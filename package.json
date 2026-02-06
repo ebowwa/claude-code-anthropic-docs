@@ -1,0 +1,18 @@
+{
+  "name": "claude-code-anthropic-docs",
+  "version": "1.0.0",
+  "description": "Daily scraped documentation from Anthropic's official Claude Code resources",
+  "type": "module",
+  "scripts": {
+    "scrape": "bun run scripts/scrape.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.11.0",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "author": "Ebowwa",
+  "license": "MIT"
+}
