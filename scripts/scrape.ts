@@ -2,9 +2,9 @@
 /**
  * Anthropic Claude Code Documentation Scraper
  *
- * Scrapes daily updates from:
+ * Fetches and mirrors full markdown documentation from:
  * 1. GitHub repo (commits, releases, PRs)
- * 2. Documentation site
+ * 2. Documentation site (full markdown downloads)
  * 3. Release notes
  *
  * Generates daily markdown report in daily/{YEAR}/{MONTH}/{DATE}.md
@@ -40,7 +40,14 @@ interface GitHubPR {
 interface DocPage {
   title: string;
   url: string;
+  path: string;
   lastUpdated: string;
+}
+
+interface DownloadResult {
+  success: boolean;
+  path: string;
+  title: string;
 }
 
 interface DailyReport {
@@ -51,13 +58,53 @@ interface DailyReport {
     releases: GitHubRelease[];
     pullRequests: GitHubPR[];
   };
-  docs: DocPage[];
+  docs: {
+    downloaded: DownloadResult[];
+    failed: Array<{ url: string; error: string }>;
+  };
   releaseNotes: string[];
 }
 
 const GITHUB_REPO = "anthropics/claude-code";
-const DOCS_BASE_URL = "https://code.claude.com/docs";
+const DOCS_BASE_URL = "https://code.claude.com";
 const RELEASE_NOTES_URL = "https://platform.claude.com/docs/en/release-notes/overview";
+
+// Known documentation categories and their pages
+const DOC_CATEGORIES: Record<string, string[]> = {
+  "getting-started": [
+    "introduction",
+    "installation",
+    "quick-start",
+    "configuration",
+    "authentication",
+  ],
+  "features": [
+    "inline-edits",
+    "tool-use",
+    "file-operations",
+    "terminal-integration",
+    "search",
+    "multi-file",
+  ],
+  "guides": [
+    "debugging",
+    "testing",
+    "refactoring",
+    "best-practices",
+    "troubleshooting",
+  ],
+  "reference": [
+    "cli-commands",
+    "configuration-options",
+    "keyboard-shortcuts",
+    "environment-variables",
+  ],
+  "architecture": [
+    "overview",
+    "mcp-integration",
+    "extension-system",
+  ],
+};
 
 // Format date as YYYY-MM-DD
 function formatDate(date: Date): string {
@@ -70,6 +117,19 @@ function getDateParts(date: Date): { year: string; month: string; day: string } 
   const month = (date.getMonth() + 1).toString().padStart(2, "0");
   const day = date.getDate().toString().padStart(2, "0");
   return { year, month, day };
+}
+
+// Create directory recursively
+async function ensureDir(path: string): Promise<void> {
+  await $`mkdir -p ${path}`;
+}
+
+// Sanitize filename
+function sanitizeFilename(name: string): string {
+  return name
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/^-|-$/g, "");
 }
 
 // Fetch GitHub commits from last 24 hours
@@ -177,40 +237,147 @@ async function fetchRecentPRs(): Promise<GitHubPR[]> {
   }
 }
 
-// Check documentation site for updates
-async function checkDocumentationUpdates(): Promise<DocPage[]> {
-  const results: DocPage[] = [];
+// Fetch markdown content from URL
+async function fetchMarkdown(url: string): Promise<string | null> {
+  try {
+    const response = await fetch(url, {
+      headers: {
+        Accept: "text/markdown, text/plain",
+        "User-Agent": "claude-code-docs-scraper",
+      },
+    });
+
+    if (!response.ok) {
+      return null;
+    }
+
+    const contentType = response.headers.get("content-type") || "";
+    if (!contentType.includes("markdown") && !contentType.includes("text/plain")) {
+      console.warn(`Unexpected content type for ${url}: ${contentType}`);
+    }
+
+    return await response.text();
+  } catch (error) {
+    console.error(`Error fetching ${url}:`, error);
+    return null;
+  }
+}
+
+// Extract title from markdown content
+function extractTitle(markdown: string): string {
+  const titleMatch = markdown.match(/^#\s+(.+)$/m);
+  return titleMatch ? titleMatch[1].trim() : "Untitled";
+}
+
+// Download and save a documentation page
+async function downloadDocPage(
+  category: string,
+  pageName: string
+): Promise<DownloadResult | null> {
+  const url = `${DOCS_BASE_URL}/docs/en/${category}/${pageName}.md`;
+  const filename = `${sanitizeFilename(pageName)}.md`;
+  const dirPath = `docs/${category}`;
+  const filePath = `${dirPath}/${filename}`;
 
   try {
-    const response = await fetch('https://code.claude.com/docs');
+    const markdown = await fetchMarkdown(url);
+    if (!markdown) {
+      return null;
+    }
+
+    // Ensure directory exists
+    await ensureDir(dirPath);
+
+    // Add source URL as comment at the top
+    const header = `<!--\nSource: ${url}\nDownloaded: ${new Date().toISOString()}\n-->\n\n`;
+    const content = header + markdown;
+
+    // Write file
+    await Bun.write(filePath, content);
+
+    return {
+      success: true,
+      path: filePath,
+      title: extractTitle(markdown),
+    };
+  } catch (error) {
+    console.error(`Error downloading ${url}:`, error);
+    return null;
+  }
+}
+
+// Download all documentation pages
+async function downloadAllDocumentation(): Promise<{
+  downloaded: DownloadResult[];
+  failed: Array<{ url: string; error: string }>;
+}> {
+  const downloaded: DownloadResult[] = [];
+  const failed: Array<{ url: string; error: string }> = [];
+
+  console.log("Fetching documentation pages...");
+
+  // Process all categories in parallel batches
+  for (const [category, pages] of Object.entries(DOC_CATEGORIES)) {
+    console.log(`  Processing category: ${category}`);
+
+    const results = await Promise.allSettled(
+      pages.map((page) => downloadDocPage(category, page))
+    );
+
+    results.forEach((result, index) => {
+      if (result.status === "fulfilled" && result.value) {
+        downloaded.push(result.value);
+      } else {
+        failed.push({
+          url: `${DOCS_BASE_URL}/docs/en/${category}/${pages[index]}.md`,
+          error: result.status === "rejected" ? result.reason.message : "Not found",
+        });
+      }
+    });
+  }
+
+  console.log(`  Downloaded: ${downloaded.length} pages`);
+  console.log(`  Failed: ${failed.length} pages`);
+
+  return { downloaded, failed };
+}
+
+// Try to discover additional documentation pages
+async function discoverDocumentationPages(): Promise<string[]> {
+  const discovered: string[] = [];
+
+  try {
+    // Fetch the main docs index
+    const response = await fetch(`${DOCS_BASE_URL}/docs/en`, {
+      headers: {
+        Accept: "text/html",
+        "User-Agent": "claude-code-docs-scraper",
+      },
+    });
+
     if (!response.ok) {
-      console.warn('Failed to fetch docs site:', response.status);
-      return [];
+      return discovered;
     }
 
     const html = await response.text();
-    const linkRegex = /href="\/docs\/([^"]+)"/g;
-    const links = new Set<string>();
+
+    // Look for markdown file references
+    const mdLinkRegex = /href="\/docs\/en\/([^"]+\.md)"/g;
     let match;
 
-    while ((match = linkRegex.exec(html)) !== null) {
-      links.add(match[1]);
+    while ((match = mdLinkRegex.exec(html)) !== null) {
+      const path = match[1];
+      if (!discovered.includes(path)) {
+        discovered.push(path);
+      }
     }
 
-    for (const link of links) {
-      results.push({
-        title: link.split('/').pop() || link,
-        url: `${DOCS_BASE_URL}/${link}`,
-        lastUpdated: new Date().toISOString(),
-      });
-    }
-
-    console.log(`Found ${results.length} documentation pages`);
+    console.log(`Discovered ${discovered.length} additional documentation pages`);
   } catch (error) {
-    console.error('Error checking documentation updates:', error);
+    console.error("Error discovering documentation pages:", error);
   }
 
-  return results;
+  return discovered;
 }
 
 // Check release notes for updates
@@ -220,7 +387,7 @@ async function checkReleaseNotes(): Promise<string[]> {
   try {
     const response = await fetch(RELEASE_NOTES_URL);
     if (!response.ok) {
-      console.warn('Failed to fetch release notes:', response.status);
+      console.warn("Failed to fetch release notes:", response.status);
       return [];
     }
 
@@ -229,7 +396,7 @@ async function checkReleaseNotes(): Promise<string[]> {
     let match;
 
     while ((match = headingRegex.exec(html)) !== null) {
-      const text = match[1].replace(/<[^>]*>/g, '').trim();
+      const text = match[1].replace(/<[^>]*>/g, "").trim();
       if (text && text.length > 0) {
         notes.push(text);
       }
@@ -237,7 +404,7 @@ async function checkReleaseNotes(): Promise<string[]> {
 
     console.log(`Found ${notes.length} release note entries`);
   } catch (error) {
-    console.error('Error checking release notes:', error);
+    console.error("Error checking release notes:", error);
   }
 
   return notes;
@@ -291,15 +458,27 @@ function generateMarkdown(report: DailyReport): string {
     md += `## Merged Pull Requests\n\nNo PRs merged in the last 24 hours.\n\n`;
   }
 
-  // Documentation Updates
-  if (report.docs.length > 0) {
-    md += `## Documentation Pages (${report.docs.length})\n\n`;
-    md += `*Current documentation pages available:\n\n`;
-    for (const doc of report.docs.slice(0, 20)) {
-      md += `- [${doc.title}](${doc.url})\n`;
+  // Documentation Downloads
+  md += `## Documentation Pages\n\n`;
+
+  if (report.docs.downloaded.length > 0) {
+    md += `### Downloaded (${report.docs.downloaded.length})\n\n`;
+    for (const doc of report.docs.downloaded.slice(0, 30)) {
+      md += `- [${doc.title}](${doc.path})\n`;
     }
-    if (report.docs.length > 20) {
-      md += `\n*... and ${report.docs.length - 20} more pages*\n`;
+    if (report.docs.downloaded.length > 30) {
+      md += `\n*... and ${report.docs.downloaded.length - 30} more pages*\n`;
+    }
+    md += `\n`;
+  }
+
+  if (report.docs.failed.length > 0) {
+    md += `### Failed to Download (${report.docs.failed.length})\n\n`;
+    for (const fail of report.docs.failed.slice(0, 10)) {
+      md += `- ${fail.url}: ${fail.error}\n`;
+    }
+    if (report.docs.failed.length > 10) {
+      md += `\n*... and ${report.docs.failed.length - 10} more failures*\n`;
     }
     md += `\n`;
   }
@@ -331,7 +510,7 @@ async function saveReport(markdown: string, date: Date): Promise<string> {
   const filepath = `${dir}/${day}.md`;
 
   // Ensure directory exists
-  await $`mkdir -p ${dir}`;
+  await ensureDir(dir);
 
   await Bun.write(filepath, markdown);
 
@@ -340,17 +519,17 @@ async function saveReport(markdown: string, date: Date): Promise<string> {
 
 // Main execution
 async function main() {
-  console.log("🔍 Scraping Anthropic Claude Code documentation...");
+  console.log("Scraping Anthropic Claude Code documentation...");
 
   const today = new Date();
   const dateStr = formatDate(today);
 
   // Fetch all data in parallel
-  const [commits, releases, prs, docs, releaseNotes] = await Promise.all([
+  const [commits, releases, prs, docResults, releaseNotes] = await Promise.all([
     fetchRecentCommits(),
     fetchRecentReleases(),
     fetchRecentPRs(),
-    checkDocumentationUpdates(),
+    downloadAllDocumentation(),
     checkReleaseNotes(),
   ]);
 
@@ -360,7 +539,8 @@ async function main() {
   if (commits.length > 0) parts.push(`${commits.length} commit${commits.length > 1 ? "s" : ""}`);
   if (releases.length > 0) parts.push(`${releases.length} release${releases.length > 1 ? "s" : ""}`);
   if (prs.length > 0) parts.push(`${prs.length} PR${prs.length > 1 ? "s" : ""}`);
-  if (docs.length > 0) parts.push(`${docs.length} doc page${docs.length > 1 ? "s" : ""}`);
+  if (docResults.downloaded.length > 0)
+    parts.push(`${docResults.downloaded.length} doc page${docResults.downloaded.length > 1 ? "s" : ""} downloaded`);
   if (releaseNotes.length > 0) parts.push(`${releaseNotes.length} release note${releaseNotes.length > 1 ? "s" : ""}`);
 
   if (parts.length === 0) {
@@ -373,15 +553,15 @@ async function main() {
     date: dateStr,
     summary,
     github: { commits, releases, pullRequests: prs },
-    docs,
+    docs: docResults,
     releaseNotes,
   };
 
   const markdown = generateMarkdown(report);
   const filepath = await saveReport(markdown, today);
 
-  console.log(`✅ Report saved to: ${filepath}`);
-  console.log(`   Summary: ${summary}`);
+  console.log(`Report saved to: ${filepath}`);
+  console.log(`Summary: ${summary}`);
 }
 
 main().catch(console.error);

@@ -9,8 +9,8 @@
 ## Overview
 
 This repository contains automatically generated documentation based on daily scrapes of Anthropic's official Claude Code resources:
+- Full markdown documentation downloads from code.claude.com
 - GitHub repository commits and releases
-- Official documentation updates
 - Platform release notes
 
 ---
@@ -19,10 +19,10 @@ This repository contains automatically generated documentation based on daily sc
 
 This repository is updated **daily at 12 noon PST** via GitHub Actions.
 
-The automation scrapes:
-- [anthropics/claude-code](https://github.com/anthropics/claude-code) GitHub repository
-- [code.claude.com/docs](https://code.claude.com/docs) Official documentation
-- [platform.claude.com](https://platform.claude.com/docs/en/release-notes/overview) Release notes
+The automation:
+1. **Downloads full markdown documentation** from [code.claude.com/docs](https://code.claude.com/docs)
+2. **Tracks GitHub activity** on [anthropics/claude-code](https://github.com/anthropics/claude-code)
+3. **Monitors release notes** from [platform.claude.com](https://platform.claude.com/docs/en/release-notes/overview)
 
 ---
 
@@ -31,15 +31,55 @@ The automation scrapes:
 ```
 claude-code-anthropic-docs/
 ├── README.md              # This file
+├── docs/                  # Downloaded documentation
+│   ├── getting-started/   # Getting started guides
+│   ├── features/          # Feature documentation
+│   ├── guides/            # How-to guides
+│   ├── reference/         # Reference documentation
+│   └── architecture/      # Architecture docs
 ├── daily/                 # Daily generated updates
 │   └── YYYY/MM/
-│       └── DD.md          # Daily update
+│       └── DD.md          # Daily update report
 ├── scripts/               # Automation scripts
 │   └── scrape.ts          # Main scraping script
 └── .github/
     └── workflows/
         └── daily.yml      # GitHub Actions workflow
 ```
+
+---
+
+## Documentation Categories
+
+The downloaded documentation is organized into:
+
+- **Getting Started** - Introduction, installation, quick start, configuration
+- **Features** - Inline edits, tool use, file operations, terminal integration
+- **Guides** - Debugging, testing, refactoring, best practices
+- **Reference** - CLI commands, configuration options, keyboard shortcuts
+- **Architecture** - Overview, MCP integration, extension system
+
+Each downloaded file includes a header comment with:
+- Source URL
+- Download timestamp
+
+---
+
+## Usage
+
+### Run the scraper manually
+
+```bash
+bun run scrape
+```
+
+### View daily updates
+
+Check the `daily/{YEAR}/{MONTH}/` directory for daily reports.
+
+### Browse documentation
+
+Navigate to the `docs/` directory to explore the downloaded markdown files.
 
 ---
 
