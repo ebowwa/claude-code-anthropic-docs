@@ -4,11 +4,14 @@
  *
  * Fetches and mirrors full markdown documentation from:
  * 1. GitHub repo (commits, releases, PRs)
- * 2. Documentation site (full markdown downloads)
+ * 2. Documentation site (via @ebowwa/markdown-docs-scraper with llms.txt discovery)
  * 3. Release notes
  *
  * Generates daily markdown report in daily/{YEAR}/{MONTH}/{DATE}.md
  */
+
+import { scrapeMarkdownDocs } from "@ebowwa/markdown-docs-scraper";
+import { mkdir } from "node:fs/promises";
 
 interface GitHubCommit {
   sha: string;
@@ -69,43 +72,6 @@ const GITHUB_REPO = "anthropics/claude-code";
 const DOCS_BASE_URL = "https://code.claude.com";
 const RELEASE_NOTES_URL = "https://platform.claude.com/docs/en/release-notes/overview";
 
-// Known documentation categories and their pages
-const DOC_CATEGORIES: Record<string, string[]> = {
-  "getting-started": [
-    "introduction",
-    "installation",
-    "quick-start",
-    "configuration",
-    "authentication",
-  ],
-  "features": [
-    "inline-edits",
-    "tool-use",
-    "file-operations",
-    "terminal-integration",
-    "search",
-    "multi-file",
-  ],
-  "guides": [
-    "debugging",
-    "testing",
-    "refactoring",
-    "best-practices",
-    "troubleshooting",
-  ],
-  "reference": [
-    "cli-commands",
-    "configuration-options",
-    "keyboard-shortcuts",
-    "environment-variables",
-  ],
-  "architecture": [
-    "overview",
-    "mcp-integration",
-    "extension-system",
-  ],
-};
-
 // Format date as YYYY-MM-DD
 function formatDate(date: Date): string {
   return date.toISOString().split("T")[0];
@@ -121,15 +87,7 @@ function getDateParts(date: Date): { year: string; month: string; day: string } 
 
 // Create directory recursively
 async function ensureDir(path: string): Promise<void> {
-  await $`mkdir -p ${path}`;
-}
-
-// Sanitize filename
-function sanitizeFilename(name: string): string {
-  return name
-    .toLowerCase()
-    .replace(/[^a-z0-9]+/g, "-")
-    .replace(/^-|-$/g, "");
+  await mkdir(path, { recursive: true });
 }
 
 // Fetch GitHub commits from last 24 hours
@@ -237,147 +195,52 @@ async function fetchRecentPRs(): Promise<GitHubPR[]> {
   }
 }
 
-// Fetch markdown content from URL
-async function fetchMarkdown(url: string): Promise<string | null> {
-  try {
-    const response = await fetch(url, {
-      headers: {
-        Accept: "text/markdown, text/plain",
-        "User-Agent": "claude-code-docs-scraper",
-      },
-    });
-
-    if (!response.ok) {
-      return null;
-    }
-
-    const contentType = response.headers.get("content-type") || "";
-    if (!contentType.includes("markdown") && !contentType.includes("text/plain")) {
-      console.warn(`Unexpected content type for ${url}: ${contentType}`);
-    }
-
-    return await response.text();
-  } catch (error) {
-    console.error(`Error fetching ${url}:`, error);
-    return null;
-  }
-}
-
-// Extract title from markdown content
-function extractTitle(markdown: string): string {
-  const titleMatch = markdown.match(/^#\s+(.+)$/m);
-  return titleMatch ? titleMatch[1].trim() : "Untitled";
-}
-
-// Download and save a documentation page
-async function downloadDocPage(
-  category: string,
-  pageName: string
-): Promise<DownloadResult | null> {
-  const url = `${DOCS_BASE_URL}/docs/en/${category}/${pageName}.md`;
-  const filename = `${sanitizeFilename(pageName)}.md`;
-  const dirPath = `docs/${category}`;
-  const filePath = `${dirPath}/${filename}`;
-
-  try {
-    const markdown = await fetchMarkdown(url);
-    if (!markdown) {
-      return null;
-    }
-
-    // Ensure directory exists
-    await ensureDir(dirPath);
-
-    // Add source URL as comment at the top
-    const header = `<!--\nSource: ${url}\nDownloaded: ${new Date().toISOString()}\n-->\n\n`;
-    const content = header + markdown;
-
-    // Write file
-    await Bun.write(filePath, content);
-
-    return {
-      success: true,
-      path: filePath,
-      title: extractTitle(markdown),
-    };
-  } catch (error) {
-    console.error(`Error downloading ${url}:`, error);
-    return null;
-  }
-}
-
-// Download all documentation pages
+// Download documentation using @ebowwa/markdown-docs-scraper with llms.txt auto-discovery
 async function downloadAllDocumentation(): Promise<{
   downloaded: DownloadResult[];
   failed: Array<{ url: string; error: string }>;
 }> {
-  const downloaded: DownloadResult[] = [];
-  const failed: Array<{ url: string; error: string }> = [];
-
-  console.log("Fetching documentation pages...");
-
-  // Process all categories in parallel batches
-  for (const [category, pages] of Object.entries(DOC_CATEGORIES)) {
-    console.log(`  Processing category: ${category}`);
-
-    const results = await Promise.allSettled(
-      pages.map((page) => downloadDocPage(category, page))
-    );
-
-    results.forEach((result, index) => {
-      if (result.status === "fulfilled" && result.value) {
-        downloaded.push(result.value);
-      } else {
-        failed.push({
-          url: `${DOCS_BASE_URL}/docs/en/${category}/${pages[index]}.md`,
-          error: result.status === "rejected" ? result.reason.message : "Not found",
-        });
-      }
-    });
-  }
-
-  console.log(`  Downloaded: ${downloaded.length} pages`);
-  console.log(`  Failed: ${failed.length} pages`);
-
-  return { downloaded, failed };
-}
-
-// Try to discover additional documentation pages
-async function discoverDocumentationPages(): Promise<string[]> {
-  const discovered: string[] = [];
+  console.log("Fetching documentation pages using llms.txt discovery...");
 
   try {
-    // Fetch the main docs index
-    const response = await fetch(`${DOCS_BASE_URL}/docs/en`, {
-      headers: {
-        Accept: "text/html",
-        "User-Agent": "claude-code-docs-scraper",
-      },
+    const result = await scrapeMarkdownDocs({
+      baseUrl: DOCS_BASE_URL,
+      docsPath: "/docs/en",
+      outputDir: "docs",
+      concurrency: 10,
+      useLlms: true,
     });
 
-    if (!response.ok) {
-      return discovered;
-    }
+    // Convert DocPage[] to DownloadResult[]
+    const downloaded: DownloadResult[] = result.downloaded.map((page) => {
+      const category = page.category || "";
+      const filename = `${page.pageName || "untitled"}.md`;
+      const path = category ? `${category}/${filename}` : filename;
 
-    const html = await response.text();
+      return {
+        success: true,
+        path,
+        title: page.title,
+      };
+    });
 
-    // Look for markdown file references
-    const mdLinkRegex = /href="\/docs\/en\/([^"]+\.md)"/g;
-    let match;
+    console.log(`  Downloaded: ${downloaded.length} pages`);
+    console.log(`  Failed: ${result.failed.length} pages`);
 
-    while ((match = mdLinkRegex.exec(html)) !== null) {
-      const path = match[1];
-      if (!discovered.includes(path)) {
-        discovered.push(path);
-      }
-    }
-
-    console.log(`Discovered ${discovered.length} additional documentation pages`);
+    return {
+      downloaded,
+      failed: result.failed,
+    };
   } catch (error) {
-    console.error("Error discovering documentation pages:", error);
+    console.error("Error scraping documentation:", error);
+    return {
+      downloaded: [],
+      failed: [{
+        url: DOCS_BASE_URL,
+        error: error instanceof Error ? error.message : "Unknown error",
+      }],
+    };
   }
-
-  return discovered;
 }
 
 // Check release notes for updates

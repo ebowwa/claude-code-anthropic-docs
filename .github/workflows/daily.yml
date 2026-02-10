@@ -28,10 +28,30 @@ jobs:
       - name: Run scraping script
         run: bun run scripts/scrape.ts
 
-      - name: Commit and push changes
+      - name: Check for changes and commit
         run: |
           git config --local user.email "github-actions[bot]@users.noreply.github.com"
           git config --local user.name "github-actions[bot]"
-          git add daily/
-          git commit -m "chore: daily automated scrape [skip-ci]" || echo "nothing to commit"
-          git push || echo "nothing to push"
+
+          # Stage all potential changes (docs and daily reports)
+          git add docs/ daily/ 2>/dev/null || true
+
+          # Check if there are actually any changes to commit
+          if git diff --staged --quiet; then
+            echo "No changes detected. Nothing to commit."
+          else
+            # Show what changed
+            echo "Changes detected:"
+            git diff --staged --stat
+
+            # Commit with detailed message including what changed
+            CHANGED_FILES=$(git diff --staged --name-only | tr '\n' ' ' | sed 's/ $//')
+            COMMIT_MSG="chore: automated docs update
+
+            Changed files:
+            ${CHANGED_FILES}
+
+            [skip-ci]"
+            git commit -m "$COMMIT_MSG"
+            git push
+          fi
