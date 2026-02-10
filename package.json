@@ -6,6 +6,9 @@
   "scripts": {
     "scrape": "bun run scripts/scrape.ts"
   },
+  "dependencies": {
+    "@ebowwa/markdown-docs-scraper": "^1.0.0"
+  },
   "devDependencies": {
     "@types/node": "^20.11.0",
     "typescript": "^5.3.3"
