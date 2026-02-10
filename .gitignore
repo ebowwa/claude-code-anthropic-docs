@@ -1,0 +1,14 @@
+# Dependencies
+node_modules/
+bun.lock
+
+# Database
+lmdb.db
+lmdb.db-lock
+
+# OS
+.DS_Store
+
+# IDE
+.vscode/
+.idea/
