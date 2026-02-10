@@ -2,7 +2,7 @@
 
 > Daily scraped documentation from Anthropic's official Claude Code resources.
 
-**Last Updated:** 2026-02-05
+**Last Updated:** 2026-02-10
 
 ---
 
