@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/statusline.md
-Downloaded: 2026-02-11T21:14:00.068Z
+Downloaded: 2026-02-12T20:16:29.827Z
 -->
 
 > ## Documentation Index

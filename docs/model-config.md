@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/model-config.md
-Downloaded: 2026-02-11T21:14:00.065Z
+Downloaded: 2026-02-12T20:16:29.824Z
 -->
 
 > ## Documentation Index

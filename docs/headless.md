@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/headless.md
-Downloaded: 2026-02-11T21:14:00.064Z
+Downloaded: 2026-02-12T20:16:29.822Z
 -->
 
 > ## Documentation Index

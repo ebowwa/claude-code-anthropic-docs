@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/keybindings.md
-Downloaded: 2026-02-11T21:14:00.065Z
+Downloaded: 2026-02-12T20:16:29.823Z
 -->
 
 > ## Documentation Index
