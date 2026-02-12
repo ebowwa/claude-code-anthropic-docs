@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/gitlab-ci-cd.md
-Downloaded: 2026-02-12T20:16:29.822Z
+Downloaded: 2026-02-12T21:11:08.570Z
 -->
 
 > ## Documentation Index
