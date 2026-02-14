@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/interactive-mode.md
-Downloaded: 2026-02-13T21:13:09.475Z
+Downloaded: 2026-02-14T20:10:09.482Z
 -->
 
 > ## Documentation Index
@@ -121,6 +121,7 @@ To create your own commands you can invoke with `/`, see [skills](/en/skills).
 | `/copy`                   | Copy the last assistant response to clipboard                                                                                                                                                                              |
 | `/tasks`                  | List and manage background tasks                                                                                                                                                                                           |
 | `/teleport`               | Resume a remote session from claude.ai (subscribers only)                                                                                                                                                                  |
+| `/desktop`                | Hand off the current CLI session to the Claude Code Desktop app (macOS and Windows only)                                                                                                                                   |
 | `/theme`                  | Change the color theme                                                                                                                                                                                                     |
 | `/todos`                  | List current TODO items                                                                                                                                                                                                    |
 | `/usage`                  | For subscription plans only: show plan usage limits and rate limit status                                                                                                                                                  |

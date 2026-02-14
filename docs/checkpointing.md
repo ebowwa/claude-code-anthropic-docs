@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/checkpointing.md
-Downloaded: 2026-02-13T21:13:09.472Z
+Downloaded: 2026-02-14T20:10:09.479Z
 -->
 
 > ## Documentation Index

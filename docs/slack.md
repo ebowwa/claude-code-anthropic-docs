@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/slack.md
-Downloaded: 2026-02-13T21:13:09.478Z
+Downloaded: 2026-02-14T20:10:09.485Z
 -->
 
 > ## Documentation Index
@@ -28,7 +28,7 @@ Before using Claude Code in Slack, ensure you have the following:
 
 | Requirement            | Details                                                                        |
 | :--------------------- | :----------------------------------------------------------------------------- |
-| Claude Plan            | Pro, Max, Team, or Enterprise with Claude Code access (premium seats)          |
+| Claude Plan            | Pro, Max, Teams, or Enterprise with Claude Code access (premium seats)         |
 | Claude Code on the web | Access to [Claude Code on the web](/en/claude-code-on-the-web) must be enabled |
 | GitHub Account         | Connected to Claude Code on the web with at least one repository authenticated |
 | Slack Authentication   | Your Slack account linked to your Claude account via the Claude app            |

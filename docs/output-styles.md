@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/output-styles.md
-Downloaded: 2026-02-13T21:13:09.477Z
+Downloaded: 2026-02-14T20:10:09.483Z
 -->
 
 > ## Documentation Index
