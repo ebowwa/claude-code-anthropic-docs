@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/chrome.md
-Downloaded: 2026-02-14T20:10:09.479Z
+Downloaded: 2026-02-14T21:06:35.704Z
 -->
 
 > ## Documentation Index

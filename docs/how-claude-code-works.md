@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/how-claude-code-works.md
-Downloaded: 2026-02-14T20:10:09.482Z
+Downloaded: 2026-02-14T21:06:35.706Z
 -->
 
 > ## Documentation Index
