@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/claude-code-on-the-web.md
-Downloaded: 2026-07-22T21:08:09.020Z
+Downloaded: 2026-07-25T20:54:45.308Z
 -->
 
 > ## Documentation Index
@@ -201,8 +201,6 @@ Manage shared environments from the **Cloud environments** page in [admin settin
 * Set the default environment for the organization.
 
 Values in a shared environment reach every member's sessions in that environment. Like personal environments, shared environments have no dedicated secrets store, so don't include secrets.
-
-Organizations in the self-hosted runners program also manage their runner pools from the same page.
 
 ## Setup scripts
 

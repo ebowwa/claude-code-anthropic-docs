@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/trading/quickstart.md
-Downloaded: 2026-07-23T21:04:54.619Z
+Downloaded: 2026-07-25T20:54:28.351Z
 -->
 
 > ## Documentation Index
@@ -131,8 +131,34 @@ Find your Polymarket wallet address in your profile menu:
     </Tabs>
   </Step>
 
+  <Step title="Wait for Settlement">
+    Your order matched, but its trade settles on-chain asynchronously. Wait for settlement before checking your position.
+
+    <Tabs>
+      <Tab title="TypeScript">
+        Use `waitForOrderFillSettlement` to wait for the trade to settle.
+
+        ```ts theme={null}
+        const hashes = await client.waitForOrderFillSettlement(response);
+
+        // hashes: TxHash[]
+        ```
+      </Tab>
+
+      <Tab title="Python">
+        Use `wait_for_order_fill_settlement` to wait for the trade to settle.
+
+        ```python theme={null}
+        hashes = await client.wait_for_order_fill_settlement(response)
+
+        # hashes: tuple[TransactionHash, ...]
+        ```
+      </Tab>
+    </Tabs>
+  </Step>
+
   <Step title="Check Your Position">
-    Finally, after the trade settles, list your positions for the selected market and find the outcome you bought.
+    Finally, list your positions for the selected market and find the outcome you bought.
 
     <Tabs>
       <Tab title="TypeScript">

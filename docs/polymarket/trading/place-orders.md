@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/trading/place-orders.md
-Downloaded: 2026-07-24T21:04:03.616Z
+Downloaded: 2026-07-25T20:54:28.350Z
 -->
 
 > ## Documentation Index
@@ -844,7 +844,7 @@ Types](#market-order-types) for Fill or Kill (FOK).
       </Step>
 
       <Step title="Check the Response">
-        Finally, check `response.ok` to determine whether the CLOB accepted the
+        Then, check `response.ok` to determine whether the CLOB accepted the
         order:
 
         ```ts theme={null}
@@ -861,13 +861,32 @@ Types](#market-order-types) for Fill or Kill (FOK).
         trades. When available, `transactionsHashes` contains their transaction
         hashes:
 
-        | Status    | Description                                              |
-        | --------- | -------------------------------------------------------- |
-        | `live`    | The order is resting on the book.                        |
-        | `matched` | The order matched immediately with resting liquidity.    |
-        | `delayed` | The order is marketable but subject to a matching delay. |
+        | Status    | Description                                                                                   |
+        | --------- | --------------------------------------------------------------------------------------------- |
+        | `matched` | The order matched immediately with resting liquidity.                                         |
+        | `delayed` | The market imposes a matching delay; the order is queued and matches after the delay elapses. |
 
-        A rejected order returns `ok: false` with a code and message.
+        A market order never rests on the book: any amount that cannot fill is
+        canceled. A rejected order returns `ok: false` with a code and message.
+      </Step>
+
+      <Step title="Wait for Fill Settlement (Optional)">
+        Settlement happens asynchronously after an order matches, so an accepted
+        response may not carry transaction hashes yet. If you need them, call
+        `waitForOrderFillSettlement()` with the accepted response:
+
+        ```ts theme={null}
+        if (response.ok) {
+          const hashes = await client.waitForOrderFillSettlement(response);
+          // hashes: TxHash[]
+        }
+        ```
+
+        The call waits until every fill from the response settles on-chain and
+        returns the settlement transaction hashes. By default it waits up to 30
+        seconds (configurable with `timeoutMs`) and throws a `TimeoutError` if
+        fills are still settling at the deadline; the executed trades are
+        unaffected.
       </Step>
     </Steps>
   </Tab>
@@ -950,7 +969,7 @@ Types](#market-order-types) for Fill or Kill (FOK).
       </Step>
 
       <Step title="Check the Response">
-        Finally, check `response.ok` to determine whether the CLOB accepted the
+        Then, check `response.ok` to determine whether the CLOB accepted the
         order:
 
         ```python theme={null}
@@ -966,13 +985,31 @@ Types](#market-order-types) for Fill or Kill (FOK).
         trades. When available, `transactions_hashes` contains their transaction
         hashes:
 
-        | Status    | Description                                              |
-        | --------- | -------------------------------------------------------- |
-        | `live`    | The order is resting on the book.                        |
-        | `matched` | The order matched immediately with resting liquidity.    |
-        | `delayed` | The order is marketable but subject to a matching delay. |
+        | Status    | Description                                                                                   |
+        | --------- | --------------------------------------------------------------------------------------------- |
+        | `matched` | The order matched immediately with resting liquidity.                                         |
+        | `delayed` | The market imposes a matching delay; the order is queued and matches after the delay elapses. |
 
-        A rejected order returns `ok=False` with a code and message.
+        A market order never rests on the book: any amount that cannot fill is
+        canceled. A rejected order returns `ok=False` with a code and message.
+      </Step>
+
+      <Step title="Wait for Fill Settlement (Optional)">
+        Settlement happens asynchronously after an order matches, so an accepted
+        response may not carry transaction hashes yet. If you need them, call
+        `wait_for_order_fill_settlement()` with the accepted response:
+
+        ```python theme={null}
+        if response.ok:
+            hashes = await client.wait_for_order_fill_settlement(response)
+            # hashes: tuple[TransactionHash, ...]
+        ```
+
+        The call waits until every fill from the response settles on-chain and
+        returns the settlement transaction hashes. By default it waits up to 30
+        seconds (configurable with `timeout_s`) and raises a `TimeoutError` if
+        fills are still settling at the deadline; the executed trades are
+        unaffected.
       </Step>
     </Steps>
   </Tab>

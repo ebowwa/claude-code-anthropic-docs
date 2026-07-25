@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/index.md
-Downloaded: 2026-07-21T21:18:03.781Z
+Downloaded: 2026-07-25T20:54:56.275Z
 -->
 
 > ## Documentation Index
@@ -287,6 +287,13 @@ bun run <file or script>
 
 <ParamField path="--shell" type="string">
   Control the shell used for <code>package.json</code> scripts. Supports either <code>bun</code> or <code>system</code>
+</ParamField>
+
+<ParamField path="--interactive" type="boolean">
+  Open the Node.js-compatible REPL (<code>node:repl</code>). When combined with <code>-e</code>, starts the REPL and
+  then evaluates the script. Under <code>--interactive</code>, <code>-e</code> is raw JavaScript (matching{" "}
+  <code>node -i -e</code>); use <code>bun repl</code> for TypeScript. Distinct from <code>bun repl</code>, which is
+  Bun's native REPL.
 </ParamField>
 
 <ParamField path="--smol" type="boolean">

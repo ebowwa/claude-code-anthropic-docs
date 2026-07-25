@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/hooks.md
-Downloaded: 2026-07-24T21:04:21.340Z
+Downloaded: 2026-07-25T20:54:45.314Z
 -->
 
 > ## Documentation Index
@@ -1901,13 +1901,13 @@ In addition to the [common input fields](#common-input-fields), PermissionDenied
     "description": "Clean build directory"
   },
   "tool_use_id": "toolu_01ABC123...",
-  "reason": "Auto mode denied: command targets a path outside the project"
+  "reason": "Blocked by classifier"
 }
 ```
 
-| Field    | Description                                                   |
-| :------- | :------------------------------------------------------------ |
-| `reason` | The classifier's explanation for why the tool call was denied |
+| Field    | Description                                                                                                                                                                                                                     |
+| :------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `reason` | The denial reason: the fixed text `Blocked by classifier` in most sessions, or the classifier's written explanation when the session's classifier model provides one. See [Review denials](/docs/en/auto-mode-config#review-denials) |
 
 #### PermissionDenied decision control
 

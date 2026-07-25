@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/changelog/sdks.md
-Downloaded: 2026-07-23T21:04:54.608Z
+Downloaded: 2026-07-25T20:54:28.344Z
 -->
 
 > ## Documentation Index
@@ -13,6 +13,24 @@ Downloaded: 2026-07-23T21:04:54.608Z
 
 <Tabs>
   <Tab title="TypeScript">
+    ### `0.2.0`
+
+    * Added `client.waitForOrderFillSettlement(order)`, which waits until every fill in an order response reaches a terminal settlement outcome and returns the settlement transaction hashes. Matched order responses are no longer guaranteed to include `transactionsHashes`; use this method to obtain hashes reliably.
+    * `ClobTrade.status` is now typed with the shared `TradeStatus` enum instead of a plain string.
+    * Added Collateral Return support: `planCollateralReturn` returns an inspectable plan and `executeCollateralReturnPlan` signs and submits it for Deposit Wallet, Safe, and Proxy accounts, returning a transaction handle.
+    * Added `isolatedOnly` to `PerpsInstrument`, indicating whether the instrument supports only isolated margin.
+    * Added volume-based fee tiers to the Perps fee schedule: each `PerpsFeeScheduleEntry` carries a `tiers` array of `PerpsFeeTier` values, including negative maker rebate rates.
+    * Perps withdrawal statuses are now forward-compatible: known statuses are enumerated in `PerpsKnownWithdrawalStatus`, which adds `failed`, and statuses introduced after a release flow through as plain strings instead of failing the response parse.
+    * Deprecated the `PerpsWithdrawalStatus` value alias; migrate enum member access:
+
+    ```diff theme={null}
+    -if (withdrawal.status === PerpsWithdrawalStatus.Confirmed) {
+    +if (withdrawal.status === PerpsKnownWithdrawalStatus.Confirmed) {
+    ```
+
+    * Fixed offset-paginated list methods silently stopping after the first page when `pageSize` reached the server's limit cap. `pageSize` is now validated per endpoint and values above the cap are rejected with `UserInputError`. A full page reports `hasMore: true`; when a collection ends exactly on a page boundary, the final page is empty.
+    * Limit and protected market order prices must be a multiple of the market tick size. Off-grid prices (for example `0.007` on a `0.005` tick market) are now rejected client-side instead of by the exchange after signing.
+
     ### `0.1.0`
 
     * Graduated the SDK to the stable 0.x release line, marked Perps APIs as experimental, and removed deprecated compatibility APIs.
@@ -184,6 +202,23 @@ Downloaded: 2026-07-23T21:04:54.608Z
   </Tab>
 
   <Tab title="Python">
+    ### `0.2.0`
+
+    * Added `wait_for_order_fill_settlement`, which waits until every fill in an order response reaches a terminal settlement outcome and returns the settlement transaction hashes.
+    * Added Collateral Return support to secure clients: `plan_collateral_return` returns an inspectable plan and `execute_collateral_return_plan` signs and submits it for Deposit Wallet, Safe, and Proxy accounts, returning a transaction handle.
+    * Added `isolated_only` to Perps instruments, indicating whether the instrument supports only isolated margin.
+    * Added volume-based fee tiers to the Perps fee schedule, including negative maker rebate rates, typed with `PerpsFeeTier`.
+    * Perps withdrawal statuses are now forward-compatible: known statuses are enumerated in `PerpsKnownWithdrawalStatus`, which adds `failed`, and statuses introduced after a release flow through as plain strings instead of failing the response parse. `list_withdrawals` accepts `withdrawal_status="failed"`.
+    * Fixed offset-paginated reads silently stopping after the first page when `page_size` reached the server's limit cap. `page_size` is now validated per endpoint and values above the cap raise `UserInputError`. A full page reports `has_more=True`; when a collection ends exactly on a page boundary, the final page is empty.
+    * CLOB cursor-paginated reads no longer report the per-page row count as `Page.total_count`; it was never the total across pages. Use the page items instead:
+
+    ```diff theme={null}
+    -count = page.total_count
+    +count = len(page.items)
+    ```
+
+    * Open orders with no expiration now parse `expires_at` as `None`. GTC orders report a zero expiration, which previously parsed as the Unix epoch.
+
     ### `0.1.0`
 
     * Graduated the SDK to the stable 0.x release line, marked Perps APIs as experimental, and removed deprecated beta compatibility APIs.

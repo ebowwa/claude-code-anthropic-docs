@@ -1,3 +1,8 @@
+<!--
+Source: https://bun.com/docs/project/license.md
+Downloaded: 2026-07-25T20:54:56.272Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://bun.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -53,6 +58,8 @@ For compatibility, Bun embeds the following packages into its binary and injects
 
 | Package                                                                  | License |
 | ------------------------------------------------------------------------ | ------- |
+| [`acorn`](https://github.com/acornjs/acorn)                              | MIT     |
+| [`acorn-walk`](https://github.com/acornjs/acorn)                         | MIT     |
 | [`assert`](https://npmjs.com/package/assert)                             | MIT     |
 | [`browserify-zlib`](https://npmjs.com/package/browserify-zlib)           | MIT     |
 | [`buffer`](https://npmjs.com/package/buffer)                             | MIT     |

@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/nodejs-compat.md
-Downloaded: 2026-07-21T21:18:03.782Z
+Downloaded: 2026-07-25T20:54:56.276Z
 -->
 
 > ## Documentation Index
@@ -177,7 +177,7 @@ This page is updated regularly and reflects the latest version of Bun's compatib
 
 ### [`node:repl`](https://nodejs.org/api/repl.html)
 
-🔴 Not implemented.
+🟡 Mostly implemented. `bun --interactive` starts a Node.js-compatible REPL. Result previews (which need V8's inspector-based side-effect-free eval), tab-completion of `let`/`const`/`class` bindings in `useGlobal: true` mode, and some V8-specific error-message wording differ.
 
 ### [`node:sqlite`](https://nodejs.org/api/sqlite.html)
 
