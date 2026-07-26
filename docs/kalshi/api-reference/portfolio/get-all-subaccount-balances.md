@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/portfolio/get-all-subaccount-balances.md
-Downloaded: 2026-07-24T21:04:03.396Z
+Downloaded: 2026-07-26T20:57:52.660Z
 -->
 
 > ## Documentation Index
@@ -105,8 +105,6 @@ components:
         - exchange_index
         - balance
         - updated_ts
-        - voluntarily_locked
-        - settlement_advance
       properties:
         subaccount_number:
           type: integer
@@ -121,18 +119,6 @@ components:
           type: integer
           format: int64
           description: Unix timestamp of last balance update.
-        voluntarily_locked:
-          type: boolean
-          description: >-
-            Whether this subaccount is voluntarily locked for settlement advance
-            computation.
-        settlement_advance_state:
-          type: string
-          format: uuid
-          description: Current settlement advance state token, if one has been established.
-        settlement_advance:
-          $ref: '#/components/schemas/FixedPointDollars'
-          description: Outstanding settlement advance in dollars.
     ErrorResponse:
       type: object
       properties:
