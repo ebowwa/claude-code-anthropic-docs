@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/changelog/index.md
-Downloaded: 2026-07-24T21:04:03.399Z
+Downloaded: 2026-07-27T21:10:37.469Z
 -->
 
 > ## Documentation Index
@@ -22,6 +22,46 @@ FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
 
 {/* changelog-tags: ["New Feature", "Upcoming"] */}
+
+<Update
+  label="July 30, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Subaccount-restricted API keys can use batch order endpoints",
+description: "API keys restricted to one subaccount can now batch-create and batch-cancel orders for that subaccount through REST."
+}}
+>
+  API keys restricted to a single subaccount, previously rejected with a 403
+  on the batch order endpoints, can now batch-create and batch-cancel orders.
+  The API infers the key's locked subaccount for any order in the batch that
+  omits it, and rejects the whole batch (no orders are placed or canceled) if
+  any entry explicitly targets a different subaccount.
+
+  **Affected endpoints:**
+
+  * `POST /trade-api/v2/portfolio/events/orders/batched`
+  * `DELETE /trade-api/v2/portfolio/events/orders/batched`
+</Update>
+
+<Update
+  label="July 30, 2026"
+  tags={["WebSocket", "Predictions"]}
+  rss={{
+title: "Subaccount on quote_created",
+description: "The quote_created message on the communications channel now includes your subaccount number, matching quote_accepted and quote_executed."
+}}
+>
+  The `quote_created` message on the `communications` channel now includes a
+  `subaccount` field when your side of the quote used a subaccount, matching
+  `quote_accepted` and `quote_executed`. Quote creators receive the subaccount
+  their quote was placed under; RFQ creators receive the subaccount their RFQ
+  was created under. Each recipient sees only their own subaccount number,
+  never the counterparty's.
+
+  This lets makers quoting from multiple subaccounts attribute a
+  `quote_created` message immediately, without waiting for the
+  `POST /trade-api/v2/communications/quotes` response.
+</Update>
 
 <Update
   label="July 30, 2026"

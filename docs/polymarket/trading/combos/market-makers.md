@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/trading/combos/market-makers.md
-Downloaded: 2026-07-23T21:04:54.616Z
+Downloaded: 2026-07-27T21:10:41.010Z
 -->
 
 > ## Documentation Index
@@ -1835,6 +1835,12 @@ is activated.
 
 Use Combo position workflows to manage inventory throughout the quote lifecycle.
 
+<Tip>
+  Quoting can leave pUSD locked across related Combo positions. Use [Collateral
+  Return](/trading/combos/collateral-return) to release available pUSD before
+  resolution while preserving unmatched exposure.
+</Tip>
+
 ### List Combo Positions
 
 List Combo positions as part of your background inventory sync. Keep this state
@@ -2645,6 +2651,12 @@ If you want to quote from inventory, build the inventory before quote requests
 arrive. Splitting converts collateral into complementary Combo positions for a
 set of legs. Merging converts matching complementary Combo positions back into
 collateral.
+
+<Note>
+  Splitting and merging manage complementary inventory directly. When capital is
+  locked across related positions that cannot be merged as-is, use [Collateral
+  Return](/trading/combos/collateral-return).
+</Note>
 
 <Tabs>
   <Tab title="TypeScript">
