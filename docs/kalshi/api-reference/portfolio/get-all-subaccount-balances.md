@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/portfolio/get-all-subaccount-balances.md
-Downloaded: 2026-07-26T20:57:52.660Z
+Downloaded: 2026-07-28T21:07:50.027Z
 -->
 
 > ## Documentation Index
@@ -133,7 +133,13 @@ components:
           description: Additional details about the error, if available
         service:
           type: string
-          description: The name of the service that generated the error
+          deprecated: true
+          x-deprecated-reason: Branch on `code` instead; this field will be removed.
+          description: >-
+            Deprecated. The name of the internal service that generated the
+            error. This exposes Kalshi-internal topology, is absent from many
+            error responses, and will be removed in a future release. Branch on
+            `code` instead.
     FixedPointDollars:
       type: string
       description: >-

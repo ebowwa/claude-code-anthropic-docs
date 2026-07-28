@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/changelog/index.md
-Downloaded: 2026-07-27T21:10:37.469Z
+Downloaded: 2026-07-28T21:07:50.030Z
 -->
 
 > ## Documentation Index
@@ -21,7 +21,66 @@ surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
 
-{/* changelog-tags: ["New Feature", "Upcoming"] */}
+{/* changelog-tags: ["Deprecation", "Upcoming"] */}
+
+<Update
+  label="July 28, 2026"
+  tags={["REST", "Predictions", "Margin"]}
+  rss={{
+title: "The service field on error responses is deprecated",
+description: "The service field on REST error responses is deprecated and will be removed in a future release. Branch on the code field instead."
+}}
+>
+  The `service` field on error response bodies is deprecated and will be removed
+  in a future release. It names the internal Kalshi service that produced the
+  error, is absent from many error responses already, and is not a stable way to
+  classify failures.
+
+  Use the `code` field instead, which is present on every error response and is
+  the intended contract for branching. No response has changed yet — `service`
+  is still returned wherever it was before.
+</Update>
+
+<Update
+  label="July 30, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Subaccount-restricted API keys can read order queue positions",
+description: "API keys restricted to one subaccount can now use the order queue position endpoints for that subaccount's orders."
+}}
+>
+  API keys restricted to a single subaccount, previously rejected with a 403
+  on the order queue position endpoints, can now read queue positions for
+  orders in their locked subaccount. The queue positions listing infers the
+  key's locked subaccount when the `subaccount` parameter is omitted and
+  rejects requests that explicitly target a different subaccount. The
+  single-order endpoint returns a 404 for orders outside the locked
+  subaccount.
+
+  **Affected endpoints:**
+
+  * `GET /trade-api/v2/portfolio/orders/queue_positions`
+  * `GET /trade-api/v2/portfolio/orders/{order_id}/queue_position`
+</Update>
+
+<Update
+  label="July 30, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Event product_metadata now includes cadence",
+description: "Event responses now return a cadence value in product_metadata when the event has one set."
+}}
+>
+  Event objects returned by the REST API now include a `cadence` value inside
+  `product_metadata` when the event has one set. It tells you how often the
+  event recurs, for example `fifteen_min`. Events without a cadence set are
+  returned the same as before.
+
+  **Affected endpoints:**
+
+  * `GET /trade-api/v2/events`
+  * `GET /trade-api/v2/events/{event_ticker}`
+</Update>
 
 <Update
   label="July 30, 2026"

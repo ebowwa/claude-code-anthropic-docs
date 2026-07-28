@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/github-enterprise-server.md
-Downloaded: 2026-07-21T21:16:35.001Z
+Downloaded: 2026-07-28T21:07:58.962Z
 -->
 
 > ## Documentation Index
@@ -169,7 +169,7 @@ Claude Code installs these marketplaces locally: it registers each entry and clo
 
 ### Allowlist GHES marketplaces in managed settings
 
-If your organization uses [managed settings](/docs/en/settings) to restrict which marketplaces developers can add, use the `hostPattern` source type to allow all marketplaces from your GHES instance without enumerating each repository:
+If your organization uses [managed settings](/docs/en/settings) to restrict which marketplaces developers can add, use the `hostPattern` source type to allow all marketplaces from your GHES instance without enumerating each repository. See [settings files](/docs/en/settings#settings-files) for file locations on each platform. Add the JSON to your `managed-settings.json` file or equivalent MDM policy:
 
 ```json theme={null}
 {

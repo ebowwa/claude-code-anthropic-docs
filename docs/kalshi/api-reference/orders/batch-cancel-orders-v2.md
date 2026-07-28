@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/orders/batch-cancel-orders-v2.md
-Downloaded: 2026-07-22T21:07:54.650Z
+Downloaded: 2026-07-28T21:07:50.025Z
 -->
 
 > ## Documentation Index
@@ -136,11 +136,10 @@ components:
               subaccount:
                 type: integer
                 minimum: 0
-                default: 0
                 description: >-
                   Optional subaccount number to use for this cancellation (0 for
-                  primary, 1-63 for subaccounts).
-                x-go-type-skip-optional-pointer: true
+                  primary, 1-63 for subaccounts). Subaccount-restricted API keys
+                  must omit this field or pass their locked subaccount.
               exchange_index:
                 allOf:
                   - $ref: '#/components/schemas/ExchangeIndex'
@@ -231,7 +230,13 @@ components:
           description: Additional details about the error, if available
         service:
           type: string
-          description: The name of the service that generated the error
+          deprecated: true
+          x-deprecated-reason: Branch on `code` instead; this field will be removed.
+          description: >-
+            Deprecated. The name of the internal service that generated the
+            error. This exposes Kalshi-internal topology, is absent from many
+            error responses, and will be removed in a future release. Branch on
+            `code` instead.
   responses:
     BadRequestError:
       description: Bad request - invalid input

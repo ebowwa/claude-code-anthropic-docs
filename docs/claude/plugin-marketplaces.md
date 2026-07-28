@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/plugin-marketplaces.md
-Downloaded: 2026-07-25T20:54:45.317Z
+Downloaded: 2026-07-28T21:07:58.967Z
 -->
 
 > ## Documentation Index
@@ -1039,7 +1039,7 @@ Both `remove` and `update` fail when run against a seed-managed marketplace, whi
 
 * Verify the marketplace URL is accessible
 * Check that `.claude-plugin/marketplace.json` exists at the specified path
-* Ensure JSON syntax is valid using `claude plugin validate` or `/plugin validate`. To check skill, agent, and command frontmatter, run the command against each plugin directory
+* Ensure JSON syntax is valid using `claude plugin validate .` or `/plugin validate .` from the marketplace directory. To check skill, agent, and command frontmatter, run the command against each plugin directory
 * For private repositories, confirm you have access permissions
 
 ### Marketplace validation errors

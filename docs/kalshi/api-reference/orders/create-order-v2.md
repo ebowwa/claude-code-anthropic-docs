@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/orders/create-order-v2.md
-Downloaded: 2026-07-22T21:07:54.650Z
+Downloaded: 2026-07-28T21:07:50.026Z
 -->
 
 > ## Documentation Index
@@ -205,11 +205,10 @@ components:
         subaccount:
           type: integer
           minimum: 0
-          default: 0
           description: >-
             The subaccount number to use for this order. 0 is the primary
-            subaccount.
-          x-go-type-skip-optional-pointer: true
+            subaccount. Subaccount-restricted API keys must omit this field or
+            pass their locked subaccount.
         order_group_id:
           type: string
           description: The order group this order is part of
@@ -322,7 +321,13 @@ components:
           description: Additional details about the error, if available
         service:
           type: string
-          description: The name of the service that generated the error
+          deprecated: true
+          x-deprecated-reason: Branch on `code` instead; this field will be removed.
+          description: >-
+            Deprecated. The name of the internal service that generated the
+            error. This exposes Kalshi-internal topology, is absent from many
+            error responses, and will be removed in a future release. Branch on
+            `code` instead.
   responses:
     BadRequestError:
       description: Bad request - invalid input

@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/portfolio/intra-account-transfer.md
-Downloaded: 2026-07-22T21:07:54.654Z
+Downloaded: 2026-07-28T21:07:50.028Z
 -->
 
 > ## Documentation Index
@@ -9,7 +9,7 @@ Downloaded: 2026-07-22T21:07:54.654Z
 
 # Intra Account Transfer
 
-> Endpoint for transferring funds within the same account. This endpoint is currently not available.
+> Endpoint for transferring funds within the same account.
 
 
 
@@ -70,9 +70,7 @@ paths:
       tags:
         - portfolio
       summary: Intra Account Transfer
-      description: >-
-        Endpoint for transferring funds within the same account. This endpoint
-        is currently not available.
+      description: Endpoint for transferring funds within the same account.
       operationId: IntraExchangeInstanceTransfer
       requestBody:
         required: true
@@ -156,7 +154,13 @@ components:
           description: Additional details about the error, if available
         service:
           type: string
-          description: The name of the service that generated the error
+          deprecated: true
+          x-deprecated-reason: Branch on `code` instead; this field will be removed.
+          description: >-
+            Deprecated. The name of the internal service that generated the
+            error. This exposes Kalshi-internal topology, is absent from many
+            error responses, and will be removed in a future release. Branch on
+            `code` instead.
   responses:
     BadRequestError:
       description: Bad request - invalid input

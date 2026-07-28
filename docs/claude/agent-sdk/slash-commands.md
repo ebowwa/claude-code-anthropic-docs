@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/agent-sdk/slash-commands.md
-Downloaded: 2026-07-21T21:16:34.983Z
+Downloaded: 2026-07-28T21:07:58.946Z
 -->
 
 > ## Documentation Index
@@ -404,6 +404,8 @@ Use in SDK:
   asyncio.run(main())
   ```
 </CodeGroup>
+
+If the prompt passes fewer arguments than the placeholders reference, unmatched indexed placeholders such as `$1` stay in the command text verbatim. For the full substitution behavior, including named arguments, see [available string substitutions](/docs/en/skills#available-string-substitutions).
 
 #### Bash Command Execution
 
