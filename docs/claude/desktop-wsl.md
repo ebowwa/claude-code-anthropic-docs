@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/desktop-wsl.md
-Downloaded: 2026-07-21T21:16:34.998Z
+Downloaded: 2026-07-29T20:57:17.733Z
 -->
 
 > ## Documentation Index
@@ -33,7 +33,7 @@ Use a WSL session when your repository lives inside the distribution's filesyste
   </Step>
 
   <Step title="Trust the folder">
-    The first session in a folder shows the workspace trust dialog. Trust is granted per distribution and folder; trusting a folder in one distribution doesn't apply to another distribution or to the same path on Windows.
+    The first session in a folder shows the workspace trust dialog. You grant trust per distribution and folder. A folder you trust in one distribution isn't trusted in another distribution or at the same path on Windows.
   </Step>
 </Steps>
 

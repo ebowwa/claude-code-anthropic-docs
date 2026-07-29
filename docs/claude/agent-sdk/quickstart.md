@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/agent-sdk/quickstart.md
-Downloaded: 2026-07-21T21:16:34.982Z
+Downloaded: 2026-07-29T20:57:17.718Z
 -->
 
 > ## Documentation Index
@@ -22,7 +22,7 @@ Use the Agent SDK to build an AI agent that reads your code, finds bugs, and fix
 ## Prerequisites
 
 * **Node.js 18+** or **Python 3.10+**
-* An **Anthropic account** ([sign up here](https://platform.claude.com/))
+* An **Anthropic account**. If you don't have one, [sign up here](https://platform.claude.com/).
 
 ## Setup
 
@@ -50,7 +50,7 @@ Use the Agent SDK to build an AI agent that reads your code, finds bugs, and fix
         npm install --save-dev tsx
         ```
 
-        Setting `"type": "module"` in `package.json` lets your agent script use top-level `await`, and [tsx](https://tsx.is) runs TypeScript files directly. npm prints `added N packages` when the install succeeds.
+        Setting `"type": "module"` in `package.json` lets your agent script use top-level `await`, and [tsx](https://tsx.hirok.io) runs TypeScript files directly. npm prints `added N packages` when the install succeeds.
       </Tab>
 
       <Tab title="TypeScript (existing project)">
@@ -59,7 +59,7 @@ Use the Agent SDK to build an AI agent that reads your code, finds bugs, and fix
         npm install --save-dev tsx
         ```
 
-        [tsx](https://tsx.is) runs TypeScript files directly. If your project uses CommonJS, name your agent script `agent.mts` instead of `agent.ts`. The `.mts` extension makes tsx treat the file as an ES module, so top-level `await` works without converting your whole project to ES modules. Use `agent.mts` in place of `agent.ts` in the create and run steps later in this quickstart.
+        [tsx](https://tsx.hirok.io) runs TypeScript files directly. If your project uses CommonJS, name your agent script `agent.mts` instead of `agent.ts`. The `.mts` extension makes tsx treat the file as an ES module, so top-level `await` works without converting your whole project to ES modules. Use `agent.mts` in place of `agent.ts` in the create and run steps later in this quickstart.
       </Tab>
 
       <Tab title="Python (uv)">
@@ -222,7 +222,7 @@ This code has three main parts:
 
 3. **`options`**: configuration for the agent. This example uses `allowedTools` to pre-approve `Read`, `Edit`, and `Glob`, and `permissionMode: "acceptEdits"` to auto-approve file changes. Other options include `systemPrompt`, `mcpServers`, and more. See all options for [Python](/docs/en/agent-sdk/python#claudeagentoptions) or [TypeScript](/docs/en/agent-sdk/typescript#options).
 
-The `async for` loop keeps running as Claude thinks, calls tools, observes results, and decides what to do next. Each iteration yields a message: Claude's reasoning, a tool call, a tool result, or the final outcome. The SDK handles the orchestration (tool execution, context management, retries) so you just consume the stream. The loop ends when Claude finishes the task or hits an error.
+The `async for` loop keeps running as Claude thinks, calls tools, observes results, and decides what to do next. Each iteration yields a message: Claude's reasoning, a tool call, a tool result, or the final outcome. The SDK handles the orchestration, tool execution, context management, and retries, so you consume the stream. The loop ends when Claude finishes the task or hits an error.
 
 The message handling inside the loop filters for human-readable output. Without filtering, you'd see raw message objects including system initialization and internal state, which is useful for debugging but noisy otherwise.
 
@@ -365,7 +365,7 @@ With `Bash` enabled, try: `"Write unit tests for utils.py, run them, and fix any
 | `bypassPermissions` | Runs every tool without prompting, except tools matched by an explicit [`ask` rule](/docs/en/agent-sdk/permissions#how-permissions-are-evaluated), connector tools [your organization set to `ask`](/docs/en/mcp#organization-controls-on-connector-tools), and tools that require user interaction. In the TypeScript SDK, also requires `allowDangerouslySkipPermissions: true` in `options` | Sandboxed CI, fully trusted environments  |
 | `default`           | Requires a `canUseTool` callback to handle approval                                                                                                                                                                                                                                                                                                                                  | Custom approval flows                     |
 
-The example above uses `acceptEdits` mode, which auto-approves file operations so the agent can run without interactive prompts. If you want to prompt users for approval, use `default` mode and provide a [`canUseTool` callback](/docs/en/agent-sdk/user-input) that collects user input. For more control, see [Permissions](/docs/en/agent-sdk/permissions).
+[Building an agent that finds and fixes bugs](#build-an-agent-that-finds-and-fixes-bugs) uses `acceptEdits` mode, which auto-approves file operations so the agent can run without interactive prompts. If you want to prompt users for approval, use `default` mode and provide a [`canUseTool` callback](/docs/en/agent-sdk/user-input) that collects user input. For more control, see [Permissions](/docs/en/agent-sdk/permissions).
 
 ## Next steps
 

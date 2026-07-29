@@ -1,8 +1,3 @@
-<!--
-Source: https://docs.polymarket.com/api-reference/get-funding-charges.md
-Downloaded: 2026-07-21T21:09:50.582Z
--->
-
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.

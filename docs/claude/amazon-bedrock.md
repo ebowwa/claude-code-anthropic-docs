@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/amazon-bedrock.md
-Downloaded: 2026-07-24T21:04:21.326Z
+Downloaded: 2026-07-29T20:57:17.724Z
 -->
 
 > ## Documentation Index
@@ -120,7 +120,7 @@ To configure Amazon Bedrock through environment variables instead of the wizard,
 
 ### 1. Submit use case details
 
-First-time users of Anthropic models are required to submit use case details before invoking a model. This is done once per AWS account.
+Before you invoke an Anthropic model for the first time, submit use case details. You do this once per AWS account.
 
 1. Ensure you have the right IAM permissions described below
 2. Navigate to the [Amazon Bedrock console](https://console.aws.amazon.com/bedrock/)

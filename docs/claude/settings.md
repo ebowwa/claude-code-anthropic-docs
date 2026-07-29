@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/settings.md
-Downloaded: 2026-07-28T21:07:58.969Z
+Downloaded: 2026-07-29T20:57:17.748Z
 -->
 
 > ## Documentation Index
@@ -19,12 +19,12 @@ Claude Code uses a scope system to determine where configurations apply and who 
 
 ### Available scopes
 
-| Scope       | Location                                                                           | Who it affects                                                                                                                                                          | Shared with team?                           |
-| :---------- | :--------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------ |
-| **Managed** | Server-managed settings, plist / registry, or system-level `managed-settings.json` | All organization members for server-managed delivery; all users on the machine for plist, HKLM registry, and file delivery; the current user for HKCU registry delivery | Yes (deployed by IT)                        |
-| **User**    | `~/.claude/` directory                                                             | You, across all projects                                                                                                                                                | No                                          |
-| **Project** | `.claude/` in repository                                                           | All collaborators on this repository                                                                                                                                    | Yes (committed to git)                      |
-| **Local**   | `.claude/settings.local.json` at the repository root                               | You, in this repository only                                                                                                                                            | No (gitignored when Claude Code creates it) |
+| Scope       | Location                                                                           | Who it affects                                                                                                                                                          | Shared with team?                                      |
+| :---------- | :--------------------------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------- |
+| **Managed** | Server-managed settings, plist / registry, or system-level `managed-settings.json` | All organization members for server-managed delivery; all users on the machine for plist, HKLM registry, and file delivery; the current user for HKCU registry delivery | Yes (deployed by IT)                                   |
+| **User**    | `~/.claude/` directory                                                             | You, across all projects                                                                                                                                                | No                                                     |
+| **Project** | `.claude/` in repository                                                           | All collaborators on this repository                                                                                                                                    | Yes (committed to git)                                 |
+| **Local**   | `.claude/settings.local.json` at the repository root                               | You, in this repository only                                                                                                                                            | No (gitignored when Claude Code saves a setting to it) |
 
 ### When to use each scope
 
@@ -89,7 +89,7 @@ Code through hierarchical settings:
   projects.
 * **Project settings** are saved in your project directory:
   * `.claude/settings.json` for settings that are checked into source control and shared with your team
-  * `.claude/settings.local.json` for settings that are not checked in, useful for personal preferences and experimentation. When Claude Code creates `.claude/settings.local.json`, it configures git to ignore the file. If you create the file yourself, add it to your gitignore manually.
+  * `.claude/settings.local.json` for settings that are not checked in, useful for personal preferences and experimentation. When Claude Code saves a setting to this file in a repository that doesn't already ignore it, Claude Code adds `**/.claude/settings.local.json` to your global git excludes file. That excludes file is `core.excludesFile` from your global git config when it's set to an absolute or `~`-prefixed path, otherwise `$XDG_CONFIG_HOME/git/ignore`, or `~/.config/git/ignore`. If you create the file by hand or have Claude write it with the Write tool, add it to your gitignore yourself.
 
     Claude Code reads and writes this file at the root of the git repository, resolved through [worktrees](/docs/en/worktrees) to the main checkout, so one file covers sessions started in any subdirectory or worktree of the repository. The file stays in the directory you start Claude Code from in three cases: outside a git repository, when the repository root is your home directory, and in [Agent SDK](/docs/en/agent-sdk/claude-code-features#control-filesystem-settings-with-settingsources) sessions.
 
@@ -158,7 +158,8 @@ The following example works in any of the settings file locations above. Where y
   },
   "env": {
     "CLAUDE_CODE_ENABLE_TELEMETRY": "1",
-    "OTEL_METRICS_EXPORTER": "otlp"
+    "OTEL_METRICS_EXPORTER": "otlp",
+    "OTEL_EXPORTER_OTLP_PROTOCOL": "http/protobuf"
   },
   "companyAnnouncements": [
     "Welcome to Acme Corp! Review our code guidelines at docs.acme.com",
@@ -330,6 +331,7 @@ This tolerance applies only to managed settings. User, project, and local settin
 | `statusLine`                       | Configure a custom status line to display context. The object's optional `padding`, `refreshInterval`, and `hideVimModeIndicator` fields control spacing, periodic re-runs, and whether the built-in vim mode indicator below the prompt is hidden. See [`statusLine` documentation](/docs/en/statusline#manually-configure-a-status-line)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | `{"type": "command", "command": "~/.claude/statusline.sh"}`                                                                     |
 | `strictKnownMarketplaces`          | (Managed settings only) Allowlist of plugin marketplace sources. Undefined = no restrictions, empty array = lockdown. Enforced on marketplace add and on plugin install, update, refresh, and auto-update, so a marketplace added before the policy was set cannot be used to fetch plugins. See [Managed marketplace restrictions](/docs/en/plugin-marketplaces#managed-marketplace-restrictions)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            | `[{ "source": "github", "repo": "acme-corp/plugins" }]`                                                                         |
 | `strictPluginOnlyCustomization`    | (Managed settings only) Block skills, agents, hooks, and MCP servers from user and project sources, so they can only come from plugins or managed settings. `true` locks all four surfaces; an array locks only the named ones. See [`strictPluginOnlyCustomization`](#strictpluginonlycustomization)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    | `["skills", "hooks"]`                                                                                                           |
+| `switchModelsOnFlag`               | {/* min-version: 2.1.170 */}**Default**: `true`. When a [safety classifier flags a request](/docs/en/model-config#automatic-model-fallback), switch to the fallback model automatically and continue the session. Set to `false` to pause instead and choose between switching and editing the prompt. See [Ask before switching](/docs/en/model-config#ask-before-switching). Appears in `/config` as **Switch models when a message is flagged**. Requires Claude Code v2.1.170 or later                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         | `false`                                                                                                                         |
 | `syntaxHighlightingDisabled`       | Disable syntax highlighting in diffs, code blocks, and file previews                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     | `true`                                                                                                                          |
 | `teammateMode`                     | **Default**: `in-process`. How [agent team](/docs/en/agent-teams) teammates display: `in-process`, `auto` (split panes when running inside tmux, or inside iTerm2 with `it2` on your `PATH`; in-process otherwise), `tmux` (split panes using tmux or iTerm2, detected from your terminal), or {/* min-version: 2.1.186 */}`iterm2` (iTerm2 native split panes via the `it2` CLI, added in v2.1.186). The default changed from `auto` in v2.1.179. `--teammate-mode` overrides this for one session. See [choose a display mode](/docs/en/agent-teams#choose-a-display-mode)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       | `"auto"`                                                                                                                        |
 | `terminalProgressBarEnabled`       | **Default**: `true`. Show the terminal progress bar in supported terminals: ConEmu, Ghostty 1.2.0+, and iTerm2 3.6.6+. Appears in `/config` as **Terminal progress bar**                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 | `false`                                                                                                                         |
@@ -751,7 +753,7 @@ This replaces the deprecated `ignorePatterns` configuration. Files matching thes
 
 ## Subagent configuration
 
-Claude Code supports custom AI subagents that can be configured at both user and project levels. These subagents are stored as Markdown files with YAML frontmatter:
+Claude Code supports custom AI subagents that can be configured at both user and project levels. You define each subagent as a Markdown file with YAML frontmatter, saved in one of these locations:
 
 * **User subagents**: `~/.claude/agents/`, available across all your projects
 * **Project subagents**: `.claude/agents/`, specific to your project and shareable with your team
@@ -792,7 +794,7 @@ Controls which plugins are enabled. Format: `"plugin-name@marketplace-name": tru
 
 * **User settings** (`~/.claude/settings.json`): Personal plugin preferences
 * **Project settings** (`.claude/settings.json`): Project-specific plugins shared with team
-* **Local settings** (`.claude/settings.local.json`): Per-machine overrides, gitignored when Claude Code creates it
+* **Local settings** (`.claude/settings.local.json`): Per-machine overrides, gitignored when Claude Code saves a setting to it
 * **Managed settings** (`managed-settings.json`): Organization-wide policy overrides that block installation at all scopes and hide the plugin from the marketplace
 
 <Note>
@@ -925,7 +927,7 @@ Use `source: 'settings'` to declare a small set of plugins inline without settin
 **Allowlist behavior**:
 
 * `undefined` (default): no restrictions, so users can add any marketplace
-* Empty array `[]`: complete lockdown, so users can't add any new marketplaces
+* Empty array `[]`: complete lockdown that blocks every marketplace source, including the official Anthropic marketplace, so users can't add any new marketplaces
 * List of sources: users can only add marketplaces that match exactly
 
 **All supported source types**:
@@ -1049,13 +1051,28 @@ Example: allow specific marketplaces only:
 }
 ```
 
-Example: disable all marketplace additions:
+Example: disable all marketplace additions, including the official Anthropic marketplace:
 
 ```json theme={null}
 {
   "strictKnownMarketplaces": []
 }
 ```
+
+Example: allow only the official Anthropic marketplace. Matching is exact, so this entry doesn't cover `ref` or `path` variants of the same repository:
+
+```json theme={null}
+{
+  "strictKnownMarketplaces": [
+    {
+      "source": "github",
+      "repo": "anthropics/claude-plugins-official"
+    }
+  ]
+}
+```
+
+With this entry, the official marketplace registers itself automatically the first time you start Claude Code interactively, so you don't need to pair it with `extraKnownMarketplaces`. In a non-interactive environment that runs before that first interactive launch, add it explicitly with `claude plugin marketplace add anthropics/claude-plugins-official` or include it in `extraKnownMarketplaces`.
 
 Example: allow all marketplaces from an internal git server:
 
@@ -1078,17 +1095,10 @@ Marketplace sources must match exactly for a user's addition to be allowed. For 
 * The `ref` field must match exactly (or both be undefined)
 * The `path` field must match exactly (or both be undefined)
 
-Examples of sources that don't match:
+For example, Claude Code treats each pair below as two different sources:
 
-```json theme={null}
-// These are DIFFERENT sources:
-{ "source": "github", "repo": "acme-corp/plugins" }
-{ "source": "github", "repo": "acme-corp/plugins", "ref": "main" }
-
-// These are also DIFFERENT:
-{ "source": "github", "repo": "acme-corp/plugins", "path": "marketplace" }
-{ "source": "github", "repo": "acme-corp/plugins" }
-```
+* `{ "source": "github", "repo": "acme-corp/plugins" }` and `{ "source": "github", "repo": "acme-corp/plugins", "ref": "main" }`
+* `{ "source": "github", "repo": "acme-corp/plugins", "path": "marketplace" }` and `{ "source": "github", "repo": "acme-corp/plugins" }`
 
 **Comparison with `extraKnownMarketplaces`**:
 

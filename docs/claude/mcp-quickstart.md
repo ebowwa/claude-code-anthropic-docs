@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/mcp-quickstart.md
-Downloaded: 2026-07-21T21:16:35.005Z
+Downloaded: 2026-07-29T20:57:17.741Z
 -->
 
 > ## Documentation Index
@@ -80,7 +80,7 @@ The steps are the same for any server: add it, check the connection status, then
     claude
     ```
 
-    ```text theme={null}
+    ```text wrap theme={null}
     Use the claude-code-docs server to look up what MCP_TIMEOUT does
     ```
 
@@ -202,7 +202,7 @@ The [Playwright MCP server](https://github.com/microsoft/playwright-mcp) is a go
   <Step title="Use the browser">
     Give Claude a task that needs the browser:
 
-    ```text theme={null}
+    ```text wrap theme={null}
     Use playwright to open https://example.com and tell me the page title
     ```
 
@@ -232,7 +232,7 @@ The steps below use Sentry as the example. To connect a different service, subst
   <Step title="Authenticate in your browser">
     Start a Claude Code session and open the MCP panel:
 
-    ```text theme={null}
+    ```text wrap theme={null}
     /mcp
     ```
 

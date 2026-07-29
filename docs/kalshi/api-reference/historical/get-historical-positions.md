@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/historical/get-historical-positions.md
-Downloaded: 2026-07-28T21:07:50.021Z
+Downloaded: 2026-07-29T20:55:56.923Z
 -->
 
 > ## Documentation Index
@@ -235,15 +235,6 @@ components:
         details:
           type: string
           description: Additional details about the error, if available
-        service:
-          type: string
-          deprecated: true
-          x-deprecated-reason: Branch on `code` instead; this field will be removed.
-          description: >-
-            Deprecated. The name of the internal service that generated the
-            error. This exposes Kalshi-internal topology, is absent from many
-            error responses, and will be removed in a future release. Branch on
-            `code` instead.
     FixedPointDollars:
       type: string
       description: >-

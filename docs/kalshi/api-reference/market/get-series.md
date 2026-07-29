@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/market/get-series.md
-Downloaded: 2026-07-28T21:07:50.022Z
+Downloaded: 2026-07-29T20:55:56.926Z
 -->
 
 > ## Documentation Index
@@ -208,6 +208,11 @@ components:
           type: string
           format: date-time
           description: Timestamp of when this series' metadata was last updated.
+        exchange_index:
+          allOf:
+            - $ref: '#/components/schemas/ExchangeIndex'
+          x-go-type-skip-optional-pointer: true
+          x-omitempty: false
     ErrorResponse:
       type: object
       properties:
@@ -220,15 +225,6 @@ components:
         details:
           type: string
           description: Additional details about the error, if available
-        service:
-          type: string
-          deprecated: true
-          x-deprecated-reason: Branch on `code` instead; this field will be removed.
-          description: >-
-            Deprecated. The name of the internal service that generated the
-            error. This exposes Kalshi-internal topology, is absent from many
-            error responses, and will be removed in a future release. Branch on
-            `code` instead.
     SettlementSource:
       type: object
       properties:
@@ -260,6 +256,12 @@ components:
         contract values (e.g., "2.50") are supported; the minimum granularity is
         0.01 contracts.
       example: '10.00'
+    ExchangeIndex:
+      type: integer
+      description: >-
+        Identifier for an exchange shard. Defaults to 0 if unspecified. Note:
+        currently only 0 supported.
+      example: 0
   responses:
     BadRequestError:
       description: Bad request - invalid input

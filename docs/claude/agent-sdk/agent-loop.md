@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/agent-sdk/agent-loop.md
-Downloaded: 2026-07-28T21:07:58.941Z
+Downloaded: 2026-07-29T20:57:17.714Z
 -->
 
 > ## Documentation Index
@@ -19,7 +19,9 @@ When you start an agent, the SDK runs the same [execution loop that powers Claud
 
 Every agent session follows the same cycle:
 
-<img src="https://mintcdn.com/claude-code/ikqp3_70mqIahteV/images/agent-loop-diagram.svg?fit=max&auto=format&n=ikqp3_70mqIahteV&q=85&s=1c6e8f28d80dba14a7287419656f1237" alt="Diagram of the agent loop: your prompt enters the agentic loop, where Claude evaluates and either requests tool calls, whose results feed back into another evaluation, or returns the final answer" width="720" height="212" data-path="images/agent-loop-diagram.svg" />
+<img src="https://mintcdn.com/claude-code/ikqp3_70mqIahteV/images/agent-loop-diagram.svg?fit=max&auto=format&n=ikqp3_70mqIahteV&q=85&s=1c6e8f28d80dba14a7287419656f1237" className="dark:hidden" alt="Diagram of the agent loop: your prompt enters the agentic loop, where Claude evaluates and either requests tool calls, whose results feed back into another evaluation, or returns the final answer" width="720" height="212" data-path="images/agent-loop-diagram.svg" />
+
+<img src="https://mintcdn.com/claude-code/_xqph1dUOslCOwsj/images/agent-loop-diagram-dark.svg?fit=max&auto=format&n=_xqph1dUOslCOwsj&q=85&s=afe723c52a324d3c61fa72fb02432ab6" className="hidden dark:block" alt="Diagram of the agent loop: your prompt enters the agentic loop, where Claude evaluates and either requests tool calls, whose results feed back into another evaluation, or returns the final answer" width="720" height="212" data-path="images/agent-loop-diagram-dark.svg" />
 
 1. **Receive prompt.** Claude receives your prompt, along with the system prompt, tool definitions, and conversation history. The SDK yields a [`SystemMessage`](#message-types) with subtype `"init"` containing session metadata.
 2. **Evaluate and respond.** Claude evaluates the current state and determines how to proceed. It may respond with text, request one or more tool calls, or both. The SDK yields an [`AssistantMessage`](#message-types) containing the text and any tool call requests.
@@ -238,13 +240,13 @@ The context window is the total amount of information available to Claude during
 
 Here's how each component affects context in the SDK:
 
-| Source                   | When it loads                                                             | Impact                                                                                                                                                                                                                                                                                                                                      |
-| :----------------------- | :------------------------------------------------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **System prompt**        | Every request                                                             | Small fixed cost, always present                                                                                                                                                                                                                                                                                                            |
-| **CLAUDE.md files**      | Session start, via [`settingSources`](/docs/en/agent-sdk/claude-code-features) | Full content in every request (but prompt-cached, so only the first request pays full cost)                                                                                                                                                                                                                                                 |
-| **Tool definitions**     | Every request; MCP schemas deferred by default                            | Built-in tool schemas load every request. [Tool search](/docs/en/agent-sdk/mcp#mcp-tool-search) defers MCP tool schemas by default, falling back to upfront loading on Google Cloud's Agent Platform or a non-first-party `ANTHROPIC_BASE_URL`. See [Configure tool search](/docs/en/agent-sdk/tool-search#configure-tool-search) for the full matrix |
-| **Conversation history** | Accumulates over turns                                                    | Grows with each turn: prompts, responses, tool inputs, tool outputs                                                                                                                                                                                                                                                                         |
-| **Skill descriptions**   | Session start, via setting sources                                        | Short summaries; full content loads only when invoked                                                                                                                                                                                                                                                                                       |
+| Source                   | When it loads                                                             | Impact                                                                                                                                                                                                                                                                                                                                                                                       |
+| :----------------------- | :------------------------------------------------------------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **System prompt**        | Every request                                                             | Small fixed cost, always present                                                                                                                                                                                                                                                                                                                                                             |
+| **CLAUDE.md files**      | Session start, via [`settingSources`](/docs/en/agent-sdk/claude-code-features) | Full content in every request (but prompt-cached, so only the first request pays full cost)                                                                                                                                                                                                                                                                                                  |
+| **Tool definitions**     | Every request; MCP schemas deferred by default                            | Built-in tool schemas load every request. [Tool search](/docs/en/agent-sdk/mcp#mcp-tool-search) defers MCP tool schemas by default, falling back to upfront loading on Google Cloud's Agent Platform, a non-first-party `ANTHROPIC_BASE_URL`, or a Microsoft Foundry deployment hosted on Azure. See [Configure tool search](/docs/en/agent-sdk/tool-search#configure-tool-search) for the full matrix |
+| **Conversation history** | Accumulates over turns                                                    | Grows with each turn: prompts, responses, tool inputs, tool outputs                                                                                                                                                                                                                                                                                                                          |
+| **Skill descriptions**   | Session start, via setting sources                                        | Short summaries; full content loads only when invoked                                                                                                                                                                                                                                                                                                                                        |
 
 Large tool outputs consume significant context. Reading a big file or running a command with verbose output can use thousands of tokens in a single turn. Context accumulates across turns, so longer sessions with many tool calls build up significantly more context than short ones.
 
@@ -280,7 +282,7 @@ A few strategies for long-running agents:
 
 * **Use subagents for subtasks.** Each subagent starts with a fresh conversation (no prior message history, though it does load its own system prompt and project-level context like CLAUDE.md). It does not see the parent's turns, and only its final response returns to the parent as a tool result. The main agent's context grows by that summary, not by the full subtask transcript. See [What subagents inherit](/docs/en/agent-sdk/subagents#what-subagents-inherit) for details.
 * **Be selective with tools.** Every tool definition takes context space. Use the `tools` field on [`AgentDefinition`](/docs/en/agent-sdk/subagents#agentdefinition-configuration) to scope subagents to the minimum set they need.
-* **Watch MCP server costs.** [MCP tool search](/docs/en/agent-sdk/mcp#mcp-tool-search) defers MCP tool schemas by default and loads them on demand. When tool search is off, on Google Cloud's Agent Platform, or behind a non-first-party `ANTHROPIC_BASE_URL`, each MCP server adds all its tool schemas to every request, so a few servers with many tools can consume significant context before the agent does any work.
+* **Watch MCP server costs.** [MCP tool search](/docs/en/agent-sdk/mcp#mcp-tool-search) defers MCP tool schemas by default and loads them on demand. When tool search is off or has fallen back to upfront loading, each MCP server adds all its tool schemas to every request, so a few servers with many tools can consume significant context before the agent does any work. The fallback applies on Google Cloud's Agent Platform, behind a non-first-party `ANTHROPIC_BASE_URL`, and on a Microsoft Foundry deployment hosted on Azure.
 * **Use lower effort for routine tasks.** Set [effort](#effort-level) to `"low"` for agents that only need to read files or list directories. This reduces token usage and cost.
 
 For a detailed breakdown of per-feature context costs, see [Understand context costs](/docs/en/features-overview#understand-context-costs).
@@ -438,6 +440,8 @@ Because a single-shot `query()` call raises after yielding an error result, the 
   }
   ```
 </CodeGroup>
+
+When the agent finishes successfully, the example prints a `Done:` line with the agent's summary of the fix, then a line like `Cost: $0.0312`.
 
 ## Next steps
 

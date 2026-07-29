@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/changelog/index.md
-Downloaded: 2026-07-28T21:07:50.030Z
+Downloaded: 2026-07-29T20:55:56.933Z
 -->
 
 > ## Documentation Index
@@ -21,7 +21,42 @@ surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
 
-{/* changelog-tags: ["Deprecation", "Upcoming"] */}
+{/* changelog-tags: ["Change", "Upcoming"] */}
+
+<Update
+  label="July 30, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Richer combo-validation errors on multivariate market creation",
+description: "Invalid-combination errors from creating a market in a multivariate event collection now explain why the combination is invalid and list the offending legs."
+}}
+>
+  `POST /trade-api/v2/multivariate_event_collections/{collection_ticker}` now
+  returns richer error bodies when the selected legs form an invalid
+  combination. The `message` field explains why the combination is invalid
+  (for example, which selections conflict), and the `details` field lists the
+  offending market tickers as a comma-separated string when they are known.
+
+  The `code` field is unchanged (`conflicting_leg_outcomes`,
+  `duplicated_legs`, `invalid_market_combination`), so existing error
+  handling keeps working.
+</Update>
+
+<Update
+  label="August 6, 2026"
+  tags={["REST", "Predictions", "Margin"]}
+  rss={{
+title: "The service field has been removed from error responses",
+description: "The deprecated service field no longer appears on REST error response bodies. Branch on the code field instead."
+}}
+>
+  The `service` field announced as deprecated on July 28 has been removed from
+  error response bodies. It is no longer returned by any REST endpoint.
+
+  Branch on `code` instead, which is present on every error response. Clients
+  that read `service` should treat it as absent; clients that already branch on
+  `code` need no change.
+</Update>
 
 <Update
   label="July 28, 2026"
@@ -39,6 +74,55 @@ description: "The service field on REST error responses is deprecated and will b
   Use the `code` field instead, which is present on every error response and is
   the intended contract for branching. No response has changed yet — `service`
   is still returned wherever it was before.
+</Update>
+
+<Update
+  label="July 30, 2026"
+  tags={["WebSocket", "Predictions"]}
+  rss={{
+title: "Lifecycle creation messages now include exchange_index",
+description: "Market and event creation messages on the lifecycle WebSocket channels now include an exchange_index field identifying the exchange shard."
+}}
+>
+  Market created messages on the `market_lifecycle_v2` and
+  `multivariate_market_lifecycle` channels now include an `exchange_index`
+  field identifying the exchange shard the market lives on. `event_lifecycle`
+  messages include the same field for the event's markets.
+
+  **Affected channels:**
+
+  * `market_lifecycle_v2`
+  * `multivariate_market_lifecycle`
+</Update>
+
+<Update
+  label="July 30, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Series responses include exchange_index",
+description: "Series responses include exchange_index"
+}}
+>
+  `GET /series` now exposes `exchange_index`, identifying the target exchange instance for new events.
+</Update>
+
+<Update
+  label="July 30, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "New endpoint for event-keyed live data",
+description: "GET /trade-api/v2/live_data/events/{event_ticker} returns live data keyed by event ticker, such as crypto price charts, commodity timeseries, and weather observations."
+}}
+>
+  A new endpoint, `GET /trade-api/v2/live_data/events/{event_ticker}`, returns
+  live data keyed by event ticker — previously only available on the internal
+  API. It serves event-keyed live data such as crypto price charts (e.g.
+  `KXBTC15M` events), commodity price timeseries, and weather observations.
+
+  The response's `live_data.type` field names the schema of the flexible
+  `live_data.details` object. An optional `range` query parameter (e.g.
+  `15min`, `1h`, `1d`) restricts the returned timeseries window where the
+  underlying live data type supports it.
 </Update>
 
 <Update

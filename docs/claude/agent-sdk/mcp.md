@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/agent-sdk/mcp.md
-Downloaded: 2026-07-21T21:16:34.980Z
+Downloaded: 2026-07-29T20:57:17.716Z
 -->
 
 > ## Documentation Index
@@ -773,10 +773,12 @@ The SDK emits a `system` message with subtype `init` at the start of each query.
       }
     }
   } catch (error) {
-    // A single-shot query() throws after yielding an error result.
-    // If the failure was an error result, the error subtype branch above
-    // has already run; connection or process failures yield no result
-    // message.
+    // A single-shot query() throws after yielding an error result. If the
+    // failure was an error result, the error subtype branch above has
+    // already run; a failure to start or reach the Claude Code process
+    // yields no result message. MCP servers that fail to connect don't
+    // throw: use the status check above, and note that servers still
+    // "pending" at init need a later status check.
     console.log(`Session ended with an error: ${error}`);
   }
   ```
@@ -808,10 +810,12 @@ The SDK emits a `system` message with subtype `init` at the start of each query.
               ):
                   print("Execution failed")
       except Exception as error:
-          # A single-shot query() raises after yielding an error result.
-          # If the failure was an error result, the error subtype branch
-          # above has already run; connection or process failures yield
-          # no result message.
+          # A single-shot query() raises after yielding an error result. If the
+          # failure was an error result, the error subtype branch above has
+          # already run; a failure to start or reach the Claude Code process
+          # yields no result message. MCP servers that fail to connect don't
+          # raise: use the status check above, and note that servers still
+          # "pending" at init need a later status check.
           print(f"Session ended with an error: {error}")
 
 

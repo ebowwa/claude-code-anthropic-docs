@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/prompt-caching.md
-Downloaded: 2026-07-28T21:07:58.967Z
+Downloaded: 2026-07-29T20:57:17.746Z
 -->
 
 > ## Documentation Index
@@ -23,7 +23,7 @@ The API caches by matching the start of each request, called the prefix, against
 
 <img src="https://mintcdn.com/claude-code/VbDJw--l6T9a9Wvm/images/prompt-caching-prefix.svg?fit=max&auto=format&n=VbDJw--l6T9a9Wvm&q=85&s=f2e8f0b8298a50305fe428ca3f1d1594" className="dark:hidden" alt="Four turns shown as growing horizontal bars. Each turn's request contains everything from the previous turn plus the latest exchange appended at the end. On turns two and three, the unchanged prefix is read from cache and only the new exchange is processed. On turn four, the system prompt changed, so the prefix no longer matches and the entire request is reprocessed and written." width="720" height="454" data-path="images/prompt-caching-prefix.svg" />
 
-<img src="https://mintcdn.com/claude-code/VbDJw--l6T9a9Wvm/images/prompt-caching-prefix-dark.svg?fit=max&auto=format&n=VbDJw--l6T9a9Wvm&q=85&s=7434a04e08187edd26ec6c3dd332f624" className="hidden dark:block" alt="Four turns shown as growing horizontal bars. Each turn's request contains everything from the previous turn plus the latest exchange appended at the end. On turns two and three, the unchanged prefix is read from cache and only the new exchange is processed. On turn four, the system prompt changed, so the prefix no longer matches and the entire request is reprocessed and written." width="720" height="454" data-path="images/prompt-caching-prefix-dark.svg" />
+<img src="https://mintcdn.com/claude-code/_xqph1dUOslCOwsj/images/prompt-caching-prefix-dark.svg?fit=max&auto=format&n=_xqph1dUOslCOwsj&q=85&s=297dc1c639f0915cae858d0c4b6f3be5" className="hidden dark:block" alt="Four turns shown as growing horizontal bars. Each turn's request contains everything from the previous turn plus the latest exchange appended at the end. On turns two and three, the unchanged prefix is read from cache and only the new exchange is processed. On turn four, the system prompt changed, so the prefix no longer matches and the entire request is reprocessed and written." width="720" height="454" data-path="images/prompt-caching-prefix-dark.svg" />
 
 To get the most out of prefix matching, Claude Code orders each request so content that rarely changes between turns comes first:
 
@@ -97,7 +97,7 @@ The cost applies once per conversation. After the first fast mode turn, Claude C
 Tool definitions sit in the system prompt layer, so the cache invalidates when the set of tool definitions in the request changes between turns. Toggling the [advisor tool](/docs/en/advisor) is an exception: its definition sits after the cache breakpoint, so enabling or disabling `/advisor` keeps the cached prefix intact. Whether an [MCP server](/docs/en/mcp) change does this depends on whether its tools are deferred by [tool search](/docs/en/mcp#scale-with-mcp-tool-search) or loaded into the prefix:
 
 * **Deferred tools**, the default on supported models: a server connecting, disconnecting, or changing its tool list only appends new content and doesn't disturb anything already cached.
-* **Tools loaded into the prefix**: any change to them invalidates the cache. This happens when [tool search is unavailable or disabled](/docs/en/mcp#configure-tool-search), such as on Google Cloud's Agent Platform or with a custom `ANTHROPIC_BASE_URL` gateway. It also happens for a server or tool marked [`alwaysLoad`](/docs/en/mcp#exempt-a-server-from-deferral), and for definitions kept upfront by [threshold-based loading](/docs/en/mcp#configure-tool-search).
+* **Tools loaded into the prefix**: any change to them invalidates the cache. This happens when [tool search is unavailable or disabled](/docs/en/mcp#configure-tool-search), such as on Google Cloud's Agent Platform, with a custom `ANTHROPIC_BASE_URL` gateway, or on a Microsoft Foundry [deployment hosted on Azure](https://platform.claude.com/docs/en/build-with-claude/claude-in-microsoft-foundry#hosting-options) once Claude Code detects that the deployment rejects tool search. It also happens for a server or tool marked [`alwaysLoad`](/docs/en/mcp#exempt-a-server-from-deferral), and for definitions kept upfront by [threshold-based loading](/docs/en/mcp#configure-tool-search).
 
 When tools load into the prefix, the most common cause of an invalidation is a server connecting or disconnecting mid-session, which can happen without any action on your part: a stdio server's process exits, an HTTP session expires, or a server [reconnects automatically after a transient failure](/docs/en/mcp#automatic-reconnection). A connected server can also push a [dynamic tool update](/docs/en/mcp#dynamic-tool-updates) that changes its tool list.
 

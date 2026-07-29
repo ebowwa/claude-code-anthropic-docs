@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/agent-sdk/subagents.md
-Downloaded: 2026-07-26T20:58:34.414Z
+Downloaded: 2026-07-29T20:57:17.720Z
 -->
 
 > ## Documentation Index
@@ -565,7 +565,7 @@ Subagent transcripts persist independently of the main conversation:
 
 * **Main conversation compaction**: when the main conversation compacts, subagent transcripts are unaffected. They're stored in separate files.
 * **Session persistence**: subagent transcripts persist within their session. You can resume a subagent after restarting Claude Code by resuming the same session.
-* **Automatic cleanup**: transcripts are cleaned up based on the `cleanupPeriodDays` setting, which defaults to 30 days.
+* **Automatic cleanup**: Claude Code deletes subagent transcripts after the `cleanupPeriodDays` retention period, 30 days by default.
 
 ## Tool restrictions
 

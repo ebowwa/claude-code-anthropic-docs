@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/plugins-reference.md
-Downloaded: 2026-07-28T21:07:58.967Z
+Downloaded: 2026-07-29T20:57:17.745Z
 -->
 
 > ## Documentation Index
@@ -124,7 +124,7 @@ Plugin hooks respond to the same lifecycle events as [user-defined hooks](/docs/
 | `UserPromptSubmit`    | When you submit a prompt, before Claude processes it                                                                                                   |
 | `UserPromptExpansion` | When a user-typed command expands into a prompt, before it reaches Claude. Can block the expansion                                                     |
 | `PreToolUse`          | Before a tool call executes. Can block it                                                                                                              |
-| `PermissionRequest`   | When a permission dialog appears                                                                                                                       |
+| `PermissionRequest`   | When a tool call needs a permission decision                                                                                                           |
 | `PermissionDenied`    | When a tool call is denied by the auto mode classifier. Return `{retry: true}` to tell the model it may retry the denied tool call                     |
 | `PostToolUse`         | After a tool call succeeds                                                                                                                             |
 | `PostToolUseFailure`  | After a tool call fails                                                                                                                                |
@@ -194,6 +194,7 @@ Plugins can bundle Model Context Protocol (MCP) servers to connect Claude Code w
 * Servers appear as standard MCP tools in Claude's toolkit
 * Server capabilities integrate seamlessly with Claude's existing tools
 * Plugin servers can be configured independently of user MCP servers
+* If you run [`/reload-plugins`](/docs/en/discover-plugins#apply-plugin-changes-without-restarting) mid-session, Claude Code keeps the live connections of servers whose configuration is unchanged
 
 ### LSP servers
 
@@ -337,7 +338,7 @@ The `command` value supports the [path substitutions](#environment-variables) `$
 
 A monitor `command` can't reference [`${user_config.*}`](#user-configuration) values. The command runs through a shell, so Claude Code rejects the monitor with an [error](/docs/en/errors#plugin-command-references-user-config) instead of substituting the value. Monitor processes don't receive `CLAUDE_PLUGIN_OPTION_<KEY>` environment variables, so have the monitor script read the value from a config file it owns. Before v2.1.207, monitor commands substituted `${user_config.*}` values.
 
-Disabling a plugin mid-session does not stop monitors that are already running. They stop when the session ends.
+If you disable a plugin mid-session, Claude Code doesn't stop monitors that are already running; they stop when the session ends.
 
 ### Themes
 
@@ -355,7 +356,7 @@ Plugins can ship color themes that appear in `/theme` alongside the built-in pre
 }
 ```
 
-Selecting a plugin theme persists `custom:<plugin-name>:<slug>` in the user's config. Plugin themes are read-only; pressing `Ctrl+E` on one in `/theme` copies it into `~/.claude/themes/` so the user can edit the copy.
+When a user selects a plugin theme, Claude Code saves `custom:<plugin-name>:<slug>` in their config. Plugin themes are read-only: when a user presses `Ctrl+E` on one in `/theme`, Claude Code copies it into `~/.claude/themes/` so they can edit the copy.
 
 ***
 
@@ -363,12 +364,12 @@ Selecting a plugin theme persists `custom:<plugin-name>:<slug>` in the user's co
 
 When you install a plugin, you choose a **scope** that determines where the plugin is available and who else can use it:
 
-| Scope     | Settings file                                   | Use case                                                 |
-| :-------- | :---------------------------------------------- | :------------------------------------------------------- |
-| `user`    | `~/.claude/settings.json`                       | Personal plugins available across all projects (default) |
-| `project` | `.claude/settings.json`                         | Team plugins shared via version control                  |
-| `local`   | `.claude/settings.local.json`                   | Project-specific plugins, gitignored                     |
-| `managed` | [Managed settings](/docs/en/settings#settings-files) | Managed plugins (read-only, update only)                 |
+| Scope     | Settings file                                   | Use case                                                                    |
+| :-------- | :---------------------------------------------- | :-------------------------------------------------------------------------- |
+| `user`    | `~/.claude/settings.json`                       | Personal plugins available across all projects (default)                    |
+| `project` | `.claude/settings.json`                         | Team plugins shared via version control                                     |
+| `local`   | `.claude/settings.local.json`                   | Project-specific plugins, gitignored when Claude Code saves a setting to it |
+| `managed` | [Managed settings](/docs/en/settings#settings-files) | Managed plugins (read-only, update only)                                    |
 
 Plugins use the same scope system as other Claude Code configurations. For installation instructions and scope flags, see [Install plugins](/docs/en/discover-plugins#install-plugins). For a complete explanation of scopes, see [Configuration scopes](/docs/en/settings#configuration-scopes).
 
@@ -402,7 +403,7 @@ A project-scope plugin is checked into the repository and reaches every collabor
 Personal-scope plugins have none of these restrictions.
 
 <Warning>
-  Project-scope `@skills-dir` plugins load only from the `.claude/skills/` of the directory where you start Claude Code. They do not [walk up to the repository root](/docs/en/skills#automatic-discovery-from-parent-and-nested-directories) the way plain skills and commands do, so launching from a subdirectory misses a plugin that lives at the repo root. Launch from the repository root, or run `/reload-plugins` after changing directories.
+  Project-scope `@skills-dir` plugins load only from the `.claude/skills/` of the directory where you start Claude Code. They don't [walk up to the repository root](/docs/en/skills#discovery-from-parent-and-nested-directories) the way plain skills and commands do, so launching from a subdirectory misses a plugin that lives at the repo root. Launch from the repository root, or run `/reload-plugins` after changing directories.
 </Warning>
 
 ### Edit, reload, and disable a skills-directory plugin
@@ -958,7 +959,7 @@ claude plugin install formatter@my-marketplace
 # Install to project scope (shared with team)
 claude plugin install formatter@my-marketplace --scope project
 
-# Install to local scope (gitignored)
+# Install to local scope (not shared with team)
 claude plugin install formatter@my-marketplace --scope local
 ```
 
