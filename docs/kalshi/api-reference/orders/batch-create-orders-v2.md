@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/orders/batch-create-orders-v2.md
-Downloaded: 2026-07-29T20:55:56.928Z
+Downloaded: 2026-07-30T21:10:12.816Z
 -->
 
 > ## Documentation Index
@@ -22,7 +22,7 @@ Downloaded: 2026-07-29T20:55:56.928Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.26.0
+  version: 3.27.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -367,9 +367,7 @@ components:
         matching.
     ExchangeIndex:
       type: integer
-      description: >-
-        Identifier for an exchange shard. Defaults to 0 if unspecified. Note:
-        currently only 0 supported.
+      description: Identifier for an exchange shard. Defaults to 0 if unspecified.
       example: 0
   responses:
     BadRequestError:

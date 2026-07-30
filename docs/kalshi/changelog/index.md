@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/changelog/index.md
-Downloaded: 2026-07-29T20:55:56.933Z
+Downloaded: 2026-07-30T21:10:12.822Z
 -->
 
 > ## Documentation Index
@@ -21,7 +21,18 @@ surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
 
-{/* changelog-tags: ["Change", "Upcoming"] */}
+{/* changelog-tags: ["New Feature", "Upcoming"] */}
+
+<Update
+  label="August 6, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Order group limit updates support subaccounts",
+description: "Order group limit updates now accept a subaccount parameter."
+}}
+>
+  `PUT /portfolio/order_groups/{order_group_id}/limit` now supports the `subaccount` parameter.
+</Update>
 
 <Update
   label="July 30, 2026"

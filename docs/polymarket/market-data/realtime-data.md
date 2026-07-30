@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/market-data/realtime-data.md
-Downloaded: 2026-07-24T21:04:03.610Z
+Downloaded: 2026-07-30T21:10:12.958Z
 -->
 
 > ## Documentation Index
@@ -1142,6 +1142,9 @@ needs.
 
 Use crypto price streams to keep reference values current alongside related
 markets.
+
+For time-weighted crypto prices, see [Chainlink TWAP
+Prices](/market-data/chainlink-twap).
 
 <Tip>
   Trading 15-minute crypto markets? [Request a sponsored Chainlink API

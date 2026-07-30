@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/order-groups/update-order-group-limit.md
-Downloaded: 2026-07-29T20:55:56.928Z
+Downloaded: 2026-07-30T21:10:12.816Z
 -->
 
 > ## Documentation Index
@@ -19,7 +19,7 @@ Downloaded: 2026-07-29T20:55:56.928Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.26.0
+  version: 3.27.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
@@ -74,6 +74,7 @@ paths:
       operationId: UpdateOrderGroupLimit
       parameters:
         - $ref: '#/components/parameters/OrderGroupIdPath'
+        - $ref: '#/components/parameters/SubaccountQueryDefaultPrimary'
         - $ref: '#/components/parameters/ExchangeIndexQuery'
       requestBody:
         required: true
@@ -109,6 +110,12 @@ components:
       description: Order group ID
       schema:
         type: string
+    SubaccountQueryDefaultPrimary:
+      name: subaccount
+      in: query
+      description: Subaccount number (0 for primary, 1-63 for subaccounts). Defaults to 0.
+      schema:
+        type: integer
     ExchangeIndexQuery:
       name: exchange_index
       in: query
@@ -144,9 +151,7 @@ components:
       description: An empty response body
     ExchangeIndex:
       type: integer
-      description: >-
-        Identifier for an exchange shard. Defaults to 0 if unspecified. Note:
-        currently only 0 supported.
+      description: Identifier for an exchange shard. Defaults to 0 if unspecified.
       example: 0
     FixedPointCount:
       type: string

@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/changelog/sdks.md
-Downloaded: 2026-07-25T20:54:28.344Z
+Downloaded: 2026-07-30T21:10:12.955Z
 -->
 
 > ## Documentation Index
@@ -13,6 +13,20 @@ Downloaded: 2026-07-25T20:54:28.344Z
 
 <Tabs>
   <Tab title="TypeScript">
+    ### `0.3.0-beta.0`
+
+    * Added typed 30-second and 60-second Chainlink TWAP realtime subscriptions.
+    * Added the `DEPOSIT`, `WITHDRAWAL`, and `TAKER_REBATE` activity types, modeled as typed account-level activities. Activity responses containing these rows no longer fail validation.
+    * `RequestRejectedError` and `RateLimitError` now expose `retryAfter`, populated from the `Retry-After` response header, so callers can honor server-provided backoff.
+    * RFQ quote rejections now carry the granular Combos quote-validation error codes instead of a generic validation failure.
+    * Open order `createdAt` and `expiresAt` now parse epoch-seconds wire timestamps correctly instead of treating them as milliseconds.
+    * Cursor-paginated reads (open orders, account trades, earnings, builder lists) no longer populate `Page.totalCount` from the per-response `count`; that value was the current page's item count, not a total across all pages. Use the page items instead:
+
+    ```diff theme={null}
+    -const count = page.totalCount;
+    +const count = page.items.length;
+    ```
+
     ### `0.2.0`
 
     * Added `client.waitForOrderFillSettlement(order)`, which waits until every fill in an order response reaches a terminal settlement outcome and returns the settlement transaction hashes. Matched order responses are no longer guaranteed to include `transactionsHashes`; use this method to obtain hashes reliably.
@@ -202,6 +216,15 @@ Downloaded: 2026-07-25T20:54:28.344Z
   </Tab>
 
   <Tab title="Python">
+    ### `0.3.0b1`
+
+    * Added typed 30-second and 60-second Chainlink TWAP realtime subscriptions.
+    * Added Perps account notifications support: `session.list_notifications()` pages newest first, reports the account's `unread` count on each page, and accepts a `since_seq` backfill bound for catching up after a reconnect; `session.mark_notifications_read()` marks notifications read by ids or up to a notification entry; and the `notifications` session WebSocket channel emits typed `notification` events.
+    * Perps fills pagination now uses the API-native cursor, and `list_fills` accepts a `sort` direction: fills return newest first by default, pass `sort="asc"` for oldest first.
+    * RFQ quote rejections now carry the granular Combos quote-validation error codes instead of a generic validation failure.
+    * `RequestRejectedError` now exposes `retry_after`, the server-suggested delay in seconds taken from the `Retry-After` response header or a `retry_after_seconds` response field, so callers can honor server-provided backoff.
+    * Collateral Return operation `event_id` values are now typed as `EventId`; they carry the on-chain neg-risk event id.
+
     ### `0.2.0`
 
     * Added `wait_for_order_fill_settlement`, which waits until every fill in an order response reaches a terminal settlement outcome and returns the settlement transaction hashes.

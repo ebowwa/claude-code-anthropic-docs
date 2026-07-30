@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/live-data/get-game-stats.md
-Downloaded: 2026-07-22T21:07:54.645Z
+Downloaded: 2026-07-30T21:10:12.811Z
 -->
 
 > ## Documentation Index
@@ -19,7 +19,7 @@ Downloaded: 2026-07-22T21:07:54.645Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.26.0
+  version: 3.27.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

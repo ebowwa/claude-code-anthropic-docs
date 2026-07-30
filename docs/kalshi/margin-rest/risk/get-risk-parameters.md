@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.kalshi.com/margin-rest/risk/get-risk-parameters.md
+Downloaded: 2026-07-30T21:10:12.834Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -27,6 +32,8 @@ security: []
 tags:
   - name: account
     description: Account information endpoints
+  - name: fcm
+    description: FCM member specific endpoints
   - name: exchange
     description: Exchange status and information endpoints
   - name: market

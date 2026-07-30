@@ -1,8 +1,3 @@
-<!--
-Source: https://docs.polymarket.com/trading/positions/how-positions-work.md
-Downloaded: 2026-07-23T21:04:54.619Z
--->
-
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
