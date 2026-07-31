@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/api-reference/wss/perps-book.md
+Downloaded: 2026-07-31T21:03:55.553Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -66,7 +71,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-228>
+              x-parser-schema-id: <anonymous-schema-266>
             req:
               type: string
               description: Request type
@@ -74,21 +79,21 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-229>
+              x-parser-schema-id: <anonymous-schema-267>
             chs:
               type: array
               description: Book subscription in format "book::{iid}" (e.g., "book::1")
               items:
                 type: string
                 pattern: ^book::\d+$
-                x-parser-schema-id: <anonymous-schema-231>
+                x-parser-schema-id: <anonymous-schema-269>
               example:
                 - book::1
-              x-parser-schema-id: <anonymous-schema-230>
+              x-parser-schema-id: <anonymous-schema-268>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-227>
+          x-parser-schema-id: <anonymous-schema-265>
         title: Subscribe
         description: Subscribe to order book updates for an instrument
         example: |-
@@ -152,12 +157,15 @@ operations:
                           the API contract and safe to branch on, e.g.
                           `insufficient_margin`, `insufficient_balance`,
                           `order_not_found`, `reduce_only_invalid`,
-                          `unauthorized`, `not_found`. For `400` it is a
-                          human-readable validation detail whose wording may
-                          change. See the Error handling guide for the domain
-                          identifiers. (Post-only / Fill-or-Kill outcomes are
-                          order statuses such as `post_only_rejected`, not
-                          rejections.)
+                          `price_outside_bounds`, `position_not_found`,
+                          `invalid_margin_mode`, `invalid_margin_amount`,
+                          `margin_below_required_initial`,
+                          `account_liquidating`, `unauthorized`, `not_found`.
+                          For `400` it is a human-readable validation detail
+                          whose wording may change. See the Error handling guide
+                          for the domain identifiers. (Post-only / Fill-or-Kill
+                          outcomes are order statuses such as
+                          `post_only_rejected`, not rejections.)
                         required: true
         headers: []
         jsonPayloadSchema:
@@ -167,7 +175,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-233>
+              x-parser-schema-id: <anonymous-schema-271>
             data:
               title: Subscribe Response
               type: array
@@ -181,8 +189,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-237>
-                    x-parser-schema-id: <anonymous-schema-236>
+                        x-parser-schema-id: <anonymous-schema-275>
+                    x-parser-schema-id: <anonymous-schema-274>
                   - type: object
                     required:
                       - status
@@ -192,7 +200,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-239>
+                        x-parser-schema-id: <anonymous-schema-277>
                       error:
                         type: string
                         description: >-
@@ -202,20 +210,23 @@ operations:
                           the API contract and safe to branch on, e.g.
                           `insufficient_margin`, `insufficient_balance`,
                           `order_not_found`, `reduce_only_invalid`,
-                          `unauthorized`, `not_found`. For `400` it is a
-                          human-readable validation detail whose wording may
-                          change. See the Error handling guide for the domain
-                          identifiers. (Post-only / Fill-or-Kill outcomes are
-                          order statuses such as `post_only_rejected`, not
-                          rejections.)
+                          `price_outside_bounds`, `position_not_found`,
+                          `invalid_margin_mode`, `invalid_margin_amount`,
+                          `margin_below_required_initial`,
+                          `account_liquidating`, `unauthorized`, `not_found`.
+                          For `400` it is a human-readable validation detail
+                          whose wording may change. See the Error handling guide
+                          for the domain identifiers. (Post-only / Fill-or-Kill
+                          outcomes are order statuses such as
+                          `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-240>
-                    x-parser-schema-id: <anonymous-schema-238>
-                x-parser-schema-id: <anonymous-schema-235>
-              x-parser-schema-id: <anonymous-schema-234>
+                        x-parser-schema-id: <anonymous-schema-278>
+                    x-parser-schema-id: <anonymous-schema-276>
+                x-parser-schema-id: <anonymous-schema-273>
+              x-parser-schema-id: <anonymous-schema-272>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-232>
+          x-parser-schema-id: <anonymous-schema-270>
         title: Subscribe Response
         description: Response to book subscribe request
         example: |-
@@ -270,7 +281,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-242>
+              x-parser-schema-id: <anonymous-schema-280>
             req:
               type: string
               description: Request type
@@ -278,21 +289,21 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-243>
+              x-parser-schema-id: <anonymous-schema-281>
             chs:
               type: array
               description: Book subscription in format "book::{iid}" (e.g., "book::1")
               items:
                 type: string
                 pattern: ^book::\d+$
-                x-parser-schema-id: <anonymous-schema-245>
+                x-parser-schema-id: <anonymous-schema-283>
               example:
                 - book::1
-              x-parser-schema-id: <anonymous-schema-244>
+              x-parser-schema-id: <anonymous-schema-282>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-241>
+          x-parser-schema-id: <anonymous-schema-279>
         title: Unsubscribe
         description: Unsubscribe from order book updates
         example: |-
@@ -354,12 +365,15 @@ operations:
                           the API contract and safe to branch on, e.g.
                           `insufficient_margin`, `insufficient_balance`,
                           `order_not_found`, `reduce_only_invalid`,
-                          `unauthorized`, `not_found`. For `400` it is a
-                          human-readable validation detail whose wording may
-                          change. See the Error handling guide for the domain
-                          identifiers. (Post-only / Fill-or-Kill outcomes are
-                          order statuses such as `post_only_rejected`, not
-                          rejections.)
+                          `price_outside_bounds`, `position_not_found`,
+                          `invalid_margin_mode`, `invalid_margin_amount`,
+                          `margin_below_required_initial`,
+                          `account_liquidating`, `unauthorized`, `not_found`.
+                          For `400` it is a human-readable validation detail
+                          whose wording may change. See the Error handling guide
+                          for the domain identifiers. (Post-only / Fill-or-Kill
+                          outcomes are order statuses such as
+                          `post_only_rejected`, not rejections.)
                         required: true
         headers: []
         jsonPayloadSchema:
@@ -369,7 +383,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-247>
+              x-parser-schema-id: <anonymous-schema-285>
             data:
               title: Subscribe Response
               type: array
@@ -383,8 +397,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-251>
-                    x-parser-schema-id: <anonymous-schema-250>
+                        x-parser-schema-id: <anonymous-schema-289>
+                    x-parser-schema-id: <anonymous-schema-288>
                   - type: object
                     required:
                       - status
@@ -394,7 +408,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-253>
+                        x-parser-schema-id: <anonymous-schema-291>
                       error:
                         type: string
                         description: >-
@@ -404,20 +418,23 @@ operations:
                           the API contract and safe to branch on, e.g.
                           `insufficient_margin`, `insufficient_balance`,
                           `order_not_found`, `reduce_only_invalid`,
-                          `unauthorized`, `not_found`. For `400` it is a
-                          human-readable validation detail whose wording may
-                          change. See the Error handling guide for the domain
-                          identifiers. (Post-only / Fill-or-Kill outcomes are
-                          order statuses such as `post_only_rejected`, not
-                          rejections.)
+                          `price_outside_bounds`, `position_not_found`,
+                          `invalid_margin_mode`, `invalid_margin_amount`,
+                          `margin_below_required_initial`,
+                          `account_liquidating`, `unauthorized`, `not_found`.
+                          For `400` it is a human-readable validation detail
+                          whose wording may change. See the Error handling guide
+                          for the domain identifiers. (Post-only / Fill-or-Kill
+                          outcomes are order statuses such as
+                          `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-254>
-                    x-parser-schema-id: <anonymous-schema-252>
-                x-parser-schema-id: <anonymous-schema-249>
-              x-parser-schema-id: <anonymous-schema-248>
+                        x-parser-schema-id: <anonymous-schema-292>
+                    x-parser-schema-id: <anonymous-schema-290>
+                x-parser-schema-id: <anonymous-schema-287>
+              x-parser-schema-id: <anonymous-schema-286>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-246>
+          x-parser-schema-id: <anonymous-schema-284>
         title: Unsubscribe Response
         description: Response to book unsubscribe request
         example: |-
@@ -510,7 +527,7 @@ operations:
                 "tickers::all"). Private channels use plain names (e.g. "fills",
                 "orders").
               example: trades::1
-              x-parser-schema-id: <anonymous-schema-256>
+              x-parser-schema-id: <anonymous-schema-294>
             ts:
               type: integer
               description: >-
@@ -518,12 +535,12 @@ operations:
                 seconds for withdrawals (must match the on-chain EIP-712 struct
                 verified against block.timestamp).
               example: 1767225600000
-              x-parser-schema-id: <anonymous-schema-257>
+              x-parser-schema-id: <anonymous-schema-295>
             sq:
               type: integer
               description: Sequence number
               example: 1234567890
-              x-parser-schema-id: <anonymous-schema-258>
+              x-parser-schema-id: <anonymous-schema-296>
             data:
               type: object
               required:
@@ -536,7 +553,7 @@ operations:
                     type: array
                     items:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-262>
+                      x-parser-schema-id: <anonymous-schema-300>
                     maxItems: 2
                     description: |
                       - `"100.00"` - Price
@@ -544,16 +561,16 @@ operations:
                     example:
                       - '100.00'
                       - '10.00'
-                    x-parser-schema-id: <anonymous-schema-261>
+                    x-parser-schema-id: <anonymous-schema-299>
                   description: Bid levels
-                  x-parser-schema-id: <anonymous-schema-260>
+                  x-parser-schema-id: <anonymous-schema-298>
                 a:
                   type: array
                   items:
                     type: array
                     items:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-265>
+                      x-parser-schema-id: <anonymous-schema-303>
                     maxItems: 2
                     description: |
                       - `"100.00"` - Price
@@ -561,16 +578,16 @@ operations:
                     example:
                       - '100.00'
                       - '10.00'
-                    x-parser-schema-id: <anonymous-schema-264>
+                    x-parser-schema-id: <anonymous-schema-302>
                   description: Ask levels
-                  x-parser-schema-id: <anonymous-schema-263>
-              x-parser-schema-id: <anonymous-schema-259>
+                  x-parser-schema-id: <anonymous-schema-301>
+              x-parser-schema-id: <anonymous-schema-297>
           required:
             - ch
             - ts
             - sq
             - data
-          x-parser-schema-id: <anonymous-schema-255>
+          x-parser-schema-id: <anonymous-schema-293>
         title: Update
         description: Real-time order book updates for subscribed instruments
         example: |-

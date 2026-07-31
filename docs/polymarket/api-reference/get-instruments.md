@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/api-reference/get-instruments.md
+Downloaded: 2026-07-31T21:03:55.540Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -86,6 +91,7 @@ components:
         - instrument_id
         - instrument_type
         - category
+        - isolated_only
         - symbol
         - base_asset
         - quote_asset
@@ -107,6 +113,8 @@ components:
           $ref: '#/components/schemas/instrument_type'
         category:
           $ref: '#/components/schemas/category'
+        isolated_only:
+          $ref: '#/components/schemas/isolated_only'
         symbol:
           $ref: '#/components/schemas/symbol'
         base_asset:
@@ -137,6 +145,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RiskTier'
+    isolated_only:
+      type: boolean
+      description: >-
+        Whether the instrument supports only isolated account margin. When
+        false, both cross and isolated account margin modes are supported.
     symbol:
       type: string
       description: Instrument symbol
@@ -252,11 +265,11 @@ components:
         (`401`/`404`/`429`/`500`) this is a stable, machine-readable snake_case
         identifier that is part of the API contract and safe to branch on, e.g.
         `insufficient_margin`, `insufficient_balance`, `order_not_found`,
-        `reduce_only_invalid`, `unauthorized`, `not_found`. For `400` it is a
-        human-readable validation detail whose wording may change. See the Error
-        handling guide for the domain identifiers. (Post-only / Fill-or-Kill
-        outcomes are order statuses such as `post_only_rejected`, not
-        rejections.)
+        `reduce_only_invalid`, `price_outside_bounds`, `unauthorized`,
+        `not_found`. For `400` it is a human-readable validation detail whose
+        wording may change. See the Error handling guide for the domain
+        identifiers. (Post-only / Fill-or-Kill outcomes are order statuses such
+        as `post_only_rejected`, not rejections.)
       example: insufficient_margin
   responses:
     Error400Response:

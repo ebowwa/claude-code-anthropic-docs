@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/programs/referral-program.md
+Downloaded: 2026-07-31T21:03:55.564Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -115,5 +120,10 @@ You refer a new trader. From their very first trade and through every tier up to
     Self-referrals, referring accounts you control, and inauthentic trading are
     not allowed. Polymarket may disqualify referrals and claw back rewards for
     activity that breaks the Terms of Service.
+  </Accordion>
+
+  <Accordion title="Are third-party integrations using omnibus wallets eligible">
+    No. Third-party integrations using omnibus wallets are not eligible for the
+    Referral Program.
   </Accordion>
 </AccordionGroup>

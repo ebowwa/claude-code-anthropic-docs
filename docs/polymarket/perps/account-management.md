@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/perps/account-management.md
-Downloaded: 2026-07-24T21:04:03.610Z
+Downloaded: 2026-07-31T21:03:55.560Z
 -->
 
 > ## Documentation Index
@@ -936,6 +936,19 @@ Use withdrawals to reconcile collateral leaving the Perps account.
       ]
       ```
     </Accordion>
+
+    Branch on `status` using the `PerpsKnownWithdrawalStatus` enum.
+
+    | `status`                               | Meaning                                                                                                      |
+    | -------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
+    | `PerpsKnownWithdrawalStatus.Pending`   | The withdrawal was accepted and is awaiting on-chain confirmation.                                           |
+    | `PerpsKnownWithdrawalStatus.Confirmed` | The on-chain transaction reached the required confirmations and the funds were sent to the destination.      |
+    | `PerpsKnownWithdrawalStatus.Removed`   | A chain reorganization removed the on-chain transaction after it was observed.                               |
+    | `PerpsKnownWithdrawalStatus.Failed`    | The withdrawal could not be executed on-chain and was reverted; the amount was credited back to the account. |
+
+    The status set can grow between SDK releases. `status` is typed
+    `PerpsWithdrawalStatus`, so a status added after your release arrives as a
+    plain string instead of failing the response parse.
   </Tab>
 
   <Tab title="Python">
@@ -968,6 +981,19 @@ Use withdrawals to reconcile collateral leaving the Perps account.
       ]
       ```
     </Accordion>
+
+    Branch on `status` using the `PerpsKnownWithdrawalStatus` literals.
+
+    | `status`      | Meaning                                                                                                      |
+    | ------------- | ------------------------------------------------------------------------------------------------------------ |
+    | `"pending"`   | The withdrawal was accepted and is awaiting on-chain confirmation.                                           |
+    | `"confirmed"` | The on-chain transaction reached the required confirmations and the funds were sent to the destination.      |
+    | `"removed"`   | A chain reorganization removed the on-chain transaction after it was observed.                               |
+    | `"failed"`    | The withdrawal could not be executed on-chain and was reverted; the amount was credited back to the account. |
+
+    The status set can grow between SDK releases. `status` is typed
+    `PerpsWithdrawalStatus`, so a status added after your release arrives as a
+    plain string instead of failing validation.
   </Tab>
 
   <Tab title="API">
@@ -1005,6 +1031,13 @@ Use withdrawals to reconcile collateral leaving the Perps account.
       }
       ```
     </Accordion>
+
+    | `status`    | Meaning                                                                                                      |
+    | ----------- | ------------------------------------------------------------------------------------------------------------ |
+    | `pending`   | The withdrawal was accepted and is awaiting on-chain confirmation.                                           |
+    | `confirmed` | The on-chain transaction reached the required confirmations and the funds were sent to the destination.      |
+    | `removed`   | A chain reorganization removed the on-chain transaction after it was observed.                               |
+    | `failed`    | The withdrawal could not be executed on-chain and was reverted; the amount was credited back to the account. |
   </Tab>
 </Tabs>
 

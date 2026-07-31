@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/changelog/sdks.md
-Downloaded: 2026-07-30T21:10:12.955Z
+Downloaded: 2026-07-31T21:03:55.557Z
 -->
 
 > ## Documentation Index
@@ -13,6 +13,12 @@ Downloaded: 2026-07-30T21:10:12.955Z
 
 <Tabs>
   <Tab title="TypeScript">
+    ### `0.3.0-beta.1`
+
+    * Added Perps account notifications: `session.listNotifications()` with SDK-owned pagination and an optional `sinceSeq` backfill bound, `session.fetchUnreadNotificationsCount()`, `session.markNotificationsRead()` by ids or up to a notification, and the `notifications` session WebSocket channel emitting typed `notification` events.
+    * Perps fills pagination now forwards the API-native cursor and adds a `sort` direction option (`PerpsSortDirection`, newest-first by default). Previously issued SDK-encoded fills cursors are no longer decoded, and the fills-specific default one-day window is gone, so the API's own defaults apply.
+    * Deposit Wallet gasless and Collateral Return submits now self-heal nonce mismatches: when the relayer rejects a batch and reports the on-chain nonce, the batch is re-signed with that nonce and resubmitted once.
+
     ### `0.3.0-beta.0`
 
     * Added typed 30-second and 60-second Chainlink TWAP realtime subscriptions.
@@ -216,6 +222,11 @@ Downloaded: 2026-07-30T21:10:12.955Z
   </Tab>
 
   <Tab title="Python">
+    ### `0.3.0b2`
+
+    * Added the `DEPOSIT`, `WITHDRAWAL`, and `TAKER_REBATE` activity types, modeled as typed account-level activities. Activity responses containing these rows no longer fail validation, and requesting the `DEPOSIT` or `WITHDRAWAL` type now returns those rows instead of the API excluding them by default.
+    * Deposit Wallet gasless and Collateral Return submits now self-heal nonce mismatches: when the relayer rejects a batch and reports the on-chain nonce, the batch is re-signed with that nonce and resubmitted once.
+
     ### `0.3.0b1`
 
     * Added typed 30-second and 60-second Chainlink TWAP realtime subscriptions.

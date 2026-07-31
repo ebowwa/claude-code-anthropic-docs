@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/api-reference/get-fills.md
+Downloaded: 2026-07-31T21:03:55.539Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -7,6 +12,10 @@
 > Get fill history for the authenticated account.
 If no end time is provided, the current time will be used.
 Maximum of 100 entries returned per request.
+Results are ordered by time; use `sort` to choose newest-first (`desc`,
+default) or oldest-first (`asc`). To page through more than 100 fills, pass
+`cursor` set to the trade ID of the last fill from the previous page (keep
+`sort` consistent across pages).
 
 
 <Badge color="gray" size="md">Request Weight: **10**</Badge>
@@ -31,10 +40,22 @@ paths:
   /v1/account/fills:
     get:
       summary: Get Fills
-      description: |
+      description: >
         Get fill history for the authenticated account.
+
         If no end time is provided, the current time will be used.
+
         Maximum of 100 entries returned per request.
+
+        Results are ordered by time; use `sort` to choose newest-first (`desc`,
+
+        default) or oldest-first (`asc`). To page through more than 100 fills,
+        pass
+
+        `cursor` set to the trade ID of the last fill from the previous page
+        (keep
+
+        `sort` consistent across pages).
       operationId: getFills
       parameters:
         - name: start_timestamp
@@ -47,6 +68,16 @@ paths:
           required: false
           schema:
             $ref: '#/components/schemas/end_timestamp'
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/cursor'
+        - name: sort
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/sort'
       responses:
         '200':
           description: Fills response.
@@ -75,6 +106,22 @@ components:
       type: integer
       description: End timestamp in milliseconds
       example: 1767229200000
+    cursor:
+      type: integer
+      description: >-
+        Pagination cursor. Pass the trade ID of the last fill from the previous
+        page to fetch the next page. Paging follows the `sort` direction
+        (strictly older fills when `sort=desc`, strictly newer when `sort=asc`).
+      example: 1
+    sort:
+      type: string
+      description: >-
+        Time sort direction. `desc` (default) returns newest fills first; `asc`
+        returns oldest first.
+      default: desc
+      enum:
+        - desc
+        - asc
     AccountTrades:
       type: object
       required:
@@ -263,11 +310,11 @@ components:
         (`401`/`404`/`429`/`500`) this is a stable, machine-readable snake_case
         identifier that is part of the API contract and safe to branch on, e.g.
         `insufficient_margin`, `insufficient_balance`, `order_not_found`,
-        `reduce_only_invalid`, `unauthorized`, `not_found`. For `400` it is a
-        human-readable validation detail whose wording may change. See the Error
-        handling guide for the domain identifiers. (Post-only / Fill-or-Kill
-        outcomes are order statuses such as `post_only_rejected`, not
-        rejections.)
+        `reduce_only_invalid`, `price_outside_bounds`, `unauthorized`,
+        `not_found`. For `400` it is a human-readable validation detail whose
+        wording may change. See the Error handling guide for the domain
+        identifiers. (Post-only / Fill-or-Kill outcomes are order statuses such
+        as `post_only_rejected`, not rejections.)
       example: insufficient_margin
   responses:
     Error400Response:

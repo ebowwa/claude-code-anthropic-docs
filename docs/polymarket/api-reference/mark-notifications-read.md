@@ -1,25 +1,25 @@
 <!--
-Source: https://docs.polymarket.com/api-reference/get-pnl.md
-Downloaded: 2026-07-31T21:03:55.541Z
+Source: https://docs.polymarket.com/api-reference/mark-notifications-read.md
+Downloaded: 2026-07-31T21:03:55.543Z
 -->
 
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get PnL
+# Mark Notifications Read
 
-> Get PnL history for the authenticated account.
-If no end time is provided, the current time will be used.
-Maximum of 1000 entries returned per request.
+> Mark notifications as read. Send a list of notification ids, or a before
+cursor to mark everything up to and including that point. You can only
+mark your own notifications.
 
 
-<Badge color="gray" size="md">Request Weight: **10**</Badge>
+<Badge color="gray" size="md">Request Weight: **2**</Badge>
 
 
 ## OpenAPI
 
-````yaml /api-spec/perps-openapi.json get /v1/account/pnl
+````yaml /api-spec/perps-openapi.json post /v1/account/notifications/read
 openapi: 3.0.3
 info:
   title: Polymarket Perps HTTP API
@@ -33,37 +33,39 @@ servers:
     description: Production Perps HTTP API
 security: []
 paths:
-  /v1/account/pnl:
-    get:
-      summary: Get PnL
+  /v1/account/notifications/read:
+    post:
+      summary: Mark Notifications Read
       description: |
-        Get PnL history for the authenticated account.
-        If no end time is provided, the current time will be used.
-        Maximum of 1000 entries returned per request.
-      operationId: getPnlHistory
-      parameters:
-        - name: interval
-          in: query
-          required: true
-          schema:
-            $ref: '#/components/schemas/pnl_interval'
-        - name: start_timestamp
-          in: query
-          required: true
-          schema:
-            $ref: '#/components/schemas/start_timestamp'
-        - name: end_timestamp
-          in: query
-          required: false
-          schema:
-            $ref: '#/components/schemas/end_timestamp'
+        Mark notifications as read. Send a list of notification ids, or a before
+        cursor to mark everything up to and including that point. You can only
+        mark your own notifications.
+      operationId: markAccountNotificationsRead
+      requestBody:
+        required: true
+        description: The notifications to mark read.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NotificationsReadRequest'
+            examples:
+              byIds:
+                summary: Mark specific ids read
+                value:
+                  ids:
+                    - 0a5d8f1e-3b2c-5e4a-9f8b-1c2d3e4f5a6b
+              beforeCursor:
+                summary: Mark everything up to a cursor read
+                value:
+                  before: >-
+                    eyJ0cyI6MTc2NzIyNTYwMDAwMCwiaWQiOiIwYTVkOGYxZS0zYjJjLTVlNGEtOWY4Yi0xYzJkM2U0ZjVhNmIifQ
       responses:
         '200':
-          description: PnL history response.
+          description: Read markers accepted.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PnlHistory'
+                $ref: '#/components/schemas/GenericAccepted'
         '400':
           $ref: '#/components/responses/Error400Response'
         '401':
@@ -77,44 +79,44 @@ paths:
           polymarket_secret: []
 components:
   schemas:
-    pnl_interval:
-      type: string
-      description: PnL interval
-      enum:
-        - 1h
-        - 4h
-        - 1d
-        - 1w
-    start_timestamp:
-      type: integer
-      description: Start timestamp in milliseconds
-      example: 1767225600000
-    end_timestamp:
-      type: integer
-      description: End timestamp in milliseconds
-      example: 1767229200000
-    PnlHistory:
+    NotificationsReadRequest:
+      oneOf:
+        - type: object
+          required:
+            - ids
+          additionalProperties: false
+          properties:
+            ids:
+              type: array
+              description: Notification ids to mark read.
+              items:
+                $ref: '#/components/schemas/notif_id'
+        - type: object
+          required:
+            - before
+          additionalProperties: false
+          properties:
+            before:
+              type: string
+              description: >-
+                Pagination cursor. Marks every notification at or before this
+                point as read.
+    GenericAccepted:
       type: object
       required:
-        - data
-        - more
+        - status
       properties:
-        data:
-          type: array
-          description: |
-            - `1767225600000` - Timestamp
-            - `"100.50"` - PnL
-          items:
-            type: array
-            example:
-              - 1767225600000
-              - '100.50'
-          maxItems: 1000
-        more:
-          $ref: '#/components/schemas/more'
-    more:
-      type: boolean
-      description: More data available
+        status:
+          type: string
+          enum:
+            - ok
+    notif_id:
+      type: string
+      description: >-
+        Stable notification id. The same notification always has the same id on
+        the WebSocket feed and in the notifications history, so you can safely
+        deduplicate across the two.
+      example: 0a5d8f1e-3b2c-5e4a-9f8b-1c2d3e4f5a6b
     Error400:
       title: Error400
       type: object

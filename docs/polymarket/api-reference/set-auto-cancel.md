@@ -1,26 +1,27 @@
+<!--
+Source: https://docs.polymarket.com/api-reference/set-auto-cancel.md
+Downloaded: 2026-07-31T21:03:55.549Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
 # Set Auto-Cancel
 
-> Set a dead man switch that will cancel all open orders at the specified time.
-Time must be at least 5 seconds in the future, or `0` to clear an active
-schedule without triggering it. Posting a new auto-cancel replaces the
-previous one.
+> Set a dead man's switch that cancels all your open orders at the chosen
+time. The time must be at least 5 seconds in the future. Send 0 to clear
+an active schedule without triggering it; posting a new time replaces the
+current one.
 
-The switch is one-shot: once the deadline elapses and your open orders are
-cancelled, the schedule clears automatically. Orders you place after the
-fire are not affected by the expired deadline — re-arm to extend
-protection.
+The switch fires once, then clears itself. It does not cover orders you
+place after it fires, so re-arm it if you still need protection.
 
-Each account may trigger auto-cancel at most 10 times per UTC day. Once
-that limit is reached, further attempts to arm a schedule are rejected with
-`auto_cancel_daily_limit_reached` until the next UTC day; clearing an
-existing schedule (`time: 0`) is always allowed.
-
-Use `GET /v1/account/auto-cancel` to check the current deadline, today's
-trigger count, and when the daily counter resets.
+An account can trigger auto-cancel up to 1000 times per UTC day. After
+that, the API rejects new schedules with the error
+`auto_cancel_daily_limit_reached` until the next UTC day. Clearing a
+schedule is always allowed. To check the active deadline and today's
+trigger count, call [Get Auto-Cancel Status](/api-reference/get-auto-cancel-status).
 
 Requires proxy signature, see [proxy signing](/http/signing#2-proxy-signing).
 
@@ -48,39 +49,31 @@ paths:
     patch:
       summary: Set Auto-Cancel
       description: >
-        Set a dead man switch that will cancel all open orders at the specified
-        time.
+        Set a dead man's switch that cancels all your open orders at the chosen
 
-        Time must be at least 5 seconds in the future, or `0` to clear an active
+        time. The time must be at least 5 seconds in the future. Send 0 to clear
 
-        schedule without triggering it. Posting a new auto-cancel replaces the
+        an active schedule without triggering it; posting a new time replaces
+        the
 
-        previous one.
-
-
-        The switch is one-shot: once the deadline elapses and your open orders
-        are
-
-        cancelled, the schedule clears automatically. Orders you place after the
-
-        fire are not affected by the expired deadline — re-arm to extend
-
-        protection.
+        current one.
 
 
-        Each account may trigger auto-cancel at most 10 times per UTC day. Once
+        The switch fires once, then clears itself. It does not cover orders you
 
-        that limit is reached, further attempts to arm a schedule are rejected
-        with
-
-        `auto_cancel_daily_limit_reached` until the next UTC day; clearing an
-
-        existing schedule (`time: 0`) is always allowed.
+        place after it fires, so re-arm it if you still need protection.
 
 
-        Use `GET /v1/account/auto-cancel` to check the current deadline, today's
+        An account can trigger auto-cancel up to 1000 times per UTC day. After
 
-        trigger count, and when the daily counter resets.
+        that, the API rejects new schedules with the error
+
+        `auto_cancel_daily_limit_reached` until the next UTC day. Clearing a
+
+        schedule is always allowed. To check the active deadline and today's
+
+        trigger count, call [Get Auto-Cancel
+        Status](/api-reference/get-auto-cancel-status).
 
 
         Requires proxy signature, see [proxy
@@ -145,11 +138,9 @@ components:
               $ref: '#/components/schemas/OpAutoCancel'
         - $ref: '#/components/schemas/BaseOp'
     AutoCancelResponse:
-      description: >
-        The effective auto-cancel schedule after the update. `deadline` echoes
-        the
-
-        armed Unix-ms time, or `0` when the schedule was cleared (`time: 0`).
+      description: |
+        The auto-cancel schedule now in effect. The deadline field echoes the
+        armed time in Unix milliseconds, or 0 if you cleared the schedule.
       type: object
       required:
         - status
@@ -193,10 +184,13 @@ components:
           $ref: '#/components/schemas/ts'
     auto_cancel_deadline:
       type: integer
-      description: |
-        Unix-ms deadline for the per-account auto-cancel dead-man-switch.
-        Zero means no schedule is armed. When the deadline elapses, every
-        open order on the account is cancelled and the schedule clears.
+      description: >
+        Deadline of the armed auto-cancel schedule, in Unix milliseconds. Zero
+
+        means no schedule is armed. When the deadline passes, the exchange
+        cancels
+
+        every open order on the account and the schedule clears.
       example: 1767000045000
     Error400:
       title: Error400
@@ -288,11 +282,11 @@ components:
         (`401`/`404`/`429`/`500`) this is a stable, machine-readable snake_case
         identifier that is part of the API contract and safe to branch on, e.g.
         `insufficient_margin`, `insufficient_balance`, `order_not_found`,
-        `reduce_only_invalid`, `unauthorized`, `not_found`. For `400` it is a
-        human-readable validation detail whose wording may change. See the Error
-        handling guide for the domain identifiers. (Post-only / Fill-or-Kill
-        outcomes are order statuses such as `post_only_rejected`, not
-        rejections.)
+        `reduce_only_invalid`, `price_outside_bounds`, `unauthorized`,
+        `not_found`. For `400` it is a human-readable validation detail whose
+        wording may change. See the Error handling guide for the domain
+        identifiers. (Post-only / Fill-or-Kill outcomes are order statuses such
+        as `post_only_rejected`, not rejections.)
       example: insufficient_margin
   responses:
     Error400Response:

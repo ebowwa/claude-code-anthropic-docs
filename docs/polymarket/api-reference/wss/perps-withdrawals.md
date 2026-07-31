@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/api-reference/wss/perps-withdrawals.md
+Downloaded: 2026-07-31T21:03:55.556Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -70,7 +75,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-643>
+              x-parser-schema-id: <anonymous-schema-683>
             req:
               type: string
               description: Request type
@@ -78,7 +83,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-644>
+              x-parser-schema-id: <anonymous-schema-684>
             chs:
               type: array
               description: 'Withdrawals private channel: "withdrawals"'
@@ -86,14 +91,14 @@ operations:
                 type: string
                 enum:
                   - withdrawals
-                x-parser-schema-id: <anonymous-schema-646>
+                x-parser-schema-id: <anonymous-schema-686>
               example:
                 - withdrawals
-              x-parser-schema-id: <anonymous-schema-645>
+              x-parser-schema-id: <anonymous-schema-685>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-642>
+          x-parser-schema-id: <anonymous-schema-682>
         title: Subscribe
         description: Subscribe to private withdrawal updates (requires prior auth)
         example: |-
@@ -157,12 +162,15 @@ operations:
                           the API contract and safe to branch on, e.g.
                           `insufficient_margin`, `insufficient_balance`,
                           `order_not_found`, `reduce_only_invalid`,
-                          `unauthorized`, `not_found`. For `400` it is a
-                          human-readable validation detail whose wording may
-                          change. See the Error handling guide for the domain
-                          identifiers. (Post-only / Fill-or-Kill outcomes are
-                          order statuses such as `post_only_rejected`, not
-                          rejections.)
+                          `price_outside_bounds`, `position_not_found`,
+                          `invalid_margin_mode`, `invalid_margin_amount`,
+                          `margin_below_required_initial`,
+                          `account_liquidating`, `unauthorized`, `not_found`.
+                          For `400` it is a human-readable validation detail
+                          whose wording may change. See the Error handling guide
+                          for the domain identifiers. (Post-only / Fill-or-Kill
+                          outcomes are order statuses such as
+                          `post_only_rejected`, not rejections.)
                         required: true
         headers: []
         jsonPayloadSchema:
@@ -172,7 +180,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-648>
+              x-parser-schema-id: <anonymous-schema-688>
             data:
               title: Subscribe Response
               type: array
@@ -186,8 +194,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-652>
-                    x-parser-schema-id: <anonymous-schema-651>
+                        x-parser-schema-id: <anonymous-schema-692>
+                    x-parser-schema-id: <anonymous-schema-691>
                   - type: object
                     required:
                       - status
@@ -197,7 +205,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-654>
+                        x-parser-schema-id: <anonymous-schema-694>
                       error:
                         type: string
                         description: >-
@@ -207,20 +215,23 @@ operations:
                           the API contract and safe to branch on, e.g.
                           `insufficient_margin`, `insufficient_balance`,
                           `order_not_found`, `reduce_only_invalid`,
-                          `unauthorized`, `not_found`. For `400` it is a
-                          human-readable validation detail whose wording may
-                          change. See the Error handling guide for the domain
-                          identifiers. (Post-only / Fill-or-Kill outcomes are
-                          order statuses such as `post_only_rejected`, not
-                          rejections.)
+                          `price_outside_bounds`, `position_not_found`,
+                          `invalid_margin_mode`, `invalid_margin_amount`,
+                          `margin_below_required_initial`,
+                          `account_liquidating`, `unauthorized`, `not_found`.
+                          For `400` it is a human-readable validation detail
+                          whose wording may change. See the Error handling guide
+                          for the domain identifiers. (Post-only / Fill-or-Kill
+                          outcomes are order statuses such as
+                          `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-655>
-                    x-parser-schema-id: <anonymous-schema-653>
-                x-parser-schema-id: <anonymous-schema-650>
-              x-parser-schema-id: <anonymous-schema-649>
+                        x-parser-schema-id: <anonymous-schema-695>
+                    x-parser-schema-id: <anonymous-schema-693>
+                x-parser-schema-id: <anonymous-schema-690>
+              x-parser-schema-id: <anonymous-schema-689>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-647>
+          x-parser-schema-id: <anonymous-schema-687>
         title: Subscribe Response
         description: Response to withdrawals subscribe request
         example: |-
@@ -277,7 +288,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-657>
+              x-parser-schema-id: <anonymous-schema-697>
             req:
               type: string
               description: Request type
@@ -285,7 +296,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-658>
+              x-parser-schema-id: <anonymous-schema-698>
             chs:
               type: array
               description: 'Withdrawals private channel: "withdrawals"'
@@ -293,14 +304,14 @@ operations:
                 type: string
                 enum:
                   - withdrawals
-                x-parser-schema-id: <anonymous-schema-660>
+                x-parser-schema-id: <anonymous-schema-700>
               example:
                 - withdrawals
-              x-parser-schema-id: <anonymous-schema-659>
+              x-parser-schema-id: <anonymous-schema-699>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-656>
+          x-parser-schema-id: <anonymous-schema-696>
         title: Unsubscribe
         description: Unsubscribe from private withdrawal updates
         example: |-
@@ -362,12 +373,15 @@ operations:
                           the API contract and safe to branch on, e.g.
                           `insufficient_margin`, `insufficient_balance`,
                           `order_not_found`, `reduce_only_invalid`,
-                          `unauthorized`, `not_found`. For `400` it is a
-                          human-readable validation detail whose wording may
-                          change. See the Error handling guide for the domain
-                          identifiers. (Post-only / Fill-or-Kill outcomes are
-                          order statuses such as `post_only_rejected`, not
-                          rejections.)
+                          `price_outside_bounds`, `position_not_found`,
+                          `invalid_margin_mode`, `invalid_margin_amount`,
+                          `margin_below_required_initial`,
+                          `account_liquidating`, `unauthorized`, `not_found`.
+                          For `400` it is a human-readable validation detail
+                          whose wording may change. See the Error handling guide
+                          for the domain identifiers. (Post-only / Fill-or-Kill
+                          outcomes are order statuses such as
+                          `post_only_rejected`, not rejections.)
                         required: true
         headers: []
         jsonPayloadSchema:
@@ -377,7 +391,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-662>
+              x-parser-schema-id: <anonymous-schema-702>
             data:
               title: Subscribe Response
               type: array
@@ -391,8 +405,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-666>
-                    x-parser-schema-id: <anonymous-schema-665>
+                        x-parser-schema-id: <anonymous-schema-706>
+                    x-parser-schema-id: <anonymous-schema-705>
                   - type: object
                     required:
                       - status
@@ -402,7 +416,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-668>
+                        x-parser-schema-id: <anonymous-schema-708>
                       error:
                         type: string
                         description: >-
@@ -412,20 +426,23 @@ operations:
                           the API contract and safe to branch on, e.g.
                           `insufficient_margin`, `insufficient_balance`,
                           `order_not_found`, `reduce_only_invalid`,
-                          `unauthorized`, `not_found`. For `400` it is a
-                          human-readable validation detail whose wording may
-                          change. See the Error handling guide for the domain
-                          identifiers. (Post-only / Fill-or-Kill outcomes are
-                          order statuses such as `post_only_rejected`, not
-                          rejections.)
+                          `price_outside_bounds`, `position_not_found`,
+                          `invalid_margin_mode`, `invalid_margin_amount`,
+                          `margin_below_required_initial`,
+                          `account_liquidating`, `unauthorized`, `not_found`.
+                          For `400` it is a human-readable validation detail
+                          whose wording may change. See the Error handling guide
+                          for the domain identifiers. (Post-only / Fill-or-Kill
+                          outcomes are order statuses such as
+                          `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-669>
-                    x-parser-schema-id: <anonymous-schema-667>
-                x-parser-schema-id: <anonymous-schema-664>
-              x-parser-schema-id: <anonymous-schema-663>
+                        x-parser-schema-id: <anonymous-schema-709>
+                    x-parser-schema-id: <anonymous-schema-707>
+                x-parser-schema-id: <anonymous-schema-704>
+              x-parser-schema-id: <anonymous-schema-703>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-661>
+          x-parser-schema-id: <anonymous-schema-701>
         title: Unsubscribe Response
         description: Response to withdrawals unsubscribe request
         example: |-
@@ -525,7 +542,7 @@ operations:
                 "tickers::all"). Private channels use plain names (e.g. "fills",
                 "orders").
               example: trades::1
-              x-parser-schema-id: <anonymous-schema-671>
+              x-parser-schema-id: <anonymous-schema-711>
             ts:
               type: integer
               description: >-
@@ -533,12 +550,12 @@ operations:
                 seconds for withdrawals (must match the on-chain EIP-712 struct
                 verified against block.timestamp).
               example: 1767225600000
-              x-parser-schema-id: <anonymous-schema-672>
+              x-parser-schema-id: <anonymous-schema-712>
             sq:
               type: integer
               description: Sequence number
               example: 1234567890
-              x-parser-schema-id: <anonymous-schema-673>
+              x-parser-schema-id: <anonymous-schema-713>
             data:
               type: object
               description: Array of withdrawal objects
@@ -546,12 +563,12 @@ operations:
                 withdraw_id:
                   type: integer
                   description: Withdraw ID
-                  x-parser-schema-id: <anonymous-schema-675>
+                  x-parser-schema-id: <anonymous-schema-715>
                 asset:
                   type: string
                   description: Asset name
                   example: USDC
-                  x-parser-schema-id: <anonymous-schema-676>
+                  x-parser-schema-id: <anonymous-schema-716>
                 amount:
                   type: string
                   description: >-
@@ -559,17 +576,17 @@ operations:
                     matches the uint256 amount in the EIP-712 signature (e.g.
                     "100000000" for 100 USDC with 6 decimals).
                   example: '100000000'
-                  x-parser-schema-id: <anonymous-schema-677>
+                  x-parser-schema-id: <anonymous-schema-717>
                 fee:
                   type: string
                   description: Withdrawal transaction fee in decimalized asset units
                   example: '5.00'
-                  x-parser-schema-id: <anonymous-schema-678>
+                  x-parser-schema-id: <anonymous-schema-718>
                 to:
                   type: string
                   description: Destination address in hex format
                   example: '0x1234567890abcdef1234567890abcdef12345678'
-                  x-parser-schema-id: <anonymous-schema-679>
+                  x-parser-schema-id: <anonymous-schema-719>
                 status:
                   type: string
                   description: Withdrawal status
@@ -578,14 +595,14 @@ operations:
                     - confirmed
                     - removed
                     - failed
-                  x-parser-schema-id: <anonymous-schema-680>
+                  x-parser-schema-id: <anonymous-schema-720>
                 hash:
                   type: string
                   description: On-chain transaction hash, "0x" if not yet mined
                   default: 0x
                   example: >-
                     0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
-                  x-parser-schema-id: <anonymous-schema-681>
+                  x-parser-schema-id: <anonymous-schema-721>
               required:
                 - withdraw_id
                 - asset
@@ -594,13 +611,13 @@ operations:
                 - to
                 - status
                 - hash
-              x-parser-schema-id: <anonymous-schema-674>
+              x-parser-schema-id: <anonymous-schema-714>
           required:
             - ch
             - ts
             - sq
             - data
-          x-parser-schema-id: <anonymous-schema-670>
+          x-parser-schema-id: <anonymous-schema-710>
         title: Update
         description: Withdrawal status updates for authenticated users
         example: |-

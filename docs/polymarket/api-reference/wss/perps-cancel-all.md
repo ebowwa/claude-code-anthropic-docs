@@ -1,28 +1,29 @@
 <!--
-Source: https://docs.polymarket.com/api-reference/wss/perps-update-leverage.md
-Downloaded: 2026-07-31T21:03:55.556Z
+Source: https://docs.polymarket.com/api-reference/wss/perps-cancel-all.md
+Downloaded: 2026-07-31T21:03:55.553Z
 -->
 
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Update Leverage
+# Cancel All Orders
 
-> Perps WebSocket leverage updates.
+> Perps WebSocket cancellation of all open orders.
 
 
 
 ## AsyncAPI
 
-````yaml asyncapi-perps.json updateLeverage
-id: updateLeverage
-title: Update Leverage
+````yaml asyncapi-perps.json cancelAll
+id: cancelAll
+title: Cancel All Orders
 description: |
-  Set leverage and margin type for an instrument.
+  Cancel all open orders for the authenticated account, optionally scoped to
+  one instrument.
   Requires proxy signature, see [proxy signing](/http/signing#2-proxy-signing).
 
-  <Badge color="gray" size="md">Action Weight: **1**</Badge>
+  <Badge color="gray" size="md">Action Weight: **0**</Badge>
 servers:
   - id: production
     protocol: wss
@@ -34,17 +35,17 @@ parameters: []
 bindings: []
 operations:
   - &ref_1
-    id: UpdateLeverageSend
-    title: Update leverage send
-    description: Update leverage
+    id: CancelAllSend
+    title: Cancel all send
+    description: Cancel all open orders
     type: receive
     messages:
       - &ref_3
         id: Request
         contentType: application/json
         payload:
-          - name: Update Leverage Request
-            description: Client submits a signed leverage update request
+          - name: Cancel All Orders Request
+            description: Client submits a signed cancel-all request
             type: object
             properties:
               - name: id
@@ -66,24 +67,24 @@ operations:
                   - name: type
                     type: string
                     enumValues:
-                      - updateLeverage
+                      - cancelAll
                     required: true
                   - name: args
                     type: object
+                    description: >
+                      Optional cancel scope. When `iid` is provided, only open
+                      orders for
+
+                      that instrument are canceled. When omitted, all open
+                      orders for the
+
+                      signing account are canceled.
                     required: true
                     properties:
                       - name: iid
                         type: integer
                         description: Instrument ID
-                        required: true
-                      - name: lev
-                        type: integer
-                        description: Leverage
-                        required: true
-                      - name: cross
-                        type: boolean
-                        description: Whether to use cross margin mode
-                        required: true
+                        required: false
               - name: sig
                 type: string
                 description: Signature in hex format
@@ -99,6 +100,14 @@ operations:
                   seconds for withdrawals (must match the on-chain EIP-712
                   struct verified against block.timestamp).
                 required: true
+              - name: exp
+                type: integer
+                description: >-
+                  Command expiry timestamp in Unix milliseconds. If provided, it
+                  must be in the future and within the gateway's default command
+                  timeout. It can shorten request validity but cannot extend it.
+                  This is not an order auto-cancel time.
+                required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -107,7 +116,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-133>
+              x-parser-schema-id: <anonymous-schema-96>
             req:
               type: string
               description: Request type
@@ -115,7 +124,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-134>
+              x-parser-schema-id: <anonymous-schema-97>
             op:
               type: object
               required:
@@ -125,41 +134,36 @@ operations:
                 type:
                   type: string
                   enum:
-                    - updateLeverage
-                  x-parser-schema-id: <anonymous-schema-136>
+                    - cancelAll
+                  x-parser-schema-id: <anonymous-schema-99>
                 args:
                   type: object
-                  required:
-                    - iid
-                    - lev
-                    - cross
+                  description: >
+                    Optional cancel scope. When `iid` is provided, only open
+                    orders for
+
+                    that instrument are canceled. When omitted, all open orders
+                    for the
+
+                    signing account are canceled.
                   properties:
                     iid:
                       type: integer
                       description: Instrument ID
                       example: 1
-                      x-parser-schema-id: <anonymous-schema-138>
-                    lev:
-                      type: integer
-                      description: Leverage
-                      example: 10
-                      x-parser-schema-id: <anonymous-schema-139>
-                    cross:
-                      type: boolean
-                      description: Whether to use cross margin mode
-                      x-parser-schema-id: <anonymous-schema-140>
-                  x-parser-schema-id: <anonymous-schema-137>
-              x-parser-schema-id: <anonymous-schema-135>
+                      x-parser-schema-id: <anonymous-schema-101>
+                  x-parser-schema-id: <anonymous-schema-100>
+              x-parser-schema-id: <anonymous-schema-98>
             sig:
               type: string
               description: Signature in hex format
               example: 0x1234567890...
-              x-parser-schema-id: <anonymous-schema-141>
+              x-parser-schema-id: <anonymous-schema-102>
             salt:
               type: integer
               description: Salt
               example: 1234567890
-              x-parser-schema-id: <anonymous-schema-142>
+              x-parser-schema-id: <anonymous-schema-103>
             ts:
               type: integer
               description: >-
@@ -167,29 +171,38 @@ operations:
                 seconds for withdrawals (must match the on-chain EIP-712 struct
                 verified against block.timestamp).
               example: 1767225600000
-              x-parser-schema-id: <anonymous-schema-143>
+              x-parser-schema-id: <anonymous-schema-104>
+            exp:
+              type: integer
+              description: >-
+                Command expiry timestamp in Unix milliseconds. If provided, it
+                must be in the future and within the gateway's default command
+                timeout. It can shorten request validity but cannot extend it.
+                This is not an order auto-cancel time.
+              example: 1767225600000
+              x-parser-schema-id: <anonymous-schema-105>
           required:
             - req
             - op
             - sig
             - salt
             - ts
-          x-parser-schema-id: <anonymous-schema-132>
-        title: Update Leverage Request
-        description: Client submits a signed leverage update request
+          x-parser-schema-id: <anonymous-schema-95>
+        title: Cancel All Orders Request
+        description: Client submits a signed cancel-all request
         example: |-
           {
             "req": "post",
             "op": {
-              "type": "updateLeverage",
+              "type": "cancelAll",
               "args": {
-                "iid": 1,
-                "lev": 10
+                "iid": 1
               }
             },
             "sig": "0x1234567890...",
             "salt": 1234567890,
-            "ts": 1767225600000
+            "ts": 1767225600000,
+            "exp": 1767225600000
           }
         bindings: []
         extensions:
@@ -198,19 +211,19 @@ operations:
     bindings: []
     extensions: &ref_0
       - id: x-parser-unique-object-id
-        value: updateLeverage
+        value: cancelAll
   - &ref_2
-    id: UpdateLeverageReceive
-    title: Update leverage receive
-    description: Update leverage response
+    id: CancelAllReceive
+    title: Cancel all receive
+    description: Cancel all orders response
     type: send
     messages:
       - &ref_4
         id: Response
         contentType: application/json
         payload:
-          - name: Update Leverage Response
-            description: Server responds with leverage update result
+          - name: Cancel All Orders Response
+            description: Server responds with the cancel-all result
             type: object
             properties:
               - name: id
@@ -257,7 +270,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-145>
+              x-parser-schema-id: <anonymous-schema-107>
             data:
               oneOf:
                 - type: object
@@ -268,8 +281,8 @@ operations:
                       type: string
                       enum:
                         - ok
-                      x-parser-schema-id: <anonymous-schema-148>
-                  x-parser-schema-id: <anonymous-schema-147>
+                      x-parser-schema-id: <anonymous-schema-110>
+                  x-parser-schema-id: <anonymous-schema-109>
                 - type: object
                   required:
                     - status
@@ -279,7 +292,7 @@ operations:
                       type: string
                       enum:
                         - err
-                      x-parser-schema-id: <anonymous-schema-150>
+                      x-parser-schema-id: <anonymous-schema-112>
                     error:
                       type: string
                       description: >-
@@ -299,17 +312,17 @@ operations:
                         order statuses such as `post_only_rejected`, not
                         rejections.)
                       example: insufficient_margin
-                      x-parser-schema-id: <anonymous-schema-151>
-                  x-parser-schema-id: <anonymous-schema-149>
-              x-parser-schema-id: <anonymous-schema-146>
+                      x-parser-schema-id: <anonymous-schema-113>
+                  x-parser-schema-id: <anonymous-schema-111>
+              x-parser-schema-id: <anonymous-schema-108>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-144>
-        title: Update Leverage Response
-        description: Server responds with leverage update result
+          x-parser-schema-id: <anonymous-schema-106>
+        title: Cancel All Orders Response
+        description: Server responds with the cancel-all result
         example: |-
           {
-            "id": 6,
+            "id": 5,
             "data": {
               "status": "ok"
             }
@@ -330,7 +343,7 @@ receiveMessages:
   - *ref_4
 extensions:
   - id: x-parser-unique-object-id
-    value: updateLeverage
+    value: cancelAll
 securitySchemes: []
 
 ````

@@ -1,5 +1,5 @@
 <!--
-Source: https://docs.polymarket.com/api-reference/get-pnl.md
+Source: https://docs.polymarket.com/api-reference/get-notifications.md
 Downloaded: 2026-07-31T21:03:55.541Z
 -->
 
@@ -7,11 +7,22 @@ Downloaded: 2026-07-31T21:03:55.541Z
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get PnL
+# Get Notifications
 
-> Get PnL history for the authenticated account.
-If no end time is provided, the current time will be used.
-Maximum of 1000 entries returned per request.
+> Get the authenticated account's notifications, newest first.
+
+Results come in pages. Pass the cursor returned by the previous page to
+fetch the next, older one. If your WebSocket connection dropped or you
+received a resync frame, pass since_seq to backfill anything you may have
+missed; the same notification can show up again at the edges of the
+window, so deduplicate by id. While paging through a backfill, keep
+sending the same since_seq with each cursor so every page stays inside
+the same window.
+
+The response also includes your unread count and durable_source_seq, which
+tells you how far the notification store has caught up. If a backfill has
+not yet reached your target sequence, wait briefly and retry with the same
+since_seq.
 
 
 <Badge color="gray" size="md">Request Weight: **10**</Badge>
@@ -19,7 +30,7 @@ Maximum of 1000 entries returned per request.
 
 ## OpenAPI
 
-````yaml /api-spec/perps-openapi.json get /v1/account/pnl
+````yaml /api-spec/perps-openapi.json get /v1/account/notifications
 openapi: 3.0.3
 info:
   title: Polymarket Perps HTTP API
@@ -33,37 +44,63 @@ servers:
     description: Production Perps HTTP API
 security: []
 paths:
-  /v1/account/pnl:
+  /v1/account/notifications:
     get:
-      summary: Get PnL
-      description: |
-        Get PnL history for the authenticated account.
-        If no end time is provided, the current time will be used.
-        Maximum of 1000 entries returned per request.
-      operationId: getPnlHistory
+      summary: Get Notifications
+      description: >
+        Get the authenticated account's notifications, newest first.
+
+
+        Results come in pages. Pass the cursor returned by the previous page to
+
+        fetch the next, older one. If your WebSocket connection dropped or you
+
+        received a resync frame, pass since_seq to backfill anything you may
+        have
+
+        missed; the same notification can show up again at the edges of the
+
+        window, so deduplicate by id. While paging through a backfill, keep
+
+        sending the same since_seq with each cursor so every page stays inside
+
+        the same window.
+
+
+        The response also includes your unread count and durable_source_seq,
+        which
+
+        tells you how far the notification store has caught up. If a backfill
+        has
+
+        not yet reached your target sequence, wait briefly and retry with the
+        same
+
+        since_seq.
+      operationId: getAccountNotifications
       parameters:
-        - name: interval
-          in: query
-          required: true
-          schema:
-            $ref: '#/components/schemas/pnl_interval'
-        - name: start_timestamp
-          in: query
-          required: true
-          schema:
-            $ref: '#/components/schemas/start_timestamp'
-        - name: end_timestamp
+        - name: cursor
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/end_timestamp'
+            $ref: '#/components/schemas/notif_cursor'
+        - name: since_seq
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/since_seq'
+        - name: limit
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/limit'
       responses:
         '200':
-          description: PnL history response.
+          description: Notifications page.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PnlHistory'
+                $ref: '#/components/schemas/NotificationsResponse'
         '400':
           $ref: '#/components/responses/Error400Response'
         '401':
@@ -77,44 +114,78 @@ paths:
           polymarket_secret: []
 components:
   schemas:
-    pnl_interval:
+    notif_cursor:
       type: string
-      description: PnL interval
-      enum:
-        - 1h
-        - 4h
-        - 1d
-        - 1w
-    start_timestamp:
+      nullable: true
+      description: >-
+        Opaque pagination cursor. Pass the next_cursor value from the previous
+        page to fetch the next, older page. Null when there are no more pages.
+      example: >-
+        eyJ0cyI6MTc2NzIyNTYwMDAwMCwiaWQiOiIwYTVkOGYxZS0zYjJjLTVlNGEtOWY4Yi0xYzJkM2U0ZjVhNmIifQ
+    since_seq:
       type: integer
-      description: Start timestamp in milliseconds
-      example: 1767225600000
-    end_timestamp:
+      description: >-
+        Backfill anchor for gap recovery. Pass the sequence number (sq) of the
+        last notifications data frame you processed before the gap, never the sq
+        of a resync frame. The bound is inclusive, so the response repeats the
+        boundary event in full; deduplicate by notification id.
+      example: 1043
+    limit:
       type: integer
-      description: End timestamp in milliseconds
-      example: 1767229200000
-    PnlHistory:
+      description: Maximum number of entries to return
+      example: 100
+    NotificationsResponse:
       type: object
       required:
-        - data
-        - more
+        - items
+        - unread
+        - durable_source_seq
+        - has_more
+        - next_cursor
       properties:
-        data:
+        items:
           type: array
-          description: |
-            - `1767225600000` - Timestamp
-            - `"100.50"` - PnL
           items:
-            type: array
-            example:
-              - 1767225600000
-              - '100.50'
-          maxItems: 1000
-        more:
-          $ref: '#/components/schemas/more'
-    more:
-      type: boolean
-      description: More data available
+            $ref: '#/components/schemas/NotificationItem'
+        unread:
+          $ref: '#/components/schemas/unread'
+        durable_source_seq:
+          $ref: '#/components/schemas/durable_source_seq'
+        has_more:
+          type: boolean
+          description: Whether older notifications exist beyond this page.
+        next_cursor:
+          $ref: '#/components/schemas/notif_cursor'
+    NotificationItem:
+      type: object
+      required:
+        - notification
+        - read_at
+        - ts
+      properties:
+        notification:
+          type: object
+          description: >-
+            The notification payload. Fields vary by notification type; see the
+            [Notifications channel](/api-reference/wss/perps-notifications) for
+            the per-type shapes.
+        read_at:
+          $ref: '#/components/schemas/read_at'
+        ts:
+          $ref: '#/components/schemas/ts'
+    unread:
+      type: integer
+      description: >-
+        Count of the authenticated owner's unread notifications within the
+        retention window.
+      example: 3
+    durable_source_seq:
+      type: integer
+      description: >-
+        Highest notification sequence the store has persisted for your account.
+        If it is still below the sequence you are catching up to, the store is
+        lagging; retry the backfill until it catches up.
+      example: 1043
     Error400:
       title: Error400
       type: object
@@ -167,6 +238,20 @@ components:
             - err
         error:
           $ref: '#/components/schemas/error'
+    read_at:
+      type: integer
+      nullable: true
+      description: >-
+        When the recipient marked this notification read, Unix milliseconds;
+        null if unread.
+      example: 1767225600000
+    ts:
+      type: integer
+      description: >-
+        Request timestamp. Unix milliseconds for most operations; Unix seconds
+        for withdrawals (must match the on-chain EIP-712 struct verified against
+        block.timestamp).
+      example: 1767225600000
     error:
       type: string
       description: >-

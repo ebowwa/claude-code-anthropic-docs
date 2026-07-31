@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/api-reference/get-account-rewards.md
+Downloaded: 2026-07-31T21:03:55.537Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -9,7 +14,7 @@ Reward periods run from 12:00 UTC to 12:00 UTC and are labeled by their UTC end 
 OI rewards pay 6% APR on the account's full daily average gross OI across all
 instruments when the combined daily average gross OI of its rewards entity is
 at least $1M. Accounts without an entity mapping qualify independently.
-The first reward period starts at 2026-05-08 12:00 UTC. If no date range is provided,
+The first reward period starts at 2026-07-06 12:00 UTC. If no date range is provided,
 the latest computed reward period is returned.
 
 
@@ -50,7 +55,7 @@ paths:
 
         at least $1M. Accounts without an entity mapping qualify independently.
 
-        The first reward period starts at 2026-05-08 12:00 UTC. If no date range
+        The first reward period starts at 2026-07-06 12:00 UTC. If no date range
         is provided,
 
         the latest computed reward period is returned.
@@ -237,11 +242,11 @@ components:
         (`401`/`404`/`429`/`500`) this is a stable, machine-readable snake_case
         identifier that is part of the API contract and safe to branch on, e.g.
         `insufficient_margin`, `insufficient_balance`, `order_not_found`,
-        `reduce_only_invalid`, `unauthorized`, `not_found`. For `400` it is a
-        human-readable validation detail whose wording may change. See the Error
-        handling guide for the domain identifiers. (Post-only / Fill-or-Kill
-        outcomes are order statuses such as `post_only_rejected`, not
-        rejections.)
+        `reduce_only_invalid`, `price_outside_bounds`, `unauthorized`,
+        `not_found`. For `400` it is a human-readable validation detail whose
+        wording may change. See the Error handling guide for the domain
+        identifiers. (Post-only / Fill-or-Kill outcomes are order statuses such
+        as `post_only_rejected`, not rejections.)
       example: insufficient_margin
     instrument_id:
       type: integer

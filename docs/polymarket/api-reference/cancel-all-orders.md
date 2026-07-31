@@ -1,25 +1,24 @@
 <!--
-Source: https://docs.polymarket.com/api-reference/get-pnl.md
-Downloaded: 2026-07-31T21:03:55.541Z
+Source: https://docs.polymarket.com/api-reference/cancel-all-orders.md
+Downloaded: 2026-07-31T21:03:55.533Z
 -->
 
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get PnL
+# Cancel All Orders
 
-> Get PnL history for the authenticated account.
-If no end time is provided, the current time will be used.
-Maximum of 1000 entries returned per request.
+> Cancel all open orders for the authenticated account on one instrument.
+Requires proxy signature, see [proxy signing](/http/signing#2-proxy-signing).
 
 
-<Badge color="gray" size="md">Request Weight: **10**</Badge>
+<Badge color="gray" size="md">Request Weight: **1**</Badge> <Badge color="gray" size="md">Action Weight: **0**</Badge>
 
 
 ## OpenAPI
 
-````yaml /api-spec/perps-openapi.json get /v1/account/pnl
+````yaml /api-spec/perps-openapi.json delete /v1/trade/orders/all
 openapi: 3.0.3
 info:
   title: Polymarket Perps HTTP API
@@ -33,103 +32,101 @@ servers:
     description: Production Perps HTTP API
 security: []
 paths:
-  /v1/account/pnl:
-    get:
-      summary: Get PnL
-      description: |
-        Get PnL history for the authenticated account.
-        If no end time is provided, the current time will be used.
-        Maximum of 1000 entries returned per request.
-      operationId: getPnlHistory
-      parameters:
-        - name: interval
-          in: query
-          required: true
-          schema:
-            $ref: '#/components/schemas/pnl_interval'
-        - name: start_timestamp
-          in: query
-          required: true
-          schema:
-            $ref: '#/components/schemas/start_timestamp'
-        - name: end_timestamp
-          in: query
-          required: false
-          schema:
-            $ref: '#/components/schemas/end_timestamp'
+  /v1/trade/orders/all:
+    delete:
+      summary: Cancel All Orders
+      description: >
+        Cancel all open orders for the authenticated account on one instrument.
+
+        Requires proxy signature, see [proxy
+        signing](/http/signing#2-proxy-signing).
+      operationId: cancelAllOrders
+      requestBody:
+        description: Cancel all request.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CancelAllRequest'
       responses:
         '200':
-          description: PnL history response.
+          description: Cancel all accepted response.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/PnlHistory'
+                $ref: '#/components/schemas/GenericAccepted'
         '400':
           $ref: '#/components/responses/Error400Response'
-        '401':
-          $ref: '#/components/responses/Error401Response'
         '429':
           $ref: '#/components/responses/Error429Response'
         '500':
           $ref: '#/components/responses/Error500Response'
-      security:
-        - polymarket_proxy: []
-          polymarket_secret: []
+      security: []
 components:
   schemas:
-    pnl_interval:
-      type: string
-      description: PnL interval
-      enum:
-        - 1h
-        - 4h
-        - 1d
-        - 1w
-    start_timestamp:
-      type: integer
-      description: Start timestamp in milliseconds
-      example: 1767225600000
-    end_timestamp:
-      type: integer
-      description: End timestamp in milliseconds
-      example: 1767229200000
-    PnlHistory:
-      type: object
-      required:
-        - data
-        - more
-      properties:
-        data:
-          type: array
-          description: |
-            - `1767225600000` - Timestamp
-            - `"100.50"` - PnL
-          items:
-            type: array
-            example:
-              - 1767225600000
-              - '100.50'
-          maxItems: 1000
-        more:
-          $ref: '#/components/schemas/more'
-    more:
-      type: boolean
-      description: More data available
-    Error400:
-      title: Error400
+    CancelAllRequest:
+      allOf:
+        - type: object
+          required:
+            - op
+          properties:
+            op:
+              $ref: '#/components/schemas/OpCancelAll'
+        - $ref: '#/components/schemas/BaseOp'
+        - type: object
+          properties:
+            exp:
+              $ref: '#/components/schemas/exp'
+    GenericAccepted:
       type: object
       required:
         - status
-        - error
       properties:
         status:
           type: string
           enum:
-            - err
-        error:
-          $ref: '#/components/schemas/error'
-    Error401:
-      title: Error401
+            - ok
+    OpCancelAll:
+      type: object
+      required:
+        - type
+        - args
+      properties:
+        type:
+          type: string
+          enum:
+            - cancelAll
+        args:
+          type: object
+          description: |
+            Optional cancel scope. When `iid` is provided, only open orders for
+            that instrument are canceled. When omitted, all open orders for the
+            signing account are canceled.
+          properties:
+            iid:
+              $ref: '#/components/schemas/iid'
+    BaseOp:
+      type: object
+      required:
+        - sig
+        - salt
+        - ts
+      properties:
+        sig:
+          $ref: '#/components/schemas/sig'
+        salt:
+          $ref: '#/components/schemas/salt'
+        ts:
+          $ref: '#/components/schemas/ts'
+    exp:
+      type: integer
+      description: >-
+        Command expiry timestamp in Unix milliseconds. If provided, it must be
+        in the future and within the gateway's default command timeout. It can
+        shorten request validity but cannot extend it. This is not an order
+        auto-cancel time.
+      example: 1767225600000
+    Error400:
+      title: Error400
       type: object
       required:
         - status
@@ -167,6 +164,25 @@ components:
             - err
         error:
           $ref: '#/components/schemas/error'
+    iid:
+      type: integer
+      description: Instrument ID
+      example: 1
+    sig:
+      type: string
+      description: Signature in hex format
+      example: 0x1234567890...
+    salt:
+      type: integer
+      description: Salt
+      example: 1234567890
+    ts:
+      type: integer
+      description: >-
+        Request timestamp. Unix milliseconds for most operations; Unix seconds
+        for withdrawals (must match the on-chain EIP-712 struct verified against
+        block.timestamp).
+      example: 1767225600000
     error:
       type: string
       description: >-
@@ -190,16 +206,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error400'
-    Error401Response:
-      description: >
-        Unauthorized — missing or invalid `POLYMARKET-PROXY` /
-        `POLYMARKET-SECRET`
-
-        credentials. `error` is `unauthorized`.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error401'
     Error429Response:
       description: >
         Too Many Requests. `error` distinguishes the limit that was hit:
@@ -238,16 +244,5 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error500'
-  securitySchemes:
-    polymarket_proxy:
-      type: apiKey
-      name: POLYMARKET-PROXY
-      in: header
-      description: Proxy address
-    polymarket_secret:
-      type: apiKey
-      name: POLYMARKET-SECRET
-      in: header
-      description: Correponding proxy secret
 
 ````

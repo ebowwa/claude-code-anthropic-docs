@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/api-reference/wss/perps-portfolio.md
+Downloaded: 2026-07-31T21:03:55.555Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -70,7 +75,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-550>
+              x-parser-schema-id: <anonymous-schema-589>
             req:
               type: string
               description: Request type
@@ -78,7 +83,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-551>
+              x-parser-schema-id: <anonymous-schema-590>
             chs:
               type: array
               description: 'Portfolio private channel: "portfolio"'
@@ -86,14 +91,14 @@ operations:
                 type: string
                 enum:
                   - portfolio
-                x-parser-schema-id: <anonymous-schema-553>
+                x-parser-schema-id: <anonymous-schema-592>
               example:
                 - portfolio
-              x-parser-schema-id: <anonymous-schema-552>
+              x-parser-schema-id: <anonymous-schema-591>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-549>
+          x-parser-schema-id: <anonymous-schema-588>
         title: Subscribe
         description: Subscribe to private portfolio updates (requires prior auth)
         example: |-
@@ -157,12 +162,15 @@ operations:
                           the API contract and safe to branch on, e.g.
                           `insufficient_margin`, `insufficient_balance`,
                           `order_not_found`, `reduce_only_invalid`,
-                          `unauthorized`, `not_found`. For `400` it is a
-                          human-readable validation detail whose wording may
-                          change. See the Error handling guide for the domain
-                          identifiers. (Post-only / Fill-or-Kill outcomes are
-                          order statuses such as `post_only_rejected`, not
-                          rejections.)
+                          `price_outside_bounds`, `position_not_found`,
+                          `invalid_margin_mode`, `invalid_margin_amount`,
+                          `margin_below_required_initial`,
+                          `account_liquidating`, `unauthorized`, `not_found`.
+                          For `400` it is a human-readable validation detail
+                          whose wording may change. See the Error handling guide
+                          for the domain identifiers. (Post-only / Fill-or-Kill
+                          outcomes are order statuses such as
+                          `post_only_rejected`, not rejections.)
                         required: true
         headers: []
         jsonPayloadSchema:
@@ -172,7 +180,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-555>
+              x-parser-schema-id: <anonymous-schema-594>
             data:
               title: Subscribe Response
               type: array
@@ -186,8 +194,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-559>
-                    x-parser-schema-id: <anonymous-schema-558>
+                        x-parser-schema-id: <anonymous-schema-598>
+                    x-parser-schema-id: <anonymous-schema-597>
                   - type: object
                     required:
                       - status
@@ -197,7 +205,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-561>
+                        x-parser-schema-id: <anonymous-schema-600>
                       error:
                         type: string
                         description: >-
@@ -207,20 +215,23 @@ operations:
                           the API contract and safe to branch on, e.g.
                           `insufficient_margin`, `insufficient_balance`,
                           `order_not_found`, `reduce_only_invalid`,
-                          `unauthorized`, `not_found`. For `400` it is a
-                          human-readable validation detail whose wording may
-                          change. See the Error handling guide for the domain
-                          identifiers. (Post-only / Fill-or-Kill outcomes are
-                          order statuses such as `post_only_rejected`, not
-                          rejections.)
+                          `price_outside_bounds`, `position_not_found`,
+                          `invalid_margin_mode`, `invalid_margin_amount`,
+                          `margin_below_required_initial`,
+                          `account_liquidating`, `unauthorized`, `not_found`.
+                          For `400` it is a human-readable validation detail
+                          whose wording may change. See the Error handling guide
+                          for the domain identifiers. (Post-only / Fill-or-Kill
+                          outcomes are order statuses such as
+                          `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-562>
-                    x-parser-schema-id: <anonymous-schema-560>
-                x-parser-schema-id: <anonymous-schema-557>
-              x-parser-schema-id: <anonymous-schema-556>
+                        x-parser-schema-id: <anonymous-schema-601>
+                    x-parser-schema-id: <anonymous-schema-599>
+                x-parser-schema-id: <anonymous-schema-596>
+              x-parser-schema-id: <anonymous-schema-595>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-554>
+          x-parser-schema-id: <anonymous-schema-593>
         title: Subscribe Response
         description: Response to portfolio subscribe request
         example: |-
@@ -277,7 +288,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-564>
+              x-parser-schema-id: <anonymous-schema-603>
             req:
               type: string
               description: Request type
@@ -285,7 +296,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-565>
+              x-parser-schema-id: <anonymous-schema-604>
             chs:
               type: array
               description: 'Portfolio private channel: "portfolio"'
@@ -293,14 +304,14 @@ operations:
                 type: string
                 enum:
                   - portfolio
-                x-parser-schema-id: <anonymous-schema-567>
+                x-parser-schema-id: <anonymous-schema-606>
               example:
                 - portfolio
-              x-parser-schema-id: <anonymous-schema-566>
+              x-parser-schema-id: <anonymous-schema-605>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-563>
+          x-parser-schema-id: <anonymous-schema-602>
         title: Unsubscribe
         description: Unsubscribe from private portfolio updates
         example: |-
@@ -362,12 +373,15 @@ operations:
                           the API contract and safe to branch on, e.g.
                           `insufficient_margin`, `insufficient_balance`,
                           `order_not_found`, `reduce_only_invalid`,
-                          `unauthorized`, `not_found`. For `400` it is a
-                          human-readable validation detail whose wording may
-                          change. See the Error handling guide for the domain
-                          identifiers. (Post-only / Fill-or-Kill outcomes are
-                          order statuses such as `post_only_rejected`, not
-                          rejections.)
+                          `price_outside_bounds`, `position_not_found`,
+                          `invalid_margin_mode`, `invalid_margin_amount`,
+                          `margin_below_required_initial`,
+                          `account_liquidating`, `unauthorized`, `not_found`.
+                          For `400` it is a human-readable validation detail
+                          whose wording may change. See the Error handling guide
+                          for the domain identifiers. (Post-only / Fill-or-Kill
+                          outcomes are order statuses such as
+                          `post_only_rejected`, not rejections.)
                         required: true
         headers: []
         jsonPayloadSchema:
@@ -377,7 +391,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-569>
+              x-parser-schema-id: <anonymous-schema-608>
             data:
               title: Subscribe Response
               type: array
@@ -391,8 +405,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-573>
-                    x-parser-schema-id: <anonymous-schema-572>
+                        x-parser-schema-id: <anonymous-schema-612>
+                    x-parser-schema-id: <anonymous-schema-611>
                   - type: object
                     required:
                       - status
@@ -402,7 +416,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-575>
+                        x-parser-schema-id: <anonymous-schema-614>
                       error:
                         type: string
                         description: >-
@@ -412,20 +426,23 @@ operations:
                           the API contract and safe to branch on, e.g.
                           `insufficient_margin`, `insufficient_balance`,
                           `order_not_found`, `reduce_only_invalid`,
-                          `unauthorized`, `not_found`. For `400` it is a
-                          human-readable validation detail whose wording may
-                          change. See the Error handling guide for the domain
-                          identifiers. (Post-only / Fill-or-Kill outcomes are
-                          order statuses such as `post_only_rejected`, not
-                          rejections.)
+                          `price_outside_bounds`, `position_not_found`,
+                          `invalid_margin_mode`, `invalid_margin_amount`,
+                          `margin_below_required_initial`,
+                          `account_liquidating`, `unauthorized`, `not_found`.
+                          For `400` it is a human-readable validation detail
+                          whose wording may change. See the Error handling guide
+                          for the domain identifiers. (Post-only / Fill-or-Kill
+                          outcomes are order statuses such as
+                          `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-576>
-                    x-parser-schema-id: <anonymous-schema-574>
-                x-parser-schema-id: <anonymous-schema-571>
-              x-parser-schema-id: <anonymous-schema-570>
+                        x-parser-schema-id: <anonymous-schema-615>
+                    x-parser-schema-id: <anonymous-schema-613>
+                x-parser-schema-id: <anonymous-schema-610>
+              x-parser-schema-id: <anonymous-schema-609>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-568>
+          x-parser-schema-id: <anonymous-schema-607>
         title: Unsubscribe Response
         description: Response to portfolio unsubscribe request
         example: |-
@@ -507,7 +524,26 @@ operations:
                         required: true
                       - name: initial_margin
                         type: string
-                        description: Initial margin in USD
+                        description: >
+                          Current collateral backing the position. For cross
+                          positions, this is
+
+                          the required initial margin based on position size,
+                          mark price, the
+
+                          applicable risk tier, and configured leverage. For
+                          isolated positions,
+
+                          this is the position's current equity: signed
+                          allocated margin plus
+
+                          unrealized PnL minus settled funding.
+
+
+                          The legacy `initial_margin` name is retained for API
+                          compatibility;
+
+                          `margin` would more accurately describe the field.
                         required: true
                       - name: maintenance_margin
                         type: string
@@ -527,11 +563,24 @@ operations:
                         required: true
                       - name: return_on_equity
                         type: string
-                        description: Return on equity as a decimal
+                        description: >-
+                          Unrealized PnL divided by the position's current
+                          required initial margin, as a decimal.
                         required: true
                       - name: cumulative_funding
                         type: string
                         description: Cumulative funding paid/received in USD
+                        required: true
+                      - name: adl_index
+                        type: integer
+                        description: >-
+                          Auto-deleveraging tier; higher means higher risk of
+                          being ADL'd.
+                        enumValues:
+                          - 0
+                          - 1
+                          - 2
+                          - 3
                         required: true
                   - name: margin
                     type: object
@@ -578,7 +627,7 @@ operations:
                 "tickers::all"). Private channels use plain names (e.g. "fills",
                 "orders").
               example: trades::1
-              x-parser-schema-id: <anonymous-schema-578>
+              x-parser-schema-id: <anonymous-schema-617>
             ts:
               type: integer
               description: >-
@@ -586,12 +635,12 @@ operations:
                 seconds for withdrawals (must match the on-chain EIP-712 struct
                 verified against block.timestamp).
               example: 1767225600000
-              x-parser-schema-id: <anonymous-schema-579>
+              x-parser-schema-id: <anonymous-schema-618>
             sq:
               type: integer
               description: Sequence number
               example: 1234567890
-              x-parser-schema-id: <anonymous-schema-580>
+              x-parser-schema-id: <anonymous-schema-619>
             data:
               type: object
               required:
@@ -619,74 +668,108 @@ operations:
                       - unrealized_pnl
                       - return_on_equity
                       - cumulative_funding
+                      - adl_index
                     properties:
                       instrument_id:
                         type: integer
                         description: Instrument ID
-                        x-parser-schema-id: <anonymous-schema-584>
+                        x-parser-schema-id: <anonymous-schema-623>
                       symbol:
                         type: string
                         description: Instrument symbol
                         example: NVDA-USDC
-                        x-parser-schema-id: <anonymous-schema-585>
+                        x-parser-schema-id: <anonymous-schema-624>
                       size:
                         type: string
                         description: >-
                           Signed position size in no. of contracts (positive =
                           long, negative = short)
                         example: '10.00'
-                        x-parser-schema-id: <anonymous-schema-586>
+                        x-parser-schema-id: <anonymous-schema-625>
                       entry_price:
                         type: string
                         description: Average entry price
                         example: '2986.30'
-                        x-parser-schema-id: <anonymous-schema-587>
+                        x-parser-schema-id: <anonymous-schema-626>
                       leverage:
                         type: integer
                         description: Leverage
                         example: 10
-                        x-parser-schema-id: <anonymous-schema-588>
+                        x-parser-schema-id: <anonymous-schema-627>
                       cross:
                         type: boolean
                         description: Whether to use cross margin mode
-                        x-parser-schema-id: <anonymous-schema-589>
+                        x-parser-schema-id: <anonymous-schema-628>
                       initial_margin:
                         type: string
-                        description: Initial margin in USD
+                        description: >
+                          Current collateral backing the position. For cross
+                          positions, this is
+
+                          the required initial margin based on position size,
+                          mark price, the
+
+                          applicable risk tier, and configured leverage. For
+                          isolated positions,
+
+                          this is the position's current equity: signed
+                          allocated margin plus
+
+                          unrealized PnL minus settled funding.
+
+
+                          The legacy `initial_margin` name is retained for API
+                          compatibility;
+
+                          `margin` would more accurately describe the field.
                         example: '10.00'
-                        x-parser-schema-id: <anonymous-schema-590>
+                        x-parser-schema-id: <anonymous-schema-629>
                       maintenance_margin:
                         type: string
                         description: Maintenance margin amount
                         example: '100.00'
-                        x-parser-schema-id: <anonymous-schema-591>
+                        x-parser-schema-id: <anonymous-schema-630>
                       position_value:
                         type: string
                         description: Notional position value in USD
                         example: '100.03'
-                        x-parser-schema-id: <anonymous-schema-592>
+                        x-parser-schema-id: <anonymous-schema-631>
                       liquidation_price:
                         type: string
                         description: Liquidation price
                         example: '2866.27'
-                        x-parser-schema-id: <anonymous-schema-593>
+                        x-parser-schema-id: <anonymous-schema-632>
                       unrealized_pnl:
                         type: string
                         description: Unrealized PnL in USD
                         example: '-0.01'
-                        x-parser-schema-id: <anonymous-schema-594>
+                        x-parser-schema-id: <anonymous-schema-633>
                       return_on_equity:
                         type: string
-                        description: Return on equity as a decimal
+                        description: >-
+                          Unrealized PnL divided by the position's current
+                          required initial margin, as a decimal.
                         example: '-0.0027'
-                        x-parser-schema-id: <anonymous-schema-595>
+                        x-parser-schema-id: <anonymous-schema-634>
                       cumulative_funding:
                         type: string
                         description: Cumulative funding paid/received in USD
                         example: '514.09'
-                        x-parser-schema-id: <anonymous-schema-596>
-                    x-parser-schema-id: <anonymous-schema-583>
-                  x-parser-schema-id: <anonymous-schema-582>
+                        x-parser-schema-id: <anonymous-schema-635>
+                      adl_index:
+                        type: integer
+                        enum:
+                          - 0
+                          - 1
+                          - 2
+                          - 3
+                        description: >-
+                          Auto-deleveraging tier; higher means higher risk of
+                          being ADL'd.
+                        example: 2
+                        x-parser-schema-id: <anonymous-schema-636>
+                    x-parser-schema-id: <anonymous-schema-622>
+                  x-parser-schema-id: <anonymous-schema-621>
                 margin:
                   type: object
                   required:
@@ -699,44 +782,44 @@ operations:
                       type: string
                       description: Total account value in USD (equity + unrealized PnL)
                       example: '13109.48'
-                      x-parser-schema-id: <anonymous-schema-598>
+                      x-parser-schema-id: <anonymous-schema-638>
                     total_initial_margin:
                       type: string
                       description: Total initial margin in use across all positions
                       example: '4.97'
-                      x-parser-schema-id: <anonymous-schema-599>
+                      x-parser-schema-id: <anonymous-schema-639>
                     total_maintenance_margin:
                       type: string
                       description: Total maintenance margin across all positions
                       example: '2.49'
-                      x-parser-schema-id: <anonymous-schema-600>
+                      x-parser-schema-id: <anonymous-schema-640>
                     total_position_value:
                       type: string
                       description: Total notional position value in USD
                       example: '100.03'
-                      x-parser-schema-id: <anonymous-schema-601>
-                  x-parser-schema-id: <anonymous-schema-597>
+                      x-parser-schema-id: <anonymous-schema-641>
+                  x-parser-schema-id: <anonymous-schema-637>
                 withdrawable:
                   type: string
                   description: Withdrawable balance in USD
                   example: '13104.51'
-                  x-parser-schema-id: <anonymous-schema-602>
+                  x-parser-schema-id: <anonymous-schema-642>
                 in_liquidation:
                   type: boolean
                   description: Whether the account is currently under liquidation
-                  x-parser-schema-id: <anonymous-schema-603>
+                  x-parser-schema-id: <anonymous-schema-643>
                 timestamp:
                   type: integer
                   description: Update timestamp in milliseconds
                   example: 1767225600000
-                  x-parser-schema-id: <anonymous-schema-604>
-              x-parser-schema-id: <anonymous-schema-581>
+                  x-parser-schema-id: <anonymous-schema-644>
+              x-parser-schema-id: <anonymous-schema-620>
           required:
             - ch
             - ts
             - sq
             - data
-          x-parser-schema-id: <anonymous-schema-577>
+          x-parser-schema-id: <anonymous-schema-616>
         title: Update
         description: Portfolio updates pushed every 5 seconds
         example: |-
@@ -757,7 +840,8 @@ operations:
                   "liquidation_price": "2866.27",
                   "unrealized_pnl": "-0.01",
                   "return_on_equity": "-0.0027",
-                  "cumulative_funding": "514.09"
+                  "cumulative_funding": "514.09",
+                  "adl_index": 2
                 }
               ],
               "margin": {

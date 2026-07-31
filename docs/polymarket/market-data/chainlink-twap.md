@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/market-data/chainlink-twap.md
-Downloaded: 2026-07-30T21:10:12.957Z
+Downloaded: 2026-07-31T21:03:55.559Z
 -->
 
 > ## Documentation Index
@@ -9,28 +9,32 @@ Downloaded: 2026-07-30T21:10:12.957Z
 
 # Chainlink TWAP Prices
 
-> Test Chainlink-computed TWAP prices now and prepare for Polymarket RTDS.
+> Consume Chainlink-computed TWAP prices directly or through Polymarket RTDS.
 
 A time-weighted average price (TWAP) represents an asset's price across a
 lookback window. This page covers Chainlink-computed 30-second and 60-second
 TWAPs.
 
 <Info>
-  Chainlink Data Streams testnet is available now with authorized credentials.
-  Polymarket RTDS is the recommended production integration and is scheduled to
-  launch August 4, 2026.
+  Chainlink Data Streams mainnet TWAP feeds are available now. You can use your
+  existing standard or sponsored Data Streams credentials. Polymarket RTDS is
+  scheduled to launch August 4, 2026.
 </Info>
 
-## Test with Chainlink Data Streams
-
-Use Chainlink Data Streams for live testnet access, the latest report before
-streaming, or the original signed report. Run it only on a trusted backend;
-never expose Chainlink credentials to browsers or mobile apps.
-
 <Warning>
-  These URLs and feed IDs are testnet-only. Mainnet access, including the
-  production URLs and TWAP feed IDs, will be available August 4, 2026.
+  Chainlink is still completing development and soak testing through August 4,
+  2026\. The feeds are available for integration now but may be updated before
+  then.
 </Warning>
+
+## Use Chainlink Data Streams
+
+Use Chainlink Data Streams for direct mainnet access, the latest report before
+streaming, or the original signed report. Find an asset's `TWAP: 30s` or `TWAP:
+60s` ticker in the [Chainlink Data Streams
+catalog](https://data.chain.link/streams), then copy its feed ID. Run this only
+on a trusted backend; never expose Chainlink credentials to browsers or mobile
+apps.
 
 <Steps>
   <Step title="Install and Connect">
@@ -40,7 +44,7 @@ never expose Chainlink credentials to browsers or mobile apps.
     npm install --save-exact @chainlink/data-streams-sdk@1.2.1
     ```
 
-    Create the testnet client:
+    Create the mainnet client:
 
     ```ts theme={null}
     import {
@@ -67,8 +71,8 @@ never expose Chainlink credentials to browsers or mobile apps.
     const client = createClient({
       apiKey: requireEnv("CHAINLINK_CLIENT_ID"),
       userSecret: requireEnv("CHAINLINK_CLIENT_SECRET"),
-      endpoint: "https://api.testnet-dataengine.chain.link",
-      wsEndpoint: "wss://ws.testnet-dataengine.chain.link",
+      endpoint: "https://api.dataengine.chain.link",
+      wsEndpoint: "wss://ws.dataengine.chain.link",
       haMode: false,
     });
     ```
@@ -78,17 +82,18 @@ never expose Chainlink credentials to browsers or mobile apps.
   </Step>
 
   <Step title="Map and Decode Reports">
-    Map each feed ID to its asset and window. Preserve the signed E18 price
+    Store the feed IDs from the catalog in server-side environment variables,
+    then map each ID to its asset and window. Preserve the signed E18 price
     instead of converting it to a JavaScript `number`:
 
     ```ts theme={null}
     const feeds = new Map<string, TwapFeed>([
       [
-        "0x00027603752fe85a4c86c3adcc71abcb5ed826831d8afd4fd746a11c10cee188",
+        requireEnv("CHAINLINK_TWAP_30S_FEED_ID").toLowerCase(),
         { symbol: "btc/usd", windowSeconds: 30 },
       ],
       [
-        "0x0002e64f0b0166fa748cc05cd510a11442be16279873574f98c8cfa06b42b3dd",
+        requireEnv("CHAINLINK_TWAP_60S_FEED_ID").toLowerCase(),
         { symbol: "btc/usd", windowSeconds: 60 },
       ],
     ]);
@@ -147,7 +152,7 @@ never expose Chainlink credentials to browsers or mobile apps.
     <Accordion title="Output: Chainlink TWAP">
       ```json theme={null}
       {
-        "feedID": "0x00027603752fe85a4c86c3adcc71abcb5ed826831d8afd4fd746a11c10cee188",
+        "feedID": "0x<mainnet-feed-id>",
         "symbol": "btc/usd",
         "windowSeconds": 30,
         "value": "65000.5",
@@ -199,8 +204,8 @@ never expose Chainlink credentials to browsers or mobile apps.
 
 ### Read a Chainlink Report
 
-The testnet TWAP feeds listed below use Chainlink report schema V2.
-`decodeReport()` exposes the encoded `benchmarkPrice` as `decoded.price`.
+The TWAP feeds use Chainlink report schema V2. `decodeReport()` exposes the
+encoded `benchmarkPrice` as `decoded.price`.
 
 | Value                          | How to use it                                                       |
 | ------------------------------ | ------------------------------------------------------------------- |
@@ -221,39 +226,16 @@ for freshness checks.
   for settlement or another trust-sensitive action.
 </Note>
 
-### Testnet Feed IDs
+### Find a Feed ID
 
-<Accordion title="View 30-Second and 60-Second Feed IDs">
-  | Asset    | 30-second feed ID                                                    | 60-second feed ID                                                    |
-  | -------- | -------------------------------------------------------------------- | -------------------------------------------------------------------- |
-  | BTC/USD  | `0x00027603752fe85a4c86c3adcc71abcb5ed826831d8afd4fd746a11c10cee188` | `0x0002e64f0b0166fa748cc05cd510a11442be16279873574f98c8cfa06b42b3dd` |
-  | ETH/USD  | `0x000257bd0c11555619448f31c8bbf36250ffdcd8de0d7bf8ab21af804d7a6142` | `0x00022f7f59660d2caf1665dc08976707de45b58518b68bb91cb499182448ae85` |
-  | XRP/USD  | `0x00027cb2f348a92be0397eba6fdfa814a8473180c56ea4190272ac8e2430df12` | `0x000242f2ce7651c59f07907fa6fa7bccff0405327abffaa09e39a559ce25dc2d` |
-  | SOL/USD  | `0x0002f6123d7f4f61d213f9bdd10256dc19978f61a74797b1e3479053429f20c8` | `0x0002990595e444f1c3aee99bb78536b8b8c137cfe2f01696df69a045207654c9` |
-  | HYPE/USD | `0x0002a498f26948f15e1f00af0330d8fef5ea53fffe4a0bf3f7f31fc2a371ae04` | `0x00027163e67ed79a3b7d67ef68073e1d54745de32fdff1ca68b79f1e0489732a` |
-  | DOGE/USD | `0x000234a7d46f9b7a6568ad7d2677a0c0028744d06ece3cc4a006201cf9a76453` | `0x00025ad76902e0d91491abfd13fa5a7320d3248ee7b030a059bd1fd35b601e0c` |
-  | ZEC/USD  | `0x0002b6a49760c664e68653b4cced722239400b46905e1c1ce45733bd42d7f669` | `0x00024785f38aa028dcbdd32b24a5851c689c7a9db4924ab08480df11ec7c3949` |
-  | LINK/USD | `0x0002a1d9e5e117e7627594ac561da02d6777bc170e41a90c21897a02645bd883` | `0x00021c115fafdbf603d36e1d09d7f1f837a43e464eedb382ed8344dd6e5906ce` |
-  | TRX/USD  | `0x00021a7256522fbd2c5505067cdd6a37a7556d36bcb98467fbe24734527e86fd` | `0x00027d3ec00c5bb657c1b32e19e8b67d14b2ffd25632346ebf6338eb31288463` |
-  | BNB/USD  | `0x00028242b80742c99e3cfed3b8f9dd48d6dfc449ffb4a4623b129c85b7a19270` | `0x0002b653f2b9497c3c798440729d52f6eaf16f37bc8edb177bf6bbd345d443e1` |
-</Accordion>
+Open the [Chainlink Data Streams catalog](https://data.chain.link/streams) and
+search for the asset and window you need, such as `BTC / USD - TWAP: 30s` or
+`BTC / USD - TWAP: 60s`. Copy the feed ID from the product page and use it with
+your existing standard or sponsored Data Streams credentials.
 
-<Note>
-  Use these feed IDs directly. Custom TWAP feeds may not appear in `listFeeds()`
-  even when your credentials can fetch and stream them.
-</Note>
-
-### Mainnet Availability
-
-| Environment | Availability   | REST URL                                    | WebSocket URL                            |
-| ----------- | -------------- | ------------------------------------------- | ---------------------------------------- |
-| Testnet     | Available now  | `https://api.testnet-dataengine.chain.link` | `wss://ws.testnet-dataengine.chain.link` |
-| Mainnet     | August 4, 2026 | `https://api.dataengine.chain.link`         | `wss://ws.dataengine.chain.link`         |
-
-On August 4, replace the testnet feed IDs with the mainnet IDs released by
-Chainlink. Confirm the mainnet report schema and price scale before reusing the
-decoder. High Availability mode is mainnet-only; keep `haMode: false` on
-testnet.
+| REST URL                            | WebSocket URL                    |
+| ----------------------------------- | -------------------------------- |
+| `https://api.dataengine.chain.link` | `wss://ws.dataengine.chain.link` |
 
 The 30-second and 60-second values are lookback windows, not publication
 cadences. Chainlink computes and signs the TWAP. Define a freshness threshold
@@ -287,10 +269,10 @@ to receive every available pair.
 
 <Tabs>
   <Tab title="TypeScript">
-    Requires Node.js 24+ and `@polymarket/client@0.3.0-beta.0`:
+    Requires Node.js 24+ and `@polymarket/client@0.3.0-beta.1`:
 
     ```bash theme={null}
-    npm install --save-exact @polymarket/client@0.3.0-beta.0
+    npm install --save-exact @polymarket/client@0.3.0-beta.1
     ```
 
     Matching bindings are included. See the [TypeScript SDK
@@ -387,10 +369,10 @@ to receive every available pair.
   </Tab>
 
   <Tab title="Python">
-    Requires Python 3.11+ and `polymarket-client==0.3.0b1`:
+    Requires Python 3.11+ and `polymarket-client==0.3.0b2`:
 
     ```bash theme={null}
-    python -m pip install --upgrade "polymarket-client==0.3.0b1"
+    python -m pip install --upgrade "polymarket-client==0.3.0b2"
     ```
 
     See the [Python SDK guide](/getting-started/python) for general setup.
