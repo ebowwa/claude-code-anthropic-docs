@@ -1,3 +1,8 @@
+<!--
+Source: https://bun.com/docs/runtime/environment-variables.md
+Downloaded: 2026-08-01T20:53:36.373Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://bun.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -87,6 +92,8 @@ env = false
 ```
 
 Files passed with `--env-file` still load even when default loading is disabled.
+
+When Bun is invoked as `node` (for example via `bun --bun`, `bunx --bun`, or a `node` symlink pointing at Bun), automatic `.env` loading is disabled to match Node.js. This lets tools with their own mode-aware `.env` resolution, such as Vite's `loadEnv`, pick the correct `.env.{mode}` file instead of seeing Bun's pre-populated values as shell-set overrides. Explicit `--env-file` arguments are still honored.
 
 ***
 
