@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/sub-agents.md
-Downloaded: 2026-07-29T20:57:17.749Z
+Downloaded: 2026-08-02T20:55:59.073Z
 -->
 
 > ## Documentation Index
@@ -77,10 +77,11 @@ Explore and Plan skip your CLAUDE.md files and the parent session's git status t
   <Tab title="Other">
     Claude Code includes additional helper agents for specific tasks. These are typically invoked automatically, so you don't need to use them directly.
 
-    | Agent             | Model  | When Claude uses it                                      |
-    | :---------------- | :----- | :------------------------------------------------------- |
-    | statusline-setup  | Sonnet | When you run `/statusline` to configure your status line |
-    | claude-code-guide | Haiku  | When you ask questions about Claude Code features        |
+    | Agent             | Model    | When Claude uses it                                                                                                                                                            |
+    | :---------------- | :------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+    | statusline-setup  | Sonnet   | When you run `/statusline` to configure your status line                                                                                                                       |
+    | claude-code-guide | Haiku    | When you ask questions about Claude Code features                                                                                                                              |
+    | claude            | Inherits | When you dispatch a [background session](/docs/en/agent-view) from `claude agents` or `claude --bg` without naming an agent. Claude can also delegate to it like any other subagent |
   </Tab>
 </Tabs>
 

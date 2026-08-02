@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/project/license.md
-Downloaded: 2026-07-25T20:54:56.272Z
--->
-
 > ## Documentation Index
 > Fetch the complete documentation index at: https://bun.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.

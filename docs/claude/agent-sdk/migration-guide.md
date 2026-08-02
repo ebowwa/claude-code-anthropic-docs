@@ -1,3 +1,8 @@
+<!--
+Source: https://code.claude.com/docs/en/agent-sdk/migration-guide.md
+Downloaded: 2026-08-02T20:55:59.050Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://code.claude.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -12,15 +17,11 @@ The Claude Code SDK has been renamed to the **Claude Agent SDK** and its documen
 
 ## What's Changed
 
-| Aspect                     | Old                         | New                              |
-| :------------------------- | :-------------------------- | :------------------------------- |
-| **Package Name (TS/JS)**   | `@anthropic-ai/claude-code` | `@anthropic-ai/claude-agent-sdk` |
-| **Python Package**         | `claude-code-sdk`           | `claude-agent-sdk`               |
-| **Documentation Location** | Claude Code docs            | API Guide → Agent SDK section    |
-
-<Note>
-  **Documentation Changes:** The Agent SDK documentation has moved from the Claude Code docs to the API Guide under a dedicated [Agent SDK](/docs/en/agent-sdk/overview) section. The Claude Code docs now focus on the CLI tool and automation features.
-</Note>
+| Aspect                     | Old                         | New                                                                      |
+| :------------------------- | :-------------------------- | :----------------------------------------------------------------------- |
+| **Package Name (TS/JS)**   | `@anthropic-ai/claude-code` | `@anthropic-ai/claude-agent-sdk`                                         |
+| **Python Package**         | `claude-code-sdk`           | `claude-agent-sdk`                                                       |
+| **Documentation Location** | Claude Code docs            | Claude Code docs → dedicated [Agent SDK](/docs/en/agent-sdk/overview) section |
 
 ## Migration Steps
 

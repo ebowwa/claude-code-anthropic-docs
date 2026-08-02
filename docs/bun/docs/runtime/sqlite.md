@@ -1,3 +1,8 @@
+<!--
+Source: https://bun.com/docs/runtime/sqlite.md
+Downloaded: 2026-08-02T20:56:00.454Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://bun.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -115,15 +120,15 @@ const db = new Database("./mydb.sqlite");
 
 ### `.close(throwOnError: boolean = false)`
 
-To close a database connection but allow existing queries to finish, call `.close(false)`:
+To close a database connection, call `.close()`:
 
 ```ts db.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" highlight={3} theme={"theme":{"light":"github-light","dark":"dracula"}}
 const db = new Database();
 // ... do stuff
-db.close(false);
+db.close();
 ```
 
-To close the database and throw an error if there are any pending queries, call `.close(true)`:
+Any prepared statements that were not finalized are finalized as part of closing, so the connection (and the database file) is released immediately. Using a statement after its database was closed throws an error, except `toString()`, which returns an empty string, and `finalize()`, which stays safe to call. Pass `true` to throw if the connection fails to close:
 
 ```ts db.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" highlight={3} theme={"theme":{"light":"github-light","dark":"dracula"}}
 const db = new Database();
@@ -132,8 +137,8 @@ db.close(true);
 ```
 
 <Note>
-  `close(false)` is called automatically when the database is garbage collected. It is safe to call multiple times but
-  has no effect after the first.
+  `close()` is called automatically when the database is garbage collected. It is safe to call multiple times but has no
+  effect after the first.
 </Note>
 
 ### `using` statement

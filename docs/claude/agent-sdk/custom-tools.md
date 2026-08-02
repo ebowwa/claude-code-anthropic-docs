@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/agent-sdk/custom-tools.md
-Downloaded: 2026-07-29T20:57:17.714Z
+Downloaded: 2026-08-02T20:55:59.050Z
 -->
 
 > ## Documentation Index
@@ -364,8 +364,6 @@ The example below catches two kinds of failures inside the handler and composes 
   from typing import Any
   from claude_agent_sdk import tool
 
-  from claude_agent_sdk import tool
-
 
   @tool(
       "fetch_data",
@@ -473,8 +471,6 @@ An image block carries the image bytes inline, encoded as base64. There is no UR
   ```python Python theme={null}
   import base64
   import httpx
-  from claude_agent_sdk import tool
-
   from claude_agent_sdk import tool
 
 
