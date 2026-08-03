@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/sqlite.md
-Downloaded: 2026-08-02T20:56:00.454Z
+Downloaded: 2026-08-03T21:02:37.336Z
 -->
 
 > ## Documentation Index
@@ -120,15 +120,17 @@ const db = new Database("./mydb.sqlite");
 
 ### `.close(throwOnError: boolean = false)`
 
-To close a database connection, call `.close()`:
+To close a database connection but let statements created with `.prepare()` keep working until they are finalized or garbage collected, call `.close(false)`:
 
 ```ts db.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" highlight={3} theme={"theme":{"light":"github-light","dark":"dracula"}}
 const db = new Database();
 // ... do stuff
-db.close();
+db.close(false);
 ```
 
-Any prepared statements that were not finalized are finalized as part of closing, so the connection (and the database file) is released immediately. Using a statement after its database was closed throws an error, except `toString()`, which returns an empty string, and `finalize()`, which stays safe to call. Pass `true` to throw if the connection fails to close:
+Statements created with `.query()` are owned by the `Database` and are finalized immediately either way. The underlying connection (and the database file handle) is released once the last outstanding `.prepare()` statement is finalized.
+
+To finalize **every** outstanding statement, release the connection immediately, and throw if SQLite reports an error while closing, call `.close(true)`:
 
 ```ts db.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" highlight={3} theme={"theme":{"light":"github-light","dark":"dracula"}}
 const db = new Database();
@@ -136,9 +138,13 @@ const db = new Database();
 db.close(true);
 ```
 
+Using a statement that was finalized by `close()` throws `Database has closed`, except `toString()`, which returns an empty string, and `finalize()`, which stays safe to call.
+
 <Note>
-  `close()` is called automatically when the database is garbage collected. It is safe to call multiple times but has no
-  effect after the first.
+  `close()` is safe to call multiple times but has no effect after the first (except that `close(true)` after
+  `close(false)` still finalizes any remaining `.prepare()` statements). If a `Database` is garbage collected without
+  being closed, the connection is released once every statement created from it has also been finalized or collected.
+  The `using` statement calls `close(true)`.
 </Note>
 
 ### `using` statement
@@ -182,7 +188,7 @@ const query = db.query(`select "Hello world" as message`);
 <Note>
   **What does "cached" mean?**
 
-  The caching refers to the **compiled prepared statement** (the SQL bytecode), not the query results. When you call `db.query()` with the same SQL string multiple times, Bun returns the same cached `Statement` object instead of recompiling the SQL.
+  The caching refers to the **compiled prepared statement** (the SQL bytecode), not the query results. When you call `db.query()` with the same SQL string multiple times, Bun returns the same cached `Statement` object instead of recompiling the SQL. The cache holds the `Database.MAX_QUERY_CACHE_SIZE` (default 20) most recently used SQL strings; evicted statements keep working but a later `db.query()` with the same string compiles a new one.
 
   It is safe to reuse a cached statement with different parameter values:
 
