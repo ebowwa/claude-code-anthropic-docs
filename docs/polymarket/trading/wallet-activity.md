@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/trading/wallet-activity.md
+Downloaded: 2026-08-04T21:12:25.247Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -369,6 +374,17 @@ Follow the timeline for a wallet across trades and other activity.
     }
     ```
 
+    You can narrow down the activity types using the `type` field:
+
+    ```ts theme={null}
+    import { ActivityType } from "@polymarket/client";
+
+    const pages = client.listActivity({
+      user: address,
+      type: [ActivityType.DEPOSIT, ActivityType.WITHDRAWAL],
+    });
+    ```
+
     `Activity` is a discriminated union. The `type` field identifies each
     variant:
 
@@ -384,7 +400,10 @@ Follow the timeline for a wallet across trades and other activity.
           | RewardActivity
           | MakerRebateActivity
           | ReferralRewardActivity
-          | YieldActivity;
+          | YieldActivity
+          | DepositActivity
+          | WithdrawalActivity
+          | TakerRebateActivity;
         ```
 
         ```json Activity Example theme={null}
@@ -431,6 +450,12 @@ Follow the timeline for a wallet across trades and other activity.
         ...  # page.items: tuple[Activity, ...]
     ```
 
+    You can narrow down the activity types using the `activity_types` field:
+
+    ```python theme={null}
+    pages = client.list_activity(user=address, activity_types=["DEPOSIT", "WITHDRAWAL"])
+    ```
+
     `Activity` is a union of the supported activity variants:
 
     <Accordion title="Output: tuple[Activity, ...]">
@@ -444,7 +469,10 @@ Follow the timeline for a wallet across trades and other activity.
             | RedeemActivity
             | ConversionActivity
             | RewardActivity
+            | DepositActivity
+            | WithdrawalActivity
             | MakerRebateActivity
+            | TakerRebateActivity
             | ReferralRewardActivity
             | YieldActivity
             | UnknownActivity
@@ -483,6 +511,9 @@ Follow the timeline for a wallet across trades and other activity.
     ```bash theme={null}
     curl "https://data-api.polymarket.com/activity?user=$ADDRESS&limit=1"
     ```
+
+    The endpoint excludes deposit and withdrawal records by default, even when
+    `type` requests them. To get them, pass `excludeDepositsWithdrawals=false`.
 
     The response contains the wallet's activity:
 

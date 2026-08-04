@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/agent-sdk/typescript-v2-preview.md
-Downloaded: 2026-07-29T20:57:17.722Z
+Downloaded: 2026-08-04T21:12:39.730Z
 -->
 
 > ## Documentation Index
@@ -32,7 +32,7 @@ npm install @anthropic-ai/claude-agent-sdk@0.2
 ```
 
 <Note>
-  The SDK bundles a native Claude Code binary for your platform as an optional dependency, so you don't need to install Claude Code separately.
+  The SDK bundles a native Claude Code binary for your platform as an optional dependency, so most installs need no separate Claude Code install. See the [quickstart's install note](/docs/en/agent-sdk/quickstart) for the installs that need one.
 </Note>
 
 ## Quick start

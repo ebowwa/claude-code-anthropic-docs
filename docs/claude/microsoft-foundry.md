@@ -1,3 +1,8 @@
+<!--
+Source: https://code.claude.com/docs/en/microsoft-foundry.md
+Downloaded: 2026-08-04T21:12:39.751Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://code.claude.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -134,7 +139,7 @@ az login
 
 **Option C: Bearer token authentication**
 
-{/* min-version: 2.1.203 */}Claude Code sends the value of `ANTHROPIC_FOUNDRY_AUTH_TOKEN` on every request as the `Authorization: Bearer` header. Use this option when another process, such as a host application or a sign-in script, has already obtained an access token for you. Requires Claude Code v2.1.203 or later.
+Claude Code sends the value of `ANTHROPIC_FOUNDRY_AUTH_TOKEN` on every request as the `Authorization: Bearer` header. Use this option when another process, such as a host application or a sign-in script, has already obtained an access token for you. Requires Claude Code v2.1.203 or later.
 
 Set the variable to a bearer token that Microsoft Entra ID issued for your resource:
 

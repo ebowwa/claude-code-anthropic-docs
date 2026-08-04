@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/market-data/chainlink-twap.md
-Downloaded: 2026-07-31T21:03:55.559Z
+Downloaded: 2026-08-04T21:12:25.239Z
 -->
 
 > ## Documentation Index
@@ -269,10 +269,10 @@ to receive every available pair.
 
 <Tabs>
   <Tab title="TypeScript">
-    Requires Node.js 24+ and `@polymarket/client@0.3.0-beta.1`:
+    Requires Node.js 24+ and `@polymarket/client` 0.3.0 or later:
 
     ```bash theme={null}
-    npm install --save-exact @polymarket/client@0.3.0-beta.1
+    npm install @polymarket/client
     ```
 
     Matching bindings are included. See the [TypeScript SDK
@@ -369,10 +369,10 @@ to receive every available pair.
   </Tab>
 
   <Tab title="Python">
-    Requires Python 3.11+ and `polymarket-client==0.3.0b2`:
+    Requires Python 3.11+ and `polymarket-client` 0.3.0 or later:
 
     ```bash theme={null}
-    python -m pip install --upgrade "polymarket-client==0.3.0b2"
+    python -m pip install --upgrade polymarket-client
     ```
 
     See the [Python SDK guide](/getting-started/python) for general setup.

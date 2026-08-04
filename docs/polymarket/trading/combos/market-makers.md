@@ -1,8 +1,3 @@
-<!--
-Source: https://docs.polymarket.com/trading/combos/market-makers.md
-Downloaded: 2026-07-27T21:10:41.010Z
--->
-
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.

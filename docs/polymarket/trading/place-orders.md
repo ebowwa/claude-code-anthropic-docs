@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/trading/place-orders.md
+Downloaded: 2026-08-04T21:12:25.246Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -856,10 +861,18 @@ Types](#market-order-types) for Fill or Kill (FOK).
         trades. When available, `transactionsHashes` contains their transaction
         hashes:
 
-        | Status    | Description                                                                                   |
-        | --------- | --------------------------------------------------------------------------------------------- |
-        | `matched` | The order matched immediately with resting liquidity.                                         |
-        | `delayed` | The market imposes a matching delay; the order is queued and matches after the delay elapses. |
+        | Status    | Description                                                                   |
+        | --------- | ----------------------------------------------------------------------------- |
+        | `matched` | The order matched immediately with resting liquidity.                         |
+        | `delayed` | The market imposes a matching delay; matching begins after the delay elapses. |
+
+        A `delayed` response is accepted but has not matched yet. Its
+        `makingAmount` and `takingAmount` are `"0"`, and its `tradeIds` and
+        `transactionsHashes` are empty because no fills exist yet. Treat it as a
+        pending order rather than a fill, and use [real-time order
+        updates](/trading/realtime-order-updates) to follow its outcome. To identify
+        markets with this behavior before placing an order, read
+        [`market.trading.secondsDelay`](/market-data/market-details#market-timing).
 
         A market order never rests on the book: any amount that cannot fill is
         canceled. A rejected order returns `ok: false` with a code and message.
@@ -877,11 +890,12 @@ Types](#market-order-types) for Fill or Kill (FOK).
         }
         ```
 
-        The call waits until every fill from the response settles on-chain and
-        returns the settlement transaction hashes. By default it waits up to 30
-        seconds (configurable with `timeoutMs`) and throws a `TimeoutError` if
-        fills are still settling at the deadline; the executed trades are
-        unaffected.
+        The call waits until every fill identified by `tradeIds` settles on-chain
+        and returns the settlement transaction hashes. When `tradeIds` is empty, it
+        returns `transactionsHashes` immediately; it does not wait for a `delayed`
+        order to match. By default it waits up to 30 seconds (configurable with
+        `timeoutMs`) and throws a `TimeoutError` if fills are still settling at the
+        deadline; the executed trades are unaffected.
       </Step>
     </Steps>
   </Tab>
@@ -980,10 +994,18 @@ Types](#market-order-types) for Fill or Kill (FOK).
         trades. When available, `transactions_hashes` contains their transaction
         hashes:
 
-        | Status    | Description                                                                                   |
-        | --------- | --------------------------------------------------------------------------------------------- |
-        | `matched` | The order matched immediately with resting liquidity.                                         |
-        | `delayed` | The market imposes a matching delay; the order is queued and matches after the delay elapses. |
+        | Status    | Description                                                                   |
+        | --------- | ----------------------------------------------------------------------------- |
+        | `matched` | The order matched immediately with resting liquidity.                         |
+        | `delayed` | The market imposes a matching delay; matching begins after the delay elapses. |
+
+        A `delayed` response is accepted but has not matched yet. Its
+        `making_amount` and `taking_amount` are `0`, and its `trade_ids` and
+        `transactions_hashes` are empty because no fills exist yet. Treat it as a
+        pending order rather than a fill, and use [real-time order
+        updates](/trading/realtime-order-updates) to follow its outcome. To identify
+        markets with this behavior before placing an order, read
+        [`market.trading.seconds_delay`](/market-data/market-details#market-timing).
 
         A market order never rests on the book: any amount that cannot fill is
         canceled. A rejected order returns `ok=False` with a code and message.
@@ -1000,11 +1022,12 @@ Types](#market-order-types) for Fill or Kill (FOK).
             # hashes: tuple[TransactionHash, ...]
         ```
 
-        The call waits until every fill from the response settles on-chain and
-        returns the settlement transaction hashes. By default it waits up to 30
-        seconds (configurable with `timeout_s`) and raises a `TimeoutError` if
-        fills are still settling at the deadline; the executed trades are
-        unaffected.
+        The call waits until every fill identified by `trade_ids` settles on-chain
+        and returns the settlement transaction hashes. When `trade_ids` is empty,
+        it returns `transactions_hashes` immediately; it does not wait for a
+        `delayed` order to match. By default it waits up to 30 seconds (configurable
+        with `timeout_s`) and raises a `TimeoutError` if fills are still settling at
+        the deadline; the executed trades are unaffected.
       </Step>
     </Steps>
   </Tab>
@@ -1172,6 +1195,14 @@ Types](#market-order-types) for Fill or Kill (FOK).
           }
           ```
         </CodeGroup>
+
+        When `status` is `"delayed"`, the order is accepted but matching has not
+        happened yet. `makingAmount` and `takingAmount` may be empty, and
+        `tradeIDs` and `transactionsHashes` are empty because no fills exist yet.
+        Treat the order as pending and use [real-time order
+        updates](/trading/realtime-order-updates) to follow its outcome. To identify
+        markets with this behavior before submitting, read
+        [`secondsDelay`](/market-data/market-details#market-timing).
       </Step>
     </Steps>
   </Tab>

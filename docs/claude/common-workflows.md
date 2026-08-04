@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/common-workflows.md
-Downloaded: 2026-07-29T20:57:17.731Z
+Downloaded: 2026-08-04T21:12:39.741Z
 -->
 
 > ## Documentation Index
@@ -149,6 +149,8 @@ Suppose you've encountered an error message and need to find and fix its source.
 ### Refactor code
 
 Suppose you need to update old code to use modern patterns and practices.
+
+For porting an entire codebase to a new language, see [how Anthropic runs large-scale code migrations with Claude Code](https://claude.com/blog/ai-code-migration) on the blog.
 
 <Steps>
   <Step title="Identify legacy code for refactoring">

@@ -1,8 +1,3 @@
-<!--
-Source: https://code.claude.com/docs/en/desktop-linux.md
-Downloaded: 2026-07-28T21:07:58.959Z
--->
-
 > ## Documentation Index
 > Fetch the complete documentation index at: https://code.claude.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.

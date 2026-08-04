@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/multivariate/get-multivariate-event-collections.md
-Downloaded: 2026-07-30T21:10:12.814Z
+Downloaded: 2026-08-04T21:12:26.387Z
 -->
 
 > ## Documentation Index
@@ -169,6 +169,12 @@ components:
           description: >-
             Series associated with the collection. Events produced in the
             collection will be associated with this series.
+        exchange_index:
+          allOf:
+            - $ref: '#/components/schemas/ExchangeIndex'
+          description: Exchange index inherited from the collection's series.
+          x-go-type-skip-optional-pointer: true
+          x-omitempty: false
         title:
           type: string
           description: Title of the collection.
@@ -246,6 +252,10 @@ components:
         details:
           type: string
           description: Additional details about the error, if available
+    ExchangeIndex:
+      type: integer
+      description: Identifier for an exchange shard. Defaults to 0 if unspecified.
+      example: 0
     AssociatedEvent:
       type: object
       required:

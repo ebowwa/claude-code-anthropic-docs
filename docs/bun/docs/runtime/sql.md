@@ -1,3 +1,8 @@
+<!--
+Source: https://bun.com/docs/runtime/sql.md
+Downloaded: 2026-08-04T21:12:29.774Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://bun.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -545,13 +550,14 @@ These environment variables define the PostgreSQL connection:
 
 If no connection URL is provided, Bun checks these individual parameters:
 
-| Environment Variable | Fallback Variables           | Default Value | Description       |
-| -------------------- | ---------------------------- | ------------- | ----------------- |
-| `PGHOST`             | -                            | `localhost`   | Database host     |
-| `PGPORT`             | -                            | `5432`        | Database port     |
-| `PGUSERNAME`         | `PGUSER`, `USER`, `USERNAME` | `postgres`    | Database user     |
-| `PGPASSWORD`         | -                            | (empty)       | Database password |
-| `PGDATABASE`         | -                            | username      | Database name     |
+| Environment Variable | Fallback Variables           | Default Value | Description                                                                    |
+| -------------------- | ---------------------------- | ------------- | ------------------------------------------------------------------------------ |
+| `PGHOST`             | -                            | `localhost`   | Database host                                                                  |
+| `PGPORT`             | -                            | `5432`        | Database port                                                                  |
+| `PGUSERNAME`         | `PGUSER`, `USER`, `USERNAME` | `postgres`    | Database user                                                                  |
+| `PGPASSWORD`         | -                            | (empty)       | Database password                                                              |
+| `PGDATABASE`         | -                            | username      | Database name                                                                  |
+| `PGSSLMODE`          | -                            | `disable`     | SSL mode (`disable`, `allow`, `prefer`, `require`, `verify-ca`, `verify-full`) |
 
 ### SQLite Environment Variables
 

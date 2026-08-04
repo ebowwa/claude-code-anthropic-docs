@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/changelog/sdks.md
-Downloaded: 2026-07-31T21:03:55.557Z
+Downloaded: 2026-08-04T21:12:25.237Z
 -->
 
 > ## Documentation Index
@@ -13,25 +13,18 @@ Downloaded: 2026-07-31T21:03:55.557Z
 
 <Tabs>
   <Tab title="TypeScript">
-    ### `0.3.0-beta.1`
+    ### `0.3.0`
 
-    * Added Perps account notifications: `session.listNotifications()` with SDK-owned pagination and an optional `sinceSeq` backfill bound, `session.fetchUnreadNotificationsCount()`, `session.markNotificationsRead()` by ids or up to a notification, and the `notifications` session WebSocket channel emitting typed `notification` events.
-    * Perps fills pagination now forwards the API-native cursor and adds a `sort` direction option (`PerpsSortDirection`, newest-first by default). Previously issued SDK-encoded fills cursors are no longer decoded, and the fills-specific default one-day window is gone, so the API's own defaults apply.
-    * Deposit Wallet gasless and Collateral Return submits now self-heal nonce mismatches: when the relayer rejects a batch and reports the on-chain nonce, the batch is re-signed with that nonce and resubmitted once.
-
-    ### `0.3.0-beta.0`
-
-    * Added typed 30-second and 60-second Chainlink TWAP realtime subscriptions.
-    * Added the `DEPOSIT`, `WITHDRAWAL`, and `TAKER_REBATE` activity types, modeled as typed account-level activities. Activity responses containing these rows no longer fail validation.
-    * `RequestRejectedError` and `RateLimitError` now expose `retryAfter`, populated from the `Retry-After` response header, so callers can honor server-provided backoff.
-    * RFQ quote rejections now carry the granular Combos quote-validation error codes instead of a generic validation failure.
-    * Open order `createdAt` and `expiresAt` now parse epoch-seconds wire timestamps correctly instead of treating them as milliseconds.
-    * Cursor-paginated reads (open orders, account trades, earnings, builder lists) no longer populate `Page.totalCount` from the per-response `count`; that value was the current page's item count, not a total across all pages. Use the page items instead:
-
-    ```diff theme={null}
-    -const count = page.totalCount;
-    +const count = page.items.length;
-    ```
+    * Added typed 30-second and 60-second Chainlink TWAP realtime subscriptions. `subscribe` validates subscription input when called: an unsupported TWAP window throws `UserInputError` before the connection opens.
+    * Added Perps account notifications: `session.listNotifications()`, `session.fetchUnreadNotificationsCount()`, `session.markNotificationsRead()`, and a `notifications` session WebSocket channel with typed `notification` events.
+    * Perps fills pagination now uses the API-native cursor and adds a `sort` direction option (newest first by default). Previously issued SDK-encoded fills cursors no longer work.
+    * Added the `DEPOSIT`, `WITHDRAWAL`, and `TAKER_REBATE` activity types. `listActivity` now returns all activity types by default, including deposits and withdrawals.
+    * `RequestRejectedError` and `RateLimitError` now expose `retryAfter` from the `Retry-After` response header.
+    * Fixes:
+      * Open order `createdAt` and `expiresAt` now parse epoch-seconds wire timestamps correctly instead of treating them as milliseconds.
+      * RFQ quote rejections now carry the granular Combos quote-validation error codes instead of a generic validation failure.
+      * Deposit Wallet gasless and Collateral Return submits now self-heal nonce mismatches: when the relayer rejects a batch and reports the on-chain nonce, the SDK re-signs the batch with that nonce and resubmits it once.
+      * Cursor-paginated reads no longer report the per-page item count as `Page.totalCount`. Use `page.items.length` instead.
 
     ### `0.2.0`
 
@@ -222,19 +215,17 @@ Downloaded: 2026-07-31T21:03:55.557Z
   </Tab>
 
   <Tab title="Python">
-    ### `0.3.0b2`
-
-    * Added the `DEPOSIT`, `WITHDRAWAL`, and `TAKER_REBATE` activity types, modeled as typed account-level activities. Activity responses containing these rows no longer fail validation, and requesting the `DEPOSIT` or `WITHDRAWAL` type now returns those rows instead of the API excluding them by default.
-    * Deposit Wallet gasless and Collateral Return submits now self-heal nonce mismatches: when the relayer rejects a batch and reports the on-chain nonce, the batch is re-signed with that nonce and resubmitted once.
-
-    ### `0.3.0b1`
+    ### `0.3.0`
 
     * Added typed 30-second and 60-second Chainlink TWAP realtime subscriptions.
-    * Added Perps account notifications support: `session.list_notifications()` pages newest first, reports the account's `unread` count on each page, and accepts a `since_seq` backfill bound for catching up after a reconnect; `session.mark_notifications_read()` marks notifications read by ids or up to a notification entry; and the `notifications` session WebSocket channel emits typed `notification` events.
-    * Perps fills pagination now uses the API-native cursor, and `list_fills` accepts a `sort` direction: fills return newest first by default, pass `sort="asc"` for oldest first.
-    * RFQ quote rejections now carry the granular Combos quote-validation error codes instead of a generic validation failure.
-    * `RequestRejectedError` now exposes `retry_after`, the server-suggested delay in seconds taken from the `Retry-After` response header or a `retry_after_seconds` response field, so callers can honor server-provided backoff.
-    * Collateral Return operation `event_id` values are now typed as `EventId`; they carry the on-chain neg-risk event id.
+    * Added Perps account notifications: `session.list_notifications()` with the account's `unread` count on each page, `session.mark_notifications_read()`, and a `notifications` session WebSocket channel with typed `notification` events.
+    * Perps fills pagination now uses the API-native cursor, and `list_fills` accepts a `sort` direction (newest first by default).
+    * Added the `DEPOSIT`, `WITHDRAWAL`, and `TAKER_REBATE` activity types. `list_activity` now returns all activity types by default, including deposits and withdrawals.
+    * `RequestRejectedError` now exposes `retry_after` from the `Retry-After` response header or a `retry_after_seconds` response field.
+    * Fixes:
+      * RFQ quote rejections now carry the granular Combos quote-validation error codes instead of a generic validation failure.
+      * Deposit Wallet gasless and Collateral Return submits now self-heal nonce mismatches: when the relayer rejects a batch and reports the on-chain nonce, the SDK re-signs the batch with that nonce and resubmits it once.
+      * Collateral Return operation `event_id` values are now typed as `EventId`.
 
     ### `0.2.0`
 

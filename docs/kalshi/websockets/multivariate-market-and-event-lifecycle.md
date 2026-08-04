@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/websockets/multivariate-market-and-event-lifecycle.md
-Downloaded: 2026-07-29T20:55:56.945Z
+Downloaded: 2026-08-04T21:12:26.404Z
 -->
 
 > ## Documentation Index
@@ -213,6 +213,7 @@ operations:
                           - center_half_edge_deci_cent
                           - center_quint_edge_quint_cent
                           - center_quint_edge_deci_cent
+                          - center_centi_edge_centi_cent
                         x-parser-schema-id: <anonymous-schema-138>
                       price_ranges:
                         type: array

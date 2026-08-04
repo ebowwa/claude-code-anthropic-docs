@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/market-data/market-details.md
+Downloaded: 2026-08-04T21:12:25.239Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -877,6 +882,9 @@ time of the game.
     | `secondsDelay`  | integer | Delay, in seconds, before a newly placed marketable order can match. |
   </Tab>
 </Tabs>
+
+See [Place Orders](/trading/place-orders#place-a-market-order) for the
+implications of trading on a market with a configured delay.
 
 ## Liquidity and Activity
 

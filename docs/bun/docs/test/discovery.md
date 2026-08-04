@@ -1,3 +1,8 @@
+<!--
+Source: https://bun.com/docs/test/discovery.md
+Downloaded: 2026-08-04T21:12:29.776Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://bun.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -89,5 +94,5 @@ root = "src"  # Only scan for tests in the src directory
 
 Tests run in the following order:
 
-1. Test files run sequentially (not in parallel)
+1. Test files run sequentially, or across worker processes with [`--parallel`](/docs/test/parallel)
 2. Within each file, tests run sequentially in definition order

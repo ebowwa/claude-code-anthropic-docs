@@ -1,3 +1,8 @@
+<!--
+Source: https://code.claude.com/docs/en/claude-platform-on-aws.md
+Downloaded: 2026-08-04T21:12:39.738Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://code.claude.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -232,7 +237,7 @@ If your SSO credentials expire mid-session, configure [`awsAuthRefresh`](/docs/e
 }
 ```
 
-Claude Code also runs this command at startup when it can't validate your existing AWS credentials, and shows the command's output in an `Authentication` panel until the login completes. {/* min-version: 2.1.212 */}Before v2.1.212, the panel was titled `Cloud authentication`.
+Claude Code also runs this command at startup when it can't validate your existing AWS credentials, and shows the command's output in an `Authentication` panel until the login completes. Before v2.1.212, the panel was titled `Cloud authentication`.
 
 With `awsAuthRefresh` configured, `/login` shows a **Claude Platform on AWS · refresh credentials** option under **Using 3rd-party platforms**. Selecting it runs the configured command and re-reads your AWS credentials without restarting Claude Code.
 
@@ -270,7 +275,7 @@ Claude Platform on AWS is opt-in even when AWS credentials are present in your e
 
 Claude Platform on AWS uses the same model IDs as the direct Claude API.
 
-The default aliases `fable`, `opus`, `sonnet`, and `haiku` resolve to Claude Code's built-in defaults for Claude Platform on AWS, which can lag the newest release. Without `ANTHROPIC_DEFAULT_OPUS_MODEL`, the `opus` alias resolves to Opus 5. {/* min-version: 2.1.219 */}Before v2.1.219, it resolved to Opus 4.8, {/* min-version: 2.1.207 */}and before v2.1.207 to Opus 4.7.
+The default aliases `fable`, `opus`, `sonnet`, and `haiku` resolve to Claude Code's built-in defaults for Claude Platform on AWS, which can lag the newest release. Without `ANTHROPIC_DEFAULT_OPUS_MODEL`, the `opus` alias resolves to Opus 5. Before v2.1.219, it resolved to Opus 4.8, and before v2.1.207 to Opus 4.7.
 
 If you deploy Claude Code to a team, pin the model IDs explicitly so a new release doesn't move everyone at once:
 

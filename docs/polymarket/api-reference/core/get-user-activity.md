@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/api-reference/core/get-user-activity.md
+Downloaded: 2026-08-04T21:12:25.219Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -100,6 +105,18 @@ paths:
                 - MAKER_REBATE
                 - TAKER_REBATE
                 - REFERRAL_REWARD
+          description: >-
+            Comma-separated list of activity types to include. DEPOSIT and
+            WITHDRAWAL records also require `excludeDepositsWithdrawals=false`.
+        - in: query
+          name: excludeDepositsWithdrawals
+          schema:
+            type: boolean
+            default: true
+          description: >-
+            Excludes deposit and withdrawal records. The default `true` applies
+            even when `type` requests those records, so to get deposits and
+            withdrawals you must pass `false`.
         - in: query
           name: start
           schema:
