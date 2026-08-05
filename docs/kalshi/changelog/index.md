@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/changelog/index.md
-Downloaded: 2026-08-04T21:12:26.391Z
+Downloaded: 2026-08-05T21:08:42.225Z
 -->
 
 > ## Documentation Index
@@ -20,6 +20,20 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="August 6, 2026"
+  tags={["REST", "WebSocket", "Predictions"]}
+  rss={{
+title: "Multivariate lookup endpoint and channel removed",
+description: "The deprecated multivariate lookup REST endpoint and multivariate WebSocket channel have been removed."
+}}
+>
+  The deprecated multivariate lookup surface has been removed:
+
+  * `PUT /trade-api/v2/multivariate_event_collections/{collection_ticker}/lookup` no longer exists. This endpoint predated RFQs and had been marked deprecated; use `POST /trade-api/v2/multivariate_event_collections/{collection_ticker}` to create or resolve a combo market, or the communications (RFQ) APIs for quoting workflows.
+  * The `multivariate` WebSocket channel (message type `multivariate_lookup`) no longer exists. Subscriptions to it now return an unknown-channel error. For multivariate market state changes, use the `multivariate_market_lifecycle` channel.
+</Update>
 
 <Update
   label="August 17, 2026"
@@ -43,6 +57,31 @@ description: "Combo markets are moving from $0.001 to $0.0001 ticks via a new pr
   emitting the existing `price_level_structure_updated` event with its new
   `price_ranges`. See [Fixed-Point Representation](/getting_started/fixed_point_migration)
   for the full structure reference.
+</Update>
+
+<Update
+  label="August 13, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Intra-account transfer history endpoints",
+description: "New endpoints to track intra-exchange transfers."
+}}
+>
+  Adding APIs to track intra-exchange account transfers:
+
+  * `GET /portfolio/intra_exchange_instance_transfers` (paginated history)
+  * `GET /portfolio/intra_exchange_instance_transfers/{transfer_id}`
+</Update>
+
+<Update
+  label="August 6, 2026"
+  tags={["FIX", "Predictions", "Margin"]}
+  rss={{
+title: "FIX execution reports identify the source exchange index",
+description: "Order and trade execution reports now include LastMkt with the source exchange index."
+}}
+>
+  Exchange-generated order and trade `ExecutionReport (35=8)` messages now include `LastMkt<30>` with the source exchange index.
 </Update>
 
 <Update

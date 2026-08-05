@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/feature-availability.md
-Downloaded: 2026-08-04T21:12:39.745Z
+Downloaded: 2026-08-05T21:08:52.666Z
 -->
 
 > ## Documentation Index
@@ -50,7 +50,7 @@ These require signing in with a claude.ai account and are not reachable with an 
 * [Claude Code on the web](/docs/en/claude-code-on-the-web), Claude Code on mobile, and [Claude Code in Slack](/docs/en/slack)
 * [Claude Code Desktop](/docs/en/desktop)
 * [Routines](/docs/en/routines) (`/schedule`)
-* [Ultraplan](/docs/en/ultraplan) and [Ultrareview](/docs/en/ultrareview)
+* [Ultrareview](/docs/en/ultrareview)
 * [Code Review](/docs/en/code-review): Team and Enterprise plans
 * [Remote Control](/docs/en/remote-control)
 * [Chrome extension](/docs/en/chrome)

@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/market-data/discover-markets.md
+Downloaded: 2026-08-05T21:08:42.745Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -838,7 +843,7 @@ Fetch a series by ID.
 
 ## Sports
 
-Sports metadata maps a sport to its Polymarket tags and market types. Use it to browse sports markets by league, look up the valid market types for filtering, or resolve team rosters.
+Sports metadata maps a sport to its Polymarket tags and market types. Use it to browse sports markets by league, look up the valid market types for filtering, find events associated with a game, or resolve team rosters.
 
 ### List Sports
 
@@ -905,12 +910,13 @@ Sports metadata maps a sport to its Polymarket tags and market types. Use it to 
 
 ### Sports Market Types
 
-A sports market's `sportsMarketType` field tells you which line it prices: a moneyline (which team wins), a spread (win by how much), or a total (over/under a combined score). Fetch the valid values, then pass one or more of them to `listMarkets` to filter.
+Every sports market carries a market type that tells you which line it prices: a moneyline (which team wins), a spread (win by how much), or a total (over/under a combined score). Fetch the valid values, then pass one or more of them when listing markets to filter.
 
 <Tabs>
   <Tab title="TypeScript">
     Call `fetchSportsMarketTypes()` on a `PublicClient` or `SecureClient` to list the
-    supported market types.
+    supported market types. When present, a market reports its type in
+    `sports.sportsMarketType`.
 
     ```ts theme={null}
     const { marketTypes } = await client.fetchSportsMarketTypes();
@@ -944,7 +950,8 @@ A sports market's `sportsMarketType` field tells you which line it prices: a mon
   <Tab title="Python">
     Call `get_sports_market_types()` on an `AsyncPublicClient` or
     `AsyncSecureClient` to list the supported market types. The synchronous
-    `PublicClient` and `SecureClient` provide the same method.
+    `PublicClient` and `SecureClient` provide the same method. Each market
+    reports its type in `sports.sports_market_type` when present.
 
     ```python theme={null}
     market_types = await client.get_sports_market_types()
@@ -975,7 +982,8 @@ A sports market's `sportsMarketType` field tells you which line it prices: a mon
   </Tab>
 
   <Tab title="API">
-    List supported sports market types:
+    List supported sports market types. When present, a market reports its type in
+    `sportsMarketType`:
 
     ```bash theme={null}
     curl "https://gamma-api.polymarket.com/sports/market-types"
@@ -994,6 +1002,230 @@ A sports market's `sportsMarketType` field tells you which line it prices: a mon
     ```bash theme={null}
     curl "https://gamma-api.polymarket.com/markets/keyset?sports_market_types=spreads&closed=false&limit=20"
     ```
+  </Tab>
+</Tabs>
+
+### List Events for a Game
+
+A sports game's markets can be split across a main event and companion events. Depending on the game, companion events may cover player props, half-time and second-half results, exact score, or additional lines grouped under a more-markets event. Their slugs extend the main event's slug with a suffix such as `-player-props`, `-halftime-result`, or `-more-markets`.
+
+Append a known suffix when you need one companion event. To discover current companion events, use the listing workflow instead of guessing each suffix.
+
+<Tabs>
+  <Tab title="TypeScript">
+    Call `fetchEvent()` on a `PublicClient` or `SecureClient`. To fetch only the
+    more-markets event, append `-more-markets` to the main event's slug.
+
+    ```ts theme={null}
+    const mainSlug = "mls-chi-vwh-2026-07-16";
+
+    const moreMarkets = await client.fetchEvent({
+      slug: `${mainSlug}-more-markets`,
+    });
+    ```
+
+    To list the game's current events, fetch the main event and read `sports.gameId`, then
+    pass it to `listEvents()`. Not every event has a game ID, so check it before filtering.
+
+    ```ts theme={null}
+    const mainSlug = "mls-chi-vwh-2026-07-16";
+    const game = await client.fetchEvent({ slug: mainSlug });
+    const gameId = game.sports.gameId;
+
+    if (gameId == null) {
+      throw new Error("Event does not have a game ID");
+    }
+
+    const pages = client.listEvents({ gameIds: [gameId], pageSize: 20 });
+
+    for await (const page of pages) {
+      // page.items: Event[]
+    }
+    ```
+
+    <Accordion title="Output: Event Page">
+      ```json Example theme={null}
+      {
+        "items": [
+          {
+            "id": "662915",
+            "slug": "mls-chi-vwh-2026-07-16",
+            "title": "Chicago Fire FC vs. Vancouver Whitecaps FC"
+          },
+          {
+            "id": "662970",
+            "slug": "mls-chi-vwh-2026-07-16-halftime-result",
+            "title": "Chicago Fire FC vs. Vancouver Whitecaps FC - Halftime Result"
+          },
+          {
+            "id": "662972",
+            "slug": "mls-chi-vwh-2026-07-16-second-half-result",
+            "title": "Chicago Fire FC vs. Vancouver Whitecaps FC - Second Half Result"
+          },
+          {
+            "id": "662974",
+            "slug": "mls-chi-vwh-2026-07-16-exact-score",
+            "title": "Chicago Fire FC vs. Vancouver Whitecaps FC - Exact Score"
+          },
+          {
+            "id": "662976",
+            "slug": "mls-chi-vwh-2026-07-16-first-to-score",
+            "title": "Chicago Fire FC vs. Vancouver Whitecaps FC - First Team to Score"
+          },
+          {
+            "id": "663131",
+            "slug": "mls-chi-vwh-2026-07-16-more-markets",
+            "title": "Chicago Fire FC vs. Vancouver Whitecaps FC - More Markets"
+          }
+        ],
+        "hasMore": false
+      }
+      ```
+    </Accordion>
+
+    When present, `market.sports.sportsMarketType` identifies lines in the more-markets
+    event such as `first_half_totals`, `both_teams_to_score`, and `soccer_team_totals`.
+  </Tab>
+
+  <Tab title="Python">
+    Call `get_event()` on an `AsyncPublicClient` or `AsyncSecureClient`. To fetch only the
+    more-markets event, append `-more-markets` to the main event's slug. The synchronous
+    `PublicClient` and `SecureClient` provide the same method.
+
+    ```python theme={null}
+    main_slug = "mls-chi-vwh-2026-07-16"
+
+    more_markets = await client.get_event(slug=f"{main_slug}-more-markets")
+    ```
+
+    To list the game's current events, fetch the main event and read `sports.game_id`, then
+    pass it to `list_events()`. Not every event has a game ID, so check it before filtering.
+
+    ```python theme={null}
+    main_slug = "mls-chi-vwh-2026-07-16"
+    game = await client.get_event(slug=main_slug)
+    game_id = game.sports.game_id
+
+    if game_id is None:
+        raise ValueError("Event does not have a game ID")
+
+    pages = client.list_events(game_ids=[game_id], page_size=20)
+
+    async for page in pages:
+        ...  # page.items: tuple[Event, ...]
+    ```
+
+    <Accordion title="Output: Event Page">
+      ```json Example theme={null}
+      {
+        "items": [
+          {
+            "id": "662915",
+            "slug": "mls-chi-vwh-2026-07-16",
+            "title": "Chicago Fire FC vs. Vancouver Whitecaps FC"
+          },
+          {
+            "id": "662970",
+            "slug": "mls-chi-vwh-2026-07-16-halftime-result",
+            "title": "Chicago Fire FC vs. Vancouver Whitecaps FC - Halftime Result"
+          },
+          {
+            "id": "662972",
+            "slug": "mls-chi-vwh-2026-07-16-second-half-result",
+            "title": "Chicago Fire FC vs. Vancouver Whitecaps FC - Second Half Result"
+          },
+          {
+            "id": "662974",
+            "slug": "mls-chi-vwh-2026-07-16-exact-score",
+            "title": "Chicago Fire FC vs. Vancouver Whitecaps FC - Exact Score"
+          },
+          {
+            "id": "662976",
+            "slug": "mls-chi-vwh-2026-07-16-first-to-score",
+            "title": "Chicago Fire FC vs. Vancouver Whitecaps FC - First Team to Score"
+          },
+          {
+            "id": "663131",
+            "slug": "mls-chi-vwh-2026-07-16-more-markets",
+            "title": "Chicago Fire FC vs. Vancouver Whitecaps FC - More Markets"
+          }
+        ],
+        "has_more": false
+      }
+      ```
+    </Accordion>
+
+    When present, `market.sports.sports_market_type` identifies lines in the more-markets
+    event such as `first_half_totals`, `both_teams_to_score`, and `soccer_team_totals`.
+  </Tab>
+
+  <Tab title="API">
+    To fetch only the more-markets event, append `-more-markets` to the main event's slug:
+
+    ```bash theme={null}
+    curl "https://gamma-api.polymarket.com/events/slug/mls-chi-vwh-2026-07-16-more-markets"
+    ```
+
+    To list the game's current events, fetch the main event and read its `gameId`:
+
+    ```bash theme={null}
+    curl "https://gamma-api.polymarket.com/events/slug/mls-chi-vwh-2026-07-16"
+    ```
+
+    Pass the ID as `game_id`:
+
+    ```bash theme={null}
+    curl "https://gamma-api.polymarket.com/events/keyset?game_id=90104306&limit=20"
+    ```
+
+    <Accordion title="Output: Events Page">
+      ```json Example theme={null}
+      {
+        "events": [
+          {
+            "id": "662915",
+            "slug": "mls-chi-vwh-2026-07-16",
+            "title": "Chicago Fire FC vs. Vancouver Whitecaps FC",
+            "gameId": 90104306
+          },
+          {
+            "id": "662970",
+            "slug": "mls-chi-vwh-2026-07-16-halftime-result",
+            "title": "Chicago Fire FC vs. Vancouver Whitecaps FC - Halftime Result",
+            "gameId": 90104306
+          },
+          {
+            "id": "662972",
+            "slug": "mls-chi-vwh-2026-07-16-second-half-result",
+            "title": "Chicago Fire FC vs. Vancouver Whitecaps FC - Second Half Result",
+            "gameId": 90104306
+          },
+          {
+            "id": "662974",
+            "slug": "mls-chi-vwh-2026-07-16-exact-score",
+            "title": "Chicago Fire FC vs. Vancouver Whitecaps FC - Exact Score",
+            "gameId": 90104306
+          },
+          {
+            "id": "662976",
+            "slug": "mls-chi-vwh-2026-07-16-first-to-score",
+            "title": "Chicago Fire FC vs. Vancouver Whitecaps FC - First Team to Score",
+            "gameId": 90104306
+          },
+          {
+            "id": "663131",
+            "slug": "mls-chi-vwh-2026-07-16-more-markets",
+            "title": "Chicago Fire FC vs. Vancouver Whitecaps FC - More Markets",
+            "gameId": 90104306
+          }
+        ]
+      }
+      ```
+    </Accordion>
+
+    If the response includes `next_cursor`, pass it as `after_cursor` in the next request.
+    When present, `market.sportsMarketType` identifies lines in the more-markets event such
+    as `first_half_totals`, `both_teams_to_score`, and `soccer_team_totals`.
   </Tab>
 </Tabs>
 

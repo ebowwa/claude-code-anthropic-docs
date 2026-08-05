@@ -1,8 +1,3 @@
-<!--
-Source: https://code.claude.com/docs/en/claude-apps-gateway-on-aws.md
-Downloaded: 2026-07-29T20:57:17.729Z
--->
-
 > ## Documentation Index
 > Fetch the complete documentation index at: https://code.claude.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.

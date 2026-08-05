@@ -1,21 +1,21 @@
 <!--
-Source: https://docs.kalshi.com/api-reference/portfolio/get-deposits.md
-Downloaded: 2026-08-05T21:08:42.222Z
+Source: https://docs.kalshi.com/api-reference/portfolio/get-intra-account-transfers.md
+Downloaded: 2026-08-05T21:08:42.223Z
 -->
 
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get Deposits
+# Get Intra Account Transfers
 
-> Endpoint for getting the member's deposit history.
+> Endpoint for fetching intra-exchange account transfer history.
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml get /portfolio/deposits
+````yaml /openapi.yaml get /portfolio/intra_exchange_instance_transfers
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -65,23 +65,23 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/deposits:
+  /portfolio/intra_exchange_instance_transfers:
     get:
       tags:
         - portfolio
-      summary: Get Deposits
-      description: Endpoint for getting the member's deposit history.
-      operationId: GetDeposits
+      summary: Get Intra Account Transfers
+      description: Endpoint for fetching intra-exchange account transfer history.
+      operationId: GetIntraExchangeInstanceTransfers
       parameters:
-        - $ref: '#/components/parameters/WithdrawalLimitQuery'
+        - $ref: '#/components/parameters/TransfersLimitQuery'
         - $ref: '#/components/parameters/CursorQuery'
       responses:
         '200':
-          description: Deposits retrieved successfully
+          description: Transfers retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetDepositsResponse'
+                $ref: '#/components/schemas/GetIntraExchangeInstanceTransfersResponse'
         '400':
           $ref: '#/components/responses/BadRequestError'
         '401':
@@ -94,7 +94,7 @@ paths:
           kalshiAccessTimestamp: []
 components:
   parameters:
-    WithdrawalLimitQuery:
+    TransfersLimitQuery:
       name: limit
       in: query
       description: Number of results per page. Defaults to 100. Maximum value is 500.
@@ -104,6 +104,7 @@ components:
         minimum: 1
         maximum: 500
         default: 100
+        x-go-type-skip-optional-pointer: true
         x-oapi-codegen-extra-tags:
           validate: omitempty,min=1,max=500
     CursorQuery:
@@ -117,73 +118,56 @@ components:
         type: string
         x-go-type-skip-optional-pointer: true
   schemas:
-    GetDepositsResponse:
+    GetIntraExchangeInstanceTransfersResponse:
       type: object
       required:
-        - deposits
+        - transfers
       properties:
-        deposits:
+        transfers:
           type: array
           items:
-            $ref: '#/components/schemas/Deposit'
+            $ref: '#/components/schemas/IntraExchangeInstanceTransfer'
         cursor:
           type: string
-    Deposit:
+          description: >-
+            Cursor for the next page of results. Omitted when there are no
+            further pages.
+    IntraExchangeInstanceTransfer:
       type: object
       required:
-        - id
+        - transfer_id
+        - source
+        - destination
+        - source_exchange_shard
+        - destination_exchange_shard
+        - amount
         - status
-        - type
-        - amount_cents
-        - fee_cents
         - created_ts
       properties:
-        id:
+        transfer_id:
           type: string
-          description: Unique identifier for the deposit.
+          description: Unique transfer id
+        source:
+          $ref: '#/components/schemas/ExchangeInstance'
+          description: Source exchange instance
+        destination:
+          $ref: '#/components/schemas/ExchangeInstance'
+          description: Destination exchange instance
+        source_exchange_shard:
+          type: integer
+          description: Source exchange shard index
+        destination_exchange_shard:
+          type: integer
+          description: Destination exchange shard index
+        amount:
+          $ref: '#/components/schemas/FixedPointDollars'
+          description: Transfer amount in dollars
         status:
-          type: string
-          enum:
-            - pending
-            - applied
-            - failed
-            - returned
-          x-enum-varnames:
-            - DepositStatusPending
-            - DepositStatusApplied
-            - DepositStatusFailed
-            - DepositStatusReturned
-          description: >-
-            Current status of the deposit. 'applied' means funds are reflected
-            in balance.
-        type:
-          type: string
-          enum:
-            - ach
-            - wire
-            - crypto
-            - debit
-            - apm
-          description: Payment method used for the deposit.
-        amount_cents:
-          type: integer
-          format: int64
-          description: Deposit amount in cents.
-        fee_cents:
-          type: integer
-          format: int64
-          description: Fee charged for the deposit in cents.
+          $ref: '#/components/schemas/IntraExchangeInstanceTransferStatus'
         created_ts:
           type: integer
           format: int64
-          description: Unix timestamp of when the deposit was created.
-        finalized_ts:
-          type: integer
-          format: int64
-          nullable: true
-          description: >-
-            Unix timestamp of when the deposit was finalized (applied, failed,
-            or returned).
+          description: Unix timestamp when the transfer was created
     ErrorResponse:
       type: object
       properties:
@@ -196,6 +180,29 @@ components:
         details:
           type: string
           description: Additional details about the error, if available
+    ExchangeInstance:
+      type: string
+      enum:
+        - event_contract
+        - margined
+      description: The exchange instance type
+    FixedPointDollars:
+      type: string
+      description: >-
+        US dollar amount as a fixed-point decimal string with up to 6 decimal
+        places of precision. This is the maximum supported precision; valid
+        quote intervals for a given market are constrained by that market's
+        price level structure.
+      example: '0.5600'
+    IntraExchangeInstanceTransferStatus:
+      type: string
+      enum:
+        - pending
+        - complete
+      x-enum-varnames:
+        - IntraExchangeInstanceTransferStatusPending
+        - IntraExchangeInstanceTransferStatusComplete
+      description: Transfer status.
   responses:
     BadRequestError:
       description: Bad request - invalid input

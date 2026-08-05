@@ -1,21 +1,21 @@
 <!--
-Source: https://docs.kalshi.com/api-reference/portfolio/get-deposits.md
-Downloaded: 2026-08-05T21:08:42.222Z
+Source: https://docs.kalshi.com/api-reference/portfolio/get-intra-account-transfer.md
+Downloaded: 2026-08-05T21:08:42.223Z
 -->
 
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get Deposits
+# Get Intra Account Transfer
 
-> Endpoint for getting the member's deposit history.
+> Endpoint for getting a single intra-account transfer by id.
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml get /portfolio/deposits
+````yaml /openapi.yaml get /portfolio/intra_exchange_instance_transfers/{transfer_id}
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -65,27 +65,31 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/deposits:
+  /portfolio/intra_exchange_instance_transfers/{transfer_id}:
     get:
       tags:
         - portfolio
-      summary: Get Deposits
-      description: Endpoint for getting the member's deposit history.
-      operationId: GetDeposits
+      summary: Get Intra Account Transfer
+      description: Endpoint for getting a single intra-account transfer by id.
+      operationId: GetIntraExchangeInstanceTransfer
       parameters:
-        - $ref: '#/components/parameters/WithdrawalLimitQuery'
-        - $ref: '#/components/parameters/CursorQuery'
+        - name: transfer_id
+          in: path
+          required: true
+          description: Transfer id returned by creation endpoint
+          schema:
+            type: string
       responses:
         '200':
-          description: Deposits retrieved successfully
+          description: The requested transfer
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/GetDepositsResponse'
-        '400':
-          $ref: '#/components/responses/BadRequestError'
+                $ref: '#/components/schemas/GetIntraExchangeInstanceTransferResponse'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
+        '404':
+          $ref: '#/components/responses/NotFoundError'
         '500':
           $ref: '#/components/responses/InternalServerError'
       security:
@@ -93,97 +97,50 @@ paths:
           kalshiAccessSignature: []
           kalshiAccessTimestamp: []
 components:
-  parameters:
-    WithdrawalLimitQuery:
-      name: limit
-      in: query
-      description: Number of results per page. Defaults to 100. Maximum value is 500.
-      schema:
-        type: integer
-        format: int64
-        minimum: 1
-        maximum: 500
-        default: 100
-        x-oapi-codegen-extra-tags:
-          validate: omitempty,min=1,max=500
-    CursorQuery:
-      name: cursor
-      in: query
-      description: >-
-        Pagination cursor. Use the cursor value returned from the previous
-        response to get the next page of results. Leave empty for the first
-        page.
-      schema:
-        type: string
-        x-go-type-skip-optional-pointer: true
   schemas:
-    GetDepositsResponse:
+    GetIntraExchangeInstanceTransferResponse:
       type: object
       required:
-        - deposits
+        - transfer
       properties:
-        deposits:
-          type: array
-          items:
-            $ref: '#/components/schemas/Deposit'
-        cursor:
-          type: string
-    Deposit:
+        transfer:
+          $ref: '#/components/schemas/IntraExchangeInstanceTransfer'
+    IntraExchangeInstanceTransfer:
       type: object
       required:
-        - id
+        - transfer_id
+        - source
+        - destination
+        - source_exchange_shard
+        - destination_exchange_shard
+        - amount
         - status
-        - type
-        - amount_cents
-        - fee_cents
         - created_ts
       properties:
-        id:
+        transfer_id:
           type: string
-          description: Unique identifier for the deposit.
+          description: Unique transfer id
+        source:
+          $ref: '#/components/schemas/ExchangeInstance'
+          description: Source exchange instance
+        destination:
+          $ref: '#/components/schemas/ExchangeInstance'
+          description: Destination exchange instance
+        source_exchange_shard:
+          type: integer
+          description: Source exchange shard index
+        destination_exchange_shard:
+          type: integer
+          description: Destination exchange shard index
+        amount:
+          $ref: '#/components/schemas/FixedPointDollars'
+          description: Transfer amount in dollars
         status:
-          type: string
-          enum:
-            - pending
-            - applied
-            - failed
-            - returned
-          x-enum-varnames:
-            - DepositStatusPending
-            - DepositStatusApplied
-            - DepositStatusFailed
-            - DepositStatusReturned
-          description: >-
-            Current status of the deposit. 'applied' means funds are reflected
-            in balance.
-        type:
-          type: string
-          enum:
-            - ach
-            - wire
-            - crypto
-            - debit
-            - apm
-          description: Payment method used for the deposit.
-        amount_cents:
-          type: integer
-          format: int64
-          description: Deposit amount in cents.
-        fee_cents:
-          type: integer
-          format: int64
-          description: Fee charged for the deposit in cents.
+          $ref: '#/components/schemas/IntraExchangeInstanceTransferStatus'
         created_ts:
           type: integer
           format: int64
-          description: Unix timestamp of when the deposit was created.
-        finalized_ts:
-          type: integer
-          format: int64
-          nullable: true
-          description: >-
-            Unix timestamp of when the deposit was finalized (applied, failed,
-            or returned).
+          description: Unix timestamp when the transfer was created
     ErrorResponse:
       type: object
       properties:
@@ -196,15 +153,38 @@ components:
         details:
           type: string
           description: Additional details about the error, if available
+    ExchangeInstance:
+      type: string
+      enum:
+        - event_contract
+        - margined
+      description: The exchange instance type
+    FixedPointDollars:
+      type: string
+      description: >-
+        US dollar amount as a fixed-point decimal string with up to 6 decimal
+        places of precision. This is the maximum supported precision; valid
+        quote intervals for a given market are constrained by that market's
+        price level structure.
+      example: '0.5600'
+    IntraExchangeInstanceTransferStatus:
+      type: string
+      enum:
+        - pending
+        - complete
+      x-enum-varnames:
+        - IntraExchangeInstanceTransferStatusPending
+        - IntraExchangeInstanceTransferStatusComplete
+      description: Transfer status.
   responses:
-    BadRequestError:
-      description: Bad request - invalid input
+    UnauthorizedError:
+      description: Unauthorized - authentication required
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
-    UnauthorizedError:
-      description: Unauthorized - authentication required
+    NotFoundError:
+      description: Resource not found
       content:
         application/json:
           schema:

@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/portfolio/intra-account-transfer.md
-Downloaded: 2026-07-30T21:10:12.820Z
+Downloaded: 2026-08-05T21:08:42.224Z
 -->
 
 > ## Documentation Index
@@ -118,14 +118,22 @@ components:
           description: The amount to transfer in centicents
         source_exchange_shard:
           type: integer
+          minimum: 0
+          maximum: 100
           default: 0
           x-go-type-skip-optional-pointer: true
           description: Source exchange shard index (default 0)
+          x-oapi-codegen-extra-tags:
+            validate: gte=0,lte=100
         destination_exchange_shard:
           type: integer
+          minimum: 0
+          maximum: 100
           default: 0
           x-go-type-skip-optional-pointer: true
           description: Destination exchange shard index (default 0)
+          x-oapi-codegen-extra-tags:
+            validate: gte=0,lte=100
     IntraExchangeInstanceTransferResponse:
       type: object
       required:

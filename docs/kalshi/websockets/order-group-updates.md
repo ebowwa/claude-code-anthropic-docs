@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/websockets/order-group-updates.md
-Downloaded: 2026-07-29T20:55:56.945Z
+Downloaded: 2026-08-05T21:08:42.236Z
 -->
 
 > ## Documentation Index
@@ -124,7 +124,7 @@ operations:
             type:
               type: string
               const: order_group_updates
-              x-parser-schema-id: <anonymous-schema-256>
+              x-parser-schema-id: <anonymous-schema-247>
             sid:
               type: integer
               description: >-
@@ -156,25 +156,25 @@ operations:
                     - reset
                     - deleted
                     - limit_updated
-                  x-parser-schema-id: <anonymous-schema-258>
+                  x-parser-schema-id: <anonymous-schema-249>
                 order_group_id:
                   type: string
                   description: Order group identifier
-                  x-parser-schema-id: <anonymous-schema-259>
+                  x-parser-schema-id: <anonymous-schema-250>
                 contracts_limit_fp:
                   type: string
                   description: >-
                     Updated contracts limit in fixed-point (2 decimals). Present
                     for "created" and "limit_updated" events only.
-                  x-parser-schema-id: <anonymous-schema-260>
+                  x-parser-schema-id: <anonymous-schema-251>
                 ts_ms:
                   type: integer
                   format: int64
                   description: >-
                     Matching engine timestamp at which the event was processed,
                     as Unix epoch milliseconds.
-                  x-parser-schema-id: <anonymous-schema-261>
-              x-parser-schema-id: <anonymous-schema-257>
+                  x-parser-schema-id: <anonymous-schema-252>
+              x-parser-schema-id: <anonymous-schema-248>
           x-parser-schema-id: orderGroupUpdatesPayload
         title: Order Group Updates
         description: Order group lifecycle and limit updates for authenticated user
