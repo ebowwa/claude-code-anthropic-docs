@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/plugins-reference.md
-Downloaded: 2026-08-05T21:08:52.673Z
+Downloaded: 2026-08-07T00:52:31.639Z
 -->
 
 > ## Documentation Index
@@ -1021,10 +1021,6 @@ claude plugin prune [options]
 **Aliases:** `autoremove`
 
 The command lists orphaned dependencies and asks for confirmation before removing them. To remove a plugin and clean up its dependencies in one step, run `claude plugin uninstall <plugin> --prune`.
-
-<Note>
-  `claude plugin prune` requires Claude Code v2.1.121 or later.
-</Note>
 
 ### plugin enable
 

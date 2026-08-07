@@ -1,3 +1,8 @@
+<!--
+Source: https://bun.com/docs/runtime/file-types.md
+Downloaded: 2026-08-07T00:52:34.804Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://bun.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -8,7 +13,7 @@
 
 The Bun bundler implements a set of default loaders. As a rule of thumb, the bundler and the runtime support the same set of file types.
 
-`.js` `.cjs` `.mjs` `.mts` `.cts` `.ts` `.tsx` `.jsx` `.css` `.json` `.jsonc` `.json5` `.toml` `.yaml` `.yml` `.txt` `.wasm` `.node` `.html` `.sh`
+`.js` `.cjs` `.mjs` `.mts` `.cts` `.ts` `.tsx` `.jsx` `.css` `.json` `.jsonc` `.json5` `.toml` `.yaml` `.yml` `.xml` `.txt` `.wasm` `.node` `.html` `.sh`
 
 Bun uses the file extension to pick the built-in *loader* that parses the file. Every loader has a name, such as `js`, `tsx`, or `json`. These names are used when building [plugins](/docs/bundler/plugins) that extend Bun with custom loaders.
 
@@ -235,6 +240,55 @@ If a `.json5` file is passed as an entrypoint, it is converted to a `.js` module
     name: "John Doe",
     age: 35,
     email: "johndoe@example.com",
+  };
+  ```
+</CodeGroup>
+
+### `xml`
+
+**XML loader**. Default for `.xml`.
+
+XML files can be directly imported. Bun parses them with its native XML 1.0 parser into the compact object shape of [`Bun.XML.parse`](/docs/runtime/xml): one key for the root element, `"@name"` keys for attributes, arrays for repeated child elements, `"#text"` for text next to attributes or children, and every value a string.
+
+```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+import doc from "./config.xml";
+console.log(doc.config["@version"]);
+
+// via import attribute:
+import feed from "./export.rss" with { type: "xml" };
+```
+
+During bundling, the parsed XML is inlined into the bundle as a JavaScript object.
+
+```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+var doc = {
+  config: {
+    "@version": "2",
+    // ...other fields
+  },
+};
+```
+
+If a `.xml` file is passed as an entrypoint, it is converted to a `.js` module that `export default`s the parsed object.
+
+<CodeGroup>
+  ```xml Input theme={"theme":{"light":"github-light","dark":"dracula"}}
+  <user id="1">
+    <name>John Doe</name>
+    <email>johndoe@example.com</email>
+    <role>admin</role>
+    <role>editor</role>
+  </user>
+  ```
+
+  ```ts Output theme={"theme":{"light":"github-light","dark":"dracula"}}
+  export default {
+    user: {
+      "@id": "1",
+      name: "John Doe",
+      email: "johndoe@example.com",
+      role: ["admin", "editor"],
+    },
   };
   ```
 </CodeGroup>

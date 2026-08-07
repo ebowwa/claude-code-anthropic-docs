@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-portfolio.md
-Downloaded: 2026-07-31T21:03:55.542Z
+Downloaded: 2026-08-07T00:52:23.802Z
 -->
 
 > ## Documentation Index
@@ -227,7 +227,15 @@ components:
       description: Whether to use cross margin mode
     initial_margin:
       type: string
-      description: Initial margin in USD
+      description: |
+        Current collateral backing the position. For cross positions, this is
+        the required initial margin based on position size, mark price, the
+        applicable risk tier, and configured leverage. For isolated positions,
+        this is the position's current equity: signed allocated margin plus
+        unrealized PnL minus settled funding.
+
+        The legacy `initial_margin` name is retained for API compatibility;
+        `margin` would more accurately describe the field.
       example: '10.00'
     maintenance_margin_amount:
       type: string
@@ -247,7 +255,9 @@ components:
       example: '-0.01'
     return_on_equity:
       type: string
-      description: Return on equity as a decimal
+      description: >-
+        Unrealized PnL divided by the position's current required initial
+        margin, as a decimal.
       example: '-0.0027'
     cumulative_funding:
       type: string
@@ -276,7 +286,9 @@ components:
         (`401`/`404`/`429`/`500`) this is a stable, machine-readable snake_case
         identifier that is part of the API contract and safe to branch on, e.g.
         `insufficient_margin`, `insufficient_balance`, `order_not_found`,
-        `reduce_only_invalid`, `price_outside_bounds`, `unauthorized`,
+        `reduce_only_invalid`, `price_outside_bounds`, `position_not_found`,
+        `invalid_margin_mode`, `invalid_margin_amount`,
+        `margin_below_required_initial`, `account_liquidating`, `unauthorized`,
         `not_found`. For `400` it is a human-readable validation detail whose
         wording may change. See the Error handling guide for the domain
         identifiers. (Post-only / Fill-or-Kill outcomes are order statuses such

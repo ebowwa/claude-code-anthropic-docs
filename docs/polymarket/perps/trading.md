@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/perps/trading.md
+Downloaded: 2026-08-07T00:52:23.821Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -2114,6 +2119,109 @@ change.
     </Steps>
   </Tab>
 </Tabs>
+
+## Adjust Isolated Margin
+
+Adjust the collateral allocated to an open position when you want to give it
+more buffer or release collateral that is no longer needed.
+
+<Tabs>
+  <Tab title="TypeScript">
+    Use `updateMargin` on the authenticated Perps session.
+
+    <CodeGroup>
+      ```ts Add Margin theme={null}
+      await session.updateMargin({
+        instrumentId: instrument.id,
+        amount: "100.00",
+      });
+      ```
+
+      ```ts Remove Margin theme={null}
+      await session.updateMargin({
+        instrumentId: instrument.id,
+        amount: "-25.00",
+      });
+      ```
+    </CodeGroup>
+  </Tab>
+
+  <Tab title="Python">
+    Use `update_margin` on the authenticated Perps session.
+
+    <CodeGroup>
+      ```python Add Margin theme={null}
+      await session.update_margin(
+          instrument_id=instrument.id,
+          amount="100.00",
+      )
+      ```
+
+      ```python Remove Margin theme={null}
+      await session.update_margin(
+          instrument_id=instrument.id,
+          amount="-25.00",
+      )
+      ```
+    </CodeGroup>
+  </Tab>
+
+  <Tab title="API">
+    Submit a signed `updateMargin` operation to `PATCH /v1/trade/margin`. Use the
+    same signing flow as [Place Orders](#place-orders), and sign this compact
+    operation for each request:
+
+    ```ts theme={null}
+    ["updateMargin", [iid, amt]];
+    ```
+
+    <CodeGroup>
+      ```bash Add Margin theme={null}
+      curl -X PATCH "https://api.perpetuals.polymarket.com/v1/trade/margin" \
+        -H "content-type: application/json" \
+        -d '{
+          "op": {
+            "type": "updateMargin",
+            "args": {
+              "iid": 1,
+              "amt": "100.00"
+            }
+          },
+          "sig": "<margin_signature>",
+          "salt": 444444444,
+          "ts": 1767000013000
+        }'
+      ```
+
+      ```bash Remove Margin theme={null}
+      curl -X PATCH "https://api.perpetuals.polymarket.com/v1/trade/margin" \
+        -H "content-type: application/json" \
+        -d '{
+          "op": {
+            "type": "updateMargin",
+            "args": {
+              "iid": 1,
+              "amt": "-25.00"
+            }
+          },
+          "sig": "<margin_signature>",
+          "salt": 444444445,
+          "ts": 1767000013001
+        }'
+      ```
+    </CodeGroup>
+
+    The response uses the generic `{ "status": "ok" }` or `{ "status": "err",
+        "error": string }` shape.
+  </Tab>
+</Tabs>
+
+The amount is a precision-safe decimal string in the instrument's quote asset.
+A positive value adds isolated margin; a negative value removes it. This
+workflow applies only to an open position using isolated margin.
+
+For allocation and removal constraints, see [Adjusting Isolated
+Margin](/perps/learn-about-trading/margin#adjusting-isolated-margin).
 
 ## Reconcile Trade State
 

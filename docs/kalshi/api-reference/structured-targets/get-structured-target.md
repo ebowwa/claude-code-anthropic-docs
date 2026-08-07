@@ -1,8 +1,3 @@
-<!--
-Source: https://docs.kalshi.com/api-reference/structured-targets/get-structured-target.md
-Downloaded: 2026-07-30T21:10:12.821Z
--->
-
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.

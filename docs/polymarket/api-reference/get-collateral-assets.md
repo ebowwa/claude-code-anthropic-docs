@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-collateral-assets.md
-Downloaded: 2026-07-31T21:03:55.538Z
+Downloaded: 2026-08-07T00:52:23.798Z
 -->
 
 > ## Documentation Index
@@ -125,7 +125,9 @@ components:
         (`401`/`404`/`429`/`500`) this is a stable, machine-readable snake_case
         identifier that is part of the API contract and safe to branch on, e.g.
         `insufficient_margin`, `insufficient_balance`, `order_not_found`,
-        `reduce_only_invalid`, `price_outside_bounds`, `unauthorized`,
+        `reduce_only_invalid`, `price_outside_bounds`, `position_not_found`,
+        `invalid_margin_mode`, `invalid_margin_amount`,
+        `margin_below_required_initial`, `account_liquidating`, `unauthorized`,
         `not_found`. For `400` it is a human-readable validation detail whose
         wording may change. See the Error handling guide for the domain
         identifiers. (Post-only / Fill-or-Kill outcomes are order statuses such

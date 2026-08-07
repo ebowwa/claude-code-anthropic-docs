@@ -1,3 +1,8 @@
+<!--
+Source: https://bun.com/docs/runtime/yaml.md
+Downloaded: 2026-08-07T00:52:34.808Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://bun.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -77,7 +82,7 @@ Bun's YAML parser supports the full YAML 1.2 specification, including:
 
 * **Scalars**: strings, numbers, booleans, null values
 * **Collections**: sequences (arrays) and mappings (objects)
-* **Anchors and Aliases**: reusable nodes with `&` and `*`
+* **Anchors and Aliases**: reusable nodes with `&` and `*`. Aliased collections share identity, and an alias may refer to a collection that contains it, so `Bun.YAML.parse` can return cyclic objects (YAML imported as a module cannot be cyclic).
 * **Tags**: type hints like `!!str`, `!!int`, `!!float`, `!!bool`, `!!null`
 * **Multi-line strings**: literal (`|`) and folded (`>`) scalars
 * **Comments**: using `#`

@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/margin-rest/market/get-markets.md
-Downloaded: 2026-08-03T21:02:32.975Z
+Downloaded: 2026-08-07T00:52:22.700Z
 -->
 
 > ## Documentation Index
@@ -107,11 +107,18 @@ components:
         - tick_size
         - fractional_trading_enabled
         - schedule
+        - exchange_index
       properties:
         ticker:
           type: string
         title:
           type: string
+        exchange_index:
+          type: integer
+          description: >-
+            The group of markets this market belongs to for order groups. Order
+            groups may only reference markets whose exchange_index matches
+            theirs.
         contract_size:
           type: string
           description: Fixed-point number with 6 decimal places

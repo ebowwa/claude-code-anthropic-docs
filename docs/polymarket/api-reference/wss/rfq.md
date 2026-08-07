@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/api-reference/wss/rfq.md
+Downloaded: 2026-08-07T00:52:23.816Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -28,13 +33,13 @@ address: /ws/rfq
 parameters: []
 bindings: []
 operations:
-  - &ref_4
+  - &ref_5
     id: authenticate
     title: Authenticate
     description: Authenticate the connection (send as the first message)
     type: receive
     messages:
-      - &ref_17
+      - &ref_18
         id: auth
         contentType: application/json
         payload:
@@ -174,13 +179,13 @@ operations:
     extensions: &ref_0
       - id: x-parser-unique-object-id
         value: quoter
-  - &ref_8
+  - &ref_9
     id: authResult
     title: Auth Result
     description: Gateway response to the auth message
     type: send
     messages:
-      - &ref_21
+      - &ref_22
         id: authResponse
         contentType: application/json
         payload:
@@ -241,13 +246,13 @@ operations:
             value: authResponse
     bindings: []
     extensions: *ref_0
-  - &ref_9
+  - &ref_10
     id: receiveRfqRequest
     title: RFQ Request
     description: Broadcast of an active RFQ request to quote
     type: send
     messages:
-      - &ref_22
+      - &ref_23
         id: rfqRequest
         contentType: application/json
         payload:
@@ -440,13 +445,13 @@ operations:
             value: rfqRequest
     bindings: []
     extensions: *ref_0
-  - &ref_5
+  - &ref_6
     id: submitQuote
     title: Submit Quote
     description: Submit a signed maker quote before the submission deadline
     type: receive
     messages:
-      - &ref_18
+      - &ref_19
         id: rfqQuote
         contentType: application/json
         payload:
@@ -654,13 +659,13 @@ operations:
             value: rfqQuote
     bindings: []
     extensions: *ref_0
-  - &ref_10
+  - &ref_11
     id: acknowledgeQuote
     title: Quote Ack
     description: Returns the server-generated quote ID
     type: send
     messages:
-      - &ref_23
+      - &ref_24
         id: ackRfqQuote
         contentType: application/json
         payload:
@@ -714,13 +719,13 @@ operations:
             value: ackRfqQuote
     bindings: []
     extensions: *ref_0
-  - &ref_6
+  - &ref_7
     id: cancelQuote
     title: Cancel Quote
     description: Cancel an active maker quote before it is selected
     type: receive
     messages:
-      - &ref_19
+      - &ref_20
         id: rfqQuoteCancel
         contentType: application/json
         payload:
@@ -794,13 +799,13 @@ operations:
             value: rfqQuoteCancel
     bindings: []
     extensions: *ref_0
-  - &ref_11
+  - &ref_12
     id: acknowledgeQuoteCancel
     title: Quote Cancel Ack
     description: Confirms quote cancellation
     type: send
     messages:
-      - &ref_24
+      - &ref_25
         id: ackRfqQuoteCancel
         contentType: application/json
         payload:
@@ -852,13 +857,13 @@ operations:
             value: ackRfqQuoteCancel
     bindings: []
     extensions: *ref_0
-  - &ref_12
+  - &ref_13
     id: receiveConfirmationRequest
     title: Confirmation Request
     description: Last-look confirmation request for a selected quote
     type: send
     messages:
-      - &ref_25
+      - &ref_26
         id: rfqConfirmationRequest
         contentType: application/json
         payload:
@@ -1035,13 +1040,13 @@ operations:
             value: rfqConfirmationRequest
     bindings: []
     extensions: *ref_0
-  - &ref_7
+  - &ref_8
     id: respondConfirmation
     title: Confirmation Response
     description: Confirm or decline a selected quote during last look
     type: receive
     messages:
-      - &ref_20
+      - &ref_21
         id: rfqConfirmationResponse
         contentType: application/json
         payload:
@@ -1111,13 +1116,13 @@ operations:
             value: rfqConfirmationResponse
     bindings: []
     extensions: *ref_0
-  - &ref_13
+  - &ref_14
     id: acknowledgeConfirmation
     title: Confirmation Ack
     description: Confirms the maker's last-look response
     type: send
     messages:
-      - &ref_26
+      - &ref_27
         id: ackRfqConfirmationResponse
         contentType: application/json
         payload:
@@ -1183,13 +1188,13 @@ operations:
             value: ackRfqConfirmationResponse
     bindings: []
     extensions: *ref_0
-  - &ref_14
+  - &ref_15
     id: receiveExecutionUpdate
     title: Execution Update
     description: Execution progress for selected makers
     type: send
     messages:
-      - &ref_27
+      - &ref_28
         id: rfqExecutionUpdate
         contentType: application/json
         payload:
@@ -1264,13 +1269,13 @@ operations:
             value: rfqExecutionUpdate
     bindings: []
     extensions: *ref_0
-  - &ref_15
+  - &ref_16
     id: receiveTradeBroadcast
     title: Trade Broadcast
     description: Confirmed Combo RFQ trade broadcast
     type: send
     messages:
-      - &ref_28
+      - &ref_29
         id: rfqTrade
         contentType: application/json
         payload:
@@ -1409,13 +1414,13 @@ operations:
             value: rfqTrade
     bindings: []
     extensions: *ref_0
-  - &ref_16
+  - &ref_17
     id: receiveError
     title: Error
     description: Sent when a command fails validation or cannot be applied
     type: send
     messages:
-      - &ref_29
+      - &ref_30
         id: rfqError
         contentType: application/json
         payload:
@@ -1442,10 +1447,10 @@ operations:
               - name: code
                 type: string
                 description: >-
-                  Stable machine-readable error code. New codes may be
-                  introduced over time; treat unrecognized codes as
-                  command-level failures.
-                enumValues:
+                  Stable machine-readable error code. Known values are listed as
+                  examples; new codes may be introduced over time, so handle
+                  unrecognized values as rejections.
+                examples: &ref_4
                   - ADDRESS_MISMATCH
                   - ALLOWANCE_VALIDATION_FAILED
                   - BALANCE_VALIDATION_FAILED
@@ -1456,20 +1461,47 @@ operations:
                   - INVALID_EXECUTION_RESULT
                   - INVALID_IDENTITY
                   - INVALID_MESSAGE
+                  - INVALID_ORDER_SIDE
                   - INVALID_QUOTE
                   - INVALID_RFQ
                   - INVALID_RFQ_STATE
                   - INVALID_ROLE
+                  - INVALID_SIGNATURE
+                  - INVALID_SIGNATURE_TYPE
                   - LEG_METADATA_UNAVAILABLE
                   - MAKER_ALREADY_RESPONDED
                   - MAKER_NOT_REQUIRED
                   - MAKER_QUOTE_LIMITED
+                  - MISSING_MAKER_ADDRESS_IN_QUOTE
+                  - MISSING_MAKER_AMOUNT_IN_SIGNED_ORDER
+                  - MISSING_MAKER_IN_SIGNED_ORDER
+                  - MISSING_QUOTE_ID
+                  - MISSING_RFQ_ID
+                  - MISSING_SALT_IN_SIGNED_ORDER
+                  - MISSING_SIGNATURE_IN_SIGNED_ORDER
+                  - MISSING_SIGNER_ADDRESS_IN_QUOTE
+                  - MISSING_SIGNER_IN_SIGNED_ORDER
+                  - MISSING_TAKER_AMOUNT_IN_SIGNED_ORDER
+                  - MISSING_TIMESTAMP_IN_SIGNED_ORDER
+                  - MISSING_TOKEN_ID_IN_SIGNED_ORDER
+                  - ORDER_SIDE_OR_TOKEN_DOES_NOT_MATCH_REQUEST
                   - PRE_EXECUTION_BALANCE_RESERVATION_FAILED
+                  - PRICE_E6_NOT_POSITIVE
                   - QUOTE_MISMATCH
                   - QUOTE_UNAVAILABLE
+                  - QUOTED_PRICE_ABOVE_SAFETY_THRESHOLD
+                  - QUOTED_PRICE_OUT_OF_RANGE
                   - RATE_LIMITED
                   - REQUEST_FAILED
                   - SERVICE_UNAVAILABLE
+                  - SIGNED_ORDER_MAKER_AMOUNT_NOT_POSITIVE
+                  - SIGNED_ORDER_MAKER_DOES_NOT_MATCH_AUTH
+                  - SIGNED_ORDER_PRICE_WORSE_THAN_QUOTE
+                  - SIGNED_ORDER_SIGNATURE_TYPE_DOES_NOT_MATCH_AUTH
+                  - SIGNED_ORDER_SIGNER_DOES_NOT_MATCH_AUTH
+                  - SIGNED_ORDER_SIZE_DOES_NOT_COVER_QUOTE
+                  - SIGNED_ORDER_TAKER_AMOUNT_NOT_POSITIVE
+                  - SIZE_E6_NOT_POSITIVE
                   - SUBMISSION_WINDOW_CLOSED
                   - TRADE_SUBMISSION_FAILED
                   - UNAUTHENTICATED
@@ -1508,38 +1540,10 @@ operations:
             code:
               type: string
               description: >-
-                Stable machine-readable error code. New codes may be introduced
-                over time; treat unrecognized codes as command-level failures.
-              enum:
-                - ADDRESS_MISMATCH
-                - ALLOWANCE_VALIDATION_FAILED
-                - BALANCE_VALIDATION_FAILED
-                - CONTRADICTORY_LEGS
-                - EXPIRED_RFQ
-                - INVALID_ACCEPTANCE
-                - INVALID_CONFIRMATION
-                - INVALID_EXECUTION_RESULT
-                - INVALID_IDENTITY
-                - INVALID_MESSAGE
-                - INVALID_QUOTE
-                - INVALID_RFQ
-                - INVALID_RFQ_STATE
-                - INVALID_ROLE
-                - LEG_METADATA_UNAVAILABLE
-                - MAKER_ALREADY_RESPONDED
-                - MAKER_NOT_REQUIRED
-                - MAKER_QUOTE_LIMITED
-                - PRE_EXECUTION_BALANCE_RESERVATION_FAILED
-                - QUOTE_MISMATCH
-                - QUOTE_UNAVAILABLE
-                - RATE_LIMITED
-                - REQUEST_FAILED
-                - SERVICE_UNAVAILABLE
-                - SUBMISSION_WINDOW_CLOSED
-                - TRADE_SUBMISSION_FAILED
-                - UNAUTHENTICATED
-                - UNAUTHORIZED_ROLE
-                - UNKNOWN_RFQ
+                Stable machine-readable error code. Known values are listed as
+                examples; new codes may be introduced over time, so handle
+                unrecognized values as rejections.
+              examples: *ref_4
               x-parser-schema-id: <anonymous-schema-88>
             error:
               type: string
@@ -1563,12 +1567,11 @@ operations:
     bindings: []
     extensions: *ref_0
 sendOperations:
-  - *ref_4
   - *ref_5
   - *ref_6
   - *ref_7
-receiveOperations:
   - *ref_8
+receiveOperations:
   - *ref_9
   - *ref_10
   - *ref_11
@@ -1577,13 +1580,13 @@ receiveOperations:
   - *ref_14
   - *ref_15
   - *ref_16
-sendMessages:
   - *ref_17
+sendMessages:
   - *ref_18
   - *ref_19
   - *ref_20
-receiveMessages:
   - *ref_21
+receiveMessages:
   - *ref_22
   - *ref_23
   - *ref_24
@@ -1592,6 +1595,7 @@ receiveMessages:
   - *ref_27
   - *ref_28
   - *ref_29
+  - *ref_30
 extensions:
   - id: x-parser-unique-object-id
     value: quoter

@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/wss/perps-notifications.md
-Downloaded: 2026-07-31T21:03:55.554Z
+Downloaded: 2026-08-07T00:52:23.815Z
 -->
 
 > ## Documentation Index
@@ -75,7 +75,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-723>
+              x-parser-schema-id: <anonymous-schema-766>
             req:
               type: string
               description: Request type
@@ -83,7 +83,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-724>
+              x-parser-schema-id: <anonymous-schema-767>
             chs:
               type: array
               description: 'Notifications private channel: "notifications"'
@@ -91,14 +91,14 @@ operations:
                 type: string
                 enum:
                   - notifications
-                x-parser-schema-id: <anonymous-schema-726>
+                x-parser-schema-id: <anonymous-schema-769>
               example:
                 - notifications
-              x-parser-schema-id: <anonymous-schema-725>
+              x-parser-schema-id: <anonymous-schema-768>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-722>
+          x-parser-schema-id: <anonymous-schema-765>
         title: Subscribe
         description: Subscribe to private perps notifications (requires prior auth)
         example: |-
@@ -180,7 +180,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-728>
+              x-parser-schema-id: <anonymous-schema-771>
             data:
               title: Subscribe Response
               type: array
@@ -194,8 +194,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-732>
-                    x-parser-schema-id: <anonymous-schema-731>
+                        x-parser-schema-id: <anonymous-schema-775>
+                    x-parser-schema-id: <anonymous-schema-774>
                   - type: object
                     required:
                       - status
@@ -205,7 +205,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-734>
+                        x-parser-schema-id: <anonymous-schema-777>
                       error:
                         type: string
                         description: >-
@@ -225,13 +225,13 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-735>
-                    x-parser-schema-id: <anonymous-schema-733>
-                x-parser-schema-id: <anonymous-schema-730>
-              x-parser-schema-id: <anonymous-schema-729>
+                        x-parser-schema-id: <anonymous-schema-778>
+                    x-parser-schema-id: <anonymous-schema-776>
+                x-parser-schema-id: <anonymous-schema-773>
+              x-parser-schema-id: <anonymous-schema-772>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-727>
+          x-parser-schema-id: <anonymous-schema-770>
         title: Subscribe Response
         description: Response to notifications subscribe request
         example: |-
@@ -288,7 +288,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-737>
+              x-parser-schema-id: <anonymous-schema-780>
             req:
               type: string
               description: Request type
@@ -296,7 +296,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-738>
+              x-parser-schema-id: <anonymous-schema-781>
             chs:
               type: array
               description: 'Notifications private channel: "notifications"'
@@ -304,14 +304,14 @@ operations:
                 type: string
                 enum:
                   - notifications
-                x-parser-schema-id: <anonymous-schema-740>
+                x-parser-schema-id: <anonymous-schema-783>
               example:
                 - notifications
-              x-parser-schema-id: <anonymous-schema-739>
+              x-parser-schema-id: <anonymous-schema-782>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-736>
+          x-parser-schema-id: <anonymous-schema-779>
         title: Unsubscribe
         description: Unsubscribe from private perps notifications
         example: |-
@@ -391,7 +391,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-742>
+              x-parser-schema-id: <anonymous-schema-785>
             data:
               title: Subscribe Response
               type: array
@@ -405,8 +405,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-746>
-                    x-parser-schema-id: <anonymous-schema-745>
+                        x-parser-schema-id: <anonymous-schema-789>
+                    x-parser-schema-id: <anonymous-schema-788>
                   - type: object
                     required:
                       - status
@@ -416,7 +416,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-748>
+                        x-parser-schema-id: <anonymous-schema-791>
                       error:
                         type: string
                         description: >-
@@ -436,13 +436,13 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-749>
-                    x-parser-schema-id: <anonymous-schema-747>
-                x-parser-schema-id: <anonymous-schema-744>
-              x-parser-schema-id: <anonymous-schema-743>
+                        x-parser-schema-id: <anonymous-schema-792>
+                    x-parser-schema-id: <anonymous-schema-790>
+                x-parser-schema-id: <anonymous-schema-787>
+              x-parser-schema-id: <anonymous-schema-786>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-741>
+          x-parser-schema-id: <anonymous-schema-784>
         title: Unsubscribe Response
         description: Response to notifications unsubscribe request
         example: |-
@@ -471,7 +471,7 @@ operations:
                 properties:
                   ch:
                     const: notifications
-                    x-parser-schema-id: <anonymous-schema-752>
+                    x-parser-schema-id: <anonymous-schema-795>
                   ts:
                     type: integer
                     description: >-
@@ -479,12 +479,12 @@ operations:
                       Unix seconds for withdrawals (must match the on-chain
                       EIP-712 struct verified against block.timestamp).
                     example: 1767225600000
-                    x-parser-schema-id: <anonymous-schema-753>
+                    x-parser-schema-id: <anonymous-schema-796>
                   sq:
                     type: integer
                     description: Sequence number
                     example: 1234567890
-                    x-parser-schema-id: <anonymous-schema-754>
+                    x-parser-schema-id: <anonymous-schema-797>
                   data:
                     oneOf:
                       - type: object
@@ -497,40 +497,40 @@ operations:
                               in the notifications history, so you can safely
                               deduplicate across the two.
                             example: 0a5d8f1e-3b2c-5e4a-9f8b-1c2d3e4f5a6b
-                            x-parser-schema-id: <anonymous-schema-757>
+                            x-parser-schema-id: <anonymous-schema-800>
                           type:
                             type: string
                             enum:
                               - position_opened
                               - position_increased
                               - position_reduced
-                            x-parser-schema-id: <anonymous-schema-758>
+                            x-parser-schema-id: <anonymous-schema-801>
                           instrument_id:
                             type: integer
                             description: Instrument ID
-                            x-parser-schema-id: <anonymous-schema-759>
+                            x-parser-schema-id: <anonymous-schema-802>
                           side:
                             type: string
                             description: Side
                             enum:
                               - long
                               - short
-                            x-parser-schema-id: <anonymous-schema-760>
+                            x-parser-schema-id: <anonymous-schema-803>
                           size:
                             type: string
                             description: Quantity in no. of contracts
                             example: '10.00'
-                            x-parser-schema-id: <anonymous-schema-761>
+                            x-parser-schema-id: <anonymous-schema-804>
                           avg_price:
                             type: string
                             description: Volume-weighted average fill price in USD
                             example: '64210'
-                            x-parser-schema-id: <anonymous-schema-762>
+                            x-parser-schema-id: <anonymous-schema-805>
                           leverage:
                             type: integer
                             description: Leverage
                             example: 10
-                            x-parser-schema-id: <anonymous-schema-763>
+                            x-parser-schema-id: <anonymous-schema-806>
                           order_type:
                             type: string
                             description: >-
@@ -550,7 +550,7 @@ operations:
                               - limit
                               - take_profit
                               - stop_loss
-                            x-parser-schema-id: <anonymous-schema-764>
+                            x-parser-schema-id: <anonymous-schema-807>
                           fill_qty:
                             type: string
                             description: >-
@@ -559,7 +559,7 @@ operations:
                               in the event, this is their combined quantity.
                               Always a positive decimal string.
                             example: '0.05'
-                            x-parser-schema-id: <anonymous-schema-765>
+                            x-parser-schema-id: <anonymous-schema-808>
                           order_qty:
                             type: string
                             description: >-
@@ -574,7 +574,7 @@ operations:
                               order_type is also omitted when a triggered
                               order's conditional cannot be classified.
                             example: '0.10'
-                            x-parser-schema-id: <anonymous-schema-766>
+                            x-parser-schema-id: <anonymous-schema-809>
                         required:
                           - id
                           - type
@@ -584,7 +584,7 @@ operations:
                           - avg_price
                           - leverage
                           - fill_qty
-                        x-parser-schema-id: <anonymous-schema-756>
+                        x-parser-schema-id: <anonymous-schema-799>
                       - type: object
                         properties:
                           id:
@@ -595,37 +595,37 @@ operations:
                               in the notifications history, so you can safely
                               deduplicate across the two.
                             example: 0a5d8f1e-3b2c-5e4a-9f8b-1c2d3e4f5a6b
-                            x-parser-schema-id: <anonymous-schema-768>
+                            x-parser-schema-id: <anonymous-schema-811>
                           type:
                             type: string
                             const: position_closed
-                            x-parser-schema-id: <anonymous-schema-769>
+                            x-parser-schema-id: <anonymous-schema-812>
                           instrument_id:
                             type: integer
                             description: Instrument ID
-                            x-parser-schema-id: <anonymous-schema-770>
+                            x-parser-schema-id: <anonymous-schema-813>
                           side:
                             type: string
                             description: Side
                             enum:
                               - long
                               - short
-                            x-parser-schema-id: <anonymous-schema-771>
+                            x-parser-schema-id: <anonymous-schema-814>
                           size:
                             type: string
                             description: Quantity in no. of contracts
                             example: '10.00'
-                            x-parser-schema-id: <anonymous-schema-772>
+                            x-parser-schema-id: <anonymous-schema-815>
                           avg_price:
                             type: string
                             description: Volume-weighted average fill price in USD
                             example: '64210'
-                            x-parser-schema-id: <anonymous-schema-773>
+                            x-parser-schema-id: <anonymous-schema-816>
                           pnl:
                             type: string
                             description: PnL in USD
                             example: '100.00'
-                            x-parser-schema-id: <anonymous-schema-774>
+                            x-parser-schema-id: <anonymous-schema-817>
                           order_type:
                             type: string
                             description: >-
@@ -645,7 +645,7 @@ operations:
                               - limit
                               - take_profit
                               - stop_loss
-                            x-parser-schema-id: <anonymous-schema-775>
+                            x-parser-schema-id: <anonymous-schema-818>
                           fill_qty:
                             type: string
                             description: >-
@@ -654,7 +654,7 @@ operations:
                               in the event, this is their combined quantity.
                               Always a positive decimal string.
                             example: '0.05'
-                            x-parser-schema-id: <anonymous-schema-776>
+                            x-parser-schema-id: <anonymous-schema-819>
                           order_qty:
                             type: string
                             description: >-
@@ -669,7 +669,7 @@ operations:
                               order_type is also omitted when a triggered
                               order's conditional cannot be classified.
                             example: '0.10'
-                            x-parser-schema-id: <anonymous-schema-777>
+                            x-parser-schema-id: <anonymous-schema-820>
                         required:
                           - id
                           - type
@@ -679,7 +679,7 @@ operations:
                           - avg_price
                           - pnl
                           - fill_qty
-                        x-parser-schema-id: <anonymous-schema-767>
+                        x-parser-schema-id: <anonymous-schema-810>
                       - type: object
                         properties:
                           id:
@@ -690,32 +690,32 @@ operations:
                               in the notifications history, so you can safely
                               deduplicate across the two.
                             example: 0a5d8f1e-3b2c-5e4a-9f8b-1c2d3e4f5a6b
-                            x-parser-schema-id: <anonymous-schema-779>
+                            x-parser-schema-id: <anonymous-schema-822>
                           type:
                             type: string
                             const: limit_order_canceled
-                            x-parser-schema-id: <anonymous-schema-780>
+                            x-parser-schema-id: <anonymous-schema-823>
                           instrument_id:
                             type: integer
                             description: Instrument ID
-                            x-parser-schema-id: <anonymous-schema-781>
+                            x-parser-schema-id: <anonymous-schema-824>
                           side:
                             type: string
                             description: Side
                             enum:
                               - long
                               - short
-                            x-parser-schema-id: <anonymous-schema-782>
+                            x-parser-schema-id: <anonymous-schema-825>
                           size:
                             type: string
                             description: Quantity in no. of contracts
                             example: '10.00'
-                            x-parser-schema-id: <anonymous-schema-783>
+                            x-parser-schema-id: <anonymous-schema-826>
                           price:
                             type: string
                             description: Price
                             example: '100.00'
-                            x-parser-schema-id: <anonymous-schema-784>
+                            x-parser-schema-id: <anonymous-schema-827>
                         required:
                           - id
                           - type
@@ -723,7 +723,7 @@ operations:
                           - side
                           - size
                           - price
-                        x-parser-schema-id: <anonymous-schema-778>
+                        x-parser-schema-id: <anonymous-schema-821>
                       - oneOf:
                           - type: object
                             properties:
@@ -735,29 +735,29 @@ operations:
                                   and in the notifications history, so you can
                                   safely deduplicate across the two.
                                 example: 0a5d8f1e-3b2c-5e4a-9f8b-1c2d3e4f5a6b
-                                x-parser-schema-id: <anonymous-schema-787>
+                                x-parser-schema-id: <anonymous-schema-830>
                               type:
                                 type: string
                                 const: liquidation_warning
-                                x-parser-schema-id: <anonymous-schema-788>
+                                x-parser-schema-id: <anonymous-schema-831>
                               instrument_id:
                                 type: integer
                                 description: Instrument ID
-                                x-parser-schema-id: <anonymous-schema-789>
+                                x-parser-schema-id: <anonymous-schema-832>
                               margin_type:
                                 type: string
                                 const: isolated
-                                x-parser-schema-id: <anonymous-schema-790>
+                                x-parser-schema-id: <anonymous-schema-833>
                               mark_price:
                                 type: string
                                 description: Mark price
                                 example: '100.00'
-                                x-parser-schema-id: <anonymous-schema-791>
+                                x-parser-schema-id: <anonymous-schema-834>
                               liq_price:
                                 type: string
                                 description: Liquidation price
                                 example: '2866.27'
-                                x-parser-schema-id: <anonymous-schema-792>
+                                x-parser-schema-id: <anonymous-schema-835>
                             required:
                               - id
                               - type
@@ -768,8 +768,8 @@ operations:
                             not:
                               required:
                                 - affected_instruments
-                              x-parser-schema-id: <anonymous-schema-793>
-                            x-parser-schema-id: <anonymous-schema-786>
+                              x-parser-schema-id: <anonymous-schema-836>
+                            x-parser-schema-id: <anonymous-schema-829>
                           - type: object
                             properties:
                               id:
@@ -780,23 +780,23 @@ operations:
                                   and in the notifications history, so you can
                                   safely deduplicate across the two.
                                 example: 0a5d8f1e-3b2c-5e4a-9f8b-1c2d3e4f5a6b
-                                x-parser-schema-id: <anonymous-schema-795>
+                                x-parser-schema-id: <anonymous-schema-838>
                               type:
                                 type: string
                                 const: liquidation_warning
-                                x-parser-schema-id: <anonymous-schema-796>
+                                x-parser-schema-id: <anonymous-schema-839>
                               instrument_id:
                                 type: 'null'
-                                x-parser-schema-id: <anonymous-schema-797>
+                                x-parser-schema-id: <anonymous-schema-840>
                               margin_type:
                                 type: string
                                 const: cross
-                                x-parser-schema-id: <anonymous-schema-798>
+                                x-parser-schema-id: <anonymous-schema-841>
                               mark_price:
                                 type: string
                                 description: Mark price
                                 example: '100.00'
-                                x-parser-schema-id: <anonymous-schema-799>
+                                x-parser-schema-id: <anonymous-schema-842>
                               affected_instruments:
                                 type: array
                                 description: >-
@@ -804,11 +804,11 @@ operations:
                                   liquidation warning
                                 items:
                                   type: integer
-                                  x-parser-schema-id: <anonymous-schema-801>
+                                  x-parser-schema-id: <anonymous-schema-844>
                                 example:
                                   - 42
                                   - 7
-                                x-parser-schema-id: <anonymous-schema-800>
+                                x-parser-schema-id: <anonymous-schema-843>
                             required:
                               - id
                               - type
@@ -819,9 +819,9 @@ operations:
                             not:
                               required:
                                 - liq_price
-                              x-parser-schema-id: <anonymous-schema-802>
-                            x-parser-schema-id: <anonymous-schema-794>
-                        x-parser-schema-id: <anonymous-schema-785>
+                              x-parser-schema-id: <anonymous-schema-845>
+                            x-parser-schema-id: <anonymous-schema-837>
+                        x-parser-schema-id: <anonymous-schema-828>
                       - type: object
                         properties:
                           id:
@@ -832,27 +832,27 @@ operations:
                               in the notifications history, so you can safely
                               deduplicate across the two.
                             example: 0a5d8f1e-3b2c-5e4a-9f8b-1c2d3e4f5a6b
-                            x-parser-schema-id: <anonymous-schema-804>
+                            x-parser-schema-id: <anonymous-schema-847>
                           type:
                             type: string
                             const: position_liquidated
-                            x-parser-schema-id: <anonymous-schema-805>
+                            x-parser-schema-id: <anonymous-schema-848>
                           instrument_id:
                             type: integer
                             description: Instrument ID
-                            x-parser-schema-id: <anonymous-schema-806>
+                            x-parser-schema-id: <anonymous-schema-849>
                           side:
                             type: string
                             description: Side
                             enum:
                               - long
                               - short
-                            x-parser-schema-id: <anonymous-schema-807>
+                            x-parser-schema-id: <anonymous-schema-850>
                           size_closed:
                             type: string
                             description: Position size closed by a liquidation (base units)
                             example: '0.05'
-                            x-parser-schema-id: <anonymous-schema-808>
+                            x-parser-schema-id: <anonymous-schema-851>
                           pnl:
                             type:
                               - string
@@ -861,21 +861,21 @@ operations:
                               Realized PnL in USD; null when not available (e.g.
                               a backstop close with no fill)
                             example: '290.00'
-                            x-parser-schema-id: <anonymous-schema-809>
+                            x-parser-schema-id: <anonymous-schema-852>
                           margin_type:
                             type: string
                             description: Margin mode
                             enum:
                               - cross
                               - isolated
-                            x-parser-schema-id: <anonymous-schema-810>
+                            x-parser-schema-id: <anonymous-schema-853>
                           via_backstop:
                             type: boolean
                             description: >-
                               Whether an insurance-fund backstop applied to the
                               liquidation
                             example: false
-                            x-parser-schema-id: <anonymous-schema-811>
+                            x-parser-schema-id: <anonymous-schema-854>
                         required:
                           - id
                           - type
@@ -885,14 +885,14 @@ operations:
                           - pnl
                           - margin_type
                           - via_backstop
-                        x-parser-schema-id: <anonymous-schema-803>
-                    x-parser-schema-id: <anonymous-schema-755>
+                        x-parser-schema-id: <anonymous-schema-846>
+                    x-parser-schema-id: <anonymous-schema-798>
                 required:
                   - ch
                   - ts
                   - sq
                   - data
-                x-parser-schema-id: <anonymous-schema-751>
+                x-parser-schema-id: <anonymous-schema-794>
               - description: >-
                   Resync control frame sent when the connection falls behind and
                   the server drops one or more data frames. Its sq is the
@@ -906,7 +906,7 @@ operations:
                 properties:
                   ch:
                     const: notifications
-                    x-parser-schema-id: <anonymous-schema-813>
+                    x-parser-schema-id: <anonymous-schema-856>
                   ts:
                     type: integer
                     description: >-
@@ -914,15 +914,15 @@ operations:
                       Unix seconds for withdrawals (must match the on-chain
                       EIP-712 struct verified against block.timestamp).
                     example: 1767225600000
-                    x-parser-schema-id: <anonymous-schema-814>
+                    x-parser-schema-id: <anonymous-schema-857>
                   sq:
                     type: integer
                     description: Sequence number
                     example: 1234567890
-                    x-parser-schema-id: <anonymous-schema-815>
+                    x-parser-schema-id: <anonymous-schema-858>
                   type:
                     const: resync
-                    x-parser-schema-id: <anonymous-schema-816>
+                    x-parser-schema-id: <anonymous-schema-859>
                 required:
                   - ch
                   - ts
@@ -931,9 +931,9 @@ operations:
                 not:
                   required:
                     - data
-                  x-parser-schema-id: <anonymous-schema-817>
-                x-parser-schema-id: <anonymous-schema-812>
-            x-parser-schema-id: <anonymous-schema-750>
+                  x-parser-schema-id: <anonymous-schema-860>
+                x-parser-schema-id: <anonymous-schema-855>
+            x-parser-schema-id: <anonymous-schema-793>
             name: Update
             description: >-
               Real-time perps notification frame (data or resync) for
@@ -941,7 +941,7 @@ operations:
         headers: []
         jsonPayloadSchema:
           oneOf: *ref_1
-          x-parser-schema-id: <anonymous-schema-750>
+          x-parser-schema-id: <anonymous-schema-793>
         title: Update
         description: >-
           Real-time perps notification frame (data or resync) for authenticated

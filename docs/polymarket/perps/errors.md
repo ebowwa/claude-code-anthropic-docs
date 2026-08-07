@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/perps/errors.md
+Downloaded: 2026-08-07T00:52:23.820Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -38,3 +43,22 @@ the errors you may encounter when placing or cancelling orders.
 | `order_not_pending_risk`   | Order is in the risk engine     |
 | `order_not_pending_engine` | Order is in engine matching     |
 | `order_not_in_orderbook`   | Order is not in the active book |
+
+## Isolated Margin Adjustment Errors
+
+These stable identifiers are returned when an isolated margin adjustment is
+rejected after sequencing.
+
+Gateway signature validation can reject a stale or future-skewed timestamp
+earlier as `invalid signature`; that request never reaches sequencing.
+
+| Error                                | Condition                                                                   |
+| ------------------------------------ | --------------------------------------------------------------------------- |
+| `position_not_found`                 | The target open position does not exist                                     |
+| `invalid_margin_mode`                | The target position is not using isolated margin                            |
+| `invalid_margin_amount`              | The amount is zero, over-precise, or cannot be represented safely           |
+| `insufficient_margin`                | An addition exceeds available, unreserved collateral                        |
+| `account_liquidating`                | Cross liquidation is active, or the target isolated position is liquidating |
+| `margin_below_required_initial`      | A removal would leave position equity below current required initial margin |
+| `invalid_margin_signature_timestamp` | Sequencer found the timestamp over five minutes old or one minute ahead     |
+| `signature_already_used`             | The exact signed margin request has already been ingested                   |

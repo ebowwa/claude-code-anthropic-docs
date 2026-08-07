@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/margin-rest/order-groups/get-order-group.md
-Downloaded: 2026-07-30T21:10:12.830Z
+Downloaded: 2026-08-07T00:52:22.701Z
 -->
 
 > ## Documentation Index
@@ -136,9 +136,7 @@ components:
       example: '10.00'
     ExchangeIndex:
       type: integer
-      description: >-
-        Identifier for an exchange shard. Defaults to 0 if unspecified. Note:
-        currently only 0 supported.
+      description: Identifier for an exchange shard. Defaults to 0 if unspecified.
       example: 0
     ErrorResponse:
       type: object

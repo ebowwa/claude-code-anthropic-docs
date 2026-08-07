@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/perps/learn-about-trading/margin.md
+Downloaded: 2026-08-07T00:52:23.820Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -102,3 +107,29 @@ healthy status immediately.
 
 Withdrawals require the account to remain above required initial margin after the
 withdrawal. You cannot withdraw yourself into a margin call.
+
+## Adjusting Isolated Margin
+
+For each position, `initial_margin` reports the collateral currently backing
+the position. For cross positions, it is the required initial margin based on
+position size, Mark Price, the applicable risk tier, and configured leverage.
+For isolated positions, it is the position's current equity:
+
+```text theme={null}
+InitialMargin = SignedAllocation + UnrealizedPnL - SettledFunding
+```
+
+The isolated value is a point-in-time snapshot that changes with Mark Price and
+funding. The legacy `initial_margin` name is retained for API compatibility;
+`margin` would describe this value more accurately.
+
+A positive margin adjustment moves free account collateral into the isolated
+allocation. A negative adjustment releases value back to free collateral and
+may include unrealized profit, so the signed allocation itself can reach zero
+or become negative. The request is accepted only when the resulting position
+equity remains at or above current required initial margin.
+
+Both additions and removals are blocked while the account is in cross
+liquidation or the target position is in isolated liquidation. An isolated
+liquidation on a different instrument does not block the request. Cancel-only
+mode does not gate margin adjustments.

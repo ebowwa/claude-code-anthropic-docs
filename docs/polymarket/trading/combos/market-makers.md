@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/trading/combos/market-makers.md
+Downloaded: 2026-08-07T00:52:23.824Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -42,8 +47,8 @@ need a Polymarket account; create one at [polymarket.com](https://polymarket.com
 
         <Note>
           This page uses Viem for wallet signing. See the [TypeScript tooling
-          guide](/getting-started/typescript#wallet-integrations) for other wallet library
-          integrations.
+          guide](/getting-started/typescript#wallet-integrations) for other wallet
+          library integrations.
         </Note>
       </Step>
 
@@ -3819,6 +3824,8 @@ In this section, we will talk you through how to handle errors with the RFQ syst
     narrow the error type.
 
     ```ts theme={null}
+    import { RfqKnownErrorCode } from "@polymarket/client";
+
     try {
       const reference = await event.quote({ price });
       // …
@@ -3830,6 +3837,14 @@ In this section, we will talk you through how to handle errors with the RFQ syst
           // error: RfqQuoteRejectedError
           // error.rfqId: RfqId
           // error.code: RfqErrorCode | undefined
+          switch (error.code) {
+            case RfqKnownErrorCode.QuotedPriceAboveSafetyThreshold:
+              // Lower the price passed to event.quote(…).
+              break;
+            default:
+              // Handle every other known or unknown code as a quote rejection.
+              break;
+          }
           break;
         case "ConnectionLostError":
           // error: ConnectionLostError
@@ -3851,6 +3866,12 @@ In this section, we will talk you through how to handle errors with the RFQ syst
       }
     }
     ```
+
+    Invalid price and size values throw `UserInputError` before the SDK sends the
+    quote. `QUOTED_PRICE_ABOVE_SAFETY_THRESHOLD` is the RFQ rejection tied directly
+    to `price`. Codes about quote contents or the signed order usually indicate a
+    client configuration problem or SDK issue. Codes for missing server-assigned
+    quote or identity values indicate an RFQ system failure.
 
     ### Cancel a Quote
 
@@ -3959,9 +3980,11 @@ In this section, we will talk you through how to handle errors with the RFQ syst
 
     from polymarket import (
         ConnectionLostError,
+        RfqErrorCode,
         RfqQuoteRejectedError,
         TimeoutError,
         TransportError,
+        UserInputError,
     )
 
 
@@ -3970,6 +3993,14 @@ In this section, we will talk you through how to handle errors with the RFQ syst
     except RfqQuoteRejectedError as error:
         # error.rfq_id: RfqId
         # error.code: RfqErrorCode | str | None
+        if error.code == RfqErrorCode.QUOTED_PRICE_ABOVE_SAFETY_THRESHOLD:
+            # Lower the price passed to event.quote(...).
+            ...
+        else:
+            # Handle every other known or unknown code as a quote rejection.
+            ...
+    except UserInputError:
+        # Invalid price or size is rejected before the quote is sent.
         ...
     except ConnectionLostError as error:
         # error.code: int
@@ -3982,6 +4013,12 @@ In this section, we will talk you through how to handle errors with the RFQ syst
         # error: TransportError
         ...
     ```
+
+    Invalid price and size values raise `UserInputError` before the SDK sends the
+    quote. `QUOTED_PRICE_ABOVE_SAFETY_THRESHOLD` is the RFQ rejection tied directly
+    to `price`. Codes about quote contents or the signed order usually indicate a
+    client configuration problem or SDK issue. Codes for missing server-assigned
+    quote or identity values indicate an RFQ system failure.
 
     ### Cancel a Quote
 
@@ -4088,29 +4125,78 @@ In this section, we will talk you through how to handle errors with the RFQ syst
     | `RFQ_QUOTE_CANCEL`          | Quote cancellation                |
     | `RFQ_CONFIRMATION_RESPONSE` | Last Look confirmation or decline |
 
-    Error codes include:
+    `code` is stable, so branch on it rather than parsing the `error` text. Quote
+    submissions return the shared command errors plus their own validation codes.
+    For quote-validation failures, check `price_e6` and `size_e6` first, then inspect
+    the matching field in `signed_order`.
 
+    For WebSocket quote submissions, the RFQ system assigns `quote_id` and applies
+    signer and maker identity from the authenticated session. Do not add those
+    fields to `RFQ_QUOTE` requests. Codes indicating that one is missing represent
+    an RFQ system failure rather than invalid caller input.
+
+    Most `RFQ_ERROR` messages reject only the referenced command.
+    `UNAUTHORIZED_ROLE` and `ADDRESS_MISMATCH` are terminal and close the WebSocket.
+  </Tab>
+</Tabs>
+
+### Error Code Reference
+
+When an RFQ rejection includes a code, its value is stable across integrations.
+New codes may be introduced over time, so handle unrecognized values as
+rejections rather than assuming this list is exhaustive.
+
+<AccordionGroup>
+  <Accordion title="Common RFQ Error Codes">
     | Code                                       | Meaning                                                        |
     | ------------------------------------------ | -------------------------------------------------------------- |
-    | `INVALID_MESSAGE`                          | Message JSON or message type is invalid                        |
-    | `UNAUTHORIZED_ROLE`                        | Message is not allowed for the authenticated gateway role      |
-    | `ADDRESS_MISMATCH`                         | Message identity does not match the authenticated session      |
+    | `INVALID_MESSAGE`                          | Request or action type is invalid                              |
+    | `UNAUTHORIZED_ROLE`                        | Action is not allowed for the authenticated role               |
+    | `ADDRESS_MISMATCH`                         | Request identity does not match the authenticated session      |
     | `UNKNOWN_RFQ`                              | RFQ ID is not active or no longer exists                       |
     | `EXPIRED_RFQ`                              | RFQ has expired                                                |
     | `SUBMISSION_WINDOW_CLOSED`                 | Quote arrived after the submission window closed               |
     | `ALLOWANCE_VALIDATION_FAILED`              | Maker allowance is insufficient for the quoted order           |
     | `BALANCE_VALIDATION_FAILED`                | Maker balance is insufficient for the quoted order             |
     | `PRE_EXECUTION_BALANCE_RESERVATION_FAILED` | Balance reservation failed before execution                    |
-    | `INVALID_QUOTE`                            | Quote payload or signed order is invalid                       |
+    | `INVALID_QUOTE`                            | Quote is invalid and no more specific code applies             |
+    | `INVALID_SIGNATURE`                        | Signed order signature could not be verified                   |
     | `INVALID_RFQ_STATE`                        | RFQ is not in a state that accepts the requested command       |
-    | `INVALID_CONFIRMATION`                     | Last Look confirmation payload is invalid                      |
+    | `INVALID_CONFIRMATION`                     | Last Look response is invalid                                  |
     | `MAKER_NOT_REQUIRED`                       | This quote maker is not required for last-look confirmation    |
     | `MAKER_ALREADY_RESPONDED`                  | This quote maker already responded to the confirmation request |
     | `MAKER_QUOTE_LIMITED`                      | Quote submissions from this maker are temporarily limited      |
-    | `SERVICE_UNAVAILABLE`                      | RFQ service dependency is temporarily unavailable              |
+    | `SERVICE_UNAVAILABLE`                      | RFQ system is temporarily unavailable                          |
+  </Accordion>
 
-    Treat these errors as command-level failures, including new codes introduced
-    after this list was written. Keep the WebSocket session alive unless the
-    connection itself closes or authentication fails.
-  </Tab>
-</Tabs>
+  <Accordion title="Quote Validation Codes">
+    | Code                                              | Meaning                                                         |
+    | ------------------------------------------------- | --------------------------------------------------------------- |
+    | `MISSING_QUOTE_ID`                                | Server-generated quote identifier was not assigned              |
+    | `MISSING_RFQ_ID`                                  | RFQ identifier is missing from the quote                        |
+    | `MISSING_SIGNER_ADDRESS_IN_QUOTE`                 | Authenticated signer identity was not applied                   |
+    | `MISSING_MAKER_ADDRESS_IN_QUOTE`                  | Authenticated maker identity was not applied                    |
+    | `PRICE_E6_NOT_POSITIVE`                           | Quote price is not positive                                     |
+    | `SIZE_E6_NOT_POSITIVE`                            | Quote size is not positive                                      |
+    | `MISSING_SALT_IN_SIGNED_ORDER`                    | Signed order is missing its salt                                |
+    | `MISSING_MAKER_IN_SIGNED_ORDER`                   | Signed order is missing its maker                               |
+    | `MISSING_SIGNER_IN_SIGNED_ORDER`                  | Signed order is missing its signer                              |
+    | `MISSING_TOKEN_ID_IN_SIGNED_ORDER`                | Signed order is missing its token identifier                    |
+    | `MISSING_MAKER_AMOUNT_IN_SIGNED_ORDER`            | Signed order is missing its maker amount                        |
+    | `MISSING_TAKER_AMOUNT_IN_SIGNED_ORDER`            | Signed order is missing its taker amount                        |
+    | `MISSING_TIMESTAMP_IN_SIGNED_ORDER`               | Signed order is missing its timestamp                           |
+    | `MISSING_SIGNATURE_IN_SIGNED_ORDER`               | Signed order is missing its signature                           |
+    | `INVALID_ORDER_SIDE`                              | Signed order uses an invalid side                               |
+    | `INVALID_SIGNATURE_TYPE`                          | Signed order uses an unsupported signature type                 |
+    | `SIGNED_ORDER_SIGNER_DOES_NOT_MATCH_AUTH`         | Signed-order signer differs from the authenticated signer       |
+    | `SIGNED_ORDER_MAKER_DOES_NOT_MATCH_AUTH`          | Signed-order maker differs from the authenticated maker         |
+    | `SIGNED_ORDER_SIGNATURE_TYPE_DOES_NOT_MATCH_AUTH` | Signed-order signature type differs from the authenticated type |
+    | `QUOTED_PRICE_ABOVE_SAFETY_THRESHOLD`             | BUY quote exceeds the `0.90909` safety maximum                  |
+    | `QUOTED_PRICE_OUT_OF_RANGE`                       | Quote price exceeds `1`                                         |
+    | `ORDER_SIDE_OR_TOKEN_DOES_NOT_MATCH_REQUEST`      | Signed-order side or token does not match the RFQ direction     |
+    | `SIGNED_ORDER_MAKER_AMOUNT_NOT_POSITIVE`          | Signed-order maker amount is not a positive integer             |
+    | `SIGNED_ORDER_TAKER_AMOUNT_NOT_POSITIVE`          | Signed-order taker amount is not a positive integer             |
+    | `SIGNED_ORDER_SIZE_DOES_NOT_COVER_QUOTE`          | Signed order cannot cover the quoted size                       |
+    | `SIGNED_ORDER_PRICE_WORSE_THAN_QUOTE`             | Signed-order limit price is worse than the quoted price         |
+  </Accordion>
+</AccordionGroup>

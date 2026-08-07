@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/changelog/sdks.md
-Downloaded: 2026-08-04T21:12:25.237Z
+Downloaded: 2026-08-07T00:52:23.817Z
 -->
 
 > ## Documentation Index
@@ -13,6 +13,19 @@ Downloaded: 2026-08-04T21:12:25.237Z
 
 <Tabs>
   <Tab title="TypeScript">
+    ### `0.4.0`
+
+    * Added `PerpsSession.updateMargin`, which adjusts isolated margin for an instrument position. Positive `amount` values add margin; negative values remove it.
+    * Repeated order preparation now caches market configuration and platform and builder fees. If cached tick data rejects a limit or protected market price, the SDK fetches current metadata once before returning the input error.
+    * Unprotected market orders now derive depth, price, tick size, and exchange selection from one live order book response. `maxSpend` remains an estimated all-in spend target based on recently resolved fees, not a hard cap.
+    * `AcceptedOrderResponse.orderId` is now typed as `OrderId`.
+    * Breaking TypeScript type change: `OrderBook.tickSize` is now a numeric `TickSizeValue` instead of a `DecimalString`.
+
+    ```diff theme={null}
+    -const isOneCentTick = orderBook.tickSize === "0.01";
+    +const isOneCentTick = orderBook.tickSize === 0.01;
+    ```
+
     ### `0.3.0`
 
     * Added typed 30-second and 60-second Chainlink TWAP realtime subscriptions. `subscribe` validates subscription input when called: an unsupported TWAP window throws `UserInputError` before the connection opens.
@@ -215,6 +228,11 @@ Downloaded: 2026-08-04T21:12:25.237Z
   </Tab>
 
   <Tab title="Python">
+    ### `0.4.0`
+
+    * Added async `PerpsSession.update_margin`, which adjusts isolated margin for an instrument position. Positive `amount` values add margin; negative values remove it.
+    * `AcceptedOrder.order_id` is now typed as `OrderId`.
+
     ### `0.3.0`
 
     * Added typed 30-second and 60-second Chainlink TWAP realtime subscriptions.

@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/changelog/index.md
-Downloaded: 2026-08-05T21:08:42.225Z
+Downloaded: 2026-08-07T00:52:22.692Z
 -->
 
 > ## Documentation Index
@@ -20,6 +20,26 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="August 13, 2026"
+  tags={["REST", "Margin"]}
+  rss={{
+title: "Margin order groups bind to single exchange_index",
+description: "Margin order groups bind to single exchange_index"
+}}
+>
+  Margin order groups are now bound to a single `exchange_index`.
+  Order groups may only reference markets belonging to their respective `exchange_index`.
+
+  Affected endpoints:
+
+  * `GET /trade-api/v2/margin/markets`
+  * `GET /trade-api/v2/margin/markets/{ticker}`
+  * `POST /trade-api/v2/margin/order_groups/create`
+
+  For now, all margin markets are `exchange_index=0`.
+</Update>
 
 <Update
   label="August 6, 2026"
@@ -57,6 +77,32 @@ description: "Combo markets are moving from $0.001 to $0.0001 ticks via a new pr
   emitting the existing `price_level_structure_updated` event with its new
   `price_ranges`. See [Fixed-Point Representation](/getting_started/fixed_point_migration)
   for the full structure reference.
+</Update>
+
+<Update
+  label="August 13, 2026"
+  tags={["FIX", "Predictions"]}
+  rss={{
+title: "Richer combo-validation errors on FIX RFQ creation",
+description: "QuoteRequestReject for an invalid multivariate combo now carries a stable reason code, a human-readable explanation, and the offending market tickers."
+}}
+>
+  When an RFQ (`35=R`) selects legs that form an invalid multivariate
+  combination, the `QuoteRequestReject` (`35=AG`) now carries three new
+  pieces of information:
+
+  * `MVEValidationReasonCode` (20187): a stable reason code —
+    `conflicting_leg_outcomes`, `duplicated_legs`, or
+    `invalid_market_combination` — matching the `code` field of the REST
+    error body. Branch on this.
+  * `Text` (58): a human-readable explanation of why the combination is
+    invalid.
+  * `NoMVEOffendingLegs` (20185): a repeating group of the offending market
+    tickers, each entry carrying `MVEOffendingMarketTicker` (20186).
+
+  `QuoteRequestRejectReason` (658) is unchanged (`99` = OTHER), so existing
+  handling keeps working. This mirrors the richer REST error bodies on
+  `POST /trade-api/v2/multivariate_event_collections/{collection_ticker}`.
 </Update>
 
 <Update

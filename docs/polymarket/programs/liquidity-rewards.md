@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/programs/liquidity-rewards.md
+Downloaded: 2026-08-07T00:52:23.822Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -26,6 +31,44 @@ The program is designed to:
   Settings](/market-data/market-details#liquidity-reward-settings) to read the
   current configuration for a market.
 </Tip>
+
+***
+
+## Crypto TWAP Rewards
+
+To support liquidity through this transition, Polymarket is adding **\$1M** in
+liquidity rewards across impacted markets through the month of August. This
+allocation applies only to crypto **5-minute**, **15-minute**, and **4-hour**
+markets that settle on TWAP.
+
+<Note>
+  The pools below are configured reward caps. Actual payouts depend on eligible
+  quoting and the scoring methodology on this page.
+</Note>
+
+### 5-Minute Markets — \$550k
+
+| Allocation          | Amount              |
+| ------------------- | ------------------- |
+| BTC                 | \$300k              |
+| SOL, ETH, HYPE, XRP | \$200k split evenly |
+| BNB, DOGE           | \$50k split evenly  |
+
+### 15-Minute Markets — \$350k
+
+| Allocation          | Amount              |
+| ------------------- | ------------------- |
+| BTC                 | \$225k              |
+| SOL, ETH, HYPE, XRP | \$100k split evenly |
+| BNB, DOGE           | \$25k split evenly  |
+
+### 4-Hour Markets — \$100k
+
+| Allocation          | Amount             |
+| ------------------- | ------------------ |
+| BTC                 | \$50k              |
+| SOL, ETH, HYPE, XRP | \$40k split evenly |
+| BNB, DOGE           | \$10k split evenly |
 
 ***
 
@@ -142,27 +185,3 @@ Q<sub>no</sub> is calculated every minute using random sampling.
 5. Normalize against all other market makers in the sample
 6. Sum across all 10,080 samples in the epoch
 7. Normalize again to get final reward share
-
-***
-
-## World Cup 2026 — Liquidity Incentive Program
-
-Polymarket is distributing liquidity incentives for World Cup 2026 markets from June 11 through July 19, 2026. Rewards are split into **Pre** (pre-game) and **Live** (in-play) periods per game.
-
-<Note>
-  The values below are configured reward caps. Actual payouts depend on eligible
-  quoting and the reward methodology above.
-</Note>
-
-### Stage Pools
-
-| Stage                 | Pre \$/Game | Live \$/Game | Total \$/Game |
-| --------------------- | ----------- | ------------ | ------------- |
-| Group Stage           | \$2,139     | \$3,971      | \$6,110       |
-| Group Stage — Marquee | \$3,754     | \$6,971      | \$10,725      |
-| Round of 32           | \$4,778     | \$8,872      | \$13,650      |
-| Round of 16           | \$6,370     | \$11,830     | \$18,200      |
-| Quarterfinals         | \$9,442     | \$17,533     | \$26,975      |
-| Semifinals            | \$13,423    | \$24,927     | \$38,350      |
-| Third Place           | \$5,460     | \$10,140     | \$15,600      |
-| Final                 | \$18,200    | \$33,800     | \$52,000      |
