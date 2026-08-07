@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/memory.md
-Downloaded: 2026-08-05T21:08:52.670Z
+Downloaded: 2026-08-07T20:40:52.076Z
 -->
 
 > ## Documentation Index
@@ -152,6 +152,8 @@ The command prints no output on success. In your next session, run `/context` an
 On Windows, creating a symlink requires Administrator privileges or Developer Mode, so use the `@AGENTS.md` import instead.
 
 Running [`/init`](/docs/en/commands) reads Cursor rules, in `.cursor/rules/` or `.cursorrules`, and Copilot rules, in `.github/copilot-instructions.md`, and incorporates the relevant parts into the generated `CLAUDE.md`. With `CLAUDE_CODE_NEW_INIT=1` set, `/init` also reads `AGENTS.md`, `.devin/rules/`, `.windsurf/rules/` or `.windsurfrules`, and `.clinerules`.
+
+You can also run [`/import`](/docs/en/commands) to bring a supported coding agent's configuration into Claude Code, which appends a one-time copy of instruction files such as `AGENTS.md` to the matching `CLAUDE.md` and carries over MCP servers, commands, subagents, and skills. Requires Claude Code v2.1.213 or later.
 
 ### How CLAUDE.md files load
 

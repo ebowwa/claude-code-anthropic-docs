@@ -1,3 +1,8 @@
+<!--
+Source: https://bun.com/docs/runtime/index.md
+Downloaded: 2026-08-07T20:41:00.572Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://bun.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -332,6 +337,10 @@ bun run <file or script>
 
 <ParamField path="--watch" type="boolean">
   Automatically restart the process on file change
+</ParamField>
+
+<ParamField path="--watch-kill-signal" type="string" default="SIGTERM">
+  Signal whose handlers run when --watch restarts the process
 </ParamField>
 
 <ParamField path="--hot" type="boolean">

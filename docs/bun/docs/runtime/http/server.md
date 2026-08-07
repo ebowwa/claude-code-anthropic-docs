@@ -1,3 +1,8 @@
+<!--
+Source: https://bun.com/docs/runtime/http/server.md
+Downloaded: 2026-08-07T20:41:00.571Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://bun.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -301,7 +306,18 @@ await server.stop();
 await server.stop(true);
 ```
 
-By default, `stop()` allows in-flight requests and WebSocket connections to complete. Pass `true` to immediately terminate all connections.
+By default, `stop()` allows in-flight requests and WebSocket connections to complete. Idle keep-alive connections are closed immediately, and connections with a request in flight close once their response has been sent. Pass `true` to immediately terminate all connections instead. The returned promise resolves once every connection has closed.
+
+### `server.closeIdleConnections()`
+
+To close keep-alive connections that are not currently serving a request, without stopping the server:
+
+```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+const closed = server.closeIdleConnections();
+console.log(`closed ${closed} idle connections`);
+```
+
+It returns the number of connections it closed. Connections with a request in flight and open WebSockets are untouched, and the server keeps accepting new connections. This mirrors `node:http`'s `server.closeIdleConnections()`, which returns nothing.
 
 ### `server.ref()` and `server.unref()`
 
@@ -558,6 +574,12 @@ interface Server extends Disposable {
    * @returns Promise that resolves when the server has stopped
    */
   stop(closeActiveConnections?: boolean): Promise<void>;
+
+  /**
+   * Close idle keep-alive connections without stopping the server.
+   * @returns The number of connections closed
+   */
+  closeIdleConnections(): number;
 
   /**
    * Update handlers without restarting the server.

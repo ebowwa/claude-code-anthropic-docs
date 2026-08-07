@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/wss/perps-balances.md
-Downloaded: 2026-08-07T00:52:23.814Z
+Downloaded: 2026-08-07T20:40:43.980Z
 -->
 
 > ## Documentation Index
@@ -75,7 +75,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-596>
+              x-parser-schema-id: <anonymous-schema-626>
             req:
               type: string
               description: Request type
@@ -83,7 +83,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-597>
+              x-parser-schema-id: <anonymous-schema-627>
             chs:
               type: array
               description: 'Balances private channel: "balances"'
@@ -91,14 +91,14 @@ operations:
                 type: string
                 enum:
                   - balances
-                x-parser-schema-id: <anonymous-schema-599>
+                x-parser-schema-id: <anonymous-schema-629>
               example:
                 - balances
-              x-parser-schema-id: <anonymous-schema-598>
+              x-parser-schema-id: <anonymous-schema-628>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-595>
+          x-parser-schema-id: <anonymous-schema-625>
         title: Subscribe
         description: Subscribe to private balance updates (requires prior auth)
         example: |-
@@ -180,7 +180,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-601>
+              x-parser-schema-id: <anonymous-schema-631>
             data:
               title: Subscribe Response
               type: array
@@ -194,8 +194,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-605>
-                    x-parser-schema-id: <anonymous-schema-604>
+                        x-parser-schema-id: <anonymous-schema-635>
+                    x-parser-schema-id: <anonymous-schema-634>
                   - type: object
                     required:
                       - status
@@ -205,7 +205,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-607>
+                        x-parser-schema-id: <anonymous-schema-637>
                       error:
                         type: string
                         description: >-
@@ -225,13 +225,13 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-608>
-                    x-parser-schema-id: <anonymous-schema-606>
-                x-parser-schema-id: <anonymous-schema-603>
-              x-parser-schema-id: <anonymous-schema-602>
+                        x-parser-schema-id: <anonymous-schema-638>
+                    x-parser-schema-id: <anonymous-schema-636>
+                x-parser-schema-id: <anonymous-schema-633>
+              x-parser-schema-id: <anonymous-schema-632>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-600>
+          x-parser-schema-id: <anonymous-schema-630>
         title: Subscribe Response
         description: Response to balances subscribe request
         example: |-
@@ -288,7 +288,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-610>
+              x-parser-schema-id: <anonymous-schema-640>
             req:
               type: string
               description: Request type
@@ -296,7 +296,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-611>
+              x-parser-schema-id: <anonymous-schema-641>
             chs:
               type: array
               description: 'Balances private channel: "balances"'
@@ -304,14 +304,14 @@ operations:
                 type: string
                 enum:
                   - balances
-                x-parser-schema-id: <anonymous-schema-613>
+                x-parser-schema-id: <anonymous-schema-643>
               example:
                 - balances
-              x-parser-schema-id: <anonymous-schema-612>
+              x-parser-schema-id: <anonymous-schema-642>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-609>
+          x-parser-schema-id: <anonymous-schema-639>
         title: Unsubscribe
         description: Unsubscribe from private balance updates
         example: |-
@@ -391,7 +391,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-615>
+              x-parser-schema-id: <anonymous-schema-645>
             data:
               title: Subscribe Response
               type: array
@@ -405,8 +405,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-619>
-                    x-parser-schema-id: <anonymous-schema-618>
+                        x-parser-schema-id: <anonymous-schema-649>
+                    x-parser-schema-id: <anonymous-schema-648>
                   - type: object
                     required:
                       - status
@@ -416,7 +416,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-621>
+                        x-parser-schema-id: <anonymous-schema-651>
                       error:
                         type: string
                         description: >-
@@ -436,13 +436,13 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-622>
-                    x-parser-schema-id: <anonymous-schema-620>
-                x-parser-schema-id: <anonymous-schema-617>
-              x-parser-schema-id: <anonymous-schema-616>
+                        x-parser-schema-id: <anonymous-schema-652>
+                    x-parser-schema-id: <anonymous-schema-650>
+                x-parser-schema-id: <anonymous-schema-647>
+              x-parser-schema-id: <anonymous-schema-646>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-614>
+          x-parser-schema-id: <anonymous-schema-644>
         title: Unsubscribe Response
         description: Response to balances unsubscribe request
         example: |-
@@ -518,7 +518,7 @@ operations:
                 "tickers::all"). Private channels use plain names (e.g. "fills",
                 "orders").
               example: trades::1
-              x-parser-schema-id: <anonymous-schema-624>
+              x-parser-schema-id: <anonymous-schema-654>
             ts:
               type: integer
               description: >-
@@ -526,12 +526,12 @@ operations:
                 seconds for withdrawals (must match the on-chain EIP-712 struct
                 verified against block.timestamp).
               example: 1767225600000
-              x-parser-schema-id: <anonymous-schema-625>
+              x-parser-schema-id: <anonymous-schema-655>
             sq:
               type: integer
               description: Sequence number
               example: 1234567890
-              x-parser-schema-id: <anonymous-schema-626>
+              x-parser-schema-id: <anonymous-schema-656>
             data:
               type: object
               description: Balance object
@@ -540,28 +540,28 @@ operations:
                   type: string
                   description: Asset name
                   example: USDC
-                  x-parser-schema-id: <anonymous-schema-628>
+                  x-parser-schema-id: <anonymous-schema-658>
                 balance:
                   type: string
                   description: Total balance
                   example: '10000.00'
-                  x-parser-schema-id: <anonymous-schema-629>
+                  x-parser-schema-id: <anonymous-schema-659>
                 value:
                   type: string
                   description: USD value
                   example: '10000.00'
-                  x-parser-schema-id: <anonymous-schema-630>
+                  x-parser-schema-id: <anonymous-schema-660>
               required:
                 - asset
                 - balance
                 - value
-              x-parser-schema-id: <anonymous-schema-627>
+              x-parser-schema-id: <anonymous-schema-657>
           required:
             - ch
             - ts
             - sq
             - data
-          x-parser-schema-id: <anonymous-schema-623>
+          x-parser-schema-id: <anonymous-schema-653>
         title: Update
         description: Balance updates pushed every 5 seconds
         example: |-

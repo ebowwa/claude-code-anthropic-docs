@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/perps/account-management.md
-Downloaded: 2026-07-31T21:03:55.560Z
+Downloaded: 2026-08-07T20:40:43.988Z
 -->
 
 > ## Documentation Index
@@ -717,11 +717,13 @@ Use funding payments to explain periodic funding debits or credits for a market.
     ```
 
     Each page returns funding records you can use to explain non-trade PnL changes.
+    Each record has a unique `id` for storing or deduplicating funding payments.
 
     <Accordion title="Output: PerpsAccountFundingPayment[]">
       ```json theme={null}
       [
         {
+          "id": 3055723280187747,
           "instrumentId": 1,
           "size": "0.01",
           "fundingRate": "0.0001",
@@ -746,11 +748,13 @@ Use funding payments to explain periodic funding debits or credits for a market.
     ```
 
     Each page returns funding records you can use to explain non-trade PnL changes.
+    Each record has a unique `id` for storing or deduplicating funding payments.
 
     <Accordion title="Output: tuple[PerpsFundingPayment, ...]">
       ```json theme={null}
       [
         {
+          "id": 3055723280187747,
           "instrument_id": 1,
           "size": "0.01",
           "funding_rate": "0.0001",
@@ -776,12 +780,14 @@ Use funding payments to explain periodic funding debits or credits for a market.
     Use the response's `more` field to continue fetching older or newer records.
 
     Each page returns funding records you can use to explain non-trade PnL changes.
+    Each record has a unique `id` for storing or deduplicating funding payments.
 
     <Accordion title="Output: Funding Payments">
       ```json theme={null}
       {
         "data": [
           {
+            "id": 3055723280187747,
             "instrument_id": 1,
             "size": "0.01",
             "funding_rate": "0.0001",

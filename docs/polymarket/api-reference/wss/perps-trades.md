@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/wss/perps-trades.md
-Downloaded: 2026-07-31T21:03:55.556Z
+Downloaded: 2026-08-07T20:40:43.984Z
 -->
 
 > ## Documentation Index
@@ -73,7 +73,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-188>
+              x-parser-schema-id: <anonymous-schema-218>
             req:
               type: string
               description: Request type
@@ -81,7 +81,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-189>
+              x-parser-schema-id: <anonymous-schema-219>
             chs:
               type: array
               description: >-
@@ -90,14 +90,14 @@ operations:
               items:
                 type: string
                 pattern: ^trades::\d+$
-                x-parser-schema-id: <anonymous-schema-191>
+                x-parser-schema-id: <anonymous-schema-221>
               example:
                 - trades::1
-              x-parser-schema-id: <anonymous-schema-190>
+              x-parser-schema-id: <anonymous-schema-220>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-187>
+          x-parser-schema-id: <anonymous-schema-217>
         title: Subscribe
         description: Subscribe to public trade updates for an instrument
         example: |-
@@ -179,7 +179,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-193>
+              x-parser-schema-id: <anonymous-schema-223>
             data:
               title: Subscribe Response
               type: array
@@ -193,8 +193,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-197>
-                    x-parser-schema-id: <anonymous-schema-196>
+                        x-parser-schema-id: <anonymous-schema-227>
+                    x-parser-schema-id: <anonymous-schema-226>
                   - type: object
                     required:
                       - status
@@ -204,7 +204,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-199>
+                        x-parser-schema-id: <anonymous-schema-229>
                       error:
                         type: string
                         description: >-
@@ -224,13 +224,13 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-200>
-                    x-parser-schema-id: <anonymous-schema-198>
-                x-parser-schema-id: <anonymous-schema-195>
-              x-parser-schema-id: <anonymous-schema-194>
+                        x-parser-schema-id: <anonymous-schema-230>
+                    x-parser-schema-id: <anonymous-schema-228>
+                x-parser-schema-id: <anonymous-schema-225>
+              x-parser-schema-id: <anonymous-schema-224>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-192>
+          x-parser-schema-id: <anonymous-schema-222>
         title: Subscribe Response
         description: Response to trades subscribe request
         example: |-
@@ -287,7 +287,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-202>
+              x-parser-schema-id: <anonymous-schema-232>
             req:
               type: string
               description: Request type
@@ -295,7 +295,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-203>
+              x-parser-schema-id: <anonymous-schema-233>
             chs:
               type: array
               description: >-
@@ -304,14 +304,14 @@ operations:
               items:
                 type: string
                 pattern: ^trades::\d+$
-                x-parser-schema-id: <anonymous-schema-205>
+                x-parser-schema-id: <anonymous-schema-235>
               example:
                 - trades::1
-              x-parser-schema-id: <anonymous-schema-204>
+              x-parser-schema-id: <anonymous-schema-234>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-201>
+          x-parser-schema-id: <anonymous-schema-231>
         title: Unsubscribe
         description: Unsubscribe from public trade updates
         example: |-
@@ -391,7 +391,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-207>
+              x-parser-schema-id: <anonymous-schema-237>
             data:
               title: Subscribe Response
               type: array
@@ -405,8 +405,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-211>
-                    x-parser-schema-id: <anonymous-schema-210>
+                        x-parser-schema-id: <anonymous-schema-241>
+                    x-parser-schema-id: <anonymous-schema-240>
                   - type: object
                     required:
                       - status
@@ -416,7 +416,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-213>
+                        x-parser-schema-id: <anonymous-schema-243>
                       error:
                         type: string
                         description: >-
@@ -436,13 +436,13 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-214>
-                    x-parser-schema-id: <anonymous-schema-212>
-                x-parser-schema-id: <anonymous-schema-209>
-              x-parser-schema-id: <anonymous-schema-208>
+                        x-parser-schema-id: <anonymous-schema-244>
+                    x-parser-schema-id: <anonymous-schema-242>
+                x-parser-schema-id: <anonymous-schema-239>
+              x-parser-schema-id: <anonymous-schema-238>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-206>
+          x-parser-schema-id: <anonymous-schema-236>
         title: Unsubscribe Response
         description: Response to trades unsubscribe request
         example: |-
@@ -541,7 +541,7 @@ operations:
                 "tickers::all"). Private channels use plain names (e.g. "fills",
                 "orders").
               example: trades::1
-              x-parser-schema-id: <anonymous-schema-216>
+              x-parser-schema-id: <anonymous-schema-246>
             ts:
               type: integer
               description: >-
@@ -549,12 +549,12 @@ operations:
                 seconds for withdrawals (must match the on-chain EIP-712 struct
                 verified against block.timestamp).
               example: 1767225600000
-              x-parser-schema-id: <anonymous-schema-217>
+              x-parser-schema-id: <anonymous-schema-247>
             sq:
               type: integer
               description: Sequence number
               example: 1234567890
-              x-parser-schema-id: <anonymous-schema-218>
+              x-parser-schema-id: <anonymous-schema-248>
             data:
               type: object
               description: Array of trade objects
@@ -564,29 +564,29 @@ operations:
                   type: integer
                   description: Trade ID
                   example: 1
-                  x-parser-schema-id: <anonymous-schema-220>
+                  x-parser-schema-id: <anonymous-schema-250>
                 iid:
                   type: integer
                   description: Instrument ID
                   example: 1
-                  x-parser-schema-id: <anonymous-schema-221>
+                  x-parser-schema-id: <anonymous-schema-251>
                 side:
                   type: string
                   description: Side
                   enum:
                     - long
                     - short
-                  x-parser-schema-id: <anonymous-schema-222>
+                  x-parser-schema-id: <anonymous-schema-252>
                 p:
                   type: string
                   description: Price
                   example: '100.00'
-                  x-parser-schema-id: <anonymous-schema-223>
+                  x-parser-schema-id: <anonymous-schema-253>
                 qty:
                   type: string
                   description: Quantity in no. of contracts
                   example: '10.00'
-                  x-parser-schema-id: <anonymous-schema-224>
+                  x-parser-schema-id: <anonymous-schema-254>
                 ts:
                   type: integer
                   description: >-
@@ -594,14 +594,14 @@ operations:
                     Unix seconds for withdrawals (must match the on-chain
                     EIP-712 struct verified against block.timestamp).
                   example: 1767225600000
-                  x-parser-schema-id: <anonymous-schema-225>
+                  x-parser-schema-id: <anonymous-schema-255>
                 hash:
                   type: string
                   description: On-chain transaction hash, "0x" if not yet mined
                   default: 0x
                   example: >-
                     0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
-                  x-parser-schema-id: <anonymous-schema-226>
+                  x-parser-schema-id: <anonymous-schema-256>
               required:
                 - tid
                 - iid
@@ -610,13 +610,13 @@ operations:
                 - qty
                 - ts
                 - hash
-              x-parser-schema-id: <anonymous-schema-219>
+              x-parser-schema-id: <anonymous-schema-249>
           required:
             - ch
             - ts
             - sq
             - data
-          x-parser-schema-id: <anonymous-schema-215>
+          x-parser-schema-id: <anonymous-schema-245>
         title: Update
         description: Real-time trade updates for subscribed instruments
         example: |-

@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/wss/perps-klines.md
-Downloaded: 2026-07-31T21:03:55.554Z
+Downloaded: 2026-08-07T20:40:43.982Z
 -->
 
 > ## Documentation Index
@@ -73,7 +73,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-305>
+              x-parser-schema-id: <anonymous-schema-335>
             req:
               type: string
               description: Request type
@@ -81,7 +81,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-306>
+              x-parser-schema-id: <anonymous-schema-336>
             chs:
               type: array
               description: >-
@@ -90,14 +90,14 @@ operations:
               items:
                 type: string
                 pattern: ^klines::\d+::(1m|5m|15m|30m|1h|4h|6h|12h|1d|1w)$
-                x-parser-schema-id: <anonymous-schema-308>
+                x-parser-schema-id: <anonymous-schema-338>
               example:
                 - klines::1::1m
-              x-parser-schema-id: <anonymous-schema-307>
+              x-parser-schema-id: <anonymous-schema-337>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-304>
+          x-parser-schema-id: <anonymous-schema-334>
         title: Subscribe
         description: Subscribe to kline updates for an instrument and interval
         example: |-
@@ -179,7 +179,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-310>
+              x-parser-schema-id: <anonymous-schema-340>
             data:
               title: Subscribe Response
               type: array
@@ -193,8 +193,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-314>
-                    x-parser-schema-id: <anonymous-schema-313>
+                        x-parser-schema-id: <anonymous-schema-344>
+                    x-parser-schema-id: <anonymous-schema-343>
                   - type: object
                     required:
                       - status
@@ -204,7 +204,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-316>
+                        x-parser-schema-id: <anonymous-schema-346>
                       error:
                         type: string
                         description: >-
@@ -224,13 +224,13 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-317>
-                    x-parser-schema-id: <anonymous-schema-315>
-                x-parser-schema-id: <anonymous-schema-312>
-              x-parser-schema-id: <anonymous-schema-311>
+                        x-parser-schema-id: <anonymous-schema-347>
+                    x-parser-schema-id: <anonymous-schema-345>
+                x-parser-schema-id: <anonymous-schema-342>
+              x-parser-schema-id: <anonymous-schema-341>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-309>
+          x-parser-schema-id: <anonymous-schema-339>
         title: Subscribe Response
         description: Response to klines subscribe request
         example: |-
@@ -287,7 +287,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-319>
+              x-parser-schema-id: <anonymous-schema-349>
             req:
               type: string
               description: Request type
@@ -295,7 +295,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-320>
+              x-parser-schema-id: <anonymous-schema-350>
             chs:
               type: array
               description: >-
@@ -304,14 +304,14 @@ operations:
               items:
                 type: string
                 pattern: ^klines::\d+::(1m|5m|15m|30m|1h|4h|6h|12h|1d|1w)$
-                x-parser-schema-id: <anonymous-schema-322>
+                x-parser-schema-id: <anonymous-schema-352>
               example:
                 - klines::1::1m
-              x-parser-schema-id: <anonymous-schema-321>
+              x-parser-schema-id: <anonymous-schema-351>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-318>
+          x-parser-schema-id: <anonymous-schema-348>
         title: Unsubscribe
         description: Unsubscribe from kline updates
         example: |-
@@ -391,7 +391,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-324>
+              x-parser-schema-id: <anonymous-schema-354>
             data:
               title: Subscribe Response
               type: array
@@ -405,8 +405,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-328>
-                    x-parser-schema-id: <anonymous-schema-327>
+                        x-parser-schema-id: <anonymous-schema-358>
+                    x-parser-schema-id: <anonymous-schema-357>
                   - type: object
                     required:
                       - status
@@ -416,7 +416,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-330>
+                        x-parser-schema-id: <anonymous-schema-360>
                       error:
                         type: string
                         description: >-
@@ -436,13 +436,13 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-331>
-                    x-parser-schema-id: <anonymous-schema-329>
-                x-parser-schema-id: <anonymous-schema-326>
-              x-parser-schema-id: <anonymous-schema-325>
+                        x-parser-schema-id: <anonymous-schema-361>
+                    x-parser-schema-id: <anonymous-schema-359>
+                x-parser-schema-id: <anonymous-schema-356>
+              x-parser-schema-id: <anonymous-schema-355>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-323>
+          x-parser-schema-id: <anonymous-schema-353>
         title: Unsubscribe Response
         description: Response to klines unsubscribe request
         example: |-
@@ -517,7 +517,7 @@ operations:
                 "tickers::all"). Private channels use plain names (e.g. "fills",
                 "orders").
               example: trades::1
-              x-parser-schema-id: <anonymous-schema-333>
+              x-parser-schema-id: <anonymous-schema-363>
             ts:
               type: integer
               description: >-
@@ -525,12 +525,12 @@ operations:
                 seconds for withdrawals (must match the on-chain EIP-712 struct
                 verified against block.timestamp).
               example: 1767225600000
-              x-parser-schema-id: <anonymous-schema-334>
+              x-parser-schema-id: <anonymous-schema-364>
             sq:
               type: integer
               description: Sequence number
               example: 1234567890
-              x-parser-schema-id: <anonymous-schema-335>
+              x-parser-schema-id: <anonymous-schema-365>
             data:
               type: array
               description: Array of kline arrays
@@ -552,14 +552,14 @@ operations:
                   - '102.00'
                   - '500.00'
                   - 42
-                x-parser-schema-id: <anonymous-schema-337>
-              x-parser-schema-id: <anonymous-schema-336>
+                x-parser-schema-id: <anonymous-schema-367>
+              x-parser-schema-id: <anonymous-schema-366>
           required:
             - ch
             - ts
             - sq
             - data
-          x-parser-schema-id: <anonymous-schema-332>
+          x-parser-schema-id: <anonymous-schema-362>
         title: Update
         description: Real-time kline updates for subscribed instruments
         example: |-

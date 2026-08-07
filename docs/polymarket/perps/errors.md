@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/perps/errors.md
-Downloaded: 2026-08-07T00:52:23.820Z
+Downloaded: 2026-08-07T20:40:43.988Z
 -->
 
 > ## Documentation Index
@@ -43,6 +43,21 @@ the errors you may encounter when placing or cancelling orders.
 | `order_not_pending_risk`   | Order is in the risk engine     |
 | `order_not_pending_engine` | Order is in engine matching     |
 | `order_not_in_orderbook`   | Order is not in the active book |
+
+## Auto-Cancel Errors
+
+Returned when arming the auto-cancel switch with `PATCH /v1/trade/auto-cancel`.
+Disarming skips these checks and is always allowed. A deadline already in the
+past is rejected earlier with a plain `400` message.
+
+| Error                             | Condition                                                                      |
+| --------------------------------- | ------------------------------------------------------------------------------ |
+| `auto_cancel_deadline_too_soon`   | Deadline is less than 5 seconds in the future                                  |
+| `auto_cancel_daily_limit_reached` | Account already triggered auto-cancel the maximum number of times this UTC day |
+| `auto_cancel_in_flight`           | A previous trigger is still cancelling the account's open orders               |
+
+`auto_cancel_in_flight` is transient. Arming succeeds once the engine finishes
+the earlier cancellation.
 
 ## Isolated Margin Adjustment Errors
 

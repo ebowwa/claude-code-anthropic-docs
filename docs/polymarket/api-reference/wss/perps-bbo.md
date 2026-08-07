@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/wss/perps-bbo.md
-Downloaded: 2026-07-31T21:03:55.553Z
+Downloaded: 2026-08-07T20:40:43.981Z
 -->
 
 > ## Documentation Index
@@ -72,7 +72,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-228>
+              x-parser-schema-id: <anonymous-schema-258>
             req:
               type: string
               description: Request type
@@ -80,7 +80,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-229>
+              x-parser-schema-id: <anonymous-schema-259>
             chs:
               type: array
               description: |
@@ -88,14 +88,14 @@ operations:
               items:
                 type: string
                 pattern: ^bbo::\d+$
-                x-parser-schema-id: <anonymous-schema-231>
+                x-parser-schema-id: <anonymous-schema-261>
               example:
                 - bbo::1
-              x-parser-schema-id: <anonymous-schema-230>
+              x-parser-schema-id: <anonymous-schema-260>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-227>
+          x-parser-schema-id: <anonymous-schema-257>
         title: Subscribe
         description: Subscribe to BBO updates for a specific instrument
         example: |-
@@ -177,7 +177,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-233>
+              x-parser-schema-id: <anonymous-schema-263>
             data:
               title: Subscribe Response
               type: array
@@ -191,8 +191,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-237>
-                    x-parser-schema-id: <anonymous-schema-236>
+                        x-parser-schema-id: <anonymous-schema-267>
+                    x-parser-schema-id: <anonymous-schema-266>
                   - type: object
                     required:
                       - status
@@ -202,7 +202,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-239>
+                        x-parser-schema-id: <anonymous-schema-269>
                       error:
                         type: string
                         description: >-
@@ -222,13 +222,13 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-240>
-                    x-parser-schema-id: <anonymous-schema-238>
-                x-parser-schema-id: <anonymous-schema-235>
-              x-parser-schema-id: <anonymous-schema-234>
+                        x-parser-schema-id: <anonymous-schema-270>
+                    x-parser-schema-id: <anonymous-schema-268>
+                x-parser-schema-id: <anonymous-schema-265>
+              x-parser-schema-id: <anonymous-schema-264>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-232>
+          x-parser-schema-id: <anonymous-schema-262>
         title: Subscribe Response
         description: Response to BBO subscribe request
         example: |-
@@ -284,7 +284,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-242>
+              x-parser-schema-id: <anonymous-schema-272>
             req:
               type: string
               description: Request type
@@ -292,7 +292,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-243>
+              x-parser-schema-id: <anonymous-schema-273>
             chs:
               type: array
               description: |
@@ -300,14 +300,14 @@ operations:
               items:
                 type: string
                 pattern: ^bbo::\d+$
-                x-parser-schema-id: <anonymous-schema-245>
+                x-parser-schema-id: <anonymous-schema-275>
               example:
                 - bbo::1
-              x-parser-schema-id: <anonymous-schema-244>
+              x-parser-schema-id: <anonymous-schema-274>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-241>
+          x-parser-schema-id: <anonymous-schema-271>
         title: Unsubscribe
         description: Unsubscribe from BBO updates
         example: |-
@@ -387,7 +387,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-247>
+              x-parser-schema-id: <anonymous-schema-277>
             data:
               title: Subscribe Response
               type: array
@@ -401,8 +401,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-251>
-                    x-parser-schema-id: <anonymous-schema-250>
+                        x-parser-schema-id: <anonymous-schema-281>
+                    x-parser-schema-id: <anonymous-schema-280>
                   - type: object
                     required:
                       - status
@@ -412,7 +412,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-253>
+                        x-parser-schema-id: <anonymous-schema-283>
                       error:
                         type: string
                         description: >-
@@ -432,13 +432,13 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-254>
-                    x-parser-schema-id: <anonymous-schema-252>
-                x-parser-schema-id: <anonymous-schema-249>
-              x-parser-schema-id: <anonymous-schema-248>
+                        x-parser-schema-id: <anonymous-schema-284>
+                    x-parser-schema-id: <anonymous-schema-282>
+                x-parser-schema-id: <anonymous-schema-279>
+              x-parser-schema-id: <anonymous-schema-278>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-246>
+          x-parser-schema-id: <anonymous-schema-276>
         title: Unsubscribe Response
         description: Response to BBO unsubscribe request
         example: |-
@@ -523,7 +523,7 @@ operations:
                 "tickers::all"). Private channels use plain names (e.g. "fills",
                 "orders").
               example: trades::1
-              x-parser-schema-id: <anonymous-schema-256>
+              x-parser-schema-id: <anonymous-schema-286>
             ts:
               type: integer
               description: >-
@@ -531,12 +531,12 @@ operations:
                 seconds for withdrawals (must match the on-chain EIP-712 struct
                 verified against block.timestamp).
               example: 1767225600000
-              x-parser-schema-id: <anonymous-schema-257>
+              x-parser-schema-id: <anonymous-schema-287>
             sq:
               type: integer
               description: Sequence number
               example: 1234567890
-              x-parser-schema-id: <anonymous-schema-258>
+              x-parser-schema-id: <anonymous-schema-288>
             data:
               type: object
               description: BBO object
@@ -546,40 +546,40 @@ operations:
                   type: integer
                   description: Instrument ID
                   example: 1
-                  x-parser-schema-id: <anonymous-schema-260>
+                  x-parser-schema-id: <anonymous-schema-290>
                 bp:
                   type: string
                   description: Best bid price
                   example: '99.50'
-                  x-parser-schema-id: <anonymous-schema-261>
+                  x-parser-schema-id: <anonymous-schema-291>
                 bq:
                   type: string
                   description: Best bid quantity
                   example: '10.00'
-                  x-parser-schema-id: <anonymous-schema-262>
+                  x-parser-schema-id: <anonymous-schema-292>
                 ap:
                   type: string
                   description: Best ask price
                   example: '100.50'
-                  x-parser-schema-id: <anonymous-schema-263>
+                  x-parser-schema-id: <anonymous-schema-293>
                 aq:
                   type: string
                   description: Best ask quantity
                   example: '10.00'
-                  x-parser-schema-id: <anonymous-schema-264>
+                  x-parser-schema-id: <anonymous-schema-294>
               required:
                 - iid
                 - bp
                 - bq
                 - ap
                 - aq
-              x-parser-schema-id: <anonymous-schema-259>
+              x-parser-schema-id: <anonymous-schema-289>
           required:
             - ch
             - ts
             - sq
             - data
-          x-parser-schema-id: <anonymous-schema-255>
+          x-parser-schema-id: <anonymous-schema-285>
         title: Update
         description: Real-time BBO updates for subscribed instruments
         example: |-

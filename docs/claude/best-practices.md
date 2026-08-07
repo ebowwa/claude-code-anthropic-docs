@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/best-practices.md
-Downloaded: 2026-08-04T21:12:39.732Z
+Downloaded: 2026-08-07T20:40:52.058Z
 -->
 
 > ## Documentation Index
@@ -496,7 +496,7 @@ Pick the parallel approach that fits how much coordination you want to do yourse
 
 * [Worktrees](/docs/en/worktrees): run separate CLI sessions in isolated git checkouts so edits don't collide
 * [Desktop app](/docs/en/desktop#work-in-parallel-with-sessions): manage multiple local sessions visually, each in its own worktree
-* [Claude Code on the web](/docs/en/claude-code-on-the-web): run sessions on Anthropic-managed cloud infrastructure in isolated VMs
+* [Claude Code on the web](/docs/en/claude-code-on-the-web): run sessions in the cloud, on Anthropic-managed infrastructure by default
 * [Agent teams](/docs/en/agent-teams): automated coordination of multiple sessions with shared tasks, messaging, and a team lead
 
 Beyond parallelizing work, multiple sessions enable quality-focused workflows. A fresh context improves code review since Claude won't be biased toward code it just wrote.

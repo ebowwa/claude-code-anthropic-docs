@@ -1,3 +1,8 @@
+<!--
+Source: https://bun.com/docs/runtime/watch-mode.md
+Downloaded: 2026-08-07T20:41:00.574Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://bun.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -74,6 +79,12 @@ bun --watch test
   The **`--no-clear-screen`** flag, like TypeScript's `--preserveWatchOutput`, keeps Bun from clearing the terminal in
   watch mode. Use it when running multiple `bun build --watch` commands at the same time with a tool like
   `concurrently`, where one instance clearing the screen could hide another's errors: `bun build --watch   --no-clear-screen`.
+</Note>
+
+<Note>
+  Before each restart, `bun run --watch` runs the handlers your script registered for the kill signal (default
+  `SIGTERM`, matching the signal Node.js sends its watched process). Use **`--watch-kill-signal`** to pick a different
+  signal, e.g. `bun --watch --watch-kill-signal SIGINT index.ts`.
 </Note>
 
 ***

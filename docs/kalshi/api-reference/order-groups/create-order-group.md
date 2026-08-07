@@ -1,10 +1,15 @@
+<!--
+Source: https://docs.kalshi.com/api-reference/order-groups/create-order-group.md
+Downloaded: 2026-08-07T20:40:45.359Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
 # Create Order Group
 
->  Creates a new order group with a contracts limit measured over a rolling 15-second window. When the limit is hit, all orders in the group are cancelled and no new orders can be placed until reset.
+>  Creates a new order group with a contracts limit measured over a rolling 15-second window. Users can have up to 100,000 order groups at a time. When the limit is hit, all orders in the group are cancelled and no new orders can be placed until reset.
 
 
 
@@ -65,7 +70,7 @@ paths:
       tags:
         - order-groups
       summary: Create Order Group
-      description: ' Creates a new order group with a contracts limit measured over a rolling 15-second window. When the limit is hit, all orders in the group are cancelled and no new orders can be placed until reset.'
+      description: ' Creates a new order group with a contracts limit measured over a rolling 15-second window. Users can have up to 100,000 order groups at a time. When the limit is hit, all orders in the group are cancelled and no new orders can be placed until reset.'
       operationId: CreateOrderGroup
       requestBody:
         required: true

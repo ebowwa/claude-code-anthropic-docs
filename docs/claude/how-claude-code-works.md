@@ -1,3 +1,8 @@
+<!--
+Source: https://code.claude.com/docs/en/how-claude-code-works.md
+Downloaded: 2026-08-07T20:40:52.074Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://code.claude.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -84,11 +89,11 @@ The agentic loop, tools, and capabilities described above are the same everywher
 
 Claude Code runs in three environments, each with different tradeoffs for where your code executes.
 
-| Environment        | Where code runs                         | Use case                                                   |
-| ------------------ | --------------------------------------- | ---------------------------------------------------------- |
-| **Local**          | Your machine                            | Default. Full access to your files, tools, and environment |
-| **Cloud**          | Anthropic-managed VMs                   | Offload tasks, work on repos you don't have locally        |
-| **Remote Control** | Your machine, controlled from a browser | Use the web UI while execution and your files stay local   |
+| Environment        | Where code runs                                                                                               | Use case                                                   |
+| ------------------ | ------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------- |
+| **Local**          | Your machine                                                                                                  | Default. Full access to your files, tools, and environment |
+| **Cloud**          | Anthropic-managed VMs, or [self-hosted environments](/docs/en/self-hosted-environments) your organization operates | Offload tasks, work on repos you don't have locally        |
+| **Remote Control** | Your machine, controlled from a browser                                                                       | Use the web UI while execution and your files stay local   |
 
 ### Interfaces
 

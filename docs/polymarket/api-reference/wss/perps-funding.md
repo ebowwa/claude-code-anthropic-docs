@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/wss/perps-funding.md
-Downloaded: 2026-08-07T00:52:23.814Z
+Downloaded: 2026-08-07T20:40:43.982Z
 -->
 
 > ## Documentation Index
@@ -75,7 +75,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-556>
+              x-parser-schema-id: <anonymous-schema-586>
             req:
               type: string
               description: Request type
@@ -83,7 +83,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-557>
+              x-parser-schema-id: <anonymous-schema-587>
             chs:
               type: array
               description: 'Funding private channel: "funding"'
@@ -91,14 +91,14 @@ operations:
                 type: string
                 enum:
                   - funding
-                x-parser-schema-id: <anonymous-schema-559>
+                x-parser-schema-id: <anonymous-schema-589>
               example:
                 - funding
-              x-parser-schema-id: <anonymous-schema-558>
+              x-parser-schema-id: <anonymous-schema-588>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-555>
+          x-parser-schema-id: <anonymous-schema-585>
         title: Subscribe
         description: Subscribe to private funding payment updates (requires prior auth)
         example: |-
@@ -180,7 +180,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-561>
+              x-parser-schema-id: <anonymous-schema-591>
             data:
               title: Subscribe Response
               type: array
@@ -194,8 +194,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-565>
-                    x-parser-schema-id: <anonymous-schema-564>
+                        x-parser-schema-id: <anonymous-schema-595>
+                    x-parser-schema-id: <anonymous-schema-594>
                   - type: object
                     required:
                       - status
@@ -205,7 +205,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-567>
+                        x-parser-schema-id: <anonymous-schema-597>
                       error:
                         type: string
                         description: >-
@@ -225,13 +225,13 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-568>
-                    x-parser-schema-id: <anonymous-schema-566>
-                x-parser-schema-id: <anonymous-schema-563>
-              x-parser-schema-id: <anonymous-schema-562>
+                        x-parser-schema-id: <anonymous-schema-598>
+                    x-parser-schema-id: <anonymous-schema-596>
+                x-parser-schema-id: <anonymous-schema-593>
+              x-parser-schema-id: <anonymous-schema-592>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-560>
+          x-parser-schema-id: <anonymous-schema-590>
         title: Subscribe Response
         description: Response to funding subscribe request
         example: |-
@@ -288,7 +288,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-570>
+              x-parser-schema-id: <anonymous-schema-600>
             req:
               type: string
               description: Request type
@@ -296,7 +296,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-571>
+              x-parser-schema-id: <anonymous-schema-601>
             chs:
               type: array
               description: 'Funding private channel: "funding"'
@@ -304,14 +304,14 @@ operations:
                 type: string
                 enum:
                   - funding
-                x-parser-schema-id: <anonymous-schema-573>
+                x-parser-schema-id: <anonymous-schema-603>
               example:
                 - funding
-              x-parser-schema-id: <anonymous-schema-572>
+              x-parser-schema-id: <anonymous-schema-602>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-569>
+          x-parser-schema-id: <anonymous-schema-599>
         title: Unsubscribe
         description: Unsubscribe from private funding updates
         example: |-
@@ -391,7 +391,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-575>
+              x-parser-schema-id: <anonymous-schema-605>
             data:
               title: Subscribe Response
               type: array
@@ -405,8 +405,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-579>
-                    x-parser-schema-id: <anonymous-schema-578>
+                        x-parser-schema-id: <anonymous-schema-609>
+                    x-parser-schema-id: <anonymous-schema-608>
                   - type: object
                     required:
                       - status
@@ -416,7 +416,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-581>
+                        x-parser-schema-id: <anonymous-schema-611>
                       error:
                         type: string
                         description: >-
@@ -436,13 +436,13 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-582>
-                    x-parser-schema-id: <anonymous-schema-580>
-                x-parser-schema-id: <anonymous-schema-577>
-              x-parser-schema-id: <anonymous-schema-576>
+                        x-parser-schema-id: <anonymous-schema-612>
+                    x-parser-schema-id: <anonymous-schema-610>
+                x-parser-schema-id: <anonymous-schema-607>
+              x-parser-schema-id: <anonymous-schema-606>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-574>
+          x-parser-schema-id: <anonymous-schema-604>
         title: Unsubscribe Response
         description: Response to funding unsubscribe request
         example: |-
@@ -542,7 +542,7 @@ operations:
                 "tickers::all"). Private channels use plain names (e.g. "fills",
                 "orders").
               example: trades::1
-              x-parser-schema-id: <anonymous-schema-584>
+              x-parser-schema-id: <anonymous-schema-614>
             ts:
               type: integer
               description: >-
@@ -550,12 +550,12 @@ operations:
                 seconds for withdrawals (must match the on-chain EIP-712 struct
                 verified against block.timestamp).
               example: 1767225600000
-              x-parser-schema-id: <anonymous-schema-585>
+              x-parser-schema-id: <anonymous-schema-615>
             sq:
               type: integer
               description: Sequence number
               example: 1234567890
-              x-parser-schema-id: <anonymous-schema-586>
+              x-parser-schema-id: <anonymous-schema-616>
             data:
               type: object
               description: Funding payment object (one update per charged instrument)
@@ -566,35 +566,35 @@ operations:
                     Funding payment ID. Probabilistically unique (same
                     guarantees as trade IDs) and stable across REST and
                     WebSocket for the same funding record.
-                  example: 1234567890
-                  x-parser-schema-id: <anonymous-schema-588>
+                  example: 3055723280187747
+                  x-parser-schema-id: <anonymous-schema-618>
                 iid:
                   type: integer
                   description: Instrument ID
                   example: 1
-                  x-parser-schema-id: <anonymous-schema-589>
+                  x-parser-schema-id: <anonymous-schema-619>
                 sz:
                   type: string
                   description: >-
                     Signed position size in no. of contracts (positive = long,
                     negative = short)
                   example: '10.00'
-                  x-parser-schema-id: <anonymous-schema-590>
+                  x-parser-schema-id: <anonymous-schema-620>
                 fr:
                   type: string
                   description: Funding rate
                   example: '0.0001'
-                  x-parser-schema-id: <anonymous-schema-591>
+                  x-parser-schema-id: <anonymous-schema-621>
                 fund:
                   type: string
                   description: Funding paid in USD
                   example: '1.00'
-                  x-parser-schema-id: <anonymous-schema-592>
+                  x-parser-schema-id: <anonymous-schema-622>
                 fua:
                   type: string
                   description: Funding asset name
                   example: USDC
-                  x-parser-schema-id: <anonymous-schema-593>
+                  x-parser-schema-id: <anonymous-schema-623>
                 ts:
                   type: integer
                   description: >-
@@ -602,7 +602,7 @@ operations:
                     Unix seconds for withdrawals (must match the on-chain
                     EIP-712 struct verified against block.timestamp).
                   example: 1767225600000
-                  x-parser-schema-id: <anonymous-schema-594>
+                  x-parser-schema-id: <anonymous-schema-624>
               required:
                 - id
                 - iid
@@ -611,13 +611,13 @@ operations:
                 - fund
                 - fua
                 - ts
-              x-parser-schema-id: <anonymous-schema-587>
+              x-parser-schema-id: <anonymous-schema-617>
           required:
             - ch
             - ts
             - sq
             - data
-          x-parser-schema-id: <anonymous-schema-583>
+          x-parser-schema-id: <anonymous-schema-613>
         title: Update
         description: Real-time funding payment updates for authenticated users
         example: |-
@@ -626,7 +626,7 @@ operations:
             "ts": 1767225600000,
             "sq": 1234567890,
             "data": {
-              "id": 1234567890,
+              "id": 3055723280187747,
               "iid": 1,
               "sz": "10.00",
               "fr": "0.0001",

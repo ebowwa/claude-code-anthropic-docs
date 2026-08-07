@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/changelog/sdks.md
-Downloaded: 2026-08-07T00:52:23.817Z
+Downloaded: 2026-08-07T20:40:43.985Z
 -->
 
 > ## Documentation Index
@@ -13,6 +13,12 @@ Downloaded: 2026-08-07T00:52:23.817Z
 
 <Tabs>
   <Tab title="TypeScript">
+    ### `0.5.0`
+
+    * Added a Perps dead man's switch: `session.armAutoCancel()` schedules a one-shot cancel-all, `session.disarmAutoCancel()` clears it, and `session.fetchAutoCancelStatus()` reports the current deadline and daily trigger usage. Arming after the daily limit raises `AutoCancelDailyLimitError`.
+    * Perps funding history and realtime funding events now include a required `id`, typed as `PerpsFundingPaymentId`.
+    * Fixed `session.placeOrder()` missing private order updates that arrive before the command acknowledgement. When the caller omits a client order ID, the SDK now generates one before submitting the order.
+
     ### `0.4.0`
 
     * Added `PerpsSession.updateMargin`, which adjusts isolated margin for an instrument position. Positive `amount` values add margin; negative values remove it.
@@ -228,6 +234,13 @@ Downloaded: 2026-08-07T00:52:23.817Z
   </Tab>
 
   <Tab title="Python">
+    ### `0.5.0`
+
+    * Added a Perps dead man's switch: `session.arm_auto_cancel()` schedules a one-shot cancel-all, `session.disarm_auto_cancel()` clears it, and `session.fetch_auto_cancel_status()` reports the current deadline and daily trigger usage. Arming after the daily limit raises `AutoCancelDailyLimitError`.
+    * Perps funding history and realtime funding events now include a required `id`, typed as `PerpsFundingPaymentId`.
+    * Fixed `session.place_order()` missing private order updates that arrive before the command acknowledgement. When the caller omits a client order ID, the SDK now generates one before submitting the order.
+    * Order placement now caches market configuration and platform and builder fees, reducing repeated metadata reads while refreshing stale tick data before returning an input error.
+
     ### `0.4.0`
 
     * Added async `PerpsSession.update_margin`, which adjusts isolated margin for an instrument position. Positive `amount` values add margin; negative values remove it.

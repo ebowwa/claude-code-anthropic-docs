@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/perps/notifications.md
-Downloaded: 2026-07-31T21:03:55.562Z
+Downloaded: 2026-08-07T20:40:43.990Z
 -->
 
 > ## Documentation Index
@@ -509,37 +509,33 @@ backfill re-covers the boundary. Deduplicate merged results by notification
 
 Every notification carries a `type` and a small type-specific payload.
 
-| Type                   | Sent when                                                                                    |
-| ---------------------- | -------------------------------------------------------------------------------------------- |
-| `position_opened`      | A fill opens a new position.                                                                 |
-| `position_increased`   | A fill adds to an existing position.                                                         |
-| `position_reduced`     | A fill shrinks a position without closing it.                                                |
-| `position_closed`      | A fill fully closes a position and realizes its PnL.                                         |
-| `limit_order_canceled` | A resting limit order is canceled.                                                           |
-| `liquidation_warning`  | A position (isolated margin) or the whole account (cross margin) is approaching liquidation. |
-| `position_liquidated`  | A liquidation closes part or all of a position.                                              |
-
-Fill-driven position notifications (`position_opened`, `position_increased`,
-`position_reduced`, and `position_closed`) can include an `order_type` field
-that names the kind of order behind the fill: `market`, `limit`, `take_profit`,
-or `stop_loss`. An order fired by a take-profit or stop-loss
-trigger reports the trigger that fired it. Otherwise an aggressing order
-submitted without a limit price reports `market`, and everything else reports
-`limit`, including fills on a resting maker order. The field is omitted when
-the fill cannot be attributed to an order, so treat it as optional display
-metadata.
-
-A `liquidation_warning` for an isolated-margin position names the instrument
-and its liquidation price. A cross-margin warning covers the whole account
-instead. It has no single instrument or liquidation price and lists the
-affected instruments. See [Liquidation
-Mechanics](/perps/learn-about-trading/liquidation-mechanics) for how
-liquidations work.
-
 <Tabs>
   <Tab title="TypeScript">
     The `PerpsNotificationType` and `PerpsNotificationOrderType` enums export the
-    `type` and `order_type` values. Each notification type carries these fields.
+    `type` and `orderType` values shown in the examples below.
+
+    | Notification Type                          | Sent when                                                                                    |
+    | ------------------------------------------ | -------------------------------------------------------------------------------------------- |
+    | `PerpsNotificationType.PositionOpened`     | A fill opens a new position.                                                                 |
+    | `PerpsNotificationType.PositionIncreased`  | A fill adds to an existing position.                                                         |
+    | `PerpsNotificationType.PositionReduced`    | A fill shrinks a position without closing it.                                                |
+    | `PerpsNotificationType.PositionClosed`     | A fill fully closes a position and realizes its PnL.                                         |
+    | `PerpsNotificationType.LimitOrderCanceled` | A resting limit order is canceled.                                                           |
+    | `PerpsNotificationType.LiquidationWarning` | A position (isolated margin) or the whole account (cross margin) is approaching liquidation. |
+    | `PerpsNotificationType.PositionLiquidated` | A liquidation closes part or all of a position.                                              |
+
+    Fill-driven position notifications can include an `orderType` field that names
+    the kind of order behind the fill. The field is omitted when the fill cannot
+    be attributed to an order, so treat it as optional display metadata.
+
+    | Order Type                              | Meaning                                                                  |
+    | --------------------------------------- | ------------------------------------------------------------------------ |
+    | `PerpsNotificationOrderType.Market`     | An untriggered aggressing order submitted without a limit price.         |
+    | `PerpsNotificationOrderType.Limit`      | Any other untriggered order, including fills on a resting maker order.   |
+    | `PerpsNotificationOrderType.TakeProfit` | An order fired by a take-profit trigger, whether it aggressed or rested. |
+    | `PerpsNotificationOrderType.StopLoss`   | An order fired by a stop-loss trigger, whether it aggressed or rested.   |
+
+    Each notification type carries the fields shown below.
 
     <CodeGroup>
       ```json Position Opened theme={null}
@@ -613,14 +609,34 @@ liquidations work.
       }
       ```
     </CodeGroup>
-
-    On `position_liquidated`, `pnl` is `null` when no fill produced a realized
-    figure, for example a backstop close. `viaBackstop` reports whether an
-    insurance-fund backstop applied to the liquidation.
   </Tab>
 
   <Tab title="Python">
-    Each notification type carries these fields.
+    The `PerpsNotificationType` and `PerpsNotificationOrderType` type aliases list
+    the `type` and `order_type` values.
+
+    | `PerpsNotificationType` | Sent when                                                                                    |
+    | ----------------------- | -------------------------------------------------------------------------------------------- |
+    | `position_opened`       | A fill opens a new position.                                                                 |
+    | `position_increased`    | A fill adds to an existing position.                                                         |
+    | `position_reduced`      | A fill shrinks a position without closing it.                                                |
+    | `position_closed`       | A fill fully closes a position and realizes its PnL.                                         |
+    | `limit_order_canceled`  | A resting limit order is canceled.                                                           |
+    | `liquidation_warning`   | A position (isolated margin) or the whole account (cross margin) is approaching liquidation. |
+    | `position_liquidated`   | A liquidation closes part or all of a position.                                              |
+
+    Fill-driven position notifications can include an `order_type` field that
+    names the kind of order behind the fill. The field is omitted when the fill
+    cannot be attributed to an order, so treat it as optional display metadata.
+
+    | `PerpsNotificationOrderType` | Meaning                                                                  |
+    | ---------------------------- | ------------------------------------------------------------------------ |
+    | `market`                     | An untriggered aggressing order submitted without a limit price.         |
+    | `limit`                      | Any other untriggered order, including fills on a resting maker order.   |
+    | `take_profit`                | An order fired by a take-profit trigger, whether it aggressed or rested. |
+    | `stop_loss`                  | An order fired by a stop-loss trigger, whether it aggressed or rested.   |
+
+    Each notification type carries the fields shown below.
 
     <CodeGroup>
       ```json Position Opened theme={null}
@@ -694,14 +710,33 @@ liquidations work.
       }
       ```
     </CodeGroup>
-
-    On `position_liquidated`, `pnl` is `None` when no fill produced a realized
-    figure, for example a backstop close. `via_backstop` reports whether an
-    insurance-fund backstop applied to the liquidation.
   </Tab>
 
   <Tab title="API">
-    Each notification type carries these fields.
+    Notifications report these `type` values.
+
+    | `type`                 | Sent when                                                                                    |
+    | ---------------------- | -------------------------------------------------------------------------------------------- |
+    | `position_opened`      | A fill opens a new position.                                                                 |
+    | `position_increased`   | A fill adds to an existing position.                                                         |
+    | `position_reduced`     | A fill shrinks a position without closing it.                                                |
+    | `position_closed`      | A fill fully closes a position and realizes its PnL.                                         |
+    | `limit_order_canceled` | A resting limit order is canceled.                                                           |
+    | `liquidation_warning`  | A position (isolated margin) or the whole account (cross margin) is approaching liquidation. |
+    | `position_liquidated`  | A liquidation closes part or all of a position.                                              |
+
+    Fill-driven position notifications can include an `order_type` field that
+    names the kind of order behind the fill. The field is omitted when the fill
+    cannot be attributed to an order, so treat it as optional display metadata.
+
+    | `order_type`  | Meaning                                                                  |
+    | ------------- | ------------------------------------------------------------------------ |
+    | `market`      | An untriggered aggressing order submitted without a limit price.         |
+    | `limit`       | Any other untriggered order, including fills on a resting maker order.   |
+    | `take_profit` | An order fired by a take-profit trigger, whether it aggressed or rested. |
+    | `stop_loss`   | An order fired by a stop-loss trigger, whether it aggressed or rested.   |
+
+    Each notification type carries the fields shown below.
 
     <CodeGroup>
       ```json Position Opened theme={null}
@@ -776,11 +811,5 @@ liquidations work.
       }
       ```
     </CodeGroup>
-
-    On `position_liquidated`, `pnl` is `null` when no fill produced a realized
-    figure, for example a backstop close. `via_backstop` reports whether an
-    insurance-fund backstop applied to the liquidation. Notification ids are
-    deterministic: the same event yields the same `id` on the live channel and in
-    the notifications read.
   </Tab>
 </Tabs>

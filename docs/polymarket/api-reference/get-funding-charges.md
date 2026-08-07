@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-funding-charges.md
-Downloaded: 2026-08-07T00:52:23.800Z
+Downloaded: 2026-08-07T20:40:43.968Z
 -->
 
 > ## Documentation Index
@@ -103,6 +103,7 @@ components:
     AccountFundingData:
       type: object
       required:
+        - id
         - instrument_id
         - size
         - funding_rate
@@ -110,6 +111,8 @@ components:
         - funding
         - timestamp
       properties:
+        id:
+          $ref: '#/components/schemas/fid'
         instrument_id:
           $ref: '#/components/schemas/iid'
         size:
@@ -177,6 +180,12 @@ components:
             - err
         error:
           $ref: '#/components/schemas/error'
+    fid:
+      type: integer
+      description: >-
+        Funding payment ID. Probabilistically unique (same guarantees as trade
+        IDs) and stable across REST and WebSocket for the same funding record.
+      example: 3055723280187747
     iid:
       type: integer
       description: Instrument ID
