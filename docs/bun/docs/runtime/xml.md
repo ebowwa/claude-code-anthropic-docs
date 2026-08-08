@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/xml.md
-Downloaded: 2026-08-07T00:52:34.808Z
+Downloaded: 2026-08-08T20:29:45.956Z
 -->
 
 > ## Documentation Index
@@ -29,6 +29,34 @@ Bun's XML parser is written in Rust and implements [XML 1.0 (Fifth Edition)](htt
 * Nothing is validated against the DTD, namespaces are not resolved (prefixed names are kept verbatim), and comments and processing instructions are skipped.
 
 It is run against the [W3C XML Conformance Test Suite](https://www.w3.org/XML/Test/): all 1,679 cases that have a required outcome for this class of processor pass — not-well-formed documents are rejected, well-formed ones are accepted and, where the suite gives one, their element tree matches its canonical output byte for byte. The [translated test suite](https://github.com/oven-sh/bun/blob/main/test/js/bun/xml/xml-test-suite.test.ts) lists every case, including the ones whose outcome legitimately depends on not reading external entities.
+
+***
+
+## Performance
+
+The parser works in two stages, like Bun's JSON parser: a SIMD pass (runtime-dispatched AVX2/AVX-512/NEON/SVE kernels) records the position of every byte that can change the parse — `<`, `>`, `&`, line ends, quotes and `=` inside tags — and the parser then hops from one of those positions to the next, so character data, attribute values, comments and CDATA sections are never scanned a byte at a time. The result is written as flat rows and turned into JavaScript objects in a single pass that reuses JavaScriptCore's atom-string cache for element and attribute names, the same way `JSON.parse` does. A JS string is parsed in place in whatever representation the engine holds it in (Latin-1 or UTF-16) and the strings in the result share that representation, so nothing is transcoded on the way in or out; `Buffer` and `Blob` input is parsed as UTF-8.
+
+`bench/xml/xml.mjs` in the Bun repository compares `Bun.XML.parse` with popular npm parsers on the same documents (lower is better; Linux x64, one core):
+
+| Document                            | `Bun.XML.parse` |   txml | fast-xml-parser | @xmldom/xmldom | xml2js |
+| ----------------------------------- | --------------: | -----: | --------------: | -------------: | -----: |
+| S3 `ListObjectsV2` response, 231 KB |      **1.1 ms** | 4.0 ms |           23 ms |          31 ms |  19 ms |
+| Atom feed, 193 KB                   |      **1.1 ms** | 3.7 ms |           19 ms |          23 ms |  16 ms |
+| libphonenumber metadata, 960 KB     |      **5.3 ms** | 9.6 ms |           56 ms |          53 ms |      — |
+| Chromium `enums.xml`, 1.4 MB        |       **16 ms** |  41 ms |          150 ms |         103 ms |      — |
+| freedesktop MIME database, 2.2 MB   |       **27 ms** |  56 ms |          299 ms |         280 ms |      — |
+
+Roughly half of `Bun.XML.parse`'s time on these documents is creating the JavaScript objects rather than parsing. Measured at the native level (`scripts/bench-json-rust.sh --xml`, parse to the in-memory tree, MiB/s, higher is better), against widely used C, C++ and Rust parsers:
+
+| Document                          |   Bun | pugixml | quick-xml | expat | roxmltree | libxml2 |
+| --------------------------------- | ----: | ------: | --------: | ----: | --------: | ------: |
+| SVG drawing (path data), 1.2 MB   | 3,600 |   2,200 |       960 |   170 |       290 |     630 |
+| Vulkan `vk.xml`, 3.2 MB           |   340 |     630 |       240 |   130 |       110 |      41 |
+| Chromium `enums.xml`, 1.4 MB      |   320 |     700 |       275 |   114 |       106 |      35 |
+| libphonenumber metadata, 960 KB   |   440 |     840 |       580 |   170 |       175 |      88 |
+| freedesktop MIME database, 2.4 MB |   210 |     585 |       240 |   120 |        91 |      30 |
+
+Unlike the fastest C++ parsers, Bun's parser checks everything XML requires of a well-formed document (valid UTF-8, legal characters, unique attributes, entity expansion limits) and expands entities declared in the DTD; attribute- and text-heavy documents are where the SIMD stage pays off most.
 
 ***
 

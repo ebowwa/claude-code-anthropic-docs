@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/claude-apps-gateway.md
-Downloaded: 2026-08-07T20:40:52.061Z
+Downloaded: 2026-08-08T20:29:47.896Z
 -->
 
 > ## Documentation Index
@@ -88,7 +88,7 @@ The gateway server requires the native `claude` binary; download a pinned releas
   </Step>
 
   <Step title="Provision a PostgreSQL database">
-    Any Postgres 14 or later works, including the smallest managed tier. The gateway runs its own schema migrations at boot, so the database user needs `CREATE TABLE` permission. If your security policy prohibits DDL from application roles, pre-create the schema instead; see [`store`](/docs/en/claude-apps-gateway-config#store).
+    Any Postgres 14 or later works, including the smallest managed tier. The gateway runs its own schema migrations at boot, so the database role needs rights to create and alter tables; see [`store`](/docs/en/claude-apps-gateway-config#store).
   </Step>
 
   <Step title="Write gateway.yaml">
@@ -262,7 +262,7 @@ Once signed in, the [model picker](/docs/en/model-config) shows the models in th
 
 ### Set the gateway URL
 
-Three keys go in the per-OS [managed settings file](/docs/en/settings#settings-files) you deploy via MDM or directly on disk. `forceLoginMethod` and `forceLoginGatewayUrl` open `/login` directly on the **Cloud gateway** screen with the URL filled in, and `parentSettingsBehavior: "merge"` lets Claude Desktop deliver the gateway's policy to the Claude Code sessions it launches, explained in [Deliver policy to Claude Desktop sessions](#deliver-policy-to-claude-desktop-sessions):
+Three keys go in the per-OS [managed settings file](/docs/en/settings#settings-files) you deploy via MDM or directly on disk. `forceLoginMethod` and `forceLoginGatewayUrl` open `/login` directly on the **Cloud gateway** screen with the URL filled in, and `parentSettingsBehavior: "merge"` lets Claude Desktop deliver the gateway's egress allowlist to the Claude Code sessions it launches, explained in [Deliver policy to Claude Desktop sessions](#deliver-policy-to-claude-desktop-sessions):
 
 ```json theme={null}
 {
@@ -284,7 +284,7 @@ Settings passed by a launching process are parent settings. Claude Code ignores 
 
 #### Which machines need the opt-in
 
-Machines that only run Claude Desktop need it, because parent settings are the only way the gateway's policy reaches embedded sessions. Without the opt-in, those sessions run without the tool restrictions, egress restrictions, and filtered model list the gateway derives for Claude Desktop, and nothing warns you. The gateway still rejects inference requests for models the policy doesn't grant.
+Machines that only run Claude Desktop need it. Claude Desktop applies the model list and the disabled-tools list to embedded sessions itself, but the egress allowlist reaches them only as parent settings, in the form of `WebFetch` domain rules and sandbox network rules. Without the opt-in, those sessions run without the egress restriction, and nothing warns you. The gateway still rejects inference requests for models the policy doesn't grant.
 
 Machines where developers sign in through `/login` don't need it; every Claude Code invocation fetches its policy from the gateway directly. Fleets that configure a [`policyHelper`](/docs/en/settings#compute-managed-settings-with-a-policy-helper) can't use it, because the helper's output replaces every other managed source and parent settings are never merged while a helper is configured.
 

@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.kalshi.com/websockets/public-trades.md
+Downloaded: 2026-08-08T20:29:46.344Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -121,6 +126,10 @@ operations:
                       - bid
                       - ask
                     required: true
+                  - name: is_block_trade
+                    type: boolean
+                    description: True if the trade was matched off book as a block trade
+                    required: true
                   - name: ts
                     type: integer
                     description: Deprecated - Unix timestamp in seconds. Use ts_ms instead.
@@ -160,6 +169,7 @@ operations:
                 - taker_side
                 - taker_outcome_side
                 - taker_book_side
+                - is_block_trade
                 - ts
                 - ts_ms
               properties:
@@ -204,17 +214,21 @@ operations:
                     - bid
                     - ask
                   x-parser-schema-id: bookSide
+                is_block_trade:
+                  type: boolean
+                  description: True if the trade was matched off book as a block trade
+                  x-parser-schema-id: <anonymous-schema-102>
                 ts:
                   type: integer
                   deprecated: true
                   description: Deprecated - Unix timestamp in seconds. Use ts_ms instead.
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-102>
+                  x-parser-schema-id: <anonymous-schema-103>
                 ts_ms:
                   type: integer
                   description: Unix timestamp in milliseconds
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-103>
+                  x-parser-schema-id: <anonymous-schema-104>
               x-parser-schema-id: <anonymous-schema-97>
           x-parser-schema-id: tradePayload
         title: Trade Update
@@ -230,6 +244,7 @@ operations:
               "no_price_dollars": "0.640",
               "count_fp": "136.00",
               "taker_side": "no",
+              "is_block_trade": false,
               "ts": 1669149841,
               "ts_ms": 1669149841000
             }

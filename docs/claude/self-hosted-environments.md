@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/self-hosted-environments.md
-Downloaded: 2026-08-07T20:40:52.081Z
+Downloaded: 2026-08-08T20:29:47.912Z
 -->
 
 > ## Documentation Index
@@ -122,7 +122,7 @@ Corporate egress proxies are supported. The runner and the optional [autoscaling
 
 ## What stays on your infrastructure
 
-Repository checkouts, build artifacts, secrets, and any files a session creates or modifies stay on the machines you provision. The conversation itself, including prompts, responses, and tool results, goes to `api.anthropic.com` for model inference, and the session transcript is stored by Anthropic so a session can be picked up from any surface.
+Repository checkouts, build artifacts, secrets, and any files a session creates or modifies stay on the machines you provision. The conversation itself, including prompts, responses, and tool results, goes to `api.anthropic.com` for model inference, and Anthropic stores the session transcript so you can resume the session from another [supported surface](#availability-and-limitations).
 
 Session orchestration, queueing, and the claude.ai interface remain Anthropic-hosted: a self-hosted environment moves session execution into your network, not the control plane.
 

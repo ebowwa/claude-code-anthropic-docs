@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/changelog/index.md
-Downloaded: 2026-08-07T20:40:45.363Z
+Downloaded: 2026-08-08T20:29:46.332Z
 -->
 
 > ## Documentation Index
@@ -20,6 +20,18 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="August 13, 2026"
+  tags={["WebSocket", "Predictions"]}
+  rss={{
+title: "Block trade indicator for WebSocket trades",
+description: "Trade messages now identify block trades."
+}}
+>
+  Predictions trade WebSocket messages now include `is_block_trade`, indicating
+  whether the trade was matched off book.
+</Update>
 
 <Update
   label="August 13, 2026"

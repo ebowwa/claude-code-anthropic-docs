@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/sub-agents.md
-Downloaded: 2026-08-07T20:40:52.085Z
+Downloaded: 2026-08-08T20:29:47.915Z
 -->
 
 > ## Documentation Index
@@ -28,8 +28,6 @@ Subagents help you:
 * **Control costs** by routing tasks to faster, cheaper models like Haiku
 
 Claude uses each subagent's description to decide when to delegate tasks. When you create a subagent, write a clear description so Claude knows when to use it.
-
-Claude Code includes several built-in subagents such as Explore, Plan, and general-purpose. You can also create custom subagents to handle specific tasks.
 
 ## Built-in subagents
 
