@@ -1,3 +1,8 @@
+<!--
+Source: https://bun.com/docs/installation.md
+Downloaded: 2026-08-09T20:32:29.731Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://bun.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -23,7 +28,7 @@ Bun ships as a single, dependency-free executable. Install it with the install s
     </CodeGroup>
 
     <Note>
-      **Linux users**  The `unzip` package is required to install Bun (`sudo apt install unzip`). Kernel version 5.6 or higher is recommended; Bun runs on kernels as old as 3.10 (RHEL 7) with graceful degradation of newer syscalls. Use `uname -r` to check your kernel version.
+      **Linux users:** The `unzip` package is required to install Bun (`sudo apt install unzip`). Kernel version 5.6 or higher is recommended; Bun runs on kernels as old as 3.10 (RHEL 7) with graceful degradation of newer syscalls. Use `uname -r` to check your kernel version.
     </Note>
   </Tab>
 
