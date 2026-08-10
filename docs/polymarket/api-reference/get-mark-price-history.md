@@ -1,38 +1,32 @@
 <!--
-Source: https://docs.polymarket.com/api-reference/get-book.md
-Downloaded: 2026-08-10T20:41:52.059Z
+Source: https://docs.polymarket.com/api-reference/get-mark-price-history.md
+Downloaded: 2026-08-10T20:41:52.058Z
 -->
 
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get Book
+# Get Mark Price History
 
-> Get book for an instrument.
+> Get mark price history for an instrument, bucketed by interval.
+If no end time is provided, the current time will be used.
+Maximum of 1000 entries returned per request.
+Only buckets with at least one mark update are included.
+For intervals of a minute or coarser, a bucket cut mid-way by `end_timestamp`
+may be omitted, or may reflect the window's last mark at one-minute fidelity.
 
-<Badge color="gray" size="md">Request Weight:</Badge>
 
-<br />
-
-<Badge color="gray" size="md">Depth 10: **2**</Badge>
-
-<br />
-
-<Badge color="gray" size="md">Depth 100: **5**</Badge>
+<Badge color="gray" size="md">Request Weight: **5**</Badge>
 
 <br />
 
-<Badge color="gray" size="md">Depth 500: **10**</Badge>
-
-<br />
-
-<Badge color="gray" size="md">Depth 1000: **20**</Badge>
+<Badge color="gray" size="md">Cached for 2s. A request served from cache costs **1**</Badge>
 
 
 ## OpenAPI
 
-````yaml /api-spec/perps-openapi.json get /v1/info/book
+````yaml /api-spec/perps-openapi.json get /v1/info/mark-history
 openapi: 3.0.3
 info:
   title: Polymarket Perps HTTP API
@@ -46,11 +40,24 @@ servers:
     description: Production Perps HTTP API
 security: []
 paths:
-  /v1/info/book:
+  /v1/info/mark-history:
     get:
-      summary: Get Book
-      description: Get book for an instrument.
-      operationId: getBook
+      summary: Get Mark Price History
+      description: >
+        Get mark price history for an instrument, bucketed by interval.
+
+        If no end time is provided, the current time will be used.
+
+        Maximum of 1000 entries returned per request.
+
+        Only buckets with at least one mark update are included.
+
+        For intervals of a minute or coarser, a bucket cut mid-way by
+        `end_timestamp`
+
+        may be omitted, or may reflect the window's last mark at one-minute
+        fidelity.
+      operationId: getMarkHistory
       parameters:
         - name: instrument_id
           in: query
@@ -61,18 +68,28 @@ paths:
             minimum: 0
             maximum: 4294967295
             description: Instrument ID
-        - name: depth
+        - name: interval
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/interval'
+        - name: start_timestamp
+          in: query
+          required: true
+          schema:
+            $ref: '#/components/schemas/start_timestamp'
+        - name: end_timestamp
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/depth'
+            $ref: '#/components/schemas/end_timestamp'
       responses:
         '200':
-          description: Book response.
+          description: Mark price history response.
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Book'
+                $ref: '#/components/schemas/MarkHistoryResponse'
         '400':
           $ref: '#/components/responses/Error400Response'
         '429':
@@ -82,62 +99,53 @@ paths:
       security: []
 components:
   schemas:
-    depth:
-      type: integer
-      description: Number of book levels to return
+    interval:
+      type: string
+      description: Kline interval
       enum:
-        - 10
-        - 100
-        - 500
-        - 1000
-      default: 100
-    Book:
+        - 1s
+        - 1m
+        - 5m
+        - 15m
+        - 30m
+        - 1h
+        - 4h
+        - 6h
+        - 12h
+        - 1d
+        - 1w
+    start_timestamp:
+      type: integer
+      description: Start timestamp in milliseconds
+      example: 1767225600000
+    end_timestamp:
+      type: integer
+      description: End timestamp in milliseconds
+      example: 1767229200000
+    MarkHistoryResponse:
       type: object
       required:
-        - instrument_id
-        - bids
-        - asks
-        - timestamp
-        - sequence
+        - data
+        - more
       properties:
-        instrument_id:
-          $ref: '#/components/schemas/instrument_id'
-        bids:
+        data:
           type: array
           items:
-            $ref: '#/components/schemas/level'
-          description: Bid levels
-        asks:
-          type: array
-          items:
-            $ref: '#/components/schemas/level'
-          description: Ask levels
-        timestamp:
-          $ref: '#/components/schemas/timestamp'
-        sequence:
-          $ref: '#/components/schemas/sequence'
-    instrument_id:
-      type: integer
-      description: Instrument ID
-    level:
+            $ref: '#/components/schemas/mark_point'
+          maxItems: 1000
+        more:
+          $ref: '#/components/schemas/more'
+    mark_point:
       type: array
-      items:
-        type: string
-      maxItems: 2
       description: |
-        - `"100.00"` - Price
-        - `"10.00"` - Quantity
+        - `1767225600000` - Bucket open time (ms)
+        - `"160.00"` - Last mark price in bucket
       example:
-        - '100.00'
-        - '10.00'
-    timestamp:
-      type: integer
-      description: Timestamp in milliseconds
-      example: 1767225600000
-    sequence:
-      type: integer
-      description: Sequence number
-      example: 1234567890
+        - 1767225600000
+        - '160.00'
+    more:
+      type: boolean
+      description: More data available
     Error400:
       title: Error400
       type: object

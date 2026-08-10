@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-instruments.md
-Downloaded: 2026-08-07T00:52:23.801Z
+Downloaded: 2026-08-10T20:41:52.058Z
 -->
 
 > ## Documentation Index
@@ -40,7 +40,11 @@ paths:
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/instrument_id'
+            type: integer
+            format: int64
+            minimum: 0
+            maximum: 4294967295
+            description: Instrument ID
         - name: instrument_type
           in: query
           required: false
@@ -69,9 +73,6 @@ paths:
       security: []
 components:
   schemas:
-    instrument_id:
-      type: integer
-      description: Instrument ID
     instrument_type:
       type: string
       description: Instrument type
@@ -106,6 +107,7 @@ components:
         - max_limit_notional
         - max_leverage
         - risk_tiers
+        - ui_live_time
       properties:
         instrument_id:
           $ref: '#/components/schemas/instrument_id'
@@ -145,6 +147,11 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/RiskTier'
+        ui_live_time:
+          $ref: '#/components/schemas/ui_live_time'
+    instrument_id:
+      type: integer
+      description: Instrument ID
     isolated_only:
       type: boolean
       description: >-
@@ -215,6 +222,16 @@ components:
           $ref: '#/components/schemas/lower_bound'
         max_leverage:
           $ref: '#/components/schemas/max_leverage'
+    ui_live_time:
+      type: integer
+      nullable: true
+      minimum: 0
+      maximum: 253402300799000
+      description: >-
+        Unix timestamp in milliseconds when first-party interfaces may display
+        the instrument. A null value means hidden. This advisory field does not
+        affect trading availability.
+      example: 1786032000000
     Error400:
       title: Error400
       type: object

@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/perps/market-data.md
+Downloaded: 2026-08-10T20:41:52.045Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -233,7 +238,8 @@ workflow.
         "max_limit_notional": "1000000",
         "max_leverage": 10,
         "isolated_only": false,
-        "risk_tiers": [{ "lower_bound": "0", "max_leverage": 10 }]
+        "risk_tiers": [{ "lower_bound": "0", "max_leverage": 10 }],
+        "ui_live_time": null
       }
     ]
     ```
@@ -263,6 +269,14 @@ workflow.
     | `risk_tiers`                | Risk tiers for larger position sizes.                                                                                   |
     | `risk_tiers[].lower_bound`  | Lower notional bound for the risk tier.                                                                                 |
     | `risk_tiers[].max_leverage` | Maximum leverage allowed for the risk tier.                                                                             |
+    | `ui_live_time`              | Advisory display time in Unix milliseconds, or `null` when hidden from first-party interfaces.                          |
+
+    <Note>
+      Most trading and market-data integrations can ignore `ui_live_time`. It is
+      advisory metadata for interface display timing and does not control whether
+      the API returns an instrument or whether that instrument can be traded. A
+      non-null value indicates when first-party interfaces may display it.
+    </Note>
   </Tab>
 </Tabs>
 
@@ -652,6 +666,42 @@ backtests, or trading signals.
     ```
 
     Each candle is `[timestamp, open, high, low, close, volume, trades]`.
+  </Tab>
+</Tabs>
+
+## Fetch Mark Price History
+
+Mark price history shows how an instrument's mark price changed over time. Each
+data point contains the last mark price recorded for an interval, independent
+of whether trades occurred during that interval.
+
+<Tabs>
+  <Tab title="API">
+    Fetch bucketed mark prices for an instrument and interval. `start_timestamp` is
+    required; `end_timestamp` is optional. The API returns at most 1000 points per
+    request.
+
+    ```bash theme={null}
+    curl -G "https://api.perpetuals.polymarket.com/v1/info/mark-history" \
+      --data-urlencode "instrument_id=1" \
+      --data-urlencode "interval=1s" \
+      --data-urlencode "start_timestamp=1766120400000"
+    ```
+
+    The response returns mark price points in `data` and a `more` flag for
+    continuation. Only buckets that contain at least one mark update are included.
+
+    ```json theme={null}
+    {
+      "data": [
+        [1766120400000, "160.00"],
+        [1766120401000, "160.05"]
+      ],
+      "more": false
+    }
+    ```
+
+    Each point is `[bucket_open_time_ms, last_mark_price_in_bucket]`.
   </Tab>
 </Tabs>
 

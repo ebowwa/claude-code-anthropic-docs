@@ -1,15 +1,22 @@
+<!--
+Source: https://docs.polymarket.com/perps/learn-about-trading/liquidation-mechanics.md
+Downloaded: 2026-08-10T20:41:52.047Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
 # Liquidation Mechanics
 
-> Detection, execution, and insurance-fund backstop
+> Detection, execution, insurance-fund backstop, and auto-deleveraging
 
 When a trader's equity drops below maintenance margin, the system closes the
 position before it becomes insolvent. Normal liquidations route through the order
 book as reduce-only immediate-or-cancel orders. If the breach is severe, the
-position is absorbed directly by the insurance fund instead.
+position is absorbed directly by the insurance fund — or, when the fund cannot
+safely take it on, closed against opposite-side traders through
+auto-deleveraging.
 
 ## Trigger
 
@@ -36,8 +43,11 @@ When liquidation starts, the affected scope is flagged:
 * Cross liquidation blocks new orders on every market for the account.
 * Isolated liquidation blocks new orders only on the affected market.
 
-Order submissions from the account are rejected while the flag is set. Existing
-resting orders remain on the book.
+Order submissions from the account are rejected while the flag is set. The
+system also cancels the account's resting orders inside the same scope before
+it places the first liquidation order: cross liquidation cancels resting
+orders on every cross-margined market but leaves isolated markets untouched,
+while isolated liquidation cancels only the orders on the affected market.
 
 ## Execution
 
@@ -81,6 +91,61 @@ position into the insurance fund.
 Once absorbed, the insurance fund holds the position and manages it like any other
 account.
 
+The backstop only fires when the fund can take the position on and remain
+healthy itself — its equity after absorbing must stay at or above its own
+maintenance margin. When it cannot, the system auto-deleverages instead.
+
+## Auto-Deleveraging
+
+If a breach is severe enough for the backstop but the insurance fund cannot
+safely absorb the position, the system force-closes it directly against traders
+holding the opposite side. This is auto-deleveraging (ADL): no order-book
+matching, no draw on the insurance fund.
+
+An isolated liquidation deleverages the affected market only. A cross
+liquidation deleverages every open cross position the account holds.
+
+### Counterparty Selection
+
+For each affected market, opposite-side positions are ranked by:
+
+```text theme={null}
+AdlIndex = ProfitRatio * Notional / Equity
+```
+
+* `ProfitRatio` is `Mark / Entry` for longs and `Entry / Mark` for shorts.
+* `Notional / Equity` is effective leverage: position notional at Mark over
+  cross equity for a cross position, or over the position's own equity for an
+  isolated position.
+
+The most profitable, most leveraged counterparties rank first. The system works
+down the queue, reducing each counterparty in turn, until the liquidated
+position is fully closed. A counterparty position is only ever reduced — never
+flipped to the other side or increased. Accounts that are themselves
+liquidating, and the insurance fund, are never selected.
+
+While a counterparty is being deleveraged, its new orders on that market are
+rejected, exactly as during liquidation. The block clears automatically once
+the deleveraging completes.
+
+### Execution Price
+
+* An isolated liquidation deleverages at the liquidated position's bankruptcy
+  price — the price at which its isolated margin is exactly exhausted.
+* A cross liquidation deleverages at the Mark Price frozen when the liquidation
+  started, not the live mark.
+
+Both legs settle at this price, and each side's realized PnL is credited to its
+quote balance.
+
+### What Counterparties See
+
+* The fill arrives on the WebSocket `fills` channel and in trade history with
+  `adl: true`. The `liq` flag marks only the leg whose own position is being
+  liquidated, so it stays `false` on the counterparty leg.
+* A `position_deleveraged` [notification](/perps/notifications) reports the
+  market, side, size closed, execution price, and realized PnL.
+
 ## Fees
 
 The liquidating account pays an extra liquidation fee on every fill while flagged,
@@ -92,3 +157,5 @@ FillFee = Notional * (MakerOrTakerRate + LiquidationFeeRate)
 
 Liquidation fee rates vary by market. If you're integrating Perps, read current
 values from [Market Data](/perps/market-data#fetch-instruments).
+
+Auto-deleveraging fills bypass the order book and carry no fee for either side.

@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-klines.md
-Downloaded: 2026-08-07T00:52:23.801Z
+Downloaded: 2026-08-10T20:41:52.058Z
 -->
 
 > ## Documentation Index
@@ -46,7 +46,11 @@ paths:
           in: query
           required: true
           schema:
-            $ref: '#/components/schemas/instrument_id'
+            type: integer
+            format: int64
+            minimum: 0
+            maximum: 4294967295
+            description: Instrument ID
         - name: interval
           in: query
           required: true
@@ -78,9 +82,6 @@ paths:
       security: []
 components:
   schemas:
-    instrument_id:
-      type: integer
-      description: Instrument ID
     interval:
       type: string
       description: Kline interval

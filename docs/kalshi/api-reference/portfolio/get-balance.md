@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/portfolio/get-balance.md
-Downloaded: 2026-08-04T21:12:26.389Z
+Downloaded: 2026-08-10T20:41:51.123Z
 -->
 
 > ## Documentation Index
@@ -9,7 +9,7 @@ Downloaded: 2026-08-04T21:12:26.389Z
 
 # Get Balance
 
-> Endpoint for getting the balance and portfolio value of a member. By default the returned balance is the primary account's available balance. Pass a non-zero `subaccount` to fetch that subaccount's balance on a specific exchange index instead (`exchange_index`, defaulting to 0). When `subaccount` is omitted or 0, `exchange_index` has no effect. This endpoint also accepts API keys with the 'read::portfolio_balance' scope.
+> Endpoint for getting the balance and portfolio value of a member. `portfolio_value` is always scoped to the requested `exchange_index` (defaulting to 0). When `subaccount` is omitted, `balance` is the primary account's aggregate available balance; pass `subaccount` explicitly (0 for primary, 1-63 for subaccounts) to read that subaccount's balance on the requested exchange index instead. This endpoint also accepts API keys with the 'read::portfolio_balance' scope.
 
 
 
@@ -71,11 +71,12 @@ paths:
         - portfolio
       summary: Get Balance
       description: >-
-        Endpoint for getting the balance and portfolio value of a member. By
-        default the returned balance is the primary account's available balance.
-        Pass a non-zero `subaccount` to fetch that subaccount's balance on a
-        specific exchange index instead (`exchange_index`, defaulting to 0).
-        When `subaccount` is omitted or 0, `exchange_index` has no effect. This
+        Endpoint for getting the balance and portfolio value of a member.
+        `portfolio_value` is always scoped to the requested `exchange_index`
+        (defaulting to 0). When `subaccount` is omitted, `balance` is the
+        primary account's aggregate available balance; pass `subaccount`
+        explicitly (0 for primary, 1-63 for subaccounts) to read that
+        subaccount's balance on the requested exchange index instead. This
         endpoint also accepts API keys with the 'read::portfolio_balance' scope.
       operationId: GetBalance
       parameters:
@@ -86,9 +87,8 @@ paths:
             $ref: '#/components/schemas/ExchangeIndex'
           x-go-type-skip-optional-pointer: true
           description: >-
-            Exchange index to read the subaccount balance from, paired with a
-            non-zero `subaccount`. Defaults to 0. Ignored when `subaccount` is
-            omitted or 0.
+            Exchange index to scope the returned portfolio value to, and the
+            balance when `subaccount` is provided. Defaults to 0.
       responses:
         '200':
           description: Balance retrieved successfully
@@ -140,8 +140,9 @@ components:
           type: integer
           format: int64
           description: >-
-            Member's portfolio value in cents. This is the current value of all
-            positions held.
+            Member's portfolio value in cents. This is the current value of the
+            positions held by the requested subaccount on the requested exchange
+            index.
         updated_ts:
           type: integer
           format: int64

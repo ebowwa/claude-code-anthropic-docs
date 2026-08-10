@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/wss/perps-fills.md
-Downloaded: 2026-08-07T20:40:43.982Z
+Downloaded: 2026-08-10T20:41:52.065Z
 -->
 
 > ## Documentation Index
@@ -544,7 +544,14 @@ operations:
                     required: true
                   - name: liq
                     type: boolean
-                    description: Whether the fill was a liquidation
+                    description: >-
+                      Liquidation flag for this leg of the fill. False on the
+                      counterparty leg of an auto-deleveraging match — that leg
+                      is flagged by `adl` instead
+                    required: true
+                  - name: adl
+                    type: boolean
+                    description: Whether the fill came from auto-deleveraging
                     required: true
                   - name: ts
                     type: integer
@@ -651,8 +658,15 @@ operations:
                   x-parser-schema-id: <anonymous-schema-491>
                 liq:
                   type: boolean
-                  description: Whether the fill was a liquidation
+                  description: >-
+                    Liquidation flag for this leg of the fill. False on the
+                    counterparty leg of an auto-deleveraging match — that leg is
+                    flagged by `adl` instead
                   x-parser-schema-id: <anonymous-schema-492>
+                adl:
+                  type: boolean
+                  description: Whether the fill came from auto-deleveraging
+                  x-parser-schema-id: <anonymous-schema-493>
                 ts:
                   type: integer
                   description: >-
@@ -660,7 +674,7 @@ operations:
                     Unix seconds for withdrawals (must match the on-chain
                     EIP-712 struct verified against block.timestamp).
                   example: 1767225600000
-                  x-parser-schema-id: <anonymous-schema-493>
+                  x-parser-schema-id: <anonymous-schema-494>
                 coid:
                   type: string
                   description: Client order ID
@@ -668,7 +682,7 @@ operations:
                   maxLength: 32
                   pattern: ^[0-9a-f]{32}$
                   example: 550e8400e29b41d4a716446655440000
-                  x-parser-schema-id: <anonymous-schema-494>
+                  x-parser-schema-id: <anonymous-schema-495>
               required:
                 - tid
                 - oid
@@ -684,6 +698,7 @@ operations:
                 - pnl
                 - ts
                 - liq
+                - adl
               x-parser-schema-id: <anonymous-schema-479>
           required:
             - ch

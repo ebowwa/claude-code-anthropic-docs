@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-funding-charges.md
-Downloaded: 2026-08-07T20:40:43.968Z
+Downloaded: 2026-08-10T20:41:52.061Z
 -->
 
 > ## Documentation Index
@@ -46,7 +46,11 @@ paths:
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/instrument_id'
+            type: integer
+            format: int64
+            minimum: 0
+            maximum: 4294967295
+            description: Instrument ID
         - name: start_timestamp
           in: query
           required: false
@@ -77,9 +81,6 @@ paths:
           polymarket_secret: []
 components:
   schemas:
-    instrument_id:
-      type: integer
-      description: Instrument ID
     start_timestamp:
       type: integer
       description: Start timestamp in milliseconds

@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-recent-trades.md
-Downloaded: 2026-08-07T00:52:23.802Z
+Downloaded: 2026-08-10T20:41:52.059Z
 -->
 
 > ## Documentation Index
@@ -44,7 +44,11 @@ paths:
           in: query
           required: true
           schema:
-            $ref: '#/components/schemas/instrument_id'
+            type: integer
+            format: int64
+            minimum: 0
+            maximum: 4294967295
+            description: Instrument ID
         - name: start_timestamp
           in: query
           required: false
@@ -71,9 +75,6 @@ paths:
       security: []
 components:
   schemas:
-    instrument_id:
-      type: integer
-      description: Instrument ID
     start_timestamp:
       type: integer
       description: Start timestamp in milliseconds

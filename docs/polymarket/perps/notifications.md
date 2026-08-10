@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/perps/notifications.md
-Downloaded: 2026-08-07T20:40:43.990Z
+Downloaded: 2026-08-10T20:41:52.046Z
 -->
 
 > ## Documentation Index
@@ -715,15 +715,22 @@ Every notification carries a `type` and a small type-specific payload.
   <Tab title="API">
     Notifications report these `type` values.
 
-    | `type`                 | Sent when                                                                                    |
-    | ---------------------- | -------------------------------------------------------------------------------------------- |
-    | `position_opened`      | A fill opens a new position.                                                                 |
-    | `position_increased`   | A fill adds to an existing position.                                                         |
-    | `position_reduced`     | A fill shrinks a position without closing it.                                                |
-    | `position_closed`      | A fill fully closes a position and realizes its PnL.                                         |
-    | `limit_order_canceled` | A resting limit order is canceled.                                                           |
-    | `liquidation_warning`  | A position (isolated margin) or the whole account (cross margin) is approaching liquidation. |
-    | `position_liquidated`  | A liquidation closes part or all of a position.                                              |
+    | `type`                 | Sent when                                                                                     |
+    | ---------------------- | --------------------------------------------------------------------------------------------- |
+    | `position_opened`      | A fill opens a new position.                                                                  |
+    | `position_increased`   | A fill adds to an existing position.                                                          |
+    | `position_reduced`     | A fill shrinks a position without closing it.                                                 |
+    | `position_closed`      | A fill fully closes a position and realizes its PnL.                                          |
+    | `limit_order_canceled` | A resting limit order is canceled.                                                            |
+    | `liquidation_warning`  | A position (isolated margin) or the whole account (cross margin) is approaching liquidation.  |
+    | `position_liquidated`  | A liquidation closes part or all of a position.                                               |
+    | `position_deleveraged` | Auto-deleveraging closes part or all of a position to settle a liquidation on the other side. |
+
+    A liquidation that cannot settle on the order book is auto-deleveraged against
+    a trader on the profitable side. The liquidated account receives
+    `position_liquidated`; the counterparty, whose position was closed or reduced
+    without any action of its own, receives `position_deleveraged` with the
+    settlement `price` and the realized `pnl`.
 
     Fill-driven position notifications can include an `order_type` field that
     names the kind of order behind the fill. The field is omitted when the fill
@@ -808,6 +815,19 @@ Every notification carries a `type` and a small type-specific payload.
         "pnl": "-130",
         "margin_type": "isolated",
         "via_backstop": false
+      }
+      ```
+
+      ```json Position Deleveraged theme={null}
+      {
+        "id": "6ab1e47f-9b8c-5eaf-8f9b-7c8d9e0f1a2b",
+        "type": "position_deleveraged",
+        "instrument_id": 1,
+        "side": "short",
+        "size_closed": "0.01",
+        "price": "52000",
+        "pnl": "130",
+        "margin_type": "isolated"
       }
       ```
     </CodeGroup>

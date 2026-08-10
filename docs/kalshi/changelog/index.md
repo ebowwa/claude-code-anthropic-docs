@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/changelog/index.md
-Downloaded: 2026-08-08T20:29:46.332Z
+Downloaded: 2026-08-10T20:41:51.138Z
 -->
 
 > ## Documentation Index
@@ -20,6 +20,22 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="August 13, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Balance reads scoped by exchange_index",
+description: "GetBalance scopes portfolio_value to the requested exchange_index and supports scoped primary balance reads via subaccount=0."
+}}
+>
+  `GET /trade-api/v2/portfolio/balance` now scopes `portfolio_value` to the
+  requested `exchange_index` (defaulting to 0); it previously covered
+  positions across all exchange indexes. Passing `subaccount` explicitly
+  (including 0, previously treated as omitted) returns that subaccount's
+  `balance` on the requested exchange index. Omitting `subaccount` keeps
+  the primary account's aggregate `balance`.
+</Update>
 
 <Update
   label="August 13, 2026"

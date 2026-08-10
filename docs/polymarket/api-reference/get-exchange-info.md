@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-exchange-info.md
-Downloaded: 2026-08-07T00:52:23.799Z
+Downloaded: 2026-08-10T20:41:52.058Z
 -->
 
 > ## Documentation Index
@@ -58,6 +58,8 @@ components:
         - version
         - chain_id
         - contract
+        - cancel_only
+        - engine_version
       properties:
         name:
           $ref: '#/components/schemas/name'
@@ -67,6 +69,10 @@ components:
           $ref: '#/components/schemas/chain_id'
         contract:
           $ref: '#/components/schemas/contract'
+        cancel_only:
+          $ref: '#/components/schemas/cancel_only'
+        engine_version:
+          $ref: '#/components/schemas/engine_version'
     name:
       type: string
       description: Exchange name used in the EIP-712 domain.
@@ -84,6 +90,16 @@ components:
       type: string
       description: Verifying contract address or the EIP-712 domain.
       example: '0x1234567890abcdef1234567890abcdef12345678'
+    cancel_only:
+      type: boolean
+      description: >-
+        True while the exchange is in cancel-only (maintenance) mode — only
+        order cancellation is accepted.
+      example: false
+    engine_version:
+      type: string
+      description: Engine release version of the build serving this response.
+      example: 0.0.61
     Error429:
       title: Error429
       type: object

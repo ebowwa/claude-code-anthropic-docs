@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/wss/perps-portfolio.md
-Downloaded: 2026-08-07T20:40:43.983Z
+Downloaded: 2026-08-10T20:41:52.065Z
 -->
 
 > ## Documentation Index
@@ -75,7 +75,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-662>
+              x-parser-schema-id: <anonymous-schema-663>
             req:
               type: string
               description: Request type
@@ -83,7 +83,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-663>
+              x-parser-schema-id: <anonymous-schema-664>
             chs:
               type: array
               description: 'Portfolio private channel: "portfolio"'
@@ -91,14 +91,14 @@ operations:
                 type: string
                 enum:
                   - portfolio
-                x-parser-schema-id: <anonymous-schema-665>
+                x-parser-schema-id: <anonymous-schema-666>
               example:
                 - portfolio
-              x-parser-schema-id: <anonymous-schema-664>
+              x-parser-schema-id: <anonymous-schema-665>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-661>
+          x-parser-schema-id: <anonymous-schema-662>
         title: Subscribe
         description: Subscribe to private portfolio updates (requires prior auth)
         example: |-
@@ -180,7 +180,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-667>
+              x-parser-schema-id: <anonymous-schema-668>
             data:
               title: Subscribe Response
               type: array
@@ -194,8 +194,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-671>
-                    x-parser-schema-id: <anonymous-schema-670>
+                        x-parser-schema-id: <anonymous-schema-672>
+                    x-parser-schema-id: <anonymous-schema-671>
                   - type: object
                     required:
                       - status
@@ -205,7 +205,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-673>
+                        x-parser-schema-id: <anonymous-schema-674>
                       error:
                         type: string
                         description: >-
@@ -225,13 +225,13 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-674>
-                    x-parser-schema-id: <anonymous-schema-672>
-                x-parser-schema-id: <anonymous-schema-669>
-              x-parser-schema-id: <anonymous-schema-668>
+                        x-parser-schema-id: <anonymous-schema-675>
+                    x-parser-schema-id: <anonymous-schema-673>
+                x-parser-schema-id: <anonymous-schema-670>
+              x-parser-schema-id: <anonymous-schema-669>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-666>
+          x-parser-schema-id: <anonymous-schema-667>
         title: Subscribe Response
         description: Response to portfolio subscribe request
         example: |-
@@ -288,7 +288,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-676>
+              x-parser-schema-id: <anonymous-schema-677>
             req:
               type: string
               description: Request type
@@ -296,7 +296,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-677>
+              x-parser-schema-id: <anonymous-schema-678>
             chs:
               type: array
               description: 'Portfolio private channel: "portfolio"'
@@ -304,14 +304,14 @@ operations:
                 type: string
                 enum:
                   - portfolio
-                x-parser-schema-id: <anonymous-schema-679>
+                x-parser-schema-id: <anonymous-schema-680>
               example:
                 - portfolio
-              x-parser-schema-id: <anonymous-schema-678>
+              x-parser-schema-id: <anonymous-schema-679>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-675>
+          x-parser-schema-id: <anonymous-schema-676>
         title: Unsubscribe
         description: Unsubscribe from private portfolio updates
         example: |-
@@ -391,7 +391,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-681>
+              x-parser-schema-id: <anonymous-schema-682>
             data:
               title: Subscribe Response
               type: array
@@ -405,8 +405,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-685>
-                    x-parser-schema-id: <anonymous-schema-684>
+                        x-parser-schema-id: <anonymous-schema-686>
+                    x-parser-schema-id: <anonymous-schema-685>
                   - type: object
                     required:
                       - status
@@ -416,7 +416,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-687>
+                        x-parser-schema-id: <anonymous-schema-688>
                       error:
                         type: string
                         description: >-
@@ -436,13 +436,13 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-688>
-                    x-parser-schema-id: <anonymous-schema-686>
-                x-parser-schema-id: <anonymous-schema-683>
-              x-parser-schema-id: <anonymous-schema-682>
+                        x-parser-schema-id: <anonymous-schema-689>
+                    x-parser-schema-id: <anonymous-schema-687>
+                x-parser-schema-id: <anonymous-schema-684>
+              x-parser-schema-id: <anonymous-schema-683>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-680>
+          x-parser-schema-id: <anonymous-schema-681>
         title: Unsubscribe Response
         description: Response to portfolio unsubscribe request
         example: |-
@@ -590,6 +590,14 @@ operations:
                         type: string
                         description: Total account value in USD (equity + unrealized PnL)
                         required: true
+                      - name: available_order_margin
+                        type: string
+                        description: >-
+                          Collateral available in USD for additional order
+                          initial margin after existing exposure, open orders,
+                          orders and isolated-margin additions awaiting risk
+                          processing, and pending withdrawals or transfers
+                        required: true
                       - name: total_initial_margin
                         type: string
                         description: Total initial margin in use across all positions
@@ -627,7 +635,7 @@ operations:
                 "tickers::all"). Private channels use plain names (e.g. "fills",
                 "orders").
               example: trades::1
-              x-parser-schema-id: <anonymous-schema-690>
+              x-parser-schema-id: <anonymous-schema-691>
             ts:
               type: integer
               description: >-
@@ -635,12 +643,12 @@ operations:
                 seconds for withdrawals (must match the on-chain EIP-712 struct
                 verified against block.timestamp).
               example: 1767225600000
-              x-parser-schema-id: <anonymous-schema-691>
+              x-parser-schema-id: <anonymous-schema-692>
             sq:
               type: integer
               description: Sequence number
               example: 1234567890
-              x-parser-schema-id: <anonymous-schema-692>
+              x-parser-schema-id: <anonymous-schema-693>
             data:
               type: object
               required:
@@ -673,33 +681,33 @@ operations:
                       instrument_id:
                         type: integer
                         description: Instrument ID
-                        x-parser-schema-id: <anonymous-schema-696>
+                        x-parser-schema-id: <anonymous-schema-697>
                       symbol:
                         type: string
                         description: Instrument symbol
                         example: NVDA-USDC
-                        x-parser-schema-id: <anonymous-schema-697>
+                        x-parser-schema-id: <anonymous-schema-698>
                       size:
                         type: string
                         description: >-
                           Signed position size in no. of contracts (positive =
                           long, negative = short)
                         example: '10.00'
-                        x-parser-schema-id: <anonymous-schema-698>
+                        x-parser-schema-id: <anonymous-schema-699>
                       entry_price:
                         type: string
                         description: Average entry price
                         example: '2986.30'
-                        x-parser-schema-id: <anonymous-schema-699>
+                        x-parser-schema-id: <anonymous-schema-700>
                       leverage:
                         type: integer
                         description: Leverage
                         example: 10
-                        x-parser-schema-id: <anonymous-schema-700>
+                        x-parser-schema-id: <anonymous-schema-701>
                       cross:
                         type: boolean
                         description: Whether to use cross margin mode
-                        x-parser-schema-id: <anonymous-schema-701>
+                        x-parser-schema-id: <anonymous-schema-702>
                       initial_margin:
                         type: string
                         description: >
@@ -723,39 +731,39 @@ operations:
 
                           `margin` would more accurately describe the field.
                         example: '10.00'
-                        x-parser-schema-id: <anonymous-schema-702>
+                        x-parser-schema-id: <anonymous-schema-703>
                       maintenance_margin:
                         type: string
                         description: Maintenance margin amount
                         example: '100.00'
-                        x-parser-schema-id: <anonymous-schema-703>
+                        x-parser-schema-id: <anonymous-schema-704>
                       position_value:
                         type: string
                         description: Notional position value in USD
                         example: '100.03'
-                        x-parser-schema-id: <anonymous-schema-704>
+                        x-parser-schema-id: <anonymous-schema-705>
                       liquidation_price:
                         type: string
                         description: Liquidation price
                         example: '2866.27'
-                        x-parser-schema-id: <anonymous-schema-705>
+                        x-parser-schema-id: <anonymous-schema-706>
                       unrealized_pnl:
                         type: string
                         description: Unrealized PnL in USD
                         example: '-0.01'
-                        x-parser-schema-id: <anonymous-schema-706>
+                        x-parser-schema-id: <anonymous-schema-707>
                       return_on_equity:
                         type: string
                         description: >-
                           Unrealized PnL divided by the position's current
                           required initial margin, as a decimal.
                         example: '-0.0027'
-                        x-parser-schema-id: <anonymous-schema-707>
+                        x-parser-schema-id: <anonymous-schema-708>
                       cumulative_funding:
                         type: string
                         description: Cumulative funding paid/received in USD
                         example: '514.09'
-                        x-parser-schema-id: <anonymous-schema-708>
+                        x-parser-schema-id: <anonymous-schema-709>
                       adl_index:
                         type: integer
                         enum:
@@ -767,13 +775,14 @@ operations:
                           Auto-deleveraging tier; higher means higher risk of
                           being ADL'd.
                         example: 2
-                        x-parser-schema-id: <anonymous-schema-709>
-                    x-parser-schema-id: <anonymous-schema-695>
-                  x-parser-schema-id: <anonymous-schema-694>
+                        x-parser-schema-id: <anonymous-schema-710>
+                    x-parser-schema-id: <anonymous-schema-696>
+                  x-parser-schema-id: <anonymous-schema-695>
                 margin:
                   type: object
                   required:
                     - total_account_value
+                    - available_order_margin
                     - total_initial_margin
                     - total_maintenance_margin
                     - total_position_value
@@ -782,44 +791,53 @@ operations:
                       type: string
                       description: Total account value in USD (equity + unrealized PnL)
                       example: '13109.48'
-                      x-parser-schema-id: <anonymous-schema-711>
+                      x-parser-schema-id: <anonymous-schema-712>
+                    available_order_margin:
+                      type: string
+                      description: >-
+                        Collateral available in USD for additional order initial
+                        margin after existing exposure, open orders, orders and
+                        isolated-margin additions awaiting risk processing, and
+                        pending withdrawals or transfers
+                      example: '5055.79'
+                      x-parser-schema-id: <anonymous-schema-713>
                     total_initial_margin:
                       type: string
                       description: Total initial margin in use across all positions
                       example: '4.97'
-                      x-parser-schema-id: <anonymous-schema-712>
+                      x-parser-schema-id: <anonymous-schema-714>
                     total_maintenance_margin:
                       type: string
                       description: Total maintenance margin across all positions
                       example: '2.49'
-                      x-parser-schema-id: <anonymous-schema-713>
+                      x-parser-schema-id: <anonymous-schema-715>
                     total_position_value:
                       type: string
                       description: Total notional position value in USD
                       example: '100.03'
-                      x-parser-schema-id: <anonymous-schema-714>
-                  x-parser-schema-id: <anonymous-schema-710>
+                      x-parser-schema-id: <anonymous-schema-716>
+                  x-parser-schema-id: <anonymous-schema-711>
                 withdrawable:
                   type: string
                   description: Withdrawable balance in USD
                   example: '13104.51'
-                  x-parser-schema-id: <anonymous-schema-715>
+                  x-parser-schema-id: <anonymous-schema-717>
                 in_liquidation:
                   type: boolean
                   description: Whether the account is currently under liquidation
-                  x-parser-schema-id: <anonymous-schema-716>
+                  x-parser-schema-id: <anonymous-schema-718>
                 timestamp:
                   type: integer
                   description: Update timestamp in milliseconds
                   example: 1767225600000
-                  x-parser-schema-id: <anonymous-schema-717>
-              x-parser-schema-id: <anonymous-schema-693>
+                  x-parser-schema-id: <anonymous-schema-719>
+              x-parser-schema-id: <anonymous-schema-694>
           required:
             - ch
             - ts
             - sq
             - data
-          x-parser-schema-id: <anonymous-schema-689>
+          x-parser-schema-id: <anonymous-schema-690>
         title: Update
         description: Portfolio updates pushed every 5 seconds
         example: |-
@@ -846,6 +864,7 @@ operations:
               ],
               "margin": {
                 "total_account_value": "13109.48",
+                "available_order_margin": "13104.51",
                 "total_initial_margin": "4.97",
                 "total_maintenance_margin": "2.49",
                 "total_position_value": "100.03"

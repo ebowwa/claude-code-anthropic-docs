@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/perps/trading.md
-Downloaded: 2026-08-07T20:40:43.991Z
+Downloaded: 2026-08-10T20:41:52.046Z
 -->
 
 > ## Documentation Index
@@ -159,7 +159,8 @@ the market and include the constraints used later when building an order.
         "max_limit_notional": "1000000",
         "max_leverage": 10,
         "isolated_only": false,
-        "risk_tiers": [{ "lower_bound": "0", "max_leverage": 10 }]
+        "risk_tiers": [{ "lower_bound": "0", "max_leverage": 10 }],
+        "ui_live_time": null
       }
     ]
     ```
@@ -248,6 +249,7 @@ open position size.
       ],
       "margin": {
         "total_account_value": "1000",
+        "available_order_margin": "870",
         "total_initial_margin": "130",
         "total_maintenance_margin": "65",
         "total_position_value": "650"
@@ -1572,11 +1574,47 @@ filled position.
       [
         {
           "status": "err",
-          "error": "order_not_found"
+          "oid": 1234567890,
+          "error": "order_not_in_orderbook"
         }
       ]
       ```
     </CodeGroup>
+
+    A rejected result carries a stable `error` identifier, along with the `oid` or
+    `coid` it applies to. Branch on the identifier: it tells you whether the order is
+    gone for good or whether the cancel is worth sending again.
+
+    | Error                      | Description                                                                                                     | Retry                                    |
+    | -------------------------- | --------------------------------------------------------------------------------------------------------------- | ---------------------------------------- |
+    | `order_unknown`            | The `coid` does not resolve to a live order on your account. Only returned by `DELETE /v1/trade/orders-coid`.   | Only while your create is unacknowledged |
+    | `order_not_in_orderbook`   | The order does not exist in exchange state. It already terminated, or it never existed.                         | No — terminal                            |
+    | `order_in_flight`          | The order exists but is not cancellable yet: pending risk checks, queued, or on its way to the matching engine. | Yes — transient                          |
+    | `order_not_pending_engine` | An earlier cancel for the same order is already in flight and has not been applied to the book yet.             | No — wait for the first cancel           |
+    | `order_not_found`          | The take-profit or stop-loss order you tried to cancel does not exist.                                          | No — terminal                            |
+
+    `order_unknown` covers three cases that cannot be told apart: the create never
+    reached the exchange, it reached the exchange but is not visible to this read
+    yet, or the order already filled, canceled, or expired and released its `coid`.
+    Perps keeps no order history, so a `coid` that terminated looks identical to one
+    that never existed. This identifier is answered from a cached view of your live
+    orders that can briefly trail the exchange, so it is not proof the order is
+    absent — while your create is still unacknowledged, send the cancel again. Once
+    the create has been acknowledged, reconcile against your order updates and fills
+    instead of retrying.
+
+    `order_not_in_orderbook` means the exchange evaluated the cancel against its own
+    state and found no such order, so the result is authoritative. Nothing re-creates
+    a departed order, so retrying cannot change the outcome. Canceling an `oid` owned
+    by another account returns this same identifier, so order IDs are not probeable
+    across accounts.
+
+    <Note>
+      During maintenance the exchange can enter cancel-only mode: new orders are
+      rejected with `cancel_only_mode` while cancels keep working. Entering the
+      mode does not purge resting orders or change any of the semantics above — a
+      cancel reject means the same thing it does at any other time.
+    </Note>
   </Tab>
 </Tabs>
 
@@ -2672,6 +2710,7 @@ reads. Track their lifecycle in addition to the position and fills they protect.
               "pep": "0",
               "pnl": "0",
               "liq": false,
+              "adl": false,
               "ts": 1767000010500,
               "coid": "7f9e4a2b6c8d0e1f1234567890abcdef"
             },
@@ -2703,6 +2742,7 @@ reads. Track their lifecycle in addition to the position and fills they protect.
               ],
               "margin": {
                 "total_account_value": "1000",
+                "available_order_margin": "870",
                 "total_initial_margin": "130",
                 "total_maintenance_margin": "13",
                 "total_position_value": "650"

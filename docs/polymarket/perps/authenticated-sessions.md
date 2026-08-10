@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/perps/authenticated-sessions.md
+Downloaded: 2026-08-10T20:41:52.045Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -448,6 +453,7 @@ and receive private real-time updates.
               "pep": "0",
               "pnl": "0",
               "liq": false,
+              "adl": false,
               "ts": 1767225600000
             }
           }
@@ -462,6 +468,7 @@ and receive private real-time updates.
               "positions": [],
               "margin": {
                 "total_account_value": "10.00",
+                "available_order_margin": "10.00",
                 "total_initial_margin": "0",
                 "total_maintenance_margin": "0",
                 "total_position_value": "0"

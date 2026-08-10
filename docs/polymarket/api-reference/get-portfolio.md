@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-portfolio.md
-Downloaded: 2026-08-07T00:52:23.802Z
+Downloaded: 2026-08-10T20:41:52.061Z
 -->
 
 > ## Documentation Index
@@ -126,12 +126,15 @@ components:
       type: object
       required:
         - total_account_value
+        - available_order_margin
         - total_initial_margin
         - total_maintenance_margin
         - total_position_value
       properties:
         total_account_value:
           $ref: '#/components/schemas/total_account_value'
+        available_order_margin:
+          $ref: '#/components/schemas/available_order_margin'
         total_initial_margin:
           $ref: '#/components/schemas/total_initial_margin'
         total_maintenance_margin:
@@ -267,6 +270,13 @@ components:
       type: string
       description: Total account value in USD (equity + unrealized PnL)
       example: '13109.48'
+    available_order_margin:
+      type: string
+      description: >-
+        Collateral available in USD for additional order initial margin after
+        existing exposure, open orders, orders and isolated-margin additions
+        awaiting risk processing, and pending withdrawals or transfers
+      example: '5055.79'
     total_initial_margin:
       type: string
       description: Total initial margin in use across all positions

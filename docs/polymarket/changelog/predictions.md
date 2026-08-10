@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/changelog/predictions.md
+Downloaded: 2026-08-10T20:41:52.066Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -5,6 +10,13 @@
 # Predictions Changelog
 
 > Important changes to Polymarket prediction markets, including the CLOB, APIs, web application, and mobile applications.
+
+<Update label="Aug 10, 2026" description="Data API: per-outcome redemption activity, position fee basis fields, and event artwork fallback">
+  * **Redemptions are now reported per outcome**: on `GET /activity`, a `REDEEM` row carries the outcome it settles in `asset`, `outcome`, and `outcomeIndex`, with `size` as the tokens burned for that outcome and `usdcSize` as that outcome's payout. Redeeming both sides of a market returns **two rows** — one per outcome — where a single combined row appeared before, and the losing outcome's `usdcSize` is `0`. Sum `usdcSize` across a transaction's rows to get the total payout. See [Resolution](/concepts/resolution).
+  * **New position basis fields**: `GET /positions` entries can include `grossInitialValue`, the remaining entry basis including attributed buy fees, and `entryFeesUsdc`, that fee component. `initialValue` and `avgPrice` keep their existing fee-exclusive meaning, so the fee-exclusive basis is `grossInitialValue - entryFeesUsdc`. Both fields are optional — treat an omitted field as unavailable, not as zero. See [Positions and Tokens](/concepts/positions-tokens).
+  * **New `includeArchived` filter**: `GET /positions` accepts `includeArchived` to return positions in archived markets that are still active. Archived positions remain excluded by default, so existing clients are unaffected.
+  * **Event artwork fallback**: `icon` on `GET /activity` and `GET /trades` now falls back to the market image, then the parent event's icon and image, when a market has no icon of its own. Previously these rows returned an empty `icon`.
+</Update>
 
 <Update label="Jul 17, 2026" description="Latency improvements and order response changes — Friday July 24, 04:00 UTC">
   * **Rollout Friday, July 24 at 04:00 UTC**: An async commit pipeline cuts matching latency. `POST /order` and `POST /orders` will no longer return `transactionHashes` on successful FAK/FOK matches — you get `tradeIDs` instead. `tradeIDs` behavior is unchanged; websocket fills are unaffected.

@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/perps/account-management.md
-Downloaded: 2026-08-07T20:40:43.988Z
+Downloaded: 2026-08-10T20:41:52.046Z
 -->
 
 > ## Documentation Index
@@ -256,6 +256,7 @@ and liquidation state.
         ],
         "margin": {
           "total_account_value": "1000",
+          "available_order_margin": "870",
           "total_initial_margin": "130",
           "total_maintenance_margin": "65",
           "total_position_value": "650"
@@ -266,6 +267,10 @@ and liquidation state.
       }
       ```
     </Accordion>
+
+    `margin.available_order_margin` is the collateral available to margin new
+    orders, after existing positions, open orders, and any orders, isolated-margin
+    additions, withdrawals, or transfers still being processed.
   </Tab>
 </Tabs>
 
@@ -683,6 +688,7 @@ Use fills to reconcile executions, fees, realized PnL, and exposure changes.
             "previous_entry_price": "0",
             "pnl": "0",
             "liquidation": false,
+            "adl": false,
             "timestamp": 1767000010500,
             "hash": "0x1111111111111111111111111111111111111111111111111111111111111111"
           }

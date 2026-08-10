@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-fills.md
-Downloaded: 2026-08-07T00:52:23.800Z
+Downloaded: 2026-08-10T20:41:52.061Z
 -->
 
 > ## Documentation Index
@@ -152,6 +152,7 @@ components:
         - pnl
         - timestamp
         - liquidation
+        - adl
         - hash
       properties:
         trade_id:
@@ -180,6 +181,8 @@ components:
           $ref: '#/components/schemas/pnl'
         liquidation:
           $ref: '#/components/schemas/liq'
+        adl:
+          $ref: '#/components/schemas/adl'
         timestamp:
           $ref: '#/components/schemas/ts'
         hash:
@@ -290,7 +293,12 @@ components:
       example: '100.00'
     liq:
       type: boolean
-      description: Whether the fill was a liquidation
+      description: >-
+        Liquidation flag for this leg of the fill. False on the counterparty leg
+        of an auto-deleveraging match — that leg is flagged by `adl` instead
+    adl:
+      type: boolean
+      description: Whether the fill came from auto-deleveraging
     ts:
       type: integer
       description: >-

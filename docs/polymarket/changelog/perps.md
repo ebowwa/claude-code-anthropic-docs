@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/changelog/perps.md
+Downloaded: 2026-08-10T20:41:52.066Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -7,6 +12,39 @@
 > Recent changes to the Polymarket Perps API and platform
 
 Notable changes to the Polymarket Perps API.
+
+<Update label="Aug 10, 2026" description="Fills gain an adl flag; liq no longer set on ADL counterparty legs">
+  Fill entries now carry a required boolean `adl` field on both the WebSocket
+  `fills` channel and `GET /v1/account/fills`, set on both legs of an
+  auto-deleveraging match. Behavior change: the counterparty leg of an ADL match
+  previously reported `liq: true` on the WebSocket `fills` channel; it now
+  reports `liq: false`. `liq` marks only the leg whose own position is being
+  liquidated. Clients that detect forced closes via `liq` alone will no longer
+  see ADL counterparty fills — check `adl` as well.
+</Update>
+
+<Update label="Aug 8, 2026" description="Position deleveraged notification added">
+  Added the <code>position\_deleveraged</code> notification, sent to the
+  counterparty of an auto-deleveraging match when its profitable position is
+  closed or reduced to settle a liquidation on the other side. Delivered on the
+  WebSocket <code>notifications</code> channel and in the notifications history.
+</Update>
+
+<Update label="Aug 7, 2026" description="Exchange info reports engine version and cancel-only state">
+  `GET /v1/info/exchange` now includes `engine_version`, the engine release
+  version of the build serving the response. The response also documents
+  `cancel_only`, which reports whether the exchange is in cancel-only
+  (maintenance) mode; the flag has been returned since maintenance mode shipped
+  on Jul 15.
+</Update>
+
+<Update label="Aug 6, 2026" description="Portfolio margin summary includes available order margin">
+  The portfolio response and <code>portfolio</code> WebSocket channel now
+  include <code>margin.available\_order\_margin</code>: the collateral available
+  for additional order initial margin after existing exposure, open orders,
+  orders and isolated-margin additions awaiting risk processing, and pending
+  withdrawals or transfers.
+</Update>
 
 <Update label="Jul 6, 2026" description="Cancel all orders added">
   Added <code>DELETE /v1/trade/orders/all</code> to cancel all open orders in
