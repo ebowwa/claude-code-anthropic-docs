@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/server-managed-settings.md
-Downloaded: 2026-08-07T20:40:52.082Z
+Downloaded: 2026-08-11T20:43:49.255Z
 -->
 
 > ## Documentation Index
@@ -218,7 +218,7 @@ The settings fetch also sends a `Cache-Control: no-cache` header so intermediate
 
 Before enabling this setting, ensure your network policies allow connectivity to `api.anthropic.com`. If that endpoint is unreachable, the CLI exits at startup and users cannot start Claude Code.
 
-As of v2.1.139, the `claude auth` subcommands such as `claude auth login` are exempt from this check, so users can re-authenticate when expired credentials are the reason the settings fetch fails.
+The `claude auth` subcommands such as `claude auth login` are exempt from this check, so users can re-authenticate when expired credentials are the reason the settings fetch fails.
 
 ### Security approval dialogs
 

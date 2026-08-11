@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/changelog.md
-Downloaded: 2026-08-08T20:29:47.894Z
+Downloaded: 2026-08-11T20:43:49.240Z
 -->
 
 > ## Documentation Index
@@ -14,6 +14,14 @@ Downloaded: 2026-08-08T20:29:47.894Z
 This page is generated from the [CHANGELOG.md on GitHub](https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md).
 
 Run `claude --version` to check your installed version.
+
+<Update label="2.1.227" description="August 10, 2026">
+  * Fixed feature flags being evaluated without the user's subscription tier when a session started with an expired login token, which could wrongly prompt Max plan users to enable usage credits for Fable
+  * Fixed every Bash command failing under `claude-code-action` with `allowed_non_write_users` on GitHub-hosted runners
+  * Fixed `/tui` bringing back a conversation that had been rewound to before its first message
+  * Improved slash-command menu: blue now marks only the selected row, matched characters are bolded instead of recolored, and emoji or accented names keep their glyphs
+  * Improved performance: fewer event-loop stalls on file-not-found suggestions and at-mention size checks
+</Update>
 
 <Update label="2.1.226" description="August 8, 2026">
   * Bug fixes and reliability improvements

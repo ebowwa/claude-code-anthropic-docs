@@ -1,3 +1,8 @@
+<!--
+Source: https://bun.com/docs/runtime/networking/dns.md
+Downloaded: 2026-08-11T20:43:42.154Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://bun.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -23,6 +28,22 @@ dns.prefetch("bun.com", 443);
 ```
 
 ***
+
+## Choosing a resolver backend
+
+`Bun.dns.lookup()` accepts a `backend` option that selects the resolver implementation:
+
+* `"c-ares"`: the [c-ares](https://c-ares.org/) asynchronous resolver. It reads `/etc/resolv.conf` directly, so it does not consult NSS modules such as `systemd-resolved`. This is the default for `Bun.dns.lookup()` on Linux.
+* `"system"`: the platform's own resolver (the non-blocking system API on macOS, `getaddrinfo` on a thread pool everywhere else). This is the default on macOS, Windows, and Android.
+* `"getaddrinfo"` (alias `"libc"`): the POSIX `getaddrinfo(3)` function on a thread pool.
+
+```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+import { dns } from "bun";
+
+const [{ address }] = await dns.lookup("example.com", { backend: "system" });
+```
+
+`node:dns.lookup()` always uses the `"system"` backend to match Node.js, whose `dns.lookup()` is documented as calling `getaddrinfo(3)`. The `node:dns.resolve*()` functions use c-ares, as they do in Node.js.
 
 ## DNS caching in Bun
 

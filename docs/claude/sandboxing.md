@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/sandboxing.md
-Downloaded: 2026-08-07T20:40:52.080Z
+Downloaded: 2026-08-11T20:43:49.260Z
 -->
 
 > ## Documentation Index
@@ -166,7 +166,7 @@ By default, sandboxed commands can write only to the current working directory a
 
 These paths are enforced at the OS level, so all commands running inside the sandbox, including their child processes, respect them. This is the recommended approach when a tool needs write access to a specific location, rather than excluding the tool from the sandbox entirely with `excludedCommands`.
 
-When the same filesystem array is defined in multiple [settings scopes](/docs/en/settings#settings-precedence), the arrays are merged: paths from every scope are combined, not replaced.
+When the same filesystem array is defined in multiple [settings scopes](/docs/en/settings#settings-precedence), the arrays are merged: paths from every scope are combined, not replaced. You can change these lists mid-session: when you save a settings file, Claude Code rebuilds the sandbox configuration, and the next sandboxed command runs under the updated paths.
 
 Path prefixes control how paths are resolved:
 
@@ -200,6 +200,12 @@ The example below blocks reading from the entire home directory while still allo
 ```
 
 If you placed the same configuration in `~/.claude/settings.json`, `.` would resolve to `~/.claude` instead, and project files would remain blocked by the `denyRead` rule.
+
+Whether glob patterns work in `allowWrite` and `denyWrite` entries depends on the platform:
+
+* **All platforms**: a trailing `/**` isn't treated as a pattern. Claude Code removes it before the platform rules below apply, so `~/build/**` grants the same access as `~/build`
+* **Linux and WSL2**: write these entries as plain paths. Bubblewrap mounts concrete paths, so Claude Code skips any entry that still contains a glob character such as `*`, `?`, or `[` after that removal, and the entry has no effect. To confirm, run with `--debug`, which logs `Skipping glob pattern on Linux/WSL` for each skipped entry
+* **macOS**: glob patterns in these entries work
 
 ### Disable filesystem isolation
 
@@ -444,8 +450,39 @@ The sandboxed Bash tool restricts file system access to specific directories:
 * **Blocked access**: cannot modify files outside the current working directory and session temp directory without explicit permission, including shell configuration files such as `~/.bashrc` and system binaries in `/bin/`
 * **Git worktrees**: when the working directory is a [linked git worktree](/docs/en/worktrees), the sandbox also allows writes to the main repository's shared `.git` directory so commands such as `git commit` can update refs and the index. Writes to `hooks/` and `config` inside that directory remain denied.
 * **Configurable**: define custom allowed and denied paths through settings
+* **Protected paths**: the sandbox denies writes to Claude Code's own configuration and code paths, such as your project's `.claude/skills` and the `~/.claude` directory, even when your settings allow writes there. See [Protected paths](#protected-paths) for the path families and where each rule applies
 
 To skip filesystem isolation entirely while keeping network isolation, set [`sandbox.filesystem.disabled`](#disable-filesystem-isolation).
+
+### Protected paths
+
+The sandbox denies writes to the configuration and code paths listed below. The deny rules don't cover every file Claude Code reads: your project's `CLAUDE.md` and its `.claude/rules` directory, for example, are ordinary files to the sandbox. These deny rules cover sandboxed Bash commands and are separate from the [permission system's protected paths](/docs/en/permission-modes#protected-paths), which gate file edits and the filesystem commands Claude Code detects.
+
+You can't exempt individual protected paths. The deny rules apply inside any allowed region, so a `sandbox.filesystem.allowWrite` entry or an `Edit` allow rule covering a protected path grants nothing there. This holds by design: an allow rule that could lift these rules would let a checked-out project widen its own access on its next run. The only setting that lifts them is [`filesystem.disabled`](#disable-filesystem-isolation), which turns the whole filesystem layer off, and Claude Code re-derives the deny list whenever you save a settings file, so a settings edit can't drop an individual rule.
+
+The main path families and where each deny rule applies:
+
+| Protected paths                                                                                                                                                                   | Where the sandbox denies writes                                                                                                                                                                                                                                                                                                                                                              |
+| :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `.claude/settings.json` and `.claude/settings.local.json`                                                                                                                         | Your launch directory, your current working directory, your home directory, and every directory above the launch directory, up through your home directory, or up to the filesystem root when you launch Claude Code outside your home directory                                                                                                                                             |
+| Your user settings file, and the managed settings file and its drop-in directory                                                                                                  | Their fixed locations, listed in [Settings files](/docs/en/settings#settings-files)                                                                                                                                                                                                                                                                                                               |
+| `.claude/skills`, `.claude/hooks`, `.claude/workflows`, `.claude/routines`, `.claude/output-styles`, `.claude/launch.json`, `.claude/scheduled_tasks.json`, and `.claude/loop.md` | The same directories as the `.claude` settings files                                                                                                                                                                                                                                                                                                                                         |
+| `.claude/commands` and `.claude/agents`                                                                                                                                           | The same directories as the `.claude` settings files, except your current working directory when it differs from your launch directory                                                                                                                                                                                                                                                       |
+| `.mcp.json`                                                                                                                                                                       | The same directories as the `.claude` settings files, continuing above your home directory to the filesystem root, plus the root of each directory added with [`--add-dir` or `/add-dir`](/docs/en/permissions#additional-directories-grant-file-access-not-configuration)                                                                                                                        |
+| Shell startup files such as `.bashrc`, `.zshrc`, and `.profile`, plus `.gitconfig`, `.gitmodules`, `.ripgreprc`, and the `.vscode` and `.idea` directories                        | Your launch directory. When your launch directory isn't your home directory, your home-directory copies rely on your `allowWrite` settings rather than on these deny rules                                                                                                                                                                                                                   |
+| `hooks` and `config` inside `.git`                                                                                                                                                | The `.git` directory of your launch and working directories, and the main repository's shared `.git` directory when your working directory is a linked worktree                                                                                                                                                                                                                              |
+| The bare names `hooks`, `config`, `HEAD`, `objects`, and `refs`                                                                                                                   | Directly in your launch and working directories, where a bare repository keeps its git configuration, when the files exist. On macOS, `HEAD`, `objects`, and `refs` are reserved there even when they don't exist. This deny catches an ordinary project's top-level `config` or `hooks` directory too, and the [recovery routes](#recover-from-a-blocked-git-operation) apply there as well |
+| Nested copies of `.mcp.json`, `.claude/commands`, `.claude/agents`, the startup files and dotfiles above, and nested repositories' `.git` `hooks` and `config`                    | Beneath your launch directory: at any depth on macOS, and on Linux and WSL2 through a best-effort scan a few levels deep that honors your gitignore rules and skips `node_modules`, so don't rely on it for deeply nested paths                                                                                                                                                              |
+
+When a symlink appears at a protected settings file path after startup, the sandbox denies writes to the symlink's target for the next command, so a linked settings file can't be edited through the link.
+
+Claude Code protects its configuration directory the same way. Treat `~/.claude`, or the directory `CLAUDE_CONFIG_DIR` points to, as read-only for sandboxed commands: nearly every entry is individually denied, along with the sibling file `~/.claude.json`, its account-suffixed variants, and the credential store `.credentials.json`. The denied entries include:
+
+* **Content Claude Code loads into sessions**: `skills`, `agents`, `commands`, `plugins`, `rules`, `output-styles`, `CLAUDE.md`, and `projects`, which holds saved session transcripts
+* **Code and prompts that run automatically**: `hooks`, `workflows`, `routines`, `scheduled_tasks.json`, `launch.json`, `loop.md`, and `daemon.json`
+* **State that feeds later commands and sessions**: `shell-snapshots`, `session-env`, `jobs`, `daemon`, `local`, `backups`, and the staging directory Claude Code uses for its own settings writes
+
+If a git operation fails against one of these paths, see [Recover from a blocked git operation](#recover-from-a-blocked-git-operation).
 
 ### Network isolation
 
@@ -586,8 +623,26 @@ Some commands fail inside the sandbox even though they work outside it. The fixe
 * **Go-based CLIs fail TLS verification on macOS**: tools such as `gh`, `gcloud`, and `terraform` may fail TLS verification under Seatbelt. List these tools in `excludedCommands` to run them outside the sandbox. If you are using `httpProxyPort` with a MITM proxy and custom CA, set [`enableWeakerNetworkIsolation`](/docs/en/settings#sandbox-settings) to `true` instead.
 * **`open`, `osascript`, or browser-based auth flows fail with error `-600` on macOS**: the sandbox blocks Apple Events by default. Set [`allowAppleEvents`](/docs/en/settings#sandbox-settings) to `true` in your user, managed, or CLI settings to allow them. Project settings are ignored for this key. Enabling it removes code-execution isolation, since sandboxed commands can then launch other applications unsandboxed with no user prompt and send AppleScript commands to running applications, subject to the macOS automation-consent prompt (TCC). Alternatively, add the command to `excludedCommands` to run it outside the sandbox.
 * **`docker` commands fail**: `docker` is incompatible with the sandbox. Add `docker *` to `excludedCommands` to run it outside the sandbox.
+* **`git merge` or `git checkout` fails with `unable to unlink old ...`**: the operation needs to replace a file the sandbox denies writes to. The blocked file can sit under a [protected path](#protected-paths) such as `.claude/skills`, outside the sandbox's writable directories, or under a `denyWrite` entry. On Linux and WSL2 the error ends with `Read-only file system`. See [Recover from a blocked git operation](#recover-from-a-blocked-git-operation) to complete the operation.
 * **Bubblewrap fails to start inside a container**: in an unprivileged container, bubblewrap cannot mount a fresh `/proc` filesystem. Set [`enableWeakerNestedSandbox`](/docs/en/settings#sandbox-settings) to `true` so the inner sandbox bind-mounts the container's existing `/proc` instead. Only use this setting when the outer container already provides the isolation boundary you need, since it exposes process information to sandboxed commands that a fresh `/proc` mount would hide.
 * **`--dangerously-skip-permissions` fails as root**: this flag is blocked when running as root or via sudo on Linux and macOS, because root access combined with no permission prompts can modify any file or service on the system. The check is skipped automatically inside a recognized sandbox. To run autonomously in a container, use the [dev container](/docs/en/devcontainer) configuration, which runs Claude Code as a non-root user.
+
+### Recover from a blocked git operation
+
+When a git operation inside the sandbox needs to replace a file the sandbox denies writes to, for example a merge that updates a skill under a [protected path](#protected-paths), the command fails. On Linux and WSL2 the error names the read-only filesystem:
+
+```text theme={null}
+error: unable to unlink old '.claude/skills/example/SKILL.md': Read-only file system
+```
+
+On macOS the trailing error text differs, but the failure and the recovery routes are the same. After such a failure, your working tree can keep stale copies of the affected files, so re-run the operation through one of these routes, preferring the first:
+
+* **Outside the sandbox**: approve the unsandboxed retry when Claude proposes one, or run the git command yourself in another terminal
+* **In a git worktree**: create a [linked git worktree](/docs/en/worktrees) in a sibling directory outside your project and your session's added directories, and cover it with an `allowWrite` entry. On Linux and WSL2, create the worktree outside the sandbox, for example in another terminal: the sandbox skips an `allowWrite` entry whose path doesn't exist yet, so a sandboxed `git worktree add` fails with the same read-only error. Use the worktree to check out the other branch, or to redo the merge on a new branch, and continue working there: git refuses to update a branch that's already checked out in your main working tree
+
+<Note>
+  Your `allowWrite` entry lets every sandboxed command write the worktree, including its `.claude` directory, so remove the entry once the operation completes, and don't launch a session from a worktree that sandboxed commands could have written to. The deny rules keyed to your current working directory follow it wherever Claude works, so once Claude continues in the worktree, a later git operation there can hit the same denies on the worktree's own copies of those paths. A worktree Claude Code itself registers for sandbox writes, such as one it creates during a session, carries the same `.claude` deny rules.
+</Note>
 
 ## Limitations
 
@@ -605,10 +660,6 @@ Sandboxing reduces risk but is not a complete isolation boundary. Review the lim
 * **Filesystem permission escalation**: overly broad filesystem write permissions can enable privilege escalation attacks. Allowing writes to directories containing executables in `$PATH`, system configuration directories, or user shell configuration files such as `.bashrc` or `.zshrc` can lead to code execution in different security contexts when other users or system processes access these files.
 * **Linux sandbox strength**: the Linux implementation provides strong filesystem and network isolation but includes an `enableWeakerNestedSandbox` mode that enables it to work inside Docker environments without privileged namespaces, or on Linux hosts where unprivileged user namespaces are disabled by sysctl. This option considerably weakens security and should only be used when additional isolation is otherwise enforced.
 * **Apple Events on macOS**: the macOS sandbox blocks Apple Events by default. The `allowAppleEvents` setting lifts this restriction so tools such as `open` and `osascript` work, but it removes code-execution isolation: sandboxed commands can launch other applications unsandboxed with no user prompt, and can send AppleScript commands to running applications, subject to the per-app macOS automation-consent prompt (TCC). It is only honored from user, managed, or CLI settings. Project settings cannot enable it.
-* **Settings files protected**: the sandbox automatically denies write access to the files a sandboxed command could otherwise edit its own policy through, unless you [disable filesystem isolation](#disable-filesystem-isolation), which turns these deny rules off. The protected set:
-  * Claude Code's `settings.json` files at every scope, and the managed settings directory
-  * `.mcp.json` at the project root, and at the root of each directory added with [`--add-dir` or `/add-dir`](/docs/en/permissions#additional-directories-grant-file-access-not-configuration)
-  * The target of any symlink that appears at a protected settings file path after startup, added to the deny list for the next command so a linked settings file can't be edited through the link. Before v2.1.210, the deny rules didn't resolve symlinks
 
 ### Platform and tool compatibility
 

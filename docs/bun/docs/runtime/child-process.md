@@ -1,3 +1,8 @@
+<!--
+Source: https://bun.com/docs/runtime/child-process.md
+Downloaded: 2026-08-11T20:43:42.156Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://bun.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -170,6 +175,27 @@ console.log(`Max memory used: ${usage.maxRSS} bytes`);
 console.log(`CPU time (user): ${usage.cpuTime.user} µs`);
 console.log(`CPU time (system): ${usage.cpuTime.system} µs`);
 ```
+
+## Resource limits with cgroups (Linux)
+
+On Linux, pass `cgroup` to start the subprocess inside a [control group](https://docs.kernel.org/admin-guide/cgroup-v2.html). The child joins the cgroup before it begins executing, so limits configured on it — memory, pids, CPU — apply from the first instruction and to every process the child spawns in turn. When a memory limit is exceeded the kernel OOM-kills a process *inside* the cgroup instead of reclaiming memory from the parent.
+
+A cgroup is a directory under `/sys/fs/cgroup`; create and configure it with ordinary file operations, then pass its path (or an open directory file descriptor):
+
+```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+import { mkdirSync, writeFileSync } from "node:fs";
+
+const dir = "/sys/fs/cgroup/build-jobs";
+mkdirSync(dir, { recursive: true });
+writeFileSync(`${dir}/memory.max`, String(2 * 1024 ** 3)); // cgroup v1: memory.limit_in_bytes
+
+const proc = Bun.spawn({
+  cmd: ["make", "-j8"],
+  cgroup: dir,
+});
+```
+
+The same directory can be passed to any number of spawns; the limit applies to their combined usage. Both cgroup v1 and v2 hierarchies are supported. Creating cgroups typically requires root or a delegated subtree. On other platforms the option is ignored; on Linux, the spawn fails if the cgroup cannot be joined.
 
 ## Using AbortSignal
 

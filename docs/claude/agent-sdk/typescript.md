@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/agent-sdk/typescript.md
-Downloaded: 2026-08-10T20:42:08.655Z
+Downloaded: 2026-08-11T20:43:49.273Z
 -->
 
 > ## Documentation Index
@@ -566,7 +566,7 @@ Only some keys take effect mid-session:
 
 `effortLevel` accepts an [effort level](/docs/en/model-config#adjust-effort-level) name. It also accepts `"ultracode"`, which runs the session at `xhigh` effort and turns on [ultracode](/docs/en/workflows#let-claude-decide-with-ultracode). The `Settings` type declares `effortLevel` without that value, so pass the equivalent `{ ultracode: true }` in TypeScript. The `ultracode` value requires Claude Code v2.1.203 or later and is accepted only by `applyFlagSettings()`, not by the `effortLevel` key in a settings file.
 
-The values are written to the flag-settings layer, the same layer the inline `settings` option of `query()` populates at startup. Flag settings sit near the top of the [settings precedence order](/docs/en/settings#settings-precedence): they override user, project, and local settings, and only managed policy settings can override them. This is the same tier the [on-page precedence section](#settings-precedence) calls programmatic options.
+The values are written to the flag-settings layer, the same layer the inline `settings` option of `query()` populates at startup. This is the same tier the [on-page precedence section](#settings-precedence) calls programmatic options.
 
 Successive calls shallow-merge top-level keys. A second call with `{ permissions: {...} }` replaces the entire `permissions` object from the prior call rather than deep-merging into it. To clear a key from the flag layer and fall back to lower-precedence sources, pass `null` for that key. Passing `undefined` has no effect because JSON serialization drops it.
 
@@ -831,7 +831,7 @@ type SettingSource = "user" | "project" | "local";
 
 #### Default behavior
 
-When `settingSources` is omitted or `undefined`, `query()` loads the same filesystem settings as the Claude Code CLI: user, project, and local. [Endpoint-managed policy](/docs/en/settings#settings-files) is loaded in all cases; server-managed settings are fetched when the session authenticates with an organization credential on an [eligible configuration](/docs/en/server-managed-settings#platform-availability). See [What settingSources does not control](/docs/en/agent-sdk/claude-code-features#what-settingsources-does-not-control) for inputs that are read regardless of this option, and how to disable them.
+When `settingSources` is omitted or `undefined`, `query()` loads the same filesystem settings as the Claude Code CLI: user, project, and local. See [What settingSources does not control](/docs/en/agent-sdk/claude-code-features#what-settingsources-does-not-control) for inputs that are read regardless of this option, and how to disable them.
 
 #### Why use settingSources
 
@@ -847,19 +847,6 @@ const result = query({
 });
 ```
 
-**Load all filesystem settings explicitly:**
-
-```typescript theme={null}
-import { query } from "@anthropic-ai/claude-agent-sdk";
-
-const result = query({
-  prompt: "Analyze this code",
-  options: {
-    settingSources: ["user", "project", "local"] // Load all settings
-  }
-});
-```
-
 **Load only specific setting sources:**
 
 ```typescript theme={null}
@@ -870,44 +857,6 @@ const result = query({
   prompt: "Run CI checks",
   options: {
     settingSources: ["project"] // Only .claude/settings.json
-  }
-});
-```
-
-**Testing and CI environments:**
-
-```typescript theme={null}
-import { query } from "@anthropic-ai/claude-agent-sdk";
-
-// Ensure consistent behavior in CI by excluding local settings
-const result = query({
-  prompt: "Run tests",
-  options: {
-    settingSources: ["project"], // Only team-shared settings
-    permissionMode: "bypassPermissions",
-    allowDangerouslySkipPermissions: true
-  }
-});
-```
-
-**SDK-only applications:**
-
-```typescript theme={null}
-import { query } from "@anthropic-ai/claude-agent-sdk";
-
-// Define everything programmatically.
-// Pass [] to opt out of filesystem setting sources.
-const result = query({
-  prompt: "Review this PR",
-  options: {
-    settingSources: [],
-    agents: {
-      /* ... */
-    },
-    mcpServers: {
-      /* ... */
-    },
-    allowedTools: ["Read", "Grep", "Glob"]
   }
 });
 ```
@@ -1400,7 +1349,7 @@ type SDKCompactBoundaryMessage = {
 
 ### `SDKInformationalMessage`
 
-Generic text banner emitted by the loop. Carries non-error status lines, hook feedback such as a `UserPromptSubmit` hook's block reason, and command output. Render `content` as plaintext at the given `level`.
+Generic text banner emitted by the loop. Carries non-error status lines, hook feedback such as a `UserPromptSubmit` hook's block reason, and command output. On Claude Code v2.1.227 or later, a hook's [`systemMessage`](/docs/en/hooks#json-output) can arrive as this message, with each line prefixed by the hook's name, such as `PostToolUse:Bash says:`. Whether a hook's `systemMessage` arrives as this message depends on the event. Each [event's section](/docs/en/hooks#hook-events) on the hooks page says how output surfaces. Render `content` as plaintext at the given `level`.
 
 ```typescript theme={null}
 type SDKInformationalMessage = {
@@ -1520,7 +1469,7 @@ type SDKMessageOrigin =
 
 A `peer` origin identifies which agent sent the message: an in-process [teammate](/docs/en/agent-teams) sending to `main` with `SendMessage`, or a [cross-session peer](/docs/en/cross-session-messaging), another of your Claude Code sessions. A cross-session peer can run on the same machine, or on [another of your machines](/docs/en/cross-session-messaging#message-sessions-on-other-machines) or [Claude Code on the web](/docs/en/claude-code-on-the-web) when its message arrives through Remote Control. The two kinds of sender fill the fields differently:
 
-* `from`: the teammate's name, or the sender address for a cross-session peer. For a [one-way cross-machine reply](/docs/en/cross-session-messaging#message-sessions-on-other-machines), the sender has no reply address and `from` is `"unknown"`. The value is sender-authored; `verifiedPeerPid` is the verified identity.
+* `from`: the teammate's name, or the sender address for a cross-session peer. For a [one-way cross-machine message](/docs/en/cross-session-messaging#message-sessions-on-other-machines), the sender has no reply address and `from` is `"unknown"`. The value is sender-authored; `verifiedPeerPid` is the verified identity.
 * `senderTaskId`: the teammate's task ID. Absent for a cross-session peer.
 * `name`: the sender's display name, normalized by Claude Code: it strips Unicode control, format, surrogate, and line or paragraph separator code points, then trims the result and caps it at 64 code points with an ellipsis. Requires Claude Code v2.1.205 or later.
 * `body`: the decoded message body with the peer envelope stripped, byte-exact with what the model sees. Always present for a teammate message; for a cross-session peer, present only when the turn is exactly one peer envelope formed by Claude Code. Render `name` and `body` instead of re-parsing the message text. Requires Claude Code v2.1.205 or later.
@@ -2251,7 +2200,7 @@ type ToolInputSchemas =
 **Tool name:** `Agent`. The previous name `Task` is still accepted as an alias, and the `tools` array in the [`SDKSystemMessage`](#sdksystemmessage) init message currently lists this tool as `Task` for backward compatibility.
 
 <Note>
-  The `mode` field is deprecated and ignored on Claude Code v2.1.212 or later: subagents [inherit the parent session's permission mode](/docs/en/agent-sdk/permissions#available-modes), and a subagent definition's [`permissionMode`](#agentdefinition) can override it, except when the parent uses `bypassPermissions`, `acceptEdits`, or `auto`.
+  The `mode` field is deprecated and ignored on Claude Code v2.1.212 or later: subagents [inherit the parent session's permission mode](/docs/en/agent-sdk/permissions#available-modes), and a subagent definition's [`permissionMode`](#agentdefinition) can override it, except when the parent uses `bypassPermissions`, `acceptEdits`, or `auto`, and Claude Code ignores a definition's `permissionMode: "bypassPermissions"` when bypass mode is disabled by [`permissions.disableBypassPermissionsMode`](/docs/en/permissions#managed-settings).
 </Note>
 
 ```typescript theme={null}
@@ -2509,8 +2458,6 @@ Runs a [dynamic workflow](/docs/en/workflows): a script that orchestrates many s
 | `title`           | `string`  | Ignored; the script's `meta` block sets the title                                                                                                                                                                                                                                    |
 | `description`     | `string`  | Ignored; the script's `meta` block sets the description                                                                                                                                                                                                                              |
 
-The schema accepts any JSON value for `args`; the exported type marks it `unknown`, but the published typings render the field as an object map.
-
 ### TodoWrite
 
 **Tool name:** `TodoWrite`
@@ -2726,17 +2673,31 @@ Schedules a one-shot wake-up that fires the given prompt after a delay. This too
 
 ```typescript theme={null}
 type RemoteTriggerInput = {
-  action: "list" | "get" | "create" | "update" | "run";
+  action:
+    | "list"
+    | "get"
+    | "create"
+    | "update"
+    | "run"
+    | "create_webhook_trigger"
+    | "list_runs"
+    | "get_run_log";
   trigger_id?: string;
+  session_id?: string;
+  cursor?: string;
   body?: {
     [k: string]: unknown;
   };
 };
 ```
 
-Manages [Routines](/docs/en/routines), the scheduled and triggered Claude Code runs hosted in the cloud. This tool backs the `/schedule` command. `trigger_id` is required for the `get`, `update`, and `run` actions. `body` is required for `create` and `update`, and optional for `run`.
+Manages [Routines](/docs/en/routines), the scheduled and triggered Claude Code runs hosted in the cloud. This tool backs the `/schedule` command. `trigger_id` is required for the `get`, `update`, `run`, and `list_runs` actions. `body` is required for `create`, `update`, and `create_webhook_trigger`, and optional for `run`.
 
-This tool is available only when the session is authenticated with a claude.ai account on a plan with Routines enabled.
+`create_webhook_trigger` attaches an event source to an existing routine, such as a [GitHub event](/docs/en/routines#add-a-github-trigger) that fires it; the `body` names the source, the events, and the routine to fire. Requires Claude Code v2.1.225 or later.
+
+`list_runs` lists a routine's recent runs, and `get_run_log` reads one run's log. `session_id` names the run to read, from a `list_runs` result, and `cursor` pages through either action's results. Both actions require Claude Code v2.1.227 or later.
+
+This tool is available only when the session is authenticated with a claude.ai account on a plan with Routines enabled, and is absent when your organization's policy disables [Claude Code on the web](/docs/en/claude-code-on-the-web). On Claude Code v2.1.227 or later, the tool is also absent when an Owner has [turned off routines for the organization](/docs/en/routines#routines-are-disabled-by-your-organizations-policy). Before v2.1.227, a session with only the routines toggle turned off still showed the tool, and the server denied its calls.
 
 ### PushNotification
 
@@ -4812,12 +4773,6 @@ for await (const message of query({
   if ("result" in message) console.log(message.result);
 }
 ```
-
-This pattern enables you to:
-
-* **Audit model requests:** Log when the model requests unsandboxed execution
-* **Implement allowlists:** Only permit specific commands to run unsandboxed
-* **Add approval workflows:** Require explicit authorization for privileged operations
 
 <Warning>
   Commands running with `dangerouslyDisableSandbox: true` have full system access. Ensure your `canUseTool` handler validates these requests carefully.

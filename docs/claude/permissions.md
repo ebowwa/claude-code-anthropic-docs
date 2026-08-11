@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/permissions.md
-Downloaded: 2026-08-07T20:40:52.077Z
+Downloaded: 2026-08-11T20:43:49.260Z
 -->
 
 > ## Documentation Index
@@ -51,7 +51,7 @@ Deny rules behave differently depending on whether they name a tool or scope a p
 
 ## Permission modes
 
-Claude Code supports several permission modes that control how it approves tool calls. See [Permission modes](/docs/en/permission-modes) for when to use each one. Set the `defaultMode` in your [settings files](/docs/en/settings#settings-files):
+Claude Code supports several permission modes that control how it approves tool calls. See [Permission modes](/docs/en/permission-modes) for when to use each one. Set the `defaultMode` in your [settings files](/docs/en/settings#settings-files). In sessions the VS Code extension starts, the extension resolves the starting mode instead. See [Switch permission modes](/docs/en/permission-modes#switch-permission-modes).
 
 | Mode                | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
 | :------------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |

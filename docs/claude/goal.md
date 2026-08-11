@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/goal.md
-Downloaded: 2026-08-08T20:29:47.905Z
+Downloaded: 2026-08-11T20:43:49.252Z
 -->
 
 > ## Documentation Index
@@ -10,10 +10,6 @@ Downloaded: 2026-08-08T20:29:47.905Z
 # Keep Claude working toward a goal
 
 > Set a completion condition with /goal and Claude keeps working across turns until the condition is met.
-
-<Note>
-  `/goal` requires Claude Code v2.1.139 or later.
-</Note>
 
 The `/goal` command sets a completion condition and Claude keeps working toward it without you prompting each step. After each turn, a small fast model checks whether the condition holds. If not, Claude starts another turn instead of returning control to you. The goal clears automatically once the condition is met.
 

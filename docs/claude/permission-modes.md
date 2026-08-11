@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/permission-modes.md
-Downloaded: 2026-08-08T20:29:47.910Z
+Downloaded: 2026-08-11T20:43:49.243Z
 -->
 
 > ## Documentation Index
@@ -76,7 +76,7 @@ You can switch modes mid-session, at startup, or as a persistent default. The mo
   <Tab title="VS Code">
     **During a session**: click the mode indicator at the bottom of the prompt box.
 
-    **As a default**: set `claudeCode.initialPermissionMode` in VS Code settings, or use the Claude Code extension settings panel.
+    **As a default**: set `claudeCode.initialPermissionMode` in your VS Code user settings, or use the Claude Code extension settings panel.
 
     The mode indicator shows these labels, mapped to the mode each one applies:
 
@@ -88,7 +88,7 @@ You can switch modes mid-session, at startup, or as a persistent default. The mo
     | Auto               | `auto`              |
     | Bypass permissions | `bypassPermissions` |
 
-    Auto mode appears in the mode indicator when your account meets every requirement listed in the [auto mode section](#eliminate-prompts-with-auto-mode). The `claudeCode.initialPermissionMode` setting does not accept `auto`. To start in auto mode by default, set `defaultMode` in your [user settings](/docs/en/settings#settings-files) instead. Claude Code ignores `defaultMode: "auto"` in project and local settings.
+    Auto mode appears in the mode indicator when your account meets every requirement listed in the [auto mode section](#eliminate-prompts-with-auto-mode). The `claudeCode.initialPermissionMode` setting does not accept `auto`. To switch a session into auto mode, select **Auto** from the mode indicator.
 
     Bypass permissions requires the **Allow dangerously skip permissions** toggle in the extension settings before it appears in the mode indicator.
 
@@ -184,7 +184,7 @@ Accepting a plan also names the session from the plan content automatically, unl
 
 ### Set plan mode as the default
 
-To make plan mode the default for a project, set `defaultMode` in `.claude/settings.json`:
+In a session the [VS Code extension](/docs/en/vs-code) started, a settings-file `defaultMode` doesn't set the starting mode. Set `claudeCode.initialPermissionMode` to `plan` in your VS Code user settings instead. Elsewhere, to make plan mode the default for a project, set `defaultMode` in `.claude/settings.json`:
 
 ```json theme={null}
 {
@@ -204,6 +204,8 @@ To make plan mode the default for a project, set `defaultMode` in `.claude/setti
 
 Auto mode lets Claude execute without routine permission prompts. A separate classifier model reviews actions before they run, blocking anything that escalates beyond your request, targets unrecognized infrastructure, or appears driven by hostile content Claude read. Explicit [ask rules](/docs/en/permissions#manage-permissions) still force a prompt.
 
+The classifier also reviews each message Claude sends to another agent with [`SendMessage`](/docs/en/tools-reference), plain or structured, before Claude Code delivers it, both in auto mode and in [plan mode while the classifier reviews commands](#analyze-before-you-edit-with-plan-mode); the send review requires Claude Code v2.1.222 or later.
+
 The classifier also decides removals targeting the filesystem root or home directory, such as `rm -rf /` and `rm -rf ~`, including when the removal sits inside command or process substitution. Before v2.1.218, the plain forms prompted for approval instead, and the substitution forms prompted in v2.1.208 through v2.1.217.
 
 Auto mode also nudges Claude to keep working without stopping for clarifying questions, though Claude still asks when your prompt or a skill explicitly relies on it. For stronger autonomous behavior while keeping permission prompts, set the [Proactive output style](/docs/en/output-styles) instead.
@@ -221,15 +223,15 @@ Auto mode is available only when your account meets all of these requirements:
 
 If Claude Code reports auto mode as unavailable, one of these requirements is unmet; this is not a transient outage. A separate message that names a model and says auto mode "cannot determine the safety" of an action means a classifier request failed; that failure is usually transient, but on Amazon Bedrock it can repeat until your account can invoke the named model. See the [error reference](/docs/en/errors#auto-mode-cannot-determine-the-safety-of-an-action) for the causes and what to do.
 
-If you set `defaultMode: "auto"` in [settings](/docs/en/settings#available-settings) and the session starts in `default` mode with no error, the setting is likely in `.claude/settings.json` or `.claude/settings.local.json`. Claude Code v2.1.142 and later ignore `auto` from those files so a repository cannot grant itself auto mode. Move it to `~/.claude/settings.json`.
+If you set `defaultMode: "auto"` in [settings](/docs/en/settings#available-settings) and the session starts in `default` mode with no error, the setting is likely in `.claude/settings.json` or `.claude/settings.local.json`. Claude Code v2.1.142 and later ignore `auto` from those files so a repository cannot grant itself auto mode. Move it to `~/.claude/settings.json`. In a session the [VS Code extension](/docs/en/vs-code) started, a settings-file `defaultMode` doesn't set the starting mode: select the mode from the extension's mode indicator instead.
 
 <h3 id="enable-auto-mode-on-bedrock-agent-platform-or-foundry">
   Auto mode on Bedrock, Agent Platform, or Foundry
 </h3>
 
-On [Amazon Bedrock](/docs/en/amazon-bedrock), [Google Cloud's Agent Platform](/docs/en/google-vertex-ai), [Microsoft Foundry](/docs/en/microsoft-foundry), and signed-in [Claude apps gateway](/docs/en/claude-apps-gateway) sessions, auto mode appears in the `Shift+Tab` cycle by default. Appearing in the cycle doesn't change the mode a session starts in: sessions still start in your [`defaultMode`](/docs/en/settings#available-settings), which is Manual unless you change it. Only Claude Sonnet 5, Opus 4.7 or later, and Fable 5 are supported on these providers.
+On [Amazon Bedrock](/docs/en/amazon-bedrock), [Google Cloud's Agent Platform](/docs/en/google-vertex-ai), [Microsoft Foundry](/docs/en/microsoft-foundry), and signed-in [Claude apps gateway](/docs/en/claude-apps-gateway) sessions, auto mode appears in the `Shift+Tab` cycle by default. Appearing in the cycle doesn't change the mode a session starts in. Except in sessions the [VS Code extension](/docs/en/vs-code) starts, where the extension resolves the starting mode, sessions still start in your [`defaultMode`](/docs/en/settings#available-settings), which is Manual unless you change it. Only Claude Sonnet 5, Opus 4.7 or later, and Fable 5 are supported on these providers.
 
-To make auto mode the default starting mode, set `"permissions": {"defaultMode": "auto"}` in user or managed settings.
+To make auto mode the default starting mode, set `"permissions": {"defaultMode": "auto"}` in user or managed settings. In sessions the VS Code extension starts, select **Auto** from the mode indicator instead.
 
 The [`/doctor`](/docs/en/commands#all-commands) checkup proposes this user-settings default on these providers the same way it does on the Anthropic API.
 

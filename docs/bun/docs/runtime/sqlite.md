@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/sqlite.md
-Downloaded: 2026-08-03T21:02:37.336Z
--->
-
 > ## Documentation Index
 > Fetch the complete documentation index at: https://bun.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.

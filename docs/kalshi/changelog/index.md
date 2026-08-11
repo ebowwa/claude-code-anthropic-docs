@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/changelog/index.md
-Downloaded: 2026-08-10T20:41:51.138Z
+Downloaded: 2026-08-11T20:43:37.935Z
 -->
 
 > ## Documentation Index
@@ -20,6 +20,24 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="August 13, 2026"
+  tags={["REST", "WebSocket", "FIX", "Predictions"]}
+  rss={{
+title: "New center_deci_edge_centi_cent price level structure",
+description: "A tapered structure with $0.0001 ticks below $0.01 and above $0.99, and $0.001 ticks in between."
+}}
+>
+  A new `price_level_structure`, `center_deci_edge_centi_cent`, is available:
+  \$0.0001 (0.01¢) ticks below \$0.01 and above \$0.99, with \$0.001 (0.1¢)
+  ticks in between. No API fields or message formats change. As with other
+  structures, snap order and RFQ quote prices to the `step` of the band
+  containing the price in the market's `price_ranges` array rather than
+  keying off the structure name. See
+  [Fixed-Point Representation](/getting_started/fixed_point_migration) for the
+  full structure reference.
+</Update>
 
 <Update
   label="August 13, 2026"

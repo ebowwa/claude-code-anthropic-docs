@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/agent-view.md
-Downloaded: 2026-08-07T20:40:52.056Z
+Downloaded: 2026-08-11T20:43:49.249Z
 -->
 
 > ## Documentation Index
@@ -24,7 +24,7 @@ When you want to work more directly in any agent's session, attach to the row to
 To compare agent view with subagents, agent teams, and worktrees, see [Run agents in parallel](/docs/en/agents).
 
 <Note>
-  Agent view is in research preview and requires Claude Code v2.1.139 or later. Check your version with `claude --version`. The interface and keyboard shortcuts may change as the feature evolves.
+  Agent view is in research preview. The interface and keyboard shortcuts may change as the feature evolves.
 </Note>
 
 ## Quick start
