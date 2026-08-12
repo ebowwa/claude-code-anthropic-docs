@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/exchange/get-exchange-status.md
-Downloaded: 2026-08-07T20:40:45.356Z
+Downloaded: 2026-08-12T20:44:24.178Z
 -->
 
 > ## Documentation Index
@@ -19,7 +19,7 @@ Downloaded: 2026-08-07T20:40:45.356Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.27.0
+  version: 3.28.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

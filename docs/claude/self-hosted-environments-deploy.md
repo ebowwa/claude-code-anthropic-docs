@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/self-hosted-environments-deploy.md
-Downloaded: 2026-08-11T20:43:49.261Z
+Downloaded: 2026-08-12T20:44:34.305Z
 -->
 
 > ## Documentation Index
@@ -264,7 +264,10 @@ At the default `--drain-wait-sec 0`, a rolling restart interrupts in-flight turn
 
 Throughout that whole path, the runner keeps heartbeating to the control plane at zero capacity, so the session lease doesn't expire and get requeued to another runner while the `post-session` hook is still writing out uncommitted work. The heartbeat stops just before the runner deregisters.
 
-Set `terminationGracePeriodSeconds` on Kubernetes, `stop_grace_period` on Docker Compose, or your orchestrator's equivalent to at least the total the runner logs, so a container-wide kill never lands while a `post-session` hook is mid-run. If your hosts die at a known wall-clock time and you pass [`--retire-at`](/docs/en/self-hosted-environments-reference#runner-cli-flags), size the margin between the retire time and the kill to cover typical turns plus this same budget, and compute the value at each launch, for example `date +%s` plus the runner's intended lifetime, rather than baking a static value into a restartable manifest. The Kubernetes default of 30 seconds is shorter than the runner's drain path and will kill the pod mid-cleanup. For the flags that control each phase, see the [runner CLI reference](/docs/en/self-hosted-environments-reference#runner-cli-flags).
+Give the runner at least the total it logs at startup before the host stops it. Where you set that depends on how your hosts stop:
+
+* **With a `SIGTERM` grace period**: set `terminationGracePeriodSeconds` on Kubernetes, `stop_grace_period` on Docker Compose, or your orchestrator's equivalent to at least that total. The Kubernetes default of 30 seconds is shorter than the runner's drain path, so Kubernetes stops the pod before the runner finishes draining.
+* **With [`--retire-at`](/docs/en/self-hosted-environments-reference#runner-cli-flags)**: size the margin between the retire time and the host's stop time to cover typical turns, plus the background-task hold that [Runner lifecycle](/docs/en/self-hosted-environments#runner-lifecycle) describes, plus that same total. Compute the retire time at each launch, for example `date +%s` plus the runner's intended lifetime.
 
 ### What reaches a running post-session hook
 
@@ -349,7 +352,7 @@ Common issues:
 * **Runner exits at startup with `cannot create or write to base directory`**: the runner can't create or write to `--base-dir`, which defaults to `/workspace`. Fix the directory's ownership or point `--base-dir` at a writable path, as described in [Keep the base directory and capacity identical across runners](#keep-the-base-directory-and-capacity-identical-across-runners). If the runner instead logs `[runner:fatal]` saying the base directory check timed out, the directory is on a hung NFS or CSI mount. Check mount health rather than permissions. The runner prints both of these startup failures to stderr before it opens `--log-file`, so look for them in the terminal or your platform's container logs rather than the log file. Before v2.1.225, the runner didn't check the base directory at startup, and this misconfiguration failed sessions after pickup instead.
 * **Sessions stay queued**: every online runner may be locked to a different account. Check each runner's `claude_code_self_hosted_runner_locked_account` [metric](/docs/en/self-hosted-environments-reference#prometheus-metrics) or its `Picked up session` log lines to see which account holds it. Add replicas, or wait for an existing runner to drain and restart. If the environment uses on-demand runners, check the orchestrator instead; see [On-demand runners](/docs/en/self-hosted-environments-configuration#on-demand-runners).
 * **Sessions fail immediately after pickup**: open the session in claude.ai/code to see the error. The most common causes are missing [git credentials](#configure-git) in the runner image and build tools that aren't installed. An unwritable base directory stops the runner at startup instead of failing sessions. See the **Runner exits at startup with `cannot create or write to base directory`** entry in this list.
-* **A session's branch no longer exists on the remote**: for a git source the session only reads from, the runner skips that source and continues on the remaining ones. For the source the session pushes results to, a deleted branch, typically because it was merged and auto-deleted, fails the session with an error naming the repository and branch and asking you to restore the branch and retry.
+* **A session's branch no longer exists on the remote**: for a git source the session only reads from, the runner skips that source and continues on the remaining ones. For the source the session pushes results to, a deleted branch, typically because it was merged and auto-deleted, fails the session with an error naming the repository and branch and asking you to restore the branch and retry. The runner fails the session with the same error when skipping would leave it with no repository at all. Before v2.1.228, such a session started in an empty directory.
 * **Sessions take minutes to start**: the initial clone usually dominates. Watch the `claude_code_self_hosted_runner_session_init_duration_seconds` [metric](/docs/en/self-hosted-environments-reference#prometheus-metrics) to confirm, and cut the clone with a [pre-warmed checkout](#reuse-a-pre-warmed-checkout) or a smaller `CLAUDE_RUNNER_FETCH_DEPTH`.
 * **Pod is killed mid-drain**: raise `terminationGracePeriodSeconds` to at least the value the runner logs at startup. See [Shutdown timing](#shutdown-timing).
 

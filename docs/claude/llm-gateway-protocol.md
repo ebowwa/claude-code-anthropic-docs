@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/llm-gateway-protocol.md
-Downloaded: 2026-08-11T20:43:49.257Z
+Downloaded: 2026-08-12T20:44:34.301Z
 -->
 
 > ## Documentation Index
@@ -143,7 +143,10 @@ The retry logic matches on the upstream's error wording, so forward error respon
 
 `CLAUDE_CODE_DISABLE_EXPERIMENTAL_BETAS=1` stops Claude Code from sending pre-release capabilities and their body fields on every provider, including context management and the beta tool fields. The variable doesn't affect adaptive reasoning, which is selected by model rather than by beta. It never suppresses the OAuth capability that subscription authentication requires.
 
-One exception: on Claude Code v2.1.227 or later, [managed settings can keep MCP tool search on](/docs/en/mcp#scale-with-mcp-tool-search). Under that tool-search override, Claude Code keeps sending the tool-search beta header and `defer_loading` fields, and strips the rest. The override applies only on the first-party connection path: no `CLAUDE_CODE_USE_*` provider variable set, and no gateway sign-in. Sessions signed in through a [Claude apps gateway](/docs/en/claude-apps-gateway) or running on a cloud provider keep the full strip.
+On Claude Code v2.1.227 or later, your organization can keep [MCP tool search](/docs/en/mcp#scale-with-mcp-tool-search) on under this variable through [managed settings](/docs/en/settings#settings-files). What Claude Code sends with that override in place depends on how you connect:
+
+* On a direct connection, or through a gateway set with `ANTHROPIC_BASE_URL`, Claude Code keeps sending the tool-search beta header, `defer_loading` tool fields, and `tool_reference` blocks, and strips the rest
+* On a cloud provider, or signed in through a [Claude apps gateway](/docs/en/claude-apps-gateway), the override has no effect
 
 The set of capabilities Claude Code sends grows over releases. For current beta header strings, see the [beta headers reference](https://platform.claude.com/docs/en/api/beta-headers); test your gateway against new Claude Code releases rather than pinning to an observed list.
 
@@ -189,7 +192,7 @@ Claude Code keeps an entry when its `id` contains `claude` or `anthropic` anywhe
 
 The picker is the interactive model list that opens when a developer runs `/model` in Claude Code. Each discovered entry is labeled "From gateway" and uses `display_name` when provided. The [`availableModels` managed setting](/docs/en/settings#available-settings) bounds what discovery can add.
 
-A discovered ID is skipped when it exactly matches a row already in the picker, or when both the discovered and existing IDs resolve to [Fable](/docs/en/model-config#work-with-fable-5). As of Claude Code v2.1.197, a discovered explicit ID is also folded into a built-in entry when both resolve to the same model. Built-in rows are keyed on aliases such as `sonnet`, so a discovered explicit ID of the model the alias currently resolves to, such as `claude-sonnet-5`, collapses into the `sonnet` row, while an ID the alias doesn't resolve to, such as `claude-sonnet-4-6`, still adds its own "From gateway" row alongside the built-in entry.
+A discovered ID is skipped when it exactly matches a row already in the picker, or when both the discovered and existing IDs resolve to [Fable](/docs/en/model-config#work-with-fable-5). A discovered explicit ID is also folded into a built-in entry when both resolve to the same model. Built-in rows are keyed on aliases such as `sonnet`, so a discovered explicit ID of the model the alias currently resolves to, such as `claude-sonnet-5`, collapses into the `sonnet` row, while an ID the alias doesn't resolve to, such as `claude-sonnet-4-6`, still adds its own "From gateway" row alongside the built-in entry. Before v2.1.197, Claude Code didn't fold explicit IDs into built-in entries, so a discovered ID such as `claude-sonnet-5` added its own "From gateway" row alongside the `sonnet` row.
 
 Results are cached to `~/.claude/cache/gateway-models.json`, or `%USERPROFILE%\.claude\cache\gateway-models.json` on Windows, and refreshed on each startup. If you set [`CLAUDE_CONFIG_DIR`](/docs/en/env-vars), the cache lives under that directory instead. If the request fails or the gateway doesn't implement `/v1/models`, the picker falls back to the cached list from the previous startup or to the built-in model list. If your gateway serves Claude models under aliases that don't match the discovery filter, developers can add those aliases manually with the [model configuration](/docs/en/model-config) variables.
 

@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/agent-sdk/tool-search.md
-Downloaded: 2026-08-11T20:43:49.271Z
+Downloaded: 2026-08-12T20:44:34.314Z
 -->
 
 > ## Documentation Index
@@ -18,13 +18,13 @@ This approach solves two challenges as tool libraries scale:
 * **Context efficiency:** Tool definitions can consume large portions of the context window (50 tools can use 10-20K tokens), leaving less room for actual work.
 * **Tool selection accuracy:** Tool selection accuracy degrades with more than 30-50 tools loaded at once.
 
-Tool search is enabled by default.
-
 ## How tool search works
 
-When tool search is active, tool definitions are withheld from the context window. The agent receives a summary of available tools and searches for relevant ones when the task requires a capability not already loaded. Up to five of the most relevant tools are loaded into context by default, where they stay available for subsequent turns. If the conversation is long enough that the SDK compacts earlier messages to free space, previously discovered tools may be removed, and the agent searches again as needed.
+Tool search is on by default, with the exceptions listed in [Configure tool search](#configure-tool-search).
 
-Tool search adds one extra round-trip the first time Claude discovers a tool (the search step), but for large tool sets this is offset by smaller context on every turn. With fewer than \~10 tools, loading everything upfront is typically faster.
+When it is active, tool definitions are withheld from the context window. The agent receives a summary of available tools and searches for relevant ones when the task requires a capability not already loaded. Up to five of the most relevant tools are loaded into context by default, where they stay available for subsequent turns. If the conversation is long enough that the SDK compacts earlier messages to free space, previously discovered tools may be removed, and the agent searches again as needed.
+
+Tool search adds one extra round-trip the first time Claude discovers a tool (the search step), but for large tool sets this is offset by smaller context on every turn. With fewer than \~10 tools whose definitions fit comfortably in the context window, loading everything upfront is typically faster.
 
 For details on the underlying API mechanism, see [Tool search in the API](https://platform.claude.com/docs/en/agents-and-tools/tool-use/tool-search-tool).
 

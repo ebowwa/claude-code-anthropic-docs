@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/portfolio/get-withdrawals.md
-Downloaded: 2026-08-05T21:08:42.224Z
+Downloaded: 2026-08-12T20:44:24.185Z
 -->
 
 > ## Documentation Index
@@ -19,7 +19,7 @@ Downloaded: 2026-08-05T21:08:42.224Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.27.0
+  version: 3.28.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

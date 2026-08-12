@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/trading/bridge/deposit.md
+Downloaded: 2026-08-12T20:44:18.624Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -23,10 +28,10 @@ Generate unique bridge addresses linked to your Polymarket wallet. See [Create b
   **Builders: attach your code.** If you route user funds through this endpoint,
   pass your builder code via the optional `X-Builder-Code` header (bytes32 hex;
   `0x` + 64 hex chars). It lets our bridge provider attribute traffic to your
-  app, so stuck or delayed transfers can be traced and prioritized. The header is
-  optional. Requests without it still succeed but return a `missing_builder_code`
-  warning, and a malformed code returns `400`. Get your code at [Settings →
-  Builder](https://polymarket.com/settings?tab=builder).
+  app, so stuck or delayed transfers can be traced and prioritized. The header
+  is optional. Requests without it still succeed but return a
+  `missing_builder_code` warning, and a malformed code returns `400`. Get your
+  code at [Settings → Builder](https://polymarket.com/settings?tab=builder).
 </Tip>
 
 ```bash theme={null}
@@ -36,7 +41,7 @@ curl -X POST https://bridge.polymarket.com/deposit \
   -d '{"address": "0x56687bf447db6ffa42ffe2204a05edaa20f55839"}'
 ```
 
-The response returns one bridge address per address type (`evm`, `svm`, `btc`, `tvm`). Send from the matching source chain to the matching address.
+The response returns one bridge address per address type (`evm`, `svm`, `btc`, `tron`). Send from the matching source chain to the matching address.
 
 ### Address Types
 
@@ -45,7 +50,7 @@ The response returns one bridge address per address type (`evm`, `svm`, `btc`, `
 | `evm`   | Ethereum, Arbitrum, Base, Optimism, and other EVM chains |
 | `svm`   | Solana                                                   |
 | `btc`   | Bitcoin                                                  |
-| `tvm`   | Tron                                                     |
+| `tron`  | Tron                                                     |
 
 <Warning>
   Each address is unique to your wallet. Only send assets from supported chains

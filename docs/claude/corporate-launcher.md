@@ -1,8 +1,3 @@
-<!--
-Source: https://code.claude.com/docs/en/corporate-launcher.md
-Downloaded: 2026-08-04T21:12:39.742Z
--->
-
 > ## Documentation Index
 > Fetch the complete documentation index at: https://code.claude.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.

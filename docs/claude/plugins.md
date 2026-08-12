@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/plugins.md
-Downloaded: 2026-08-07T20:40:52.079Z
+Downloaded: 2026-08-12T20:44:34.293Z
 -->
 
 > ## Documentation Index
@@ -189,10 +189,6 @@ You've created a plugin with a skill, but plugins can include much more: custom 
 | `settings.json`   | Plugin root | Default [settings](/docs/en/settings) applied when the plugin is enabled            |
 
 A plugin that ships exactly one skill can place `SKILL.md` directly at the plugin root instead of creating a `skills/` directory. Claude Code loads it as a single skill and uses the frontmatter `name` field for the invocation name. Use the `skills/` layout for plugins that may grow to more than one skill.
-
-<Note>
-  **Next steps**: Ready to add more features? Jump to [Develop more complex plugins](#develop-more-complex-plugins) to add agents, hooks, MCP servers, and LSP servers. For complete technical specifications of all plugin components, see [Plugins reference](/docs/en/plugins-reference).
-</Note>
 
 ## Develop more complex plugins
 

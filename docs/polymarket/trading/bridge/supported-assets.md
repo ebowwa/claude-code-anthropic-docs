@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/trading/bridge/supported-assets.md
+Downloaded: 2026-08-12T20:44:18.624Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -48,7 +53,7 @@ The bridge supports deposits from these blockchain networks:
 | BNB Smart Chain | EVM          | \$2         | BNB, USDC, USDT, DAI, ETH, BTCB, BUSD       |
 | Solana          | SVM          | \$2         | SOL, USDC, USDT, USDe, TRUMP                |
 | Bitcoin         | BTC          | \$9         | BTC                                         |
-| Tron            | TVM          | \$9         | USDT                                        |
+| Tron            | Tron         | \$9         | USDT                                        |
 | HyperEVM        | EVM          | \$2         | HYPE, USDC, USDe, stHYPE, UBTC, UETH        |
 | Abstract        | EVM          | \$2         | ETH, USDC, USDT                             |
 | Monad           | EVM          | \$2         | MON, USDC, USDT                             |

@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/agent-sdk/migration-guide.md
-Downloaded: 2026-08-11T20:43:49.274Z
+Downloaded: 2026-08-12T20:44:34.317Z
 -->
 
 > ## Documentation Index
@@ -109,30 +109,14 @@ from claude_code_sdk import query, ClaudeCodeOptions
 from claude_agent_sdk import query, ClaudeAgentOptions
 ```
 
-**4. Update type names:**
-
-Change `ClaudeCodeOptions` to `ClaudeAgentOptions`:
-
-```python theme={null}
-# Before
-from claude_code_sdk import query, ClaudeCodeOptions
-
-options = ClaudeCodeOptions(model="claude-opus-4-7")
-
-# After
-from claude_agent_sdk import query, ClaudeAgentOptions
-
-options = ClaudeAgentOptions(model="claude-opus-4-7")
-```
-
-**5. Review [breaking changes](#breaking-changes)**
+**4. Review [breaking changes](#breaking-changes)**
 
 Make any code changes needed to complete the migration.
 
 ## Breaking changes
 
 <Warning>
-  To improve isolation and explicit configuration, Claude Agent SDK v0.1.0 introduces breaking changes for users migrating from Claude Code SDK. Review this section carefully before migrating.
+  To improve isolation and explicit configuration, Claude Agent SDK v0.1.0 introduces breaking changes for users migrating from Claude Code SDK.
 </Warning>
 
 ### Python: ClaudeCodeOptions renamed to ClaudeAgentOptions

@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/api-reference/bridge/create-withdrawal-addresses.md
+Downloaded: 2026-08-12T20:44:18.637Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -130,6 +135,9 @@ components:
               type: string
               description: Bitcoin bridge address
               example: bc1q8eau83qffxcj8ht4hsjdza3lha9r3egfqysj3g
+            tron:
+              type: string
+              description: Tron bridge address
         note:
           type: string
           description: Additional information about the bridge addresses

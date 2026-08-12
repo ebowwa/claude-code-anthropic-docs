@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/scheduled-tasks.md
-Downloaded: 2026-08-08T20:29:47.912Z
+Downloaded: 2026-08-12T20:44:34.293Z
 -->
 
 > ## Documentation Index
@@ -48,7 +48,7 @@ The `/loop` [bundled skill](/docs/en/commands) is the quickest way to run a prom
 You can also pass a skill as the prompt, for example `/loop 20m /review-pr 1234`, to re-run that skill each iteration. As of v2.1.196, a scheduled fire only runs skills that Claude is [allowed to invoke on its own](/docs/en/skills#control-who-invokes-a-skill). The following reach Claude as plain text instead of executing:
 
 * Built-in commands such as `/permissions`, `/model`, or `/clear`
-* Skills marked [`disable-model-invocation: true`](/docs/en/skills#frontmatter-reference), including the bundled `/verify` and `/code-review` skills.
+* Skills marked [`disable-model-invocation: true`](/docs/en/skills#frontmatter-reference), including the bundled `/verify` skill
 * Skills withheld from Claude by a [`skillOverrides`](/docs/en/skills#override-skill-visibility-from-settings) setting or a `Skill` [deny rule](/docs/en/skills#restrict-claude’s-skill-access)
 * [MCP prompts](/docs/en/mcp#use-mcp-prompts-as-commands) such as `/mcp__github__list_prs`
 
@@ -79,7 +79,7 @@ When you ask for a dynamic `/loop` schedule, Claude may use the [Monitor tool](/
 A dynamically scheduled loop appears in your [scheduled task list](#manage-scheduled-tasks) like any other task, so you can list or cancel it the same way. The [jitter rules](#jitter) don't apply to it, but the [seven-day expiry](#seven-day-expiry) does: the loop ends automatically seven days after you start it.
 
 <Note>
-  On Amazon Bedrock, Claude Platform on AWS, Google Cloud's Agent Platform, and Microsoft Foundry, a prompt with no interval runs on a fixed 10-minute schedule instead.
+  On Amazon Bedrock, Claude Platform on AWS, Google Cloud's Agent Platform, and Microsoft Foundry, a prompt with no interval runs on a fixed 10-minute schedule instead. Claude Code also uses that fixed schedule when you turn off [feature-flag fetching](/docs/en/env-vars#features-that-need-feature-flag-fetching).
 </Note>
 
 ### Run the built-in maintenance prompt
@@ -99,7 +99,7 @@ Claude does not start new initiatives outside that scope, and irreversible actio
 A bare `/loop` runs this prompt at a [dynamically chosen interval](#let-claude-choose-the-interval). Add an interval, for example `/loop 15m`, to run it on a fixed schedule instead. To replace the built-in prompt with your own default, see [Customize the default prompt with loop.md](#customize-the-default-prompt-with-loop-md).
 
 <Note>
-  On Amazon Bedrock, Claude Platform on AWS, Google Cloud's Agent Platform, and Microsoft Foundry, `/loop` with no prompt prints the usage message instead of running the maintenance prompt.
+  On Amazon Bedrock, Claude Platform on AWS, Google Cloud's Agent Platform, and Microsoft Foundry, `/loop` with no prompt prints the usage message instead of running the maintenance prompt. The same happens when you turn off [feature-flag fetching](/docs/en/env-vars#features-that-need-feature-flag-fetching).
 </Note>
 
 ### Customize the default prompt with loop.md
@@ -125,7 +125,7 @@ quiet, say so in one line.
 Edits to `loop.md` take effect on the next iteration, so you can refine the instructions while a loop is running. When no `loop.md` exists in either location, the loop falls back to the built-in maintenance prompt. Keep the file concise: content beyond 25,000 bytes is truncated.
 
 <Note>
-  On Amazon Bedrock, Claude Platform on AWS, Google Cloud's Agent Platform, and Microsoft Foundry, `loop.md` isn't read and `/loop` with no prompt prints the usage message instead.
+  On Amazon Bedrock, Claude Platform on AWS, Google Cloud's Agent Platform, and Microsoft Foundry, `loop.md` isn't read and `/loop` with no prompt prints the usage message instead. The same happens when you turn off [feature-flag fetching](/docs/en/env-vars#features-that-need-feature-flag-fetching).
 </Note>
 
 ### Stop a loop

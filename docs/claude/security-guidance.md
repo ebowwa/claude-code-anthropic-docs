@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/security-guidance.md
-Downloaded: 2026-08-07T20:40:52.081Z
+Downloaded: 2026-08-12T20:44:34.288Z
 -->
 
 > ## Documentation Index
@@ -233,8 +233,6 @@ The plugin is one layer in a defense-in-depth approach. It catches issues earlie
 | On demand, deep scan   | [Claude Security plugin](/docs/en/claude-security)             | Multi-agent vulnerability scan of a repository or diff, with independently reviewed findings and patches |
 | On pull request        | [Code Review](/docs/en/code-review), Team and Enterprise plans | Multi-agent correctness and security review with full codebase context                                   |
 | In CI                  | Your existing static analysis and dependency scanners     | Language-specific rules, supply-chain checks, and policy enforcement the plugin does not attempt         |
-
-Each later stage catches what earlier ones miss. The plugin's value is reducing the volume that reaches them, not eliminating the need for them.
 
 To find security issues in code you already have, rather than in changes Claude is writing, ask Claude in a session to review a specific file or directory for vulnerabilities, or use the [Claude Security plugin](/docs/en/claude-security) for a deeper multi-agent scan of the whole repository; [`/security-review`](/docs/en/commands#all-commands) covers only the changes on your current branch. Either way, the review reads the source code in your checkout, not a running site or deployed service.
 

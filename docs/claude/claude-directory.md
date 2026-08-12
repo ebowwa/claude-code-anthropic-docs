@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/claude-directory.md
-Downloaded: 2026-08-11T20:43:49.242Z
+Downloaded: 2026-08-12T20:44:34.283Z
 -->
 
 > ## Documentation Index
@@ -1521,7 +1521,7 @@ Beyond the config you author, `~/.claude` holds data Claude Code writes during s
 
 ### Cleaned up automatically
 
-Files in the paths below are deleted on startup once they're older than [`cleanupPeriodDays`](/docs/en/settings#available-settings). The default is 30 days and the minimum is 1; setting `0` fails with a validation error. The same age cutoff applies to automatic removal of [orphaned worktrees](/docs/en/worktrees#clean-up-subagent-and-background-session-worktrees).
+Claude Code deletes the files in the paths below once they're older than [`cleanupPeriodDays`](/docs/en/settings#available-settings), as long as it can safely determine the retention period. The default is 30 days and the minimum is 1; setting `0` fails with a validation error. The same age cutoff applies to automatic removal of [orphaned worktrees](/docs/en/worktrees#clean-up-subagent-and-background-session-worktrees).
 
 | Path under `~/.claude/`                      | Contents                                                                                                                                                                                                                                                |
 | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -1540,9 +1540,12 @@ Files in the paths below are deleted on startup once they're older than [`cleanu
 | `usage-data/`                                | `report.html` and timestamped report copies written by [`/insights`](/docs/en/costs#analyze-your-usage-patterns), plus cached per-session analysis data used to build them                                                                                   |
 | `todos/`, `statsig/`, `logs/`                | Legacy directories from older versions. No longer written. The sweep removes their contents and then the empty directory.                                                                                                                               |
 
-`sessions/` holds one small file per running session, used to detect concurrent sessions and crashes. It isn't part of the age-based sweep: Claude Code removes each file when its session exits and clears crash leftovers on the next launch.
+Claude Code makes four exceptions to this sweep:
 
-If Claude Code can't read or parse a settings file, it pauses the retention cleanup sweep and shows a warning in `/status` until you fix the file, unless [managed settings](/docs/en/server-managed-settings) provide `cleanupPeriodDays`, in which case the sweep runs at the managed value. Before v2.1.203, cleanup ran at the 30-day default in that state and could delete transcripts a longer `cleanupPeriodDays` was meant to keep; files newer than 30 days were never removed.
+* **`sessions/`**: holds one small file per running session, used to detect concurrent sessions and crashes. It isn't part of the age-based sweep: Claude Code removes each file when its session exits and clears crash leftovers on the next launch.
+* **Auto memory**: Claude Code excludes a project's [auto memory](/docs/en/memory#auto-memory) directory, `projects/<project>/memory/`, from this sweep, and removes the directory itself only after it has been empty for the whole retention period. Before v2.1.228, the sweep treated folders inside the memory directory as session data and could delete old files beneath it.
+* **Bare mode**: when you run `claude -p` with [`--bare`](/docs/en/headless#start-faster-with-bare-mode), Claude Code doesn't run the sweep in that session.
+* **Paused sweep**: if Claude Code can't safely determine the retention period, it pauses the retention cleanup sweep; the [`retention_sweep` event](/docs/en/monitoring-usage#retention-sweep-event) lists each configuration that pauses it. When the cause is a settings file that can't be read or parsed, or settings errors with `cleanupPeriodDays` explicitly set, Claude Code also shows a warning in `/status` until you fix the settings errors. When [managed settings](/docs/en/server-managed-settings) provide `cleanupPeriodDays`, Claude Code runs the sweep at the managed value in either case.
 
 ### Kept until you delete them
 
@@ -1626,7 +1629,7 @@ You can also delete any of the application-data paths above by hand. New session
 
 | Delete                                                                                                                                                             | You lose                                                                                                          |
 | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- |
-| `~/.claude/projects/`                                                                                                                                              | Resume, continue, and rewind for past sessions                                                                    |
+| `~/.claude/projects/`                                                                                                                                              | Resume, continue, and rewind for past sessions, and auto memory for every project                                 |
 | `~/.claude/history.jsonl`                                                                                                                                          | Up-arrow prompt recall                                                                                            |
 | `~/.claude/paste-cache/`                                                                                                                                           | Pasted text in recalled prompts; see [paste large content](/docs/en/terminal-config#paste-large-content)               |
 | `~/.claude/file-history/`                                                                                                                                          | Checkpoint restore for past sessions                                                                              |

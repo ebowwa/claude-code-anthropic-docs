@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/costs.md
-Downloaded: 2026-08-11T20:43:49.258Z
+Downloaded: 2026-08-12T20:44:34.302Z
 -->
 
 > ## Documentation Index
@@ -147,9 +147,10 @@ For per-user cost attribution, you have three options:
 
 ### When a developer asks about a limit
 
-Developers usually bring limit questions to their admin, so it helps to know which ceiling they hit. The three situations mean different things:
+Developers usually bring limit questions to their admin, so it helps to know which ceiling they hit. The four situations mean different things:
 
 * **"You've hit your session limit" or "You've hit your weekly limit"**: a seat-based usage window on a subscription plan. These windows are shared across all models, so switching models with `/model` doesn't restore access, though it does keep the developer working after the model-specific "You've hit your Opus limit" message. The message shows when the window resets, and the developer can run `/usage-credits` to request usage beyond the allowance if you have [usage credits](https://support.claude.com/en/articles/12429409-extra-usage-for-paid-claude-plans) turned on. See [usage limit errors](/docs/en/errors#youve-hit-your-session-limit).
+* **A spend limit message from a [Claude apps gateway](/docs/en/claude-apps-gateway)**: the developer passed a spend cap you set on your self-hosted gateway, and the gateway blocks their requests until the period resets or you raise the cap. See [gateway spend limits](/docs/en/claude-apps-gateway-spend-limits) for caps, reset schedules, and the message the developer sees.
 * **A context or auto-compact warning**: not a usage limit. The conversation has grown close to the session's [auto-compact window](/docs/en/model-config#set-the-auto-compact-window), the threshold where Claude Code summarizes older history to free space. Point the developer at [reduce token usage](#reduce-token-usage).
 * **Unexpectedly high spend on an API or cloud-provider plan**: usually traces back to long sessions that were never cleared or to Opus left as the default model. The highest-impact habits to share are clearing between unrelated tasks and matching the model to the job, both covered in [reduce token usage](#reduce-token-usage).
 

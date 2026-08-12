@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/trading/bridge/withdraw.md
+Downloaded: 2026-08-12T20:44:18.625Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -23,8 +28,9 @@ Withdraw pUSD from your Polymarket wallet to any supported chain and token. Fund
 </Warning>
 
 <Warning>
-  When withdrawing, pUSD is unwrapped to USDC via the Collateral Offramp and swapped through the
-  [Uniswap v3 pool](https://polygonscan.com/address/0xd36ec33c8bed5a9f7b6630855f1533455b98a418)
+  When withdrawing, pUSD is unwrapped to USDC via the Collateral Offramp and
+  swapped through the [Uniswap v3
+  pool](https://polygonscan.com/address/0xd36ec33c8bed5a9f7b6630855f1533455b98a418)
   for USDC (native). The UI enforces less than 10bp difference in output amount.
   At times, this pool may be exhausted. If you are having withdraw issues, try
   breaking your withdraw into smaller amounts or waiting for the pool to be
@@ -46,10 +52,10 @@ Generate bridge addresses configured for your withdrawal destination. See [Creat
   **Builders: attach your code.** If you route user funds through this endpoint,
   pass your builder code via the optional `X-Builder-Code` header (bytes32 hex;
   `0x` + 64 hex chars). It lets our bridge provider attribute traffic to your
-  app, so stuck or delayed transfers can be traced and prioritized. The header is
-  optional. Requests without it still succeed but return a `missing_builder_code`
-  warning, and a malformed code returns `400`. Get your code at [Settings →
-  Builder](https://polymarket.com/settings?tab=builder).
+  app, so stuck or delayed transfers can be traced and prioritized. The header
+  is optional. Requests without it still succeed but return a
+  `missing_builder_code` warning, and a malformed code returns `400`. Get your
+  code at [Settings → Builder](https://polymarket.com/settings?tab=builder).
 </Tip>
 
 Tell the bridge where you're sending funds, including the destination chain, the destination token, and the recipient wallet, and it hands back one address per address type.
@@ -77,7 +83,7 @@ curl -X POST https://bridge.polymarket.com/withdraw \
 }
 ```
 
-Your Polymarket wallet lives on Polygon, so you always send pUSD to the `evm` address. The response also includes `svm` and `btc` addresses because withdrawals and deposits share the same response format. Ignore those addresses when withdrawing.
+Your Polymarket wallet lives on Polygon, so you always send pUSD to the `evm` address. The response also carries bridge addresses for the other chain families because withdrawals and deposits share the same response format. Ignore those addresses when withdrawing.
 
 ### Address Types
 
@@ -86,7 +92,7 @@ Your Polymarket wallet lives on Polygon, so you always send pUSD to the `evm` ad
 | `evm`   | Ethereum, Arbitrum, Base, Optimism, and other EVM chains |
 | `svm`   | Solana                                                   |
 | `btc`   | Bitcoin                                                  |
-| `tvm`   | Tron                                                     |
+| `tron`  | Tron                                                     |
 
 Withdrawals are **instant** and **free** — Polymarket does not charge withdrawal fees.
 
@@ -108,8 +114,7 @@ Withdrawals are **instant** and **free** — Polymarket does not charge withdraw
   </Step>
 
   <Step title="Send pUSD">
-    Transfer pUSD from your Polymarket wallet to the appropriate bridge
-    address.
+    Transfer pUSD from your Polymarket wallet to the appropriate bridge address.
   </Step>
 
   <Step title="Track Status">Monitor progress using `/status/{address}`.</Step>

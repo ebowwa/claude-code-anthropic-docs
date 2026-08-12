@@ -1,8 +1,16 @@
+<!--
+Source: https://docs.polymarket.com/api-reference/bridge/get-transaction-status.md
+Downloaded: 2026-08-12T20:44:18.637Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
 # Get transaction status
+
+> Returns the deposits and withdrawals seen at a bridge address, newest first. Responses are cursor-paginated: each request returns one page plus a `nextCursor`. To read the full history, pass each `nextCursor` back as `cursor` until it comes back null. To track only recent activity, keep requesting the first page without a cursor.
+
 
 
 
@@ -27,16 +35,60 @@ paths:
       tags:
         - Bridge
       summary: Get transaction status
+      description: >
+        Returns the deposits and withdrawals seen at a bridge address, newest
+        first. Responses are cursor-paginated: each request returns one page
+        plus a `nextCursor`. To read the full history, pass each `nextCursor`
+        back as `cursor` until it comes back null. To track only recent
+        activity, keep requesting the first page without a cursor.
       parameters:
         - name: address
           in: path
           required: true
-          description: >-
-            The address to query for transaction status (EVM, SVM, or BTC
-            address from the `/deposit` or `/withdraw` response)
+          description: >
+            The bridge address to query for transaction status, taken from the
+            `/deposit` or `/withdraw` response. EVM, Solana, Tron, and Bitcoin
+            address formats are supported. EVM addresses are normalized before
+            the request is forwarded upstream.
           schema:
             type: string
           example: EXoZue2avJae1d45B3fVw2unhkrtToSYQqHtHgfZ2cbE
+        - name: limit
+          in: query
+          required: false
+          description: >
+            Maximum number of transactions per page. A page may contain fewer
+            transactions than requested and still have a following page.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 50
+          example: 100
+        - name: cursor
+          in: query
+          required: false
+          description: >
+            Opaque continuation token returned as `nextCursor` by the previous
+            response. Omit it to request the first page. URL-encode it, since
+            cursors can contain characters such as `+`, `/`, and `=`. Invalid,
+            tampered, or cross-address tokens return 400; restart the walk
+            without a cursor when that happens.
+          schema:
+            type: string
+          example: eyJsYXN0SWQiOiI0MiJ9
+        - name: paginate
+          in: query
+          required: false
+          description: >
+            Compatibility parameter forwarded upstream for existing
+            integrations. Pagination applies whether or not it is sent, so new
+            integrations should omit it and use `cursor` and `limit` alone. When
+            sent, the only supported value is `true`.
+          schema:
+            type: string
+            enum:
+              - 'true'
       responses:
         '200':
           description: Successfully retrieved transaction status
@@ -68,14 +120,29 @@ paths:
                       3atr19NAiNCYt24RHM1WnzZp47RXskpTDzspJoCBBaMFwUB8fk37hFkxz35P5UEnnmWz21rb2t5wJ8pq3EE2XnxU
                     createdTimeMs: 1757531217339
                     status: COMPLETED
+                nextCursor: eyJsYXN0SWQiOiI0MiJ9
         '400':
-          description: Bad Request - Missing address parameter
+          description: Bad Request - Missing or invalid address, limit, or cursor
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/ErrorResponse'
-              example:
-                error: address is required
+              examples:
+                missingAddress:
+                  value:
+                    error: address is required
+                invalidAddress:
+                  value:
+                    error: invalid address
+                invalidLimit:
+                  value:
+                    error: limit must be an integer between 1 and 100
+                rejectedUpstream:
+                  summary: >-
+                    Rejected by the bridge provider, most often a stale or
+                    malformed cursor
+                  value:
+                    error: invalid request
         '500':
           description: Server Error
           content:
@@ -88,12 +155,27 @@ components:
   schemas:
     TransactionStatusResponse:
       type: object
+      required:
+        - transactions
+        - nextCursor
       properties:
         transactions:
           type: array
           items:
             $ref: '#/components/schemas/Transaction'
-          description: List of transactions for the given address
+          description: >
+            One page of transactions for the given address, newest first. This
+            is a page, not the full history for the address.
+        nextCursor:
+          type: string
+          nullable: true
+          description: >
+            Opaque continuation token for the next page, or null when the
+            pagination walk is complete. Pass it back verbatim as `cursor` on
+            the next request; never parse, modify, construct, or reuse it with a
+            different address. Stop on null rather than on an empty page or a
+            page shorter than `limit`.
+          example: eyJsYXN0SWQiOiI0MiJ9
     ErrorResponse:
       type: object
       properties:
