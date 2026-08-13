@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/trading/combos/overview.md
+Downloaded: 2026-08-13T20:42:10.549Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -68,16 +73,15 @@ sequenceDiagram
 
 ## Build With Combos
 
-Integrate Combos into market maker systems or apps that request executable prices.
+Integrate Combos into market maker systems or builder apps that request
+executable prices for users.
 
 <CardGroup cols={2}>
   <Card title="Market Makers" icon="chart-line" href="/trading/combos/market-makers">
     Build a market maker integration for pricing and executing Combos.
   </Card>
 
-  <Card title="Requesters" icon="arrows-rotate">
-    <Badge color="gray" size="sm" shape="pill">Coming Soon</Badge>
-
-    Request Combo quotes and execute accepted trades.
+  <Card title="Builders" icon="arrows-rotate" href="/trading/combos/builders">
+    Request Combo quotes and execute accepted trades for users.
   </Card>
 </CardGroup>

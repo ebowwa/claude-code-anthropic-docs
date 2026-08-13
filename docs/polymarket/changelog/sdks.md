@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/changelog/sdks.md
-Downloaded: 2026-08-07T20:40:43.985Z
+Downloaded: 2026-08-13T20:42:10.575Z
 -->
 
 > ## Documentation Index
@@ -13,6 +13,18 @@ Downloaded: 2026-08-07T20:40:43.985Z
 
 <Tabs>
   <Tab title="TypeScript">
+    ### `0.6.0`
+
+    * Added requester-side Combos RFQ support through `client.requestComboQuote(...)`, `client.acceptComboQuote(...)`, and `client.waitForComboFill(...)`. You can also call `fetchRfqStatus` from `@polymarket/client/actions`. Authenticate requests with `builderApiKey(...)` or `remoteBuilderSigning(...)`. Winning quotes can be stored as JSON, and SELL quotes include the exact post-fee `netReceive`. No-quote, decline, and expiry outcomes return values. Gateway rejections throw `RfqRequestRejectedError`.
+    * Market outcomes now include a nullable PolyV2 `positionId` alongside the CLOB `tokenId`. New code should use the protocol-neutral `ConditionId`, `ConditionIdSchema`, `OptionalConditionIdSchema`, and `toConditionId`. The CTF-named aliases and market-level `positionIds` array remain available for compatibility but are deprecated.
+    * Breaking change: `client.fetchLastTradePrice(...)` now returns `LastTradePrice | null`. It returns `null` when the token has not traded. `client.fetchLastTradePrices(...)` leaves untraded tokens out of the response, so match results by `tokenId` instead of array position.
+
+    ```diff theme={null}
+    -const price = (await client.fetchLastTradePrice({ tokenId })).price;
+    +const lastTrade = await client.fetchLastTradePrice({ tokenId });
+    +const price = lastTrade?.price ?? null;
+    ```
+
     ### `0.5.0`
 
     * Added a Perps dead man's switch: `session.armAutoCancel()` schedules a one-shot cancel-all, `session.disarmAutoCancel()` clears it, and `session.fetchAutoCancelStatus()` reports the current deadline and daily trigger usage. Arming after the daily limit raises `AutoCancelDailyLimitError`.
@@ -234,6 +246,17 @@ Downloaded: 2026-08-07T20:40:43.985Z
   </Tab>
 
   <Tab title="Python">
+    ### `0.6.0`
+
+    * Added requester-side Combos RFQ support to `SecureClient` and `AsyncSecureClient` through `request_combo_quote(...)`, `accept_combo_quote(...)`, `wait_for_combo_fill(...)`, and `fetch_rfq_status(...)`. Pass a Builder API key through `api_key=`. `ComboQuote` values can be serialized, and SELL quotes include the exact post-fee `net_receive`. No-quote, decline, expiry, and terminal failure outcomes return values. Gateway rejections raise `RfqRequestRejectedError`.
+    * Breaking change: `get_last_trade_price(...)` now returns `LastTradePrice | None`. Untraded tokens return `None` instead of a `Decimal("0.5")` placeholder. `get_last_trade_prices(...)` leaves untraded tokens out of the response, so match results by `token_id` instead of array position.
+
+    ```diff theme={null}
+    -price = client.get_last_trade_price(token_id=token_id).price
+    +last_trade = client.get_last_trade_price(token_id=token_id)
+    +price = last_trade.price if last_trade is not None else None
+    ```
+
     ### `0.5.0`
 
     * Added a Perps dead man's switch: `session.arm_auto_cancel()` schedules a one-shot cancel-all, `session.disarm_auto_cancel()` clears it, and `session.fetch_auto_cancel_status()` reports the current deadline and daily trigger usage. Arming after the daily limit raises `AutoCancelDailyLimitError`.

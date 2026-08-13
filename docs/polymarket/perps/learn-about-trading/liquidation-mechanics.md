@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/perps/learn-about-trading/liquidation-mechanics.md
-Downloaded: 2026-08-10T20:41:52.047Z
+Downloaded: 2026-08-13T20:42:10.553Z
 -->
 
 > ## Documentation Index
@@ -48,6 +48,12 @@ system also cancels the account's resting orders inside the same scope before
 it places the first liquidation order: cross liquidation cancels resting
 orders on every cross-margined market but leaves isolated markets untouched,
 while isolated liquidation cancels only the orders on the affected market.
+
+These cancels race in-flight executions, so a resting order can still fill in
+the moment between the flag being set and its cancel applying. Any maker or
+taker fill on an instrument in the account's active liquidation scope reports
+`liquidation: true` in the account's fill history and `liq: true` on the
+WebSocket `fills` channel.
 
 ## Execution
 

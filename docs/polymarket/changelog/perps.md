@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/changelog/perps.md
-Downloaded: 2026-08-10T20:41:52.066Z
+Downloaded: 2026-08-13T20:42:10.574Z
 -->
 
 > ## Documentation Index
@@ -12,6 +12,30 @@ Downloaded: 2026-08-10T20:41:52.066Z
 > Recent changes to the Polymarket Perps API and platform
 
 Notable changes to the Polymarket Perps API.
+
+<Update label="Aug 13, 2026" description="Deposit and withdrawal history amounts are always decimal token units">
+  `GET /v1/account/deposits` and `GET /v1/account/withdrawals` now serialize
+  every `amount` (and withdrawal `fee`) in decimal token units, e.g. `"10"` for
+  10 pUSD. Previously, deposit rows in `pending` or `removed` status reported
+  raw on-chain base units (`"10000000"` for the same 10 pUSD), and pending
+  withdrawal rows could serve base-unit amounts and fees as well, so rows for
+  the same transfer disagreed on units across statuses. Clients that divided
+  pending amounts by `10^decimals` to compensate must drop that conversion.
+  Confirmed rows and the WebSocket `deposits` and `withdrawals` channels are
+  unchanged — they were already decimal. Signed operation inputs (`POST
+      /v1/account/withdraw`) still take base-unit amounts matching the EIP-712
+  signature.
+</Update>
+
+<Update label="Aug 11, 2026" description="Fill history flags maker fills executed under liquidation">
+  `GET /v1/account/fills` and account trade history previously reported
+  `liquidation: false` on every maker fill, even when the maker's own account
+  was under liquidation on the instrument — while the WebSocket `fills` channel
+  already reported `liq: true` for the same fill. The two surfaces now agree:
+  any maker or taker fill on an instrument in the account's active liquidation
+  scope reports `liquidation: true`. Rows written before the change are
+  unaffected. Such maker legs are also excluded from leaderboard win counts.
+</Update>
 
 <Update label="Aug 10, 2026" description="Fills gain an adl flag; liq no longer set on ADL counterparty legs">
   Fill entries now carry a required boolean `adl` field on both the WebSocket

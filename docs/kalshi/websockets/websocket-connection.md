@@ -1,8 +1,3 @@
-<!--
-Source: https://docs.kalshi.com/websockets/websocket-connection.md
-Downloaded: 2026-08-05T21:08:42.236Z
--->
-
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.

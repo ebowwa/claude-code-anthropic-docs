@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/ultrareview.md
-Downloaded: 2026-08-12T20:44:34.287Z
+Downloaded: 2026-08-13T20:42:22.023Z
 -->
 
 > ## Documentation Index
@@ -131,7 +131,7 @@ Use `/tasks` to see running and completed reviews, open the detail view for a re
 
 ## Run ultrareview non-interactively
 
-Use the `claude ultrareview` subcommand to start an ultrareview from CI or a script without an interactive session. The subcommand launches the same review as `/code-review ultra`, blocks until the remote review finishes, prints the findings to stdout, and exits with code 0 on success or 1 on failure.
+Use the `claude ultrareview` subcommand to start an ultrareview from CI or a script without an interactive session. The subcommand launches the same review as `/code-review ultra`, blocks until the remote review finishes, and prints the findings to stdout.
 
 ```bash theme={null}
 claude ultrareview

@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/perps/market-data.md
-Downloaded: 2026-08-10T20:41:52.045Z
+Downloaded: 2026-08-13T20:42:10.552Z
 -->
 
 > ## Documentation Index
@@ -413,6 +413,11 @@ trading now.
     ```
   </Tab>
 </Tabs>
+
+Ticker snapshots are refreshed in the background and may be up to ten seconds
+old. When the gateway cannot guarantee that bound — for example while its data
+store is unavailable — the endpoint returns `503 Service Unavailable` rather
+than stale prices. Treat a `503` as transient and retry with backoff.
 
 ## Fetch the Order Book
 

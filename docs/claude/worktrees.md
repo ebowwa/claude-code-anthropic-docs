@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/worktrees.md
-Downloaded: 2026-08-12T20:44:34.291Z
+Downloaded: 2026-08-13T20:42:22.028Z
 -->
 
 > ## Documentation Index
@@ -269,7 +269,7 @@ Claude Code reports the errors below when it creates a worktree, enters one at s
 
 ### Claude Code can't enter the worktree at startup
 
-When Claude Code can't enter the worktree directory at startup, it prints an error naming the path and exits with code 1. This can happen when a [`WorktreeCreate` hook](/docs/en/hooks#worktreecreate) prints something other than the directory it created, or when the directory was deleted after it was set up. Before v2.1.205, this crashed the session, and with `-p` it stalled for about 30 seconds before exiting with code 0.
+When Claude Code can't enter the worktree directory at startup, it prints an error naming the path and exits with code 1. This can happen when a [`WorktreeCreate` hook](/docs/en/hooks#worktreecreate) prints something other than the directory it created, or when the directory was deleted after it was set up.
 
 ### Worktree creation fails on a symlinked path
 

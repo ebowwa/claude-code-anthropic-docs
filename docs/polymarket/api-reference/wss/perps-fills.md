@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/wss/perps-fills.md
-Downloaded: 2026-08-10T20:41:52.065Z
+Downloaded: 2026-08-13T20:42:10.573Z
 -->
 
 > ## Documentation Index
@@ -545,9 +545,13 @@ operations:
                   - name: liq
                     type: boolean
                     description: >-
-                      Liquidation flag for this leg of the fill. False on the
-                      counterparty leg of an auto-deleveraging match — that leg
-                      is flagged by `adl` instead
+                      Whether this fill was part of a liquidation of the
+                      account's position — true on forced closes and on any fill
+                      executed while the account was under liquidation on the
+                      instrument, maker or taker. False on the counterparty leg
+                      of an auto-deleveraging or backstop match — its fill is
+                      part of someone else's liquidation, flagged by `adl` where
+                      applicable
                     required: true
                   - name: adl
                     type: boolean
@@ -659,9 +663,13 @@ operations:
                 liq:
                   type: boolean
                   description: >-
-                    Liquidation flag for this leg of the fill. False on the
-                    counterparty leg of an auto-deleveraging match — that leg is
-                    flagged by `adl` instead
+                    Whether this fill was part of a liquidation of the account's
+                    position — true on forced closes and on any fill executed
+                    while the account was under liquidation on the instrument,
+                    maker or taker. False on the counterparty leg of an
+                    auto-deleveraging or backstop match — its fill is part of
+                    someone else's liquidation, flagged by `adl` where
+                    applicable
                   x-parser-schema-id: <anonymous-schema-492>
                 adl:
                   type: boolean

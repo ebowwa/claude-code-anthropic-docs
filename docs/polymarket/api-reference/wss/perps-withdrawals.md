@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/wss/perps-withdrawals.md
-Downloaded: 2026-08-10T20:41:52.066Z
+Downloaded: 2026-08-13T20:42:10.574Z
 -->
 
 > ## Documentation Index
@@ -503,10 +503,7 @@ operations:
                     required: true
                   - name: amount
                     type: string
-                    description: >-
-                      Raw token amount including decimals. For withdrawals this
-                      matches the uint256 amount in the EIP-712 signature (e.g.
-                      "100000000" for 100 USDC with 6 decimals).
+                    description: Token amount in decimal units (e.g. "100" for 100 USDC).
                     required: true
                   - name: fee
                     type: string
@@ -571,11 +568,8 @@ operations:
                   x-parser-schema-id: <anonymous-schema-791>
                 amount:
                   type: string
-                  description: >-
-                    Raw token amount including decimals. For withdrawals this
-                    matches the uint256 amount in the EIP-712 signature (e.g.
-                    "100000000" for 100 USDC with 6 decimals).
-                  example: '100000000'
+                  description: Token amount in decimal units (e.g. "100" for 100 USDC).
+                  example: '100'
                   x-parser-schema-id: <anonymous-schema-792>
                 fee:
                   type: string

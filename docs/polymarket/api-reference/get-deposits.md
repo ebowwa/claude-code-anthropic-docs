@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-deposits.md
-Downloaded: 2026-08-07T00:52:23.799Z
+Downloaded: 2026-08-13T20:42:10.569Z
 -->
 
 > ## Documentation Index
@@ -208,11 +208,8 @@ components:
       example: USDC
     amount:
       type: string
-      description: >-
-        Raw token amount including decimals. For withdrawals this matches the
-        uint256 amount in the EIP-712 signature (e.g. "100000000" for 100 USDC
-        with 6 decimals).
-      example: '100000000'
+      description: Token amount in decimal units (e.g. "100" for 100 USDC).
+      example: '100'
     from:
       type: string
       description: Sender address in hex format

@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/market-data/prices-order-books.md
+Downloaded: 2026-08-13T20:42:10.547Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -850,7 +855,7 @@ includes the trade price and side.
       ```ts LastTradePrice Type theme={null}
       type LastTradePrice = {
         price: DecimalString;
-        side: OrderSide;
+        side: OrderSide | null;
       };
       ```
 
@@ -861,6 +866,16 @@ includes the trade price and side.
       }
       ```
     </CodeGroup>
+
+    When a token has never traded and its order book is empty, the SDK returns
+    the `"0.5"` placeholder as a `DecimalString` and sets `side` to `null`:
+
+    ```json theme={null}
+    {
+      "price": "0.5",
+      "side": null
+    }
+    ```
   </Tab>
 
   <Tab title="Python">
@@ -880,7 +895,7 @@ includes the trade price and side.
       ```python LastTradePrice Type theme={null}
       class LastTradePrice:
           price: Decimal
-          side: OrderSide
+          side: OrderSide | None
       ```
 
       ```json LastTradePrice Example theme={null}
@@ -890,6 +905,13 @@ includes the trade price and side.
       }
       ```
     </CodeGroup>
+
+    When a token has never traded and its order book is empty, the SDK returns
+    the `Decimal("0.5")` placeholder and sets `side` to `None`:
+
+    ```python theme={null}
+    LastTradePrice(price=Decimal("0.5"), side=None)
+    ```
   </Tab>
 
   <Tab title="API">
@@ -905,6 +927,16 @@ includes the trade price and side.
     {
       "price": "0.08",
       "side": "SELL"
+    }
+    ```
+
+    When a token has never traded and its order book is empty, the API returns
+    the `"0.5"` placeholder and an empty `side` string:
+
+    ```json theme={null}
+    {
+      "price": "0.5",
+      "side": ""
     }
     ```
   </Tab>
@@ -1027,6 +1059,8 @@ Fetch the most recent matched trade for several outcomes in one request.
     ```
   </Tab>
 </Tabs>
+
+Tokens that have never traded are omitted from the multi-token response.
 
 ## Price History
 

@@ -1,3 +1,8 @@
+<!--
+Source: https://bun.com/docs/runtime/sql.md
+Downloaded: 2026-08-13T20:42:17.478Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://bun.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -417,6 +422,8 @@ Simple queries cannot use parameters (`${value}`). If you need parameters, split
 const result = await sql.file("query.sql", [1, 2, 3]);
 ```
 
+With the SQLite adapter, parameters can also be an object of named parameters (`:name`, `$name`, or `@name` placeholders), the same form `sql.unsafe` accepts below.
+
 ### Unsafe Queries
 
 `sql.unsafe` executes raw SQL strings. Use it with caution: it does not escape user input. Without parameters, the string can contain more than one command.
@@ -430,6 +437,13 @@ const result = await sql.unsafe(`
 
 // Using parameters (only one command is allowed)
 const result = await sql.unsafe("SELECT " + dangerous + " FROM users WHERE id = $1", [id]);
+```
+
+With the SQLite adapter, parameters can also be an object of named parameters using `:name`, `$name`, or `@name` placeholders. Object keys keep the prefix (`{ ":id": 1 }`) unless the connection sets `strict: true`, which allows bare keys:
+
+```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+const sql = new SQL({ adapter: "sqlite", filename: "myapp.db", strict: true });
+const result = await sql.unsafe("SELECT * FROM users WHERE id = :id", { id: 1 });
 ```
 
 ### Execute and Cancelling Queries

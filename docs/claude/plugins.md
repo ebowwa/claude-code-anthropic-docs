@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/plugins.md
-Downloaded: 2026-08-12T20:44:34.293Z
+Downloaded: 2026-08-13T20:42:22.029Z
 -->
 
 > ## Documentation Index
@@ -71,12 +71,12 @@ This quickstart walks you through creating a plugin with a custom skill. You'll 
     }
     ```
 
-    | Field         | Purpose                                                                                                                                                                                      |
-    | :------------ | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-    | `name`        | Unique identifier and skill namespace. Skills are prefixed with this (e.g., `/my-first-plugin:hello`).                                                                                       |
-    | `description` | Shown in the plugin manager when browsing or installing plugins.                                                                                                                             |
-    | `version`     | Optional. If set, users only receive updates when you bump this field. If omitted, the version comes from the next source in [version management](/docs/en/plugins-reference#version-management). |
-    | `author`      | Optional. Helpful for attribution.                                                                                                                                                           |
+    | Field         | Purpose                                                                                                                                                                                                                                                                                                                                    |
+    | :------------ | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+    | `name`        | Unique identifier and skill namespace. Skills are prefixed with this (e.g., `/my-first-plugin:hello`).                                                                                                                                                                                                                                     |
+    | `description` | Shown in the plugin manager when browsing or installing plugins.                                                                                                                                                                                                                                                                           |
+    | `version`     | Optional. If set, users only receive updates when you bump this field, except for a [`command` source](/docs/en/plugin-marketplaces#command-sources); see [version management](/docs/en/plugins-reference#version-management). If omitted, the version comes from the next source in [version management](/docs/en/plugins-reference#version-management). |
+    | `author`      | Optional. Helpful for attribution.                                                                                                                                                                                                                                                                                                         |
 
     For additional fields like `homepage`, `repository`, and `license`, see the [full manifest schema](/docs/en/plugins-reference#plugin-manifest-schema).
   </Step>

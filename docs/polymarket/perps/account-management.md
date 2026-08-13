@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/perps/account-management.md
-Downloaded: 2026-08-10T20:41:52.046Z
+Downloaded: 2026-08-13T20:42:10.553Z
 -->
 
 > ## Documentation Index
@@ -831,7 +831,7 @@ Use deposits to reconcile collateral added to the Perps account.
         {
           "hash": "0x2222222222222222222222222222222222222222222222222222222222222222",
           "asset": "pUSD",
-          "amount": "100000000",
+          "amount": "100",
           "status": "confirmed",
           "from": "0x1234567890abcdef1234567890abcdef12345678",
           "to": "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd",
@@ -862,7 +862,7 @@ Use deposits to reconcile collateral added to the Perps account.
         {
           "hash": "0x2222222222222222222222222222222222222222222222222222222222222222",
           "asset": "pUSD",
-          "amount": "100000000",
+          "amount": "100",
           "status": "confirmed",
           "from_address": "0x1234567890abcdef1234567890abcdef12345678",
           "to": "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd",
@@ -896,7 +896,7 @@ Use deposits to reconcile collateral added to the Perps account.
           {
             "hash": "0x2222222222222222222222222222222222222222222222222222222222222222",
             "asset": "pUSD",
-            "amount": "100000000",
+            "amount": "100",
             "status": "confirmed",
             "from": "0x1234567890abcdef1234567890abcdef12345678",
             "to": "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd",
@@ -935,7 +935,7 @@ Use withdrawals to reconcile collateral leaving the Perps account.
         {
           "withdrawalId": 1234567891,
           "asset": "pUSD",
-          "amount": "50000000",
+          "amount": "50",
           "fee": "1.5",
           "status": "confirmed",
           "to": "0x1234567890abcdef1234567890abcdef12345678",
@@ -980,7 +980,7 @@ Use withdrawals to reconcile collateral leaving the Perps account.
         {
           "withdrawal_id": 1234567891,
           "asset": "pUSD",
-          "amount": "50000000",
+          "amount": "50",
           "fee": "1.5",
           "status": "confirmed",
           "to": "0x1234567890abcdef1234567890abcdef12345678",
@@ -1028,7 +1028,7 @@ Use withdrawals to reconcile collateral leaving the Perps account.
           {
             "withdrawal_id": 1234567891,
             "asset": "pUSD",
-            "amount": "50000000",
+            "amount": "50",
             "fee": "1.5",
             "status": "confirmed",
             "to": "0x1234567890abcdef1234567890abcdef12345678",
