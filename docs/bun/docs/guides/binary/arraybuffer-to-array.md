@@ -1,29 +1,30 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/binary/arraybuffer-to-array.md
+Downloaded: 2026-08-14T20:31:00.594Z
+-->
 
 # Convert an ArrayBuffer to an array of numbers
 
 To retrieve the contents of an `ArrayBuffer` as an array of numbers, create a [`Uint8Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array) over the buffer, then use [`Array.from()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from) to convert it to an array.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const buf = new ArrayBuffer(64);
 const arr = new Uint8Array(buf);
 arr.length; // 64
 arr[0]; // 0 (instantiated with all zeros)
 ```
 
-***
+---
 
 The `Uint8Array` class supports array indexing and iteration. To convert the instance to a regular `Array`, use `Array.from()`. This is likely slower than using the `Uint8Array` directly.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const buf = new ArrayBuffer(64);
 const uintArr = new Uint8Array(buf);
 const regularArr = Array.from(uintArr);
 // number[]
 ```
 
-***
+---
 
-See [Binary Data](/docs/runtime/binary-data#conversion).
+See [Binary Data](/runtime/binary-data#conversion).

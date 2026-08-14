@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/runtime/jsx.md
+Downloaded: 2026-08-14T20:31:00.545Z
+-->
 
 # JSX
 
@@ -8,7 +9,7 @@
 
 Bun supports `.jsx` and `.tsx` files. Bun's internal transpiler converts JSX syntax into vanilla JavaScript before execution.
 
-```ts react.tsx icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts react.tsx icon="/icons/typescript.svg"
 function Component(props: {message: string}) {
   return (
     <body>
@@ -22,7 +23,7 @@ console.log(<Component message="Hello world!" />);
 
 ## Configuration
 
-Bun reads your `tsconfig.json` or `jsconfig.json` to determine how to perform the JSX transform internally. If you'd rather not use either, you can set the same options in [`bunfig.toml`](/docs/runtime/bunfig).
+Bun reads your `tsconfig.json` or `jsconfig.json` to determine how to perform the JSX transform internally. If you'd rather not use either, you can set the same options in [`bunfig.toml`](/runtime/bunfig).
 
 Bun respects the following compiler options.
 
@@ -30,16 +31,16 @@ Bun respects the following compiler options.
 
 How JSX constructs are transformed into vanilla JavaScript internally. The following table lists the possible values of `jsx`, along with how each transpiles this JSX component:
 
-```tsx theme={"theme":{"light":"github-light","dark":"dracula"}}
+```tsx
 <Box width={5}>Hello</Box>
 ```
 
-| Compiler options                                    | Transpiled output                                                                                                                                                                                                                                                                                                                                                                                                         |
-| --------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `json<br/>{<br/>  "jsx": "react"<br/>}<br/>`        | `tsx<br/>React.createElement(Box, { width: 5 }, "Hello");<br/>`                                                                                                                                                                                                                                                                                                                                                           |
-| `json<br/>{<br/>  "jsx": "react-jsx"<br/>}<br/>`    | `tsx<br/>import { jsx } from "react/jsx-runtime";<br/>jsx("Box", { width: 5 }, "Hello");<br/>`                                                                                                                                                                                                                                                                                                                            |
-| `json<br/>{<br/>  "jsx": "react-jsxdev"<br/>}<br/>` | `tsx<br/>import { jsxDEV } from "react/jsx-dev-runtime";<br/>jsxDEV(<br/>  "Box",<br/>  { width: 5, children: "Hello" },<br/>  undefined,<br/>  false,<br/>  undefined,<br/>  this,<br/>);<br/>`<br /><br />The `jsxDEV` variable name is a React convention. The `DEV` suffix marks code intended for development. The development version of React is slower and includes additional validity checks & debugging tools. |
-| `json<br/>{<br/>  "jsx": "preserve"<br/>}<br/>`     | `tsx<br/>// JSX is not transpiled<br/>// "preserve" is not supported by Bun currently<br/><Box width={5}>Hello</Box><br/>`                                                                                                                                                                                                                                                                                                |
+| Compiler options                                    | Transpiled output                                                                                                                                                                                                                                                                                                                                                                                                       |
+| --------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `json<br/>{<br/>  "jsx": "react"<br/>}<br/>`        | `tsx<br/>React.createElement(Box, { width: 5 }, "Hello");<br/>`                                                                                                                                                                                                                                                                                                                                                         |
+| `json<br/>{<br/>  "jsx": "react-jsx"<br/>}<br/>`    | `tsx<br/>import { jsx } from "react/jsx-runtime";<br/>jsx("Box", { width: 5 }, "Hello");<br/>`                                                                                                                                                                                                                                                                                                                          |
+| `json<br/>{<br/>  "jsx": "react-jsxdev"<br/>}<br/>` | `tsx<br/>import { jsxDEV } from "react/jsx-dev-runtime";<br/>jsxDEV(<br/>  "Box",<br/>  { width: 5, children: "Hello" },<br/>  undefined,<br/>  false,<br/>  undefined,<br/>  this,<br/>);<br/>`<br/><br/>The `jsxDEV` variable name is a React convention. The `DEV` suffix marks code intended for development. The development version of React is slower and includes additional validity checks & debugging tools. |
+| `json<br/>{<br/>  "jsx": "preserve"<br/>}<br/>`     | `tsx<br/>// JSX is not transpiled<br/>// "preserve" is not supported by Bun currently<br/><Box width={5}>Hello</Box><br/>`                                                                                                                                                                                                                                                                                              |
 
 ### [`jsxFactory`](https://www.typescriptlang.org/tsconfig#jsxFactory)
 
@@ -75,7 +76,7 @@ The module the component factory function (such as `createElement`, `jsx`, or `j
 
 ### JSX pragma
 
-You can set any of these values per file with a *pragma*, a comment that sets a compiler option in a particular file.
+You can set any of these values per file with a _pragma_, a comment that sets a compiler option in a particular file.
 
 | Pragma                                   | Equivalent config                                                  |
 | ---------------------------------------- | ------------------------------------------------------------------ |
@@ -87,7 +88,7 @@ You can set any of these values per file with a *pragma*, a comment that sets a 
 
 Bun implements special logging for JSX to make debugging easier. Given the following file:
 
-```tsx index.tsx icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```tsx index.tsx icon="/icons/typescript.svg"
 import { Stack, UserCard } from "./components";
 
 console.log(
@@ -106,7 +107,7 @@ Bun pretty-prints the component tree:
 
 The Bun runtime also supports "prop punning" for JSX: a shorthand for assigning a variable to a prop with the same name.
 
-```tsx react.tsx icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```tsx react.tsx icon="/icons/typescript.svg"
 function Div(props: {className: string;}) {
   const {className} = props;
 

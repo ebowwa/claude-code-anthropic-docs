@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/runtime/web-apis.md
+Downloaded: 2026-08-14T20:31:00.555Z
+-->
 
 # Web APIs
 

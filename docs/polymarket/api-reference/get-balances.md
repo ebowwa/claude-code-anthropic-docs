@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-balances.md
-Downloaded: 2026-08-07T00:52:23.798Z
+Downloaded: 2026-08-14T20:31:01.250Z
 -->
 
 > ## Documentation Index
@@ -11,7 +11,6 @@ Downloaded: 2026-08-07T00:52:23.798Z
 
 > Get asset balances for the authenticated account.
 
-<Badge color="gray" size="md">Request Weight: **2**</Badge>
 
 
 ## OpenAPI

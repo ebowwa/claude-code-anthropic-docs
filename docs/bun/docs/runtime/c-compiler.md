@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/runtime/c-compiler.md
+Downloaded: 2026-08-14T20:31:00.552Z
+-->
 
 # C Compiler
 
@@ -8,7 +9,7 @@
 
 `bun:ffi` has experimental support for compiling and running C from JavaScript with low overhead.
 
-***
+---
 
 ## Usage (cc in `bun:ffi`)
 
@@ -16,7 +17,7 @@ See the [introduction blog post](https://bun.com/blog/compile-and-run-c-in-js) f
 
 JavaScript:
 
-```ts hello.ts icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts hello.ts icon="file-code"
 import { cc } from "bun:ffi";
 import source from "./hello.c" with { type: "file" };
 
@@ -37,7 +38,7 @@ console.log("What is the answer to the universe?", hello());
 
 C source:
 
-```c hello.c theme={"theme":{"light":"github-light","dark":"dracula"}}
+```c hello.c
 int hello() {
   return 42;
 }
@@ -45,7 +46,7 @@ int hello() {
 
 Running `hello.ts` prints:
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun hello.ts
 What is the answer to the universe? 42
 ```
@@ -54,29 +55,29 @@ What is the answer to the universe? 42
 
 ### Primitive types
 
-`cc` supports the same `FFIType` values as [`dlopen`](/docs/runtime/ffi).
+`cc` supports the same `FFIType` values as [`dlopen`](/runtime/ffi).
 
-| `FFIType`   | C Type         | Aliases                     |
-| ----------- | -------------- | --------------------------- |
-| cstring     | `char*`        |                             |
-| function    | `(void*)(*)()` | `fn`, `callback`            |
-| ptr         | `void*`        | `pointer`, `void*`, `char*` |
-| i8          | `int8_t`       | `int8_t`                    |
-| i16         | `int16_t`      | `int16_t`                   |
-| i32         | `int32_t`      | `int32_t`, `int`            |
-| i64         | `int64_t`      | `int64_t`                   |
-| i64\_fast   | `int64_t`      |                             |
-| u8          | `uint8_t`      | `uint8_t`                   |
-| u16         | `uint16_t`     | `uint16_t`                  |
-| u32         | `uint32_t`     | `uint32_t`                  |
-| u64         | `uint64_t`     | `uint64_t`                  |
-| u64\_fast   | `uint64_t`     |                             |
-| f32         | `float`        | `float`                     |
-| f64         | `double`       | `double`                    |
-| bool        | `bool`         |                             |
-| char        | `char`         |                             |
-| napi\_env   | `napi_env`     |                             |
-| napi\_value | `napi_value`   |                             |
+| `FFIType`  | C Type         | Aliases                     |
+| ---------- | -------------- | --------------------------- |
+| cstring    | `char*`        |                             |
+| function   | `(void*)(*)()` | `fn`, `callback`            |
+| ptr        | `void*`        | `pointer`, `void*`, `char*` |
+| i8         | `int8_t`       | `int8_t`                    |
+| i16        | `int16_t`      | `int16_t`                   |
+| i32        | `int32_t`      | `int32_t`, `int`            |
+| i64        | `int64_t`      | `int64_t`                   |
+| i64_fast   | `int64_t`      |                             |
+| u8         | `uint8_t`      | `uint8_t`                   |
+| u16        | `uint16_t`     | `uint16_t`                  |
+| u32        | `uint32_t`     | `uint32_t`                  |
+| u64        | `uint64_t`     | `uint64_t`                  |
+| u64_fast   | `uint64_t`     |                             |
+| f32        | `float`        | `float`                     |
+| f64        | `double`       | `double`                    |
+| bool       | `bool`         |                             |
+| char       | `char`         |                             |
+| napi_env   | `napi_env`     |                             |
+| napi_value | `napi_value`   |                             |
 
 ### Strings, objects, and non-primitive types
 
@@ -90,7 +91,7 @@ You can also pass a `napi_env` to receive the N-API environment used to call the
 
 For example, to return a string from C to JavaScript:
 
-```ts hello.ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts hello.ts
 import { cc } from "bun:ffi";
 import source from "./hello.c" with { type: "file" };
 
@@ -111,7 +112,7 @@ const result = hello();
 
 And in C:
 
-```c hello.c theme={"theme":{"light":"github-light","dark":"dracula"}}
+```c hello.c
 #include <node/node_api.h>
 
 napi_value hello(napi_env env) {
@@ -123,7 +124,7 @@ napi_value hello(napi_env env) {
 
 The same approach returns other types like objects and arrays:
 
-```c hello.c theme={"theme":{"light":"github-light","dark":"dracula"}}
+```c hello.c
 #include <node/node_api.h>
 
 napi_value hello(napi_env env) {
@@ -139,7 +140,7 @@ napi_value hello(napi_env env) {
 
 Use the `library` array to specify the libraries to link with the C code.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 type Library = string[];
 
 cc({
@@ -152,7 +153,7 @@ cc({
 
 Use the `symbols` object to specify the functions and variables to expose to JavaScript.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 type Symbols = {
   [key: string]: {
     args: FFIType[];
@@ -165,7 +166,7 @@ type Symbols = {
 
 `source` is the path to the C code to compile and link with the JavaScript runtime.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 type Source = string | URL | BunFile;
 
 cc({
@@ -183,7 +184,7 @@ cc({
 
 `flags` is an optional array of strings passed to the TinyCC compiler.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 type Flags = string | string[];
 ```
 
@@ -193,7 +194,7 @@ These are flags like `-I` for include directories and `-D` for preprocessor defi
 
 `define` is an optional object of preprocessor definitions passed to the TinyCC compiler.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 type Defines = Record<string, string>;
 
 cc({

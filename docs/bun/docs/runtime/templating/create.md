@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/runtime/templating/create.md
+Downloaded: 2026-08-14T20:31:00.544Z
+-->
 
 # bun create
 
@@ -10,43 +11,53 @@
   `bun create` is optional — Bun works without any configuration. This command exists to make getting started faster.
 </Note>
 
-***
+---
 
 Template a new Bun project with `bun create`. It creates a project from a React component, a `create-<template>` npm package, a GitHub repo, or a local template.
 
-To create an empty project, use [`bun init`](/docs/runtime/templating/init).
+To create an empty project, use [`bun init`](/runtime/templating/init).
 
 ## From a React component
 
 `bun create ./MyComponent.tsx` turns an existing React component into a complete dev environment with hot reload and production builds in one command.
 
-```bash theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash
 bun create ./MyComponent.jsx # .tsx also supported
 ```
 
 <Frame>
-  <video style={{ aspectRatio: "2062 / 1344", width: "100%", height: "100%", objectFit: "contain" }} loop autoPlay muted playsInline>
-    <source src="https://mintcdn.com/bun-1dd33a4e/q61zoUYDXrVRu-tH/images/bun-create-shadcn.mp4?fit=max&auto=format&n=q61zoUYDXrVRu-tH&q=85&s=92fcea5a9d403b155e943508fbb40a21" style={{ width: "100%", height: "100%", objectFit: "contain" }} type="video/mp4" data-path="images/bun-create-shadcn.mp4" />
+  <video
+    style={{ aspectRatio: "2062 / 1344", width: "100%", height: "100%", objectFit: "contain" }}
+    loop
+    autoPlay
+    muted
+    playsInline
+  >
+    <source
+      src="/images/bun-create-shadcn.mp4"
+      style={{ width: "100%", height: "100%", objectFit: "contain" }}
+      type="video/mp4"
+    />
   </video>
 </Frame>
 
 <Note>
-  🚀 **Create React App Successor** — `bun create <component>` provides everything developers loved about Create React App, but with modern tooling, faster builds, and backend support.
+🚀 **Create React App Successor** — `bun create <component>` provides everything developers loved about Create React App, but with modern tooling, faster builds, and backend support.
 </Note>
 
 #### How this works
 
 When you run `bun create <component>`, Bun:
 
-1. Uses [Bun's JavaScript bundler](/docs/bundler) to analyze your module graph.
+1. Uses [Bun's JavaScript bundler](/bundler) to analyze your module graph.
 2. Collects all the dependencies needed to run the component.
 3. Scans the exports of the entry point for a React component.
 4. Generates a `package.json` file with the dependencies and scripts needed to run the component.
-5. Installs any missing dependencies using [`bun install --only-missing`](/docs/pm/cli/install).
+5. Installs any missing dependencies using [`bun install --only-missing`](/pm/cli/install).
 6. Generates the following files:
-   * `${component}.html`
-   * `${component}.client.tsx` (entry point for the frontend)
-   * `${component}.css`
+   - `${component}.html`
+   - `${component}.client.tsx` (entry point for the frontend)
+   - `${component}.css`
 7. Starts a frontend dev server.
 
 ### Using TailwindCSS with Bun
@@ -55,7 +66,7 @@ When you run `bun create <component>`, Bun:
 
 When you run `bun create <component>`, Bun scans your JSX/TSX file for TailwindCSS class names (and any files it imports). If it detects TailwindCSS class names, it adds the following dependencies to your `package.json`:
 
-```json package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json package.json icon="file-json"
 {
   "dependencies": {
     "tailwindcss": "^4",
@@ -66,14 +77,14 @@ When you run `bun create <component>`, Bun scans your JSX/TSX file for TailwindC
 
 Bun also configures `bunfig.toml` to use its TailwindCSS plugin with `Bun.serve()`:
 
-```toml bunfig.toml icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml bunfig.toml icon="settings"
 [serve.static]
 plugins = ["bun-plugin-tailwind"]
 ```
 
 And writes a `${component}.css` file with `@import "tailwindcss";` at the top:
 
-```css MyComponent.css icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css MyComponent.css icon="file-code"
 @import "tailwindcss";
 ```
 
@@ -85,7 +96,7 @@ And writes a `${component}.css` file with `@import "tailwindcss";` at the top:
 
 If it finds any, it runs:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 # Assuming bun detected imports to @/components/ui/accordion and @/components/ui/button
 bunx shadcn@canary add accordion button # and any other components
 ```
@@ -94,22 +105,22 @@ Since `shadcn/ui` itself uses TailwindCSS, `bun create` also adds the TailwindCS
 
 `bun create` also sets up:
 
-* `tsconfig.json` to alias `"@/*"` to `"src/*"` or `.` (depending on whether there is a `src/` directory)
-* `components.json` so that shadcn/ui knows it's a shadcn/ui project
-* `styles/globals.css` file that configures Tailwind v4 the way shadcn/ui expects
-* `${component}.build.ts` file that builds the component for production with `bun-plugin-tailwind` configured
+- `tsconfig.json` to alias `"@/*"` to `"src/*"` or `.` (depending on whether there is a `src/` directory)
+- `components.json` so that shadcn/ui knows it's a shadcn/ui project
+- `styles/globals.css` file that configures Tailwind v4 the way shadcn/ui expects
+- `${component}.build.ts` file that builds the component for production with `bun-plugin-tailwind` configured
 
 Use `bun create ./MyComponent.jsx` to run code generated by LLMs like [Claude](https://claude.ai) or ChatGPT locally.
 
 ## From `npm`
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun create <template> [<destination>]
 ```
 
 If you don't have a [local template](#from-a-local-template) with the same name, this command downloads and runs the `create-<template>` package from npm. These two commands are equivalent:
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun create remix
 bunx create-remix
 ```
@@ -120,26 +131,26 @@ Refer to the `create-<template>` package's documentation for usage instructions.
 
 `bun create <user>/<repo>` downloads the contents of the GitHub repo to disk.
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun create <user>/<repo>
 bun create github.com/<user>/<repo>
 ```
 
 Optionally specify a name for the destination folder. If you don't, Bun uses the repo name.
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun create <user>/<repo> mydir
 bun create github.com/<user>/<repo> mydir
 ```
 
 Bun then:
 
-* Downloads the template
-* Copies all template files into the destination folder
-* Installs dependencies with `bun install`
-* Initializes a fresh Git repo. Opt out with the `--no-git` flag.
+- Downloads the template
+- Copies all template files into the destination folder
+- Installs dependencies with `bun install`
+- Initializes a fresh Git repo. Opt out with the `--no-git` flag.
 
-<Note>By default Bun does *not overwrite* existing files. Use the `--force` flag to overwrite them.</Note>
+<Note>By default Bun does _not overwrite_ existing files. Use the `--force` flag to overwrite them.</Note>
 
 ## From a local template
 
@@ -150,14 +161,14 @@ Bun then:
 
 You can define custom templates on your local file system. Put them in one of the following directories:
 
-* `$HOME/.bun-create/<name>`: global templates
-* `<project root>/.bun-create/<name>`: project-specific templates
+- `$HOME/.bun-create/<name>`: global templates
+- `<project root>/.bun-create/<name>`: project-specific templates
 
 <Note>Set the `BUN_CREATE_DIR` environment variable to change the global template path.</Note>
 
 To create a local template, create a directory in `$HOME/.bun-create` named after your template.
 
-```bash theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash
 cd $HOME/.bun-create
 mkdir foo
 cd foo
@@ -165,7 +176,7 @@ cd foo
 
 Then, create a `package.json` file in that directory with the following contents:
 
-```json package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json package.json icon="file-json"
 {
   "name": "foo"
 }
@@ -177,7 +188,7 @@ Run `bun create foo` elsewhere on your file system to verify that Bun finds your
 
 You can specify pre- and post-install setup scripts in the `"bun-create"` section of your local template's `package.json`.
 
-```json package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json package.json icon="file-json"
 {
   "name": "@bun-examples/simplereact",
   "version": "0.0.1",
@@ -222,39 +233,35 @@ After cloning a template, `bun create` removes the `"bun-create"` section from `
 | `GITHUB_TOKEN` (or `GITHUB_ACCESS_TOKEN`) | Lets `bun create` access private repositories and avoid rate limits. `GITHUB_TOKEN` is chosen over `GITHUB_ACCESS_TOKEN` if both exist. |
 
 <Accordion title={<span>How <code>bun create</code> works</span>}>
-  When you run `bun create ${template} ${destination}`, here’s what happens:
 
-  IF remote template
+When you run `bun create ${template} ${destination}`, here’s what happens:
 
-  1. GET `registry.npmjs.org/@bun-examples/${template}/latest` and parse it
-  2. GET `registry.npmjs.org/@bun-examples/${template}/-/${template}-${latestVersion}.tgz`
-  3. Decompress & extract `${template}-${latestVersion}.tgz` into `${destination}`
-     * If files would be overwritten, warn and exit unless `--force` is passed
+IF remote template
 
-  IF GitHub repo
+1. GET `registry.npmjs.org/@bun-examples/${template}/latest` and parse it
+2. GET `registry.npmjs.org/@bun-examples/${template}/-/${template}-${latestVersion}.tgz`
+3. Decompress & extract `${template}-${latestVersion}.tgz` into `${destination}`
+   - If files would be overwritten, warn and exit unless `--force` is passed
 
-  1. Download the tarball from GitHub’s API
-  2. Decompress & extract into `${destination}`
-     * If files would be overwritten, warn and exit unless `--force` is passed
+IF GitHub repo
 
-  ELSE IF local template
+1. Download the tarball from GitHub’s API
+2. Decompress & extract into `${destination}`
+   - If files would be overwritten, warn and exit unless `--force` is passed
 
-  1. Open local template folder
+ELSE IF local template
 
-  2. Delete destination directory recursively
+1. Open local template folder
+2. Delete destination directory recursively
+3. Copy files recursively using the fastest system calls available (on macOS, `fcopyfile`; on Linux, `copy_file_range`). Do not copy or traverse into the `node_modules` folder if it exists (this alone makes it faster than `cp`)
 
-  3. Copy files recursively using the fastest system calls available (on macOS, `fcopyfile`; on Linux, `copy_file_range`). Do not copy or traverse into the `node_modules` folder if it exists (this alone makes it faster than `cp`)
+4. Parse the `package.json` (again!), update `name` to be `${basename(destination)}`, remove the `bun-create` section from the `package.json` and save the updated `package.json` to disk.
+5. Run any tasks defined in `"bun-create": { "preinstall" }`
+6. Run `bun install` unless `--no-install` is passed OR no dependencies are in package.json
+7. Run any tasks defined in `"bun-create": { "postinstall" }`
+8. Run `git init; git add -A .; git commit -am "Initial Commit";`
+   - Rename `gitignore` to `.gitignore`. npm strips `.gitignore` files from published packages.
+   - If there are dependencies, this runs in a separate thread concurrently while node_modules are being installed
+   - Using libgit2 if available was tested and performed 3x slower in microbenchmarks
 
-  4. Parse the `package.json` (again!), update `name` to be `${basename(destination)}`, remove the `bun-create` section from the `package.json` and save the updated `package.json` to disk.
-
-  5. Run any tasks defined in `"bun-create": { "preinstall" }`
-
-  6. Run `bun install` unless `--no-install` is passed OR no dependencies are in package.json
-
-  7. Run any tasks defined in `"bun-create": { "postinstall" }`
-
-  8. Run `git init; git add -A .; git commit -am "Initial Commit";`
-     * Rename `gitignore` to `.gitignore`. npm strips `.gitignore` files from published packages.
-     * If there are dependencies, this runs in a separate thread concurrently while node\_modules are being installed
-     * Using libgit2 if available was tested and performed 3x slower in microbenchmarks
 </Accordion>

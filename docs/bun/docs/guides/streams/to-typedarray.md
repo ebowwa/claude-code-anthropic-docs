@@ -1,12 +1,13 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/streams/to-typedarray.md
+Downloaded: 2026-08-14T20:31:00.598Z
+-->
 
 # Convert a ReadableStream to a Uint8Array
 
 To convert a [`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream) to a `Uint8Array`, read its contents into an [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) with `Bun.readableStreamToArrayBuffer`, then create a [`Uint8Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array) that points to the buffer.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const stream = new ReadableStream();
 const buf = await Bun.readableStreamToArrayBuffer(stream);
 const uint8 = new Uint8Array(buf);
@@ -14,11 +15,11 @@ const uint8 = new Uint8Array(buf);
 
 `Bun.readableStreamToBytes` converts to a `Uint8Array` directly.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const stream = new ReadableStream();
 const uint8 = await Bun.readableStreamToBytes(stream);
 ```
 
-***
+---
 
-See [Bun's other `ReadableStream` conversion functions](/docs/runtime/utils#bun-readablestreamto).
+See [Bun's other `ReadableStream` conversion functions](/runtime/utils#bun-readablestreamto).

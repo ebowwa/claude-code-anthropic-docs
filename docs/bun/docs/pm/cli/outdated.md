@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/pm/cli/outdated.md
+Downloaded: 2026-08-14T20:31:00.559Z
+-->
 
 # bun outdated
 
@@ -8,11 +9,11 @@
 
 `bun outdated` displays a table of the dependencies in your project that have newer versions available.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun outdated
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 | Package                        | Current | Update    | Latest     |
 | ------------------------------ | ------- | --------- | ---------- |
 | @sinclair/typebox              | 0.34.15 | 0.34.16   | 0.34.16    |
@@ -31,19 +32,19 @@ bun outdated
 
 The output table shows three version columns:
 
-* **Current**: The version currently installed
-* **Update**: The latest version that satisfies your package.json version range
-* **Latest**: The latest version published to the registry
+- **Current**: The version currently installed
+- **Update**: The latest version that satisfies your package.json version range
+- **Latest**: The latest version published to the registry
 
 ### Dependency Filters
 
 To check a specific dependency, pass its name as a positional argument:
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun outdated eslint-plugin-security
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 | Package                        | Current | Update | Latest    |
 | ------------------------------ | ------- | ------ | --------- |
 | eslint-plugin-security (dev)   | 2.1.1   | 2.1.1  | 3.0.1     |
@@ -52,11 +53,11 @@ bun outdated eslint-plugin-security
 
 Glob patterns work too:
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun outdated 'eslint*'
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 | Package                        | Current | Update | Latest     |
 | ------------------------------ | ------- | ------ | ---------- |
 | eslint (dev)                   | 8.57.1  | 8.57.1 | 9.20.0     |
@@ -66,11 +67,11 @@ bun outdated 'eslint*'
 
 For example, to check for outdated `@types/*` packages:
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun outdated '@types/*'
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 | Package            | Current | Update | Latest |
 | ------------------ | ------- | ------ | ------ |
 | @types/bun (dev)   | 1.3.0   | 1.3.3  | 1.3.3 |
@@ -78,11 +79,11 @@ bun outdated '@types/*'
 
 Or to exclude all `@types/*` packages:
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun outdated '!@types/*'
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 | Package                        | Current | Update    | Latest     |
 | ------------------------------ | ------- | --------- | ---------- |
 | @sinclair/typebox              | 0.34.15 | 0.34.16   | 0.34.16    |
@@ -99,11 +100,11 @@ bun outdated '!@types/*'
 
 Use the `--filter` flag to check for outdated dependencies in a different workspace package:
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun outdated --filter='@monorepo/types'
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 | Package            | Current | Update | Latest |
 | ------------------ | ------- | ------ | ------ |
 | tsup (dev)         | 8.3.5   | 8.3.6  | 8.3.6  |
@@ -112,11 +113,11 @@ bun outdated --filter='@monorepo/types'
 
 `--filter` accepts glob patterns to match multiple workspaces:
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun outdated --filter='@monorepo/{types,cli}'
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 | Package                        | Current | Update | Latest     |
 | ------------------------------ | ------- | ------ | ---------- |
 | eslint (dev)                   | 8.57.1  | 8.57.1 | 9.20.0     |
@@ -129,13 +130,13 @@ bun outdated --filter='@monorepo/{types,cli}'
 
 ### Catalog Dependencies
 
-`bun outdated` also checks [catalog](/docs/pm/catalogs) dependencies defined in `package.json`:
+`bun outdated` also checks [catalog](/pm/catalogs) dependencies defined in `package.json`:
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun outdated -r
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 ┌────────────────────┬─────────┬─────────┬─────────┬────────────────────────────────┐
 │ Package            │ Current │ Update  │ Latest  │ Workspace                      │
 ├────────────────────┼─────────┼─────────┼─────────┼────────────────────────────────┤
@@ -173,11 +174,11 @@ bun outdated -r
 └────────────────────┴─────────┴─────────┴─────────┴────────────────────────────────┘
 ```
 
-***
+---
 
 ## CLI Usage
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun outdated <filter>
 ```
 
@@ -282,7 +283,7 @@ bun outdated <filter>
 ### Caching
 
 <ParamField path="--cache-dir" type="string">
-  Store & load cached data from a specific directory path
+  Store &amp; load cached data from a specific directory path
 </ParamField>
 
 <ParamField path="--no-cache" type="boolean">
@@ -296,7 +297,7 @@ bun outdated <filter>
 </ParamField>
 
 <ParamField path="-f, --force" type="boolean">
-  Always request the latest versions from the registry & reinstall all dependencies
+  Always request the latest versions from the registry &amp; reinstall all dependencies
 </ParamField>
 
 <ParamField path="--no-verify" type="boolean">

@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/test/dom.md
+Downloaded: 2026-08-14T20:31:00.567Z
+-->
 
 # DOM testing
 
@@ -14,13 +15,13 @@ For headless tests of your frontend code and components, we recommend happy-dom.
 
 Install the `@happy-dom/global-registrator` package as a dev dependency.
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun add -d @happy-dom/global-registrator
 ```
 
 Use Bun's preload feature to register the happy-dom globals before your tests run, which makes browser APIs like `document` available in the global scope. Create a file called `happydom.ts` in the root of your project with the following code:
 
-```ts title="happydom.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="happydom.ts" icon="/icons/typescript.svg"
 import { GlobalRegistrator } from "@happy-dom/global-registrator";
 
 GlobalRegistrator.register();
@@ -28,14 +29,14 @@ GlobalRegistrator.register();
 
 To preload this file before `bun test`, open or create a `bunfig.toml` file and add the following lines.
 
-```toml title="bunfig.toml" icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml title="bunfig.toml" icon="settings"
 [test]
 preload = ["./happydom.ts"]
 ```
 
 `bun test` now executes `happydom.ts` before your tests, so they can use browser APIs like `document` and `window`.
 
-```ts title="dom.test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="dom.test.ts" icon="/icons/typescript.svg"
 import { test, expect } from "bun:test";
 
 test("dom test", () => {
@@ -49,7 +50,7 @@ test("dom test", () => {
 
 Depending on your `tsconfig.json` setup, you may see a "Cannot find name 'document'" type error in the earlier code. To load the types for `document` and other browser APIs, add the following triple-slash directive to the top of any test file.
 
-```ts title="dom.test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="dom.test.ts" icon="/icons/typescript.svg"
 /// <reference lib="dom" />
 
 import { test, expect } from "bun:test";
@@ -63,7 +64,7 @@ test("dom test", () => {
 
 Run the test with `bun test`:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun test
 ```
 
@@ -83,11 +84,11 @@ Ran 1 test across 1 file. [125.00ms]
 
 Bun works with React Testing Library for testing React components. After setting up happy-dom as described earlier, install and use React Testing Library normally.
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun add -d @testing-library/react @testing-library/jest-dom
 ```
 
-```ts title="component.test.tsx" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="component.test.tsx" icon="/icons/typescript.svg"
 /// <reference lib="dom" />
 
 import { test, expect } from 'bun:test';
@@ -110,7 +111,7 @@ test('renders button', () => {
 
 Test custom elements and web components with the same setup:
 
-```ts title="custom-element.test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="custom-element.test.ts" icon="/icons/typescript.svg"
 /// <reference lib="dom" />
 
 import { test, expect } from "bun:test";
@@ -137,7 +138,7 @@ test("custom element", () => {
 
 Test DOM events and user interactions:
 
-```ts title="events.test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="events.test.ts" icon="/icons/typescript.svg"
 /// <reference lib="dom" />
 
 import { test, expect } from "bun:test";
@@ -163,7 +164,7 @@ test("button click event", () => {
 
 For more involved setups, create a preload file that also registers global mocks:
 
-```ts title="test-setup.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test-setup.ts" icon="/icons/typescript.svg"
 import { GlobalRegistrator } from "@happy-dom/global-registrator";
 import "@testing-library/jest-dom";
 
@@ -195,7 +196,7 @@ Object.defineProperty(window, "matchMedia", {
 
 Then update your `bunfig.toml`:
 
-```toml title="bunfig.toml" icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml title="bunfig.toml" icon="settings"
 [test]
 preload = ["./test-setup.ts"]
 ```
@@ -214,11 +215,11 @@ preload = ["./test-setup.ts"]
 
 happy-dom is fast, but for very large test suites you may want to:
 
-* Use `beforeEach` to reset the DOM state between tests
-* Avoid creating too many DOM elements in a single test
-* Use `cleanup` functions from testing libraries
+- Use `beforeEach` to reset the DOM state between tests
+- Avoid creating too many DOM elements in a single test
+- Use `cleanup` functions from testing libraries
 
-```ts title="test-setup.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test-setup.ts" icon="/icons/typescript.svg"
 import { afterEach } from "bun:test";
 import { cleanup } from "@testing-library/react";
 

@@ -1,18 +1,19 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/write-file/unlink.md
+Downloaded: 2026-08-14T20:31:00.592Z
+-->
 
 # Delete a file
 
 The `Bun.file()` function accepts a path and returns a `BunFile` instance. Use the `.delete()` method to delete the file.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const path = "/path/to/file.txt";
 const file = Bun.file(path);
 
 await file.delete();
 ```
 
-***
+---
 
-See [`Bun.file()`](/docs/runtime/file-io#reading-files-bun-file).
+See [`Bun.file()`](/runtime/file-io#reading-files-bun-file).

@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/events/get-multivariate-events.md
-Downloaded: 2026-08-12T20:44:24.180Z
+Downloaded: 2026-08-14T20:31:01.977Z
 -->
 
 > ## Documentation Index
@@ -566,10 +566,10 @@ components:
     FixedPointDollars:
       type: string
       description: >-
-        US dollar amount as a fixed-point decimal string with up to 6 decimal
-        places of precision. This is the maximum supported precision; valid
-        quote intervals for a given market are constrained by that market's
-        price level structure.
+        Fixed-point US dollar string. Most request fields accept 2-4 decimal
+        places (e.g., "0.56", "0.5600"); responses emit up to 6. Valid quote
+        intervals for a given market are constrained by that market's price
+        level structure.
       example: '0.5600'
     FixedPointCount:
       type: string

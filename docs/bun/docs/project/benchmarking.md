@@ -1,11 +1,7 @@
 <!--
 Source: https://bun.com/docs/project/benchmarking.md
-Downloaded: 2026-08-07T20:41:00.568Z
+Downloaded: 2026-08-14T20:31:00.556Z
 -->
-
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
 
 # Benchmarking
 
@@ -22,12 +18,12 @@ To measure time precisely, Bun offers two runtime APIs:
 
 ## Benchmarking tools
 
-* For microbenchmarks, we recommend [`mitata`](https://github.com/evanwashere/mitata).
-* For load testing, you *must use* an HTTP benchmarking tool that is at least as fast as `Bun.serve()`, or your results will be skewed. Some popular Node.js-based benchmarking tools like [`autocannon`](https://github.com/mcollina/autocannon) are not fast enough. We recommend one of the following:
-  * [`bombardier`](https://github.com/codesenberg/bombardier)
-  * [`oha`](https://github.com/hatoo/oha)
-  * [`http_load_test`](https://github.com/uNetworking/uSockets/blob/master/examples/http_load_test.c)
-* For benchmarking scripts or CLI commands, we recommend [`hyperfine`](https://github.com/sharkdp/hyperfine).
+- For microbenchmarks, we recommend [`mitata`](https://github.com/evanwashere/mitata).
+- For load testing, you _must use_ an HTTP benchmarking tool that is at least as fast as `Bun.serve()`, or your results will be skewed. Some popular Node.js-based benchmarking tools like [`autocannon`](https://github.com/mcollina/autocannon) are not fast enough. We recommend one of the following:
+  - [`bombardier`](https://github.com/codesenberg/bombardier)
+  - [`oha`](https://github.com/hatoo/oha)
+  - [`http_load_test`](https://github.com/uNetworking/uSockets/blob/master/examples/http_load_test.c)
+- For benchmarking scripts or CLI commands, we recommend [`hyperfine`](https://github.com/sharkdp/hyperfine).
 
 ## Measuring memory usage
 
@@ -37,128 +33,130 @@ Bun has two heaps: one for the JavaScript runtime, and one for everything else.
 
 The `bun:jsc` module exposes a few functions for measuring memory usage:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import { heapStats } from "bun:jsc";
 console.log(heapStats());
 ```
 
 <Accordion title="View example statistics">
-  ```ts expandable icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  {
-    heapSize: 1657575,
-    heapCapacity: 2872775,
-    extraMemorySize: 598199,
-    objectCount: 13790,
-    protectedObjectCount: 62,
-    globalObjectCount: 1,
-    protectedGlobalObjectCount: 1,
-    // A count of every object type in the heap
-    objectTypeCounts: {
-      CallbackObject: 25,
-      FunctionExecutable: 2078,
-      AsyncGeneratorFunction: 2,
-      'RegExp String Iterator': 1,
-      FunctionCodeBlock: 188,
-      ModuleProgramExecutable: 13,
-      String: 1,
-      UnlinkedModuleProgramCodeBlock: 13,
-      JSON: 1,
-      AsyncGenerator: 1,
-      Symbol: 1,
-      GetterSetter: 68,
-      ImportMeta: 10,
-      DOMAttributeGetterSetter: 1,
-      UnlinkedFunctionCodeBlock: 174,
-      RegExp: 52,
-      ModuleLoader: 1,
-      Intl: 1,
-      WeakMap: 4,
-      Generator: 2,
-      PropertyTable: 95,
-      'Array Iterator': 1,
-      JSLexicalEnvironment: 75,
-      UnlinkedFunctionExecutable: 2067,
-      WeakSet: 1,
-      console: 1,
-      Map: 23,
-      SparseArrayValueMap: 14,
-      StructureChain: 19,
-      Set: 18,
-      'String Iterator': 1,
-      FunctionRareData: 3,
-      JSGlobalLexicalEnvironment: 1,
-      Object: 481,
-      BigInt: 2,
-      StructureRareData: 55,
-      Array: 179,
-      AbortController: 2,
-      ModuleNamespaceObject: 11,
-      ShadowRealm: 1,
-      'Immutable Butterfly': 103,
-      Primordials: 1,
-      'Set Iterator': 1,
-      JSGlobalProxy: 1,
-      AsyncFromSyncIterator: 1,
-      ModuleRecord: 13,
-      FinalizationRegistry: 1,
-      AsyncIterator: 1,
-      InternalPromise: 22,
-      Iterator: 1,
-      CustomGetterSetter: 65,
-      Promise: 19,
-      WeakRef: 1,
-      InternalPromisePrototype: 1,
-      Function: 2381,
-      AsyncFunction: 2,
-      GlobalObject: 1,
-      ArrayBuffer: 2,
-      Boolean: 1,
-      Math: 1,
-      CallbackConstructor: 1,
-      Error: 2,
-      JSModuleEnvironment: 13,
-      WebAssembly: 1,
-      HashMapBucket: 300,
-      Callee: 3,
-      symbol: 37,
-      string: 2484,
-      Performance: 1,
-      ModuleProgramCodeBlock: 12,
-      JSSourceCode: 13,
-      JSPropertyNameEnumerator: 3,
-      NativeExecutable: 290,
-      Number: 1,
-      Structure: 1550,
-      SymbolTable: 108,
-      GeneratorFunction: 2,
-      'Map Iterator': 1
-    },
-    protectedObjectTypeCounts: {
-      CallbackConstructor: 1,
-      BigInt: 1,
-      RegExp: 2,
-      GlobalObject: 1,
-      UnlinkedModuleProgramCodeBlock: 13,
-      HashMapBucket: 2,
-      Structure: 41,
-      JSPropertyNameEnumerator: 1
-    }
+
+```ts expandable icon="/icons/typescript.svg"
+{
+  heapSize: 1657575,
+  heapCapacity: 2872775,
+  extraMemorySize: 598199,
+  objectCount: 13790,
+  protectedObjectCount: 62,
+  globalObjectCount: 1,
+  protectedGlobalObjectCount: 1,
+  // A count of every object type in the heap
+  objectTypeCounts: {
+    CallbackObject: 25,
+    FunctionExecutable: 2078,
+    AsyncGeneratorFunction: 2,
+    'RegExp String Iterator': 1,
+    FunctionCodeBlock: 188,
+    ModuleProgramExecutable: 13,
+    String: 1,
+    UnlinkedModuleProgramCodeBlock: 13,
+    JSON: 1,
+    AsyncGenerator: 1,
+    Symbol: 1,
+    GetterSetter: 68,
+    ImportMeta: 10,
+    DOMAttributeGetterSetter: 1,
+    UnlinkedFunctionCodeBlock: 174,
+    RegExp: 52,
+    ModuleLoader: 1,
+    Intl: 1,
+    WeakMap: 4,
+    Generator: 2,
+    PropertyTable: 95,
+    'Array Iterator': 1,
+    JSLexicalEnvironment: 75,
+    UnlinkedFunctionExecutable: 2067,
+    WeakSet: 1,
+    console: 1,
+    Map: 23,
+    SparseArrayValueMap: 14,
+    StructureChain: 19,
+    Set: 18,
+    'String Iterator': 1,
+    FunctionRareData: 3,
+    JSGlobalLexicalEnvironment: 1,
+    Object: 481,
+    BigInt: 2,
+    StructureRareData: 55,
+    Array: 179,
+    AbortController: 2,
+    ModuleNamespaceObject: 11,
+    ShadowRealm: 1,
+    'Immutable Butterfly': 103,
+    Primordials: 1,
+    'Set Iterator': 1,
+    JSGlobalProxy: 1,
+    AsyncFromSyncIterator: 1,
+    ModuleRecord: 13,
+    FinalizationRegistry: 1,
+    AsyncIterator: 1,
+    InternalPromise: 22,
+    Iterator: 1,
+    CustomGetterSetter: 65,
+    Promise: 19,
+    WeakRef: 1,
+    InternalPromisePrototype: 1,
+    Function: 2381,
+    AsyncFunction: 2,
+    GlobalObject: 1,
+    ArrayBuffer: 2,
+    Boolean: 1,
+    Math: 1,
+    CallbackConstructor: 1,
+    Error: 2,
+    JSModuleEnvironment: 13,
+    WebAssembly: 1,
+    HashMapBucket: 300,
+    Callee: 3,
+    symbol: 37,
+    string: 2484,
+    Performance: 1,
+    ModuleProgramCodeBlock: 12,
+    JSSourceCode: 13,
+    JSPropertyNameEnumerator: 3,
+    NativeExecutable: 290,
+    Number: 1,
+    Structure: 1550,
+    SymbolTable: 108,
+    GeneratorFunction: 2,
+    'Map Iterator': 1
+  },
+  protectedObjectTypeCounts: {
+    CallbackConstructor: 1,
+    BigInt: 1,
+    RegExp: 2,
+    GlobalObject: 1,
+    UnlinkedModuleProgramCodeBlock: 13,
+    HashMapBucket: 2,
+    Structure: 41,
+    JSPropertyNameEnumerator: 1
   }
-  ```
+}
+```
+
 </Accordion>
 
 JavaScript is a garbage-collected language, not reference counted. It's normal and correct for objects to not be freed immediately in all cases, though it's not normal for objects to never be freed.
 
 To force garbage collection to run manually:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 Bun.gc(true); // synchronous
 Bun.gc(false); // asynchronous
 ```
 
 Heap snapshots show which objects are not being freed. Use `Bun.generateHeapSnapshot()` to take a heap snapshot, then view it with Safari or WebKit GTK developer tools. To generate a heap snapshot:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import { generateHeapSnapshot } from "bun";
 
 const snapshot = generateHeapSnapshot();
@@ -173,26 +171,33 @@ To view the snapshot, open the `heap.json` file in Safari's Developer Tools (or 
 4. Click "Import" and select your heap snapshot JSON
 
 <Frame>
-  <img src="https://user-images.githubusercontent.com/709451/204428943-ba999e8f-8984-4f23-97cb-b4e3e280363e.png" alt="Importing a heap snapshot" />
+  <img
+    src="https://user-images.githubusercontent.com/709451/204428943-ba999e8f-8984-4f23-97cb-b4e3e280363e.png"
+    alt="Importing a heap snapshot"
+  />
 </Frame>
 
 Once imported, you should see something like this:
 
 <Frame>
-  <img alt="Viewing heap snapshot in Safari" src="https://user-images.githubusercontent.com/709451/204429337-b0d8935f-3509-4071-b991-217794d1fb27.png" caption="Viewing heap snapshot in Safari Dev Tools" />
+  <img
+    alt="Viewing heap snapshot in Safari"
+    src="https://user-images.githubusercontent.com/709451/204429337-b0d8935f-3509-4071-b991-217794d1fb27.png"
+    caption="Viewing heap snapshot in Safari Dev Tools"
+  />
 </Frame>
 
-> The [web debugger](/docs/runtime/debugger#inspect) timeline also tracks the memory usage of the running debug session.
+> The [web debugger](/runtime/debugger#inspect) timeline also tracks the memory usage of the running debug session.
 
 ### Native heap stats
 
 Bun uses mimalloc for the other heap. To print a summary of non-JavaScript memory usage, call `Bun.unsafe.mimallocDump()`.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 Bun.unsafe.mimallocDump();
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 heap stats:    peak      total      freed    current       unit      count
   reserved:   64.0 MiB   64.0 MiB      0       64.0 MiB                        not all freed!
  committed:   64.0 MiB   64.0 MiB      0       64.0 MiB                        not all freed!
@@ -218,7 +223,7 @@ numa nodes:       1
 
 Profile JavaScript execution to identify performance bottlenecks with the `--cpu-prof` flag.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun --cpu-prof script.js
 ```
 
@@ -228,25 +233,25 @@ bun --cpu-prof script.js
 
 Use `--cpu-prof-md` to generate a markdown CPU profile, which is grep-friendly and designed for LLM analysis:
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun --cpu-prof-md script.js
 ```
 
 Combine `--cpu-prof` and `--cpu-prof-md` to generate both formats at once:
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun --cpu-prof --cpu-prof-md script.js
 ```
 
 You can also pass the flag through the `BUN_OPTIONS` environment variable:
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 BUN_OPTIONS="--cpu-prof-md" bun script.js
 ```
 
 ### Options
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun --cpu-prof --cpu-prof-name my-profile.cpuprofile script.js
 bun --cpu-prof --cpu-prof-dir ./profiles script.js
 ```
@@ -262,7 +267,7 @@ bun --cpu-prof --cpu-prof-dir ./profiles script.js
 
 Write a heap profile on exit to analyze memory usage and find memory leaks.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun --heap-prof script.js
 ```
 
@@ -278,7 +283,7 @@ which the harness and tooling key on).
 
 Use `--heap-prof-md` to generate a markdown heap profile for CLI analysis:
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun --heap-prof-md script.js
 ```
 
@@ -286,7 +291,7 @@ bun --heap-prof-md script.js
 
 ### Options
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun --heap-prof --heap-prof-name my-profile.heapprofile script.js
 bun --heap-prof --heap-prof-dir ./profiles script.js
 ```

@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/http/sse.md
+Downloaded: 2026-08-14T20:31:00.580Z
+-->
 
 # Server-Sent Events (SSE) with Bun
 
@@ -11,14 +12,14 @@ To implement an SSE endpoint in Bun, return a `Response` whose body is a streami
 <Note>
   `Bun.serve` closes idle connections after **10 seconds** by default. A quiet SSE stream counts as idle, so the
   examples below call `server.timeout(req, 0)` to disable the timeout for the stream. See
-  [`idleTimeout`](/docs/runtime/http/server#idletimeout) for details.
+  [`idleTimeout`](/runtime/http/server#idletimeout) for details.
 </Note>
 
 ## Using an async generator
 
 In Bun, `new Response` accepts an async generator function directly; this is usually the simplest way to write an SSE endpoint. Each `yield` flushes a chunk to the client, and if the client disconnects, the generator's `finally` block runs so you can clean up.
 
-```ts server.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts server.ts icon="/icons/typescript.svg"
 Bun.serve({
   port: 3000,
   routes: {
@@ -57,7 +58,7 @@ Bun.serve({
 
 If your events originate from callbacks (message brokers, timers, external pushes) rather than a linear `await` flow, a `ReadableStream` often fits better. When the client disconnects, Bun calls the stream's `cancel()` method automatically, so you can release any resources you set up in `start()`.
 
-```ts server.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts server.ts icon="/icons/typescript.svg"
 Bun.serve({
   port: 3000,
   routes: {

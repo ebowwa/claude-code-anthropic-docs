@@ -1,11 +1,7 @@
 <!--
 Source: https://bun.com/docs/runtime/yaml.md
-Downloaded: 2026-08-07T00:52:34.808Z
+Downloaded: 2026-08-14T20:31:00.553Z
 -->
-
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
 
 # YAML
 
@@ -13,17 +9,17 @@ Downloaded: 2026-08-07T00:52:34.808Z
 
 In Bun, YAML is a first-class citizen alongside JSON and TOML. You can:
 
-* Parse YAML strings with `Bun.YAML.parse`
-* `import` & `require` YAML files as modules at runtime (including hot reloading & watch mode support)
-* `import` & `require` YAML files in frontend apps with Bun's bundler
+- Parse YAML strings with `Bun.YAML.parse`
+- `import` & `require` YAML files as modules at runtime (including hot reloading & watch mode support)
+- `import` & `require` YAML files in frontend apps with Bun's bundler
 
-***
+---
 
 ## Conformance
 
 Bun's YAML parser, written in Rust, passes over 90% of the official YAML test suite and covers the vast majority of real-world use cases. We're working toward 100% conformance.
 
-***
+---
 
 ## Runtime API
 
@@ -31,7 +27,7 @@ Bun's YAML parser, written in Rust, passes over 90% of the official YAML test su
 
 Parse a YAML string into a JavaScript object.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import { YAML } from "bun";
 const text = `
 name: John Doe
@@ -57,7 +53,7 @@ console.log(data);
 
 When parsing YAML with multiple documents (separated by `---`), `Bun.YAML.parse()` returns an array:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const multiDoc = `
 ---
 name: Document 1
@@ -80,15 +76,15 @@ console.log(docs);
 
 Bun's YAML parser supports the full YAML 1.2 specification, including:
 
-* **Scalars**: strings, numbers, booleans, null values
-* **Collections**: sequences (arrays) and mappings (objects)
-* **Anchors and Aliases**: reusable nodes with `&` and `*`. Aliased collections share identity, and an alias may refer to a collection that contains it, so `Bun.YAML.parse` can return cyclic objects (YAML imported as a module cannot be cyclic).
-* **Tags**: type hints like `!!str`, `!!int`, `!!float`, `!!bool`, `!!null`
-* **Multi-line strings**: literal (`|`) and folded (`>`) scalars
-* **Comments**: using `#`
-* **Directives**: `%YAML` and `%TAG`
+- **Scalars**: strings, numbers, booleans, null values
+- **Collections**: sequences (arrays) and mappings (objects)
+- **Anchors and Aliases**: reusable nodes with `&` and `*`. Aliased collections share identity, and an alias may refer to a collection that contains it, so `Bun.YAML.parse` can return cyclic objects (YAML imported as a module cannot be cyclic).
+- **Tags**: type hints like `!!str`, `!!int`, `!!float`, `!!bool`, `!!null`
+- **Multi-line strings**: literal (`|`) and folded (`>`) scalars
+- **Comments**: using `#`
+- **Directives**: `%YAML` and `%TAG`
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const yaml = `
 # Employee record
 employee: &emp
@@ -121,7 +117,7 @@ const data = Bun.YAML.parse(yaml);
 
 `Bun.YAML.parse()` throws a `SyntaxError` if the YAML is invalid:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 try {
   Bun.YAML.parse("invalid: yaml: content:");
 } catch (error) {
@@ -129,7 +125,7 @@ try {
 }
 ```
 
-***
+---
 
 ## Module Import
 
@@ -137,7 +133,7 @@ try {
 
 Import YAML files directly as ES modules. Bun parses the content and exposes it as both default and named exports:
 
-```yaml config.yaml theme={"theme":{"light":"github-light","dark":"dracula"}}
+```yaml config.yaml
 database:
   host: localhost
   port: 5432
@@ -155,7 +151,7 @@ features:
 
 #### Default Import
 
-```ts app.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts app.ts icon="/icons/typescript.svg"
 import config from "./config.yaml";
 
 console.log(config.database.host); // "localhost"
@@ -166,7 +162,7 @@ console.log(config.redis.port); // 6379
 
 Top-level YAML properties are available as named imports:
 
-```ts app.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts app.ts icon="/icons/typescript.svg"
 import { database, redis, features } from "./config.yaml";
 
 console.log(database.host); // "localhost"
@@ -176,7 +172,7 @@ console.log(features.auth); // true
 
 Or combine both:
 
-```ts app.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts app.ts icon="/icons/typescript.svg"
 import config, { database, features } from "./config.yaml";
 
 // Use the full config object
@@ -192,7 +188,7 @@ if (features.rateLimit) {
 
 You can also `require` YAML files in CommonJS:
 
-```ts app.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts app.ts icon="/icons/typescript.svg"
 const config = require("./config.yaml");
 console.log(config.database.name); // "myapp"
 
@@ -201,7 +197,7 @@ const { database, redis } = require("./config.yaml");
 console.log(database.port); // 5432
 ```
 
-***
+---
 
 ## Hot Reloading with YAML
 
@@ -209,7 +205,7 @@ When you run your application with `bun --hot`, Bun detects changes to YAML file
 
 ### Configuration Hot Reloading
 
-```yaml config.yaml theme={"theme":{"light":"github-light","dark":"dracula"}}
+```yaml config.yaml
 server:
   port: 3000
   host: localhost
@@ -219,7 +215,7 @@ features:
   verbose: false
 ```
 
-```ts server.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts server.ts icon="/icons/typescript.svg"
 import { server, features } from "./config.yaml";
 
 console.log(`Starting server on ${server.host}:${server.port}`);
@@ -243,13 +239,13 @@ Bun.serve({
 
 Run with hot reloading:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun --hot server.ts
 ```
 
 Now when you modify `config.yaml`, the running application picks up the change: you can adjust settings or toggle feature flags during development without restarting.
 
-***
+---
 
 ## Configuration Management
 
@@ -257,7 +253,7 @@ Now when you modify `config.yaml`, the running application picks up the change: 
 
 One YAML file can hold configuration for several environments, sharing defaults with anchors:
 
-```yaml config.yaml theme={"theme":{"light":"github-light","dark":"dracula"}}
+```yaml config.yaml
 defaults: &defaults
   timeout: 5000
   retries: 3
@@ -296,7 +292,7 @@ production:
     pretty: false
 ```
 
-```ts app.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts app.ts icon="/icons/typescript.svg"
 import configs from "./config.yaml";
 
 const env = process.env.NODE_ENV || "development";
@@ -320,7 +316,7 @@ export default interpolateEnvVars(config);
 
 ### Feature Flags Configuration
 
-```yaml features.yaml theme={"theme":{"light":"github-light","dark":"dracula"}}
+```yaml features.yaml
 features:
   newDashboard:
     enabled: true
@@ -340,7 +336,7 @@ features:
     default: auto # auto, light, dark
 ```
 
-```ts feature-flags.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts feature-flags.ts icon="/icons/typescript.svg"
 import { features } from "./features.yaml";
 
 export function isFeatureEnabled(featureName: string, userEmail?: string): boolean {
@@ -376,7 +372,7 @@ if (isFeatureEnabled("newDashboard", user.email)) {
 
 ### Database Configuration
 
-```yaml database.yaml icon="yaml" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```yaml database.yaml icon="yaml"
 connections:
   primary:
     type: postgres
@@ -412,7 +408,7 @@ seeds:
   directory: ./seeds
 ```
 
-```ts db.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts db.ts icon="/icons/typescript.svg"
 import { connections, migrations } from "./database.yaml";
 import { createConnection } from "./database-driver";
 
@@ -442,21 +438,21 @@ if (parseConfig(migrations).autoRun === "true") {
 
 When you bundle an application that imports YAML files, Bun parses the YAML at build time and includes it as a JavaScript module:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun build app.ts --outdir=dist
 ```
 
 Parsing at build time means:
 
-* No runtime YAML parsing overhead in production
-* Smaller bundle sizes
-* Tree shaking of unused configuration (named imports)
+- No runtime YAML parsing overhead in production
+- Smaller bundle sizes
+- Tree shaking of unused configuration (named imports)
 
 ### Dynamic Imports
 
 Dynamically import YAML files to load configuration on demand:
 
-```ts Load configuration based on environment theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts Load configuration based on environment
 const env = process.env.NODE_ENV || "development";
 const { default: config } = await import(`./configs/${env}.yaml`);
 

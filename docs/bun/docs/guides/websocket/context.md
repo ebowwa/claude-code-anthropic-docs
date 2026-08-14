@@ -1,14 +1,15 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/websocket/context.md
+Downloaded: 2026-08-14T20:31:00.580Z
+-->
 
 # Set per-socket contextual data on a WebSocket
 
 A WebSocket server typically needs to store some identifying information or context for each connected client.
 
-With [Bun.serve()](/docs/runtime/http/websockets#contextual-data), set this "contextual data" by passing a `data` parameter to `server.upgrade()` when upgrading the connection.
+With [Bun.serve()](/runtime/http/websockets#contextual-data), set this "contextual data" by passing a `data` parameter to `server.upgrade()` when upgrading the connection.
 
-```ts server.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts server.ts icon="/icons/typescript.svg"
 Bun.serve({
   fetch(req, server) {
     const success = server.upgrade(req, {
@@ -35,11 +36,11 @@ Bun.serve({
 });
 ```
 
-***
+---
 
 It's common to read cookies/headers from the incoming request to identify the connecting client.
 
-```ts server.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts server.ts icon="/icons/typescript.svg"
 type WebSocketData = {
   createdAt: number;
   token: string;

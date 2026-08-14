@@ -1,27 +1,28 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/test/todo-tests.md
+Downloaded: 2026-08-14T20:31:00.588Z
+-->
 
 # Mark a test as a "todo" with the Bun test runner
 
 To remind yourself to write a test later, use the `test.todo` function. An implementation isn't required.
 
-```ts test.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts test.ts icon="/icons/typescript.svg"
 import { test, expect } from "bun:test";
 
 // write this later
 test.todo("unimplemented feature");
 ```
 
-***
+---
 
 The `bun test` output reports the number of `todo` tests.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun test
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 test.test.ts:
 ✓ add [0.03ms]
 ✓ multiply [0.02ms]
@@ -34,11 +35,11 @@ test.test.ts:
 Ran 3 tests across 1 file. [74.00ms]
 ```
 
-***
+---
 
 You can provide a test implementation.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import { test, expect } from "bun:test";
 
 test.todo("unimplemented feature", () => {
@@ -46,15 +47,15 @@ test.todo("unimplemented feature", () => {
 });
 ```
 
-***
+---
 
-Bun doesn't run the implementation unless you pass the `--todo` flag. With `--todo`, the test runs and is *expected to fail*. If a todo test passes, `bun test` returns a non-zero exit code.
+Bun doesn't run the implementation unless you pass the `--todo` flag. With `--todo`, the test runs and is _expected to fail_. If a todo test passes, `bun test` returns a non-zero exit code.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun test --todo
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 my.test.ts:
 ✗ unimplemented feature
   ^ this test is marked as todo but passes. Remove `.todo` if tested behavior now works
@@ -66,9 +67,9 @@ $ echo $?
 1 # this is the exit code of the previous command
 ```
 
-***
+---
 
 See also:
 
-* [Skip a test](/docs/guides/test/skip-tests)
-* [Writing tests](/docs/test/writing-tests)
+- [Skip a test](/guides/test/skip-tests)
+- [Writing tests](/test/writing-tests)

@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/pm/scopes-registries.md
+Downloaded: 2026-08-14T20:31:00.562Z
+-->
 
 # Scopes and registries
 
@@ -8,7 +9,7 @@
 
 The default registry is `registry.npmjs.org`. To change it globally, set it in `bunfig.toml`:
 
-```toml bunfig.toml icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml bunfig.toml icon="settings"
 [install]
 # set default registry as a string
 registry = "https://registry.npmjs.org"
@@ -20,7 +21,7 @@ registry = "https://username:password@registry.npmjs.org"
 
 To configure a private registry scoped to a particular organization:
 
-```toml bunfig.toml icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml bunfig.toml icon="settings"
 [install.scopes]
 # registry as string
 "@myorg1" = "https://username:password@registry.myorg.com/"
@@ -35,4 +36,4 @@ To configure a private registry scoped to a particular organization:
 
 ### `.npmrc`
 
-Bun also reads [`.npmrc`](/docs/pm/npmrc) files.
+Bun also reads [`.npmrc`](/pm/npmrc) files.

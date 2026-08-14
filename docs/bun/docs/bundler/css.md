@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/bundler/css.md
+Downloaded: 2026-08-14T20:31:00.563Z
+-->
 
 # CSS
 
@@ -8,10 +9,10 @@
 
 Bun's bundler has built-in support for CSS with the following features:
 
-* Transpiling modern/future features to work on all browsers (including vendor prefixing)
-* Minification
-* CSS Modules
-* Tailwind (through a native bundler plugin)
+- Transpiling modern/future features to work on all browsers (including vendor prefixing)
+- Minification
+- CSS Modules
+- Tailwind (through a native bundler plugin)
 
 ## Transpiling
 
@@ -25,11 +26,11 @@ Bun's CSS parser and bundler is a direct port of LightningCSS, with a bundling a
 
 By default, Bun's CSS bundler targets the following browsers:
 
-* ES2020
-* Edge 88+
-* Firefox 78+
-* Chrome 87+
-* Safari 14+
+- ES2020
+- Edge 88+
+- Firefox 78+
+- Chrome 87+
+- Safari 14+
 
 ## Syntax Lowering
 
@@ -37,7 +38,7 @@ By default, Bun's CSS bundler targets the following browsers:
 
 With CSS Nesting, you write child styles directly inside their parent blocks instead of repeating parent selectors across your CSS file.
 
-```scss title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```scss title="styles.css" icon="file-code"
 /* With nesting */
 .card {
   background: white;
@@ -56,7 +57,7 @@ With CSS Nesting, you write child styles directly inside their parent blocks ins
 
 Bun's CSS bundler automatically converts this nested syntax into traditional flat CSS that works in all browsers:
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 /* Compiled output */
 .card {
   background: white;
@@ -75,7 +76,7 @@ Bun's CSS bundler automatically converts this nested syntax into traditional fla
 
 You can also nest media queries and other at-rules inside selectors:
 
-```scss title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```scss title="styles.css" icon="file-code"
 .responsive-element {
   display: block;
 
@@ -87,7 +88,7 @@ You can also nest media queries and other at-rules inside selectors:
 
 This compiles to:
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 .responsive-element {
   display: block;
 }
@@ -103,7 +104,7 @@ This compiles to:
 
 The `color-mix()` function blends two colors at a given ratio in a chosen color space. Use it to create color variations without calculating the resulting values yourself.
 
-```scss title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```scss title="styles.css" icon="file-code"
 .button {
   /* Mix blue and red in the RGB color space with a 30/70 proportion */
   background-color: color-mix(in srgb, blue 30%, red);
@@ -117,7 +118,7 @@ The `color-mix()` function blends two colors at a given ratio in a chosen color 
 
 Bun's CSS bundler evaluates these color mixes at build time when all color values are known (not CSS variables), generating static color values that work in all browsers:
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 .button {
   /* Computed to the exact resulting color */
   background-color: #b31a1a;
@@ -132,7 +133,7 @@ Bun's CSS bundler evaluates these color mixes at build time when all color value
 
 Relative color syntax modifies individual components of an existing color. Adjust attributes like lightness, saturation, or individual channels without recalculating the entire color.
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 .theme-color {
   /* Start with a base color and increase lightness by 15% */
   --accent: lch(from purple calc(l + 15%) c h);
@@ -144,7 +145,7 @@ Relative color syntax modifies individual components of an existing color. Adjus
 
 Bun's CSS bundler computes these relative color modifications at build time (when not using CSS variables) and generates static color values for browser compatibility:
 
-```css theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css
 .theme-color {
   --accent: lch(69.32% 58.34 328.37);
   --subtle-blue: oklch(60.92% 0.112 240.01);
@@ -157,7 +158,7 @@ Use it for theme generation, accessible color variants, or color scales derived 
 
 Modern CSS supports the perceptually uniform color spaces LAB, LCH, OKLAB, and OKLCH, which can represent colors outside the standard RGB gamut.
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 .vibrant-element {
   /* A vibrant red that exceeds sRGB gamut boundaries */
   color: lab(55% 78 35);
@@ -169,7 +170,7 @@ Modern CSS supports the perceptually uniform color spaces LAB, LCH, OKLAB, and O
 
 Bun's CSS bundler converts these color formats to backwards-compatible alternatives for browsers that don't support them:
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 .vibrant-element {
   /* Fallback to closest RGB approximation */
   color: #ff0f52;
@@ -187,7 +188,7 @@ Bun's CSS bundler converts these color formats to backwards-compatible alternati
 
 The `color()` function specifies colors in predefined color spaces beyond traditional RGB, giving you access to wider color gamuts.
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 .vivid-element {
   /* Using the Display P3 color space for wider gamut colors */
   color: color(display-p3 1 0.1 0.3);
@@ -199,7 +200,7 @@ The `color()` function specifies colors in predefined color spaces beyond tradit
 
 For browsers that don't support these color spaces, Bun's CSS bundler adds RGB fallbacks:
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 .vivid-element {
   /* RGB fallback first for maximum compatibility */
   color: #fa1a4c;
@@ -215,7 +216,7 @@ For browsers that don't support these color spaces, Bun's CSS bundler adds RGB f
 
 The HWB (Hue, Whiteness, Blackness) color model expresses colors based on how much white or black is mixed with a pure hue. This makes tints and shades more direct to create than with RGB or HSL values.
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 .easy-theming {
   /* Pure cyan with no white or black added */
   --primary: hwb(180 0% 0%);
@@ -233,7 +234,7 @@ The HWB (Hue, Whiteness, Blackness) color model expresses colors based on how mu
 
 Bun's CSS bundler converts HWB colors to RGB for compatibility with all browsers:
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 .easy-theming {
   --primary: #00ffff;
   --primary-light: #33ffff;
@@ -246,7 +247,7 @@ Bun's CSS bundler converts HWB colors to RGB for compatibility with all browsers
 
 Modern CSS supports space-separated RGB and HSL values (no commas) and hex colors with an alpha channel.
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 .modern-styling {
   /* Space-separated RGB notation (no commas) */
   color: rgb(50 100 200);
@@ -264,7 +265,7 @@ Modern CSS supports space-separated RGB and HSL values (no commas) and hex color
 
 Bun's CSS bundler converts these formats for older browsers:
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 .modern-styling {
   /* Converted to comma format for older browsers */
   color: rgb(50, 100, 200);
@@ -283,7 +284,7 @@ Bun's CSS bundler converts these formats for older browsers:
 
 The `light-dark()` function takes two colors and applies one based on the current color scheme, so styles respect the user's system preference without media queries.
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 :root {
   /* Define color scheme support */
   color-scheme: light dark;
@@ -308,7 +309,7 @@ The `light-dark()` function takes two colors and applies one based on the curren
 
 For browsers that don't support `light-dark()`, Bun's CSS bundler converts it to CSS variables with fallbacks:
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 :root {
   --buncss-light: initial;
   --buncss-dark: ;
@@ -345,7 +346,7 @@ For browsers that don't support `light-dark()`, Bun's CSS bundler converts it to
 
 CSS logical properties define layout, spacing, and sizing relative to the document's writing mode and text direction rather than physical screen directions, so layouts adapt to different writing systems.
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 .multilingual-component {
   /* Margin that adapts to writing direction */
   margin-inline-start: 1rem;
@@ -364,7 +365,7 @@ CSS logical properties define layout, spacing, and sizing relative to the docume
 
 For browsers that don't fully support logical properties, Bun's CSS bundler compiles them to physical properties for each text direction:
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 /* For left-to-right languages */
 .multilingual-component:dir(ltr) {
   margin-left: 1rem;
@@ -392,7 +393,7 @@ If the `:dir()` selector isn't supported, Bun generates additional fallbacks.
 
 The `:dir()` pseudo-class styles elements based on their text direction (RTL or LTR), as determined by the document or explicit direction attributes. Use it to write direction-aware styles without JavaScript.
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 /* Apply different styles based on text direction */
 .nav-arrow:dir(ltr) {
   transform: rotate(0deg);
@@ -414,7 +415,7 @@ The `:dir()` pseudo-class styles elements based on their text direction (RTL or 
 
 For browsers that don't support the `:dir()` selector, Bun's CSS bundler converts it to the more widely supported `:lang()` selector with appropriate language mappings:
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 /* Converted to use language-based selectors as fallback */
 .nav-arrow:lang(en, fr, de, es, it, pt, nl) {
   transform: rotate(0deg);
@@ -439,7 +440,7 @@ If multiple arguments to `:lang()` aren't supported, Bun generates further fallb
 
 The `:lang()` pseudo-class targets elements based on their language. To group rules for related languages, pass multiple language codes to a single `:lang()`.
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 /* Typography adjustments for CJK languages */
 :lang(zh, ja, ko) {
   line-height: 1.8;
@@ -458,7 +459,7 @@ blockquote:lang(de, nl, da, sv) {
 
 For browsers that don't support multiple arguments in the `:lang()` selector, Bun's CSS bundler converts this syntax to the `:is()` selector with the same behavior:
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 /* Multiple languages grouped with :is() for better browser support */
 :is(:lang(zh), :lang(ja), :lang(ko)) {
   line-height: 1.8;
@@ -480,7 +481,7 @@ If needed, Bun can generate additional fallbacks for `:is()` as well.
 
 The `:is()` pseudo-class function (formerly `:matches()`) takes a selector list and matches if any selector in the list matches.
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 /* Instead of writing these separately */
 /* 
 .article h1,
@@ -503,7 +504,7 @@ The `:is()` pseudo-class function (formerly `:matches()`) takes a selector list 
 
 For browsers that don't support `:is()`, Bun's CSS bundler provides fallbacks using vendor-prefixed alternatives:
 
-```css theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css
 /* Fallback using -webkit-any */
 .article :-webkit-any(h1, h2, h3) {
   margin-top: 1.5em;
@@ -542,7 +543,7 @@ For browsers that don't support `:is()`, Bun's CSS bundler provides fallbacks us
 
 The `:not()` pseudo-class excludes elements that match a selector. The modern version accepts multiple arguments to exclude several patterns with one `:not()`.
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 /* Select all buttons except primary and secondary variants */
 button:not(.primary, .secondary) {
   background-color: #f5f5f5;
@@ -557,7 +558,7 @@ h2:not(.sidebar *, footer *) {
 
 For browsers that don't support multiple arguments in `:not()`, Bun's CSS bundler converts this syntax to a more compatible form with the same behavior:
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 /* Converted to use :not with :is() for compatibility */
 button:not(:is(.primary, .secondary)) {
   background-color: #f5f5f5;
@@ -571,7 +572,7 @@ h2:not(:is(.sidebar *, footer *)) {
 
 And if `:is()` isn't supported, Bun can generate further fallbacks:
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 /* Even more fallbacks for maximum compatibility */
 button:not(:-webkit-any(.primary, .secondary)) {
   background-color: #f5f5f5;
@@ -595,7 +596,7 @@ The converted selectors keep the specificity and behavior of the original.
 
 CSS includes standard math functions (`round()`, `mod()`, `rem()`, `abs()`, `sign()`), trigonometric functions (`sin()`, `cos()`, `tan()`, `asin()`, `acos()`, `atan()`, `atan2()`), and exponential functions (`pow()`, `sqrt()`, `exp()`, `log()`, `hypot()`).
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 .dynamic-sizing {
   /* Clamp a value between minimum and maximum */
   width: clamp(200px, 50%, 800px);
@@ -614,7 +615,7 @@ CSS includes standard math functions (`round()`, `mod()`, `rem()`, `abs()`, `sig
 
 Bun's CSS bundler evaluates these expressions at build time when all values are known constants (not variables):
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 .dynamic-sizing {
   width: clamp(200px, 50%, 800px);
   padding: 15px;
@@ -628,7 +629,7 @@ Bun's CSS bundler evaluates these expressions at build time when all values are 
 
 Media query range syntax expresses breakpoints with comparison operators (`<`, `>`, `<=`, `>=`) instead of the more verbose `min-` and `max-` prefixes.
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 /* Modern syntax with comparison operators */
 @media (width >= 768px) {
   .container {
@@ -653,7 +654,7 @@ Media query range syntax expresses breakpoints with comparison operators (`<`, `
 
 Bun's CSS bundler converts range queries to traditional media query syntax for compatibility with all browsers:
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 /* Converted to traditional min/max syntax */
 @media (min-width: 768px) {
   .container {
@@ -678,7 +679,7 @@ Bun's CSS bundler converts range queries to traditional media query syntax for c
 
 CSS has introduced several shorthand properties that combine multiple longhand properties.
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 /* Alignment shorthands */
 .flex-container {
   /* Shorthand for align-items and justify-items */
@@ -714,7 +715,7 @@ CSS has introduced several shorthand properties that combine multiple longhand p
 
 For browsers that don't support these shorthands, Bun converts them to their component longhand properties:
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 .flex-container {
   /* Expanded alignment properties */
   align-items: center;
@@ -753,7 +754,7 @@ For browsers that don't support these shorthands, Bun converts them to their com
 
 Double position gradient syntax specifies the same color at two adjacent positions to create a hard color stop: a sharp transition instead of a smooth fade. Use it for stripes, color bands, and other multi-color designs.
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 .striped-background {
   /* Creates a sharp transition from green to red at 30%-40% */
   background: linear-gradient(
@@ -782,7 +783,7 @@ Double position gradient syntax specifies the same color at two adjacent positio
 
 For browsers that don't support this syntax, Bun's CSS bundler converts it to the traditional format by duplicating color stops:
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 .striped-background {
   background: linear-gradient(
     to right,
@@ -815,7 +816,7 @@ For browsers that don't support this syntax, Bun's CSS bundler converts it to th
 
 The `system-ui` generic font family uses the device's native UI font.
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 .native-interface {
   /* Use the system's default UI font */
   font-family: system-ui;
@@ -829,7 +830,7 @@ The `system-ui` generic font family uses the device's native UI font.
 
 For browsers that don't support `system-ui`, Bun's CSS bundler expands it to a cross-platform font stack:
 
-```css title="styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.css" icon="file-code"
 .native-interface {
   /* Expanded to support all major platforms */
   font-family:
@@ -866,10 +867,10 @@ The expanded stack includes system fonts for macOS/iOS, Windows, Android, and Li
 
 Bun's bundler also supports CSS modules, with the following features:
 
-* Detecting CSS module files (`.module.css`) with no configuration
-* Composition (`composes` property)
-* Importing CSS modules into JSX/TSX
-* Warnings/errors for invalid usages of CSS modules
+- Detecting CSS module files (`.module.css`) with no configuration
+- Composition (`composes` property)
+- Importing CSS modules into JSX/TSX
+- Warnings/errors for invalid usages of CSS modules
 
 A CSS module is a CSS file (with the `.module.css` extension) where all class names and animations are scoped to the file. This helps you avoid class name collisions, as CSS declarations are globally scoped by default.
 
@@ -879,13 +880,13 @@ Bun's bundler transforms locally scoped class names into unique identifiers.
 
 Create a CSS file with the `.module.css` extension:
 
-```css title="styles.module.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.module.css" icon="file-code"
 .button {
   color: red;
 }
 ```
 
-```css title="other-styles.module.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="other-styles.module.css" icon="file-code"
 .button {
   color: blue;
 }
@@ -893,7 +894,7 @@ Create a CSS file with the `.module.css` extension:
 
 You can then import this file, for example into a TSX file:
 
-```tsx title="app.tsx" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```tsx title="app.tsx" icon="/icons/typescript.svg"
 import styles from "./styles.module.css";
 import otherStyles from "./other-styles.module.css";
 
@@ -909,7 +910,7 @@ export default function App() {
 
 Importing a CSS module gives you an object that maps each class name to its unique identifier:
 
-```ts title="app.tsx" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="app.tsx" icon="/icons/typescript.svg"
 import styles from "./styles.module.css";
 import otherStyles from "./other-styles.module.css";
 
@@ -919,7 +920,7 @@ console.log(otherStyles);
 
 This outputs:
 
-```ts title="app.tsx" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="app.tsx" icon="/icons/typescript.svg"
 {
   button: "button_123";
 }
@@ -937,7 +938,7 @@ CSS modules can compose class selectors together to reuse style rules across mul
 
 For example:
 
-```css title="styles.module.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.module.css" icon="file-code"
 .button {
   composes: background;
   color: red;
@@ -950,7 +951,7 @@ For example:
 
 This is the same as writing:
 
-```css title="styles.module.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.module.css" icon="file-code"
 .button {
   background-color: blue;
   color: red;
@@ -968,7 +969,7 @@ Two rules apply when using `composes`:
   only use `composes` on a simple selector with a single class name
 </Info>
 
-```css title="styles.module.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.module.css" icon="file-code"
 #button {
   /* Invalid! `#button` is not a class selector */
   composes: background;
@@ -985,13 +986,13 @@ Two rules apply when using `composes`:
 
 You can also compose from a separate CSS module file:
 
-```css title="background.module.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="background.module.css" icon="file-code"
 .background {
   background-color: blue;
 }
 ```
 
-```css title="styles.module.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="styles.module.css" icon="file-code"
 .button {
   composes: background from "./background.module.css";
   color: red;
@@ -999,7 +1000,8 @@ You can also compose from a separate CSS module file:
 ```
 
 <Warning>
-  When composing classes from separate files, make sure they do not contain the same properties.
+When composing classes from separate files, make sure they do not contain the same properties.
 
-  The CSS module spec says that composing classes from separate files with conflicting properties is undefined behavior: the output may differ and be unreliable.
+The CSS module spec says that composing classes from separate files with conflicting properties is undefined behavior: the output may differ and be unreliable.
+
 </Warning>

@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/runtime/hashing.md
+Downloaded: 2026-08-14T20:31:00.554Z
+-->
 
 # Hashing
 
@@ -11,13 +12,13 @@
   addition to the Bun-native APIs documented below.
 </Note>
 
-***
+---
 
 ## `Bun.password`
 
 `Bun.password` is a collection of utility functions for hashing and verifying passwords with various cryptographically secure algorithms.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const password = "super-secure-pa$$word";
 
 const hash = await Bun.password.hash(password);
@@ -29,7 +30,7 @@ const isMatch = await Bun.password.verify(password, hash);
 
 The second argument to `Bun.password.hash` is a params object that selects and configures the hashing algorithm.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const password = "super-secure-pa$$word";
 
 // use argon2 (default)
@@ -50,7 +51,7 @@ The algorithm used to create the hash is stored in the hash itself. When using `
 
 The `verify` function detects the algorithm from the input hash, whether PHC- or MCF-encoded, and uses the matching verification method.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const password = "super-secure-pa$$word";
 
 const hash = await Bun.password.hash(password, {
@@ -63,7 +64,7 @@ const isMatch = await Bun.password.verify(password, hash);
 
 Synchronous versions of all functions are also available. These functions are computationally expensive, so a blocking API can degrade application performance.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const password = "super-secure-pa$$word";
 
 const hash = Bun.password.hashSync(password, {
@@ -84,7 +85,7 @@ In the following [Modular Crypt Format](https://passlib.readthedocs.io/en/stable
 
 Input:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 await Bun.password.hash("hello", {
   algorithm: "bcrypt",
 });
@@ -92,20 +93,20 @@ await Bun.password.hash("hello", {
 
 Output:
 
-```sh theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh
 $2b$10$Lyj9kHYZtiyfxh2G60TEfeqs7xkkGiEFFDi3iJGc50ZG/XJ1sxIFi;
 ```
 
 The format is composed of:
 
-* `bcrypt`: `$2b`
-* `rounds`: `$10` - rounds (log2 of the actual number of rounds)
-* `salt`: `Lyj9kHYZtiyfxh2G60TEfe`
-* `hash`: `qs7xkkGiEFFDi3iJGc50ZG/XJ1sxIFi`
+- `bcrypt`: `$2b`
+- `rounds`: `$10` - rounds (log2 of the actual number of rounds)
+- `salt`: `Lyj9kHYZtiyfxh2G60TEfe`
+- `hash`: `qs7xkkGiEFFDi3iJGc50ZG/XJ1sxIFi`
 
 By default, the bcrypt library truncates passwords longer than 72 bytes. Instead of silently truncating, `Bun.password.hash` with the `bcrypt` algorithm hashes any password longer than 72 bytes with SHA-512 before passing it to bcrypt.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 await Bun.password.hash("hello".repeat(100), {
   algorithm: "bcrypt",
 });
@@ -117,7 +118,7 @@ In the following [PHC format](https://github.com/P-H-C/phc-string-format/blob/ma
 
 Input:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 await Bun.password.hash("hello", {
   algorithm: "argon2id",
 });
@@ -125,36 +126,36 @@ await Bun.password.hash("hello", {
 
 Output:
 
-```sh theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh
 $argon2id$v=19$m=65536,t=2,p=1$xXnlSvPh4ym5KYmxKAuuHVlDvy2QGHBNuI6bJJrRDOs$2YY6M48XmHn+s5NoBaL+ficzXajq2Yj8wut3r0vnrwI
 ```
 
 The format is composed of:
 
-* `algorithm`: `$argon2id`
-* `version`: `$v=19`
-* `memory cost`: `65536`
-* `iterations`: `t=2`
-* `parallelism`: `p=1`
-* `salt`: `$xXnlSvPh4ym5KYmxKAuuHVlDvy2QGHBNuI6bJJrRDOs`
-* `hash`: `$2YY6M48XmHn+s5NoBaL+ficzXajq2Yj8wut3r0vnrwI`
+- `algorithm`: `$argon2id`
+- `version`: `$v=19`
+- `memory cost`: `65536`
+- `iterations`: `t=2`
+- `parallelism`: `p=1`
+- `salt`: `$xXnlSvPh4ym5KYmxKAuuHVlDvy2QGHBNuI6bJJrRDOs`
+- `hash`: `$2YY6M48XmHn+s5NoBaL+ficzXajq2Yj8wut3r0vnrwI`
 
-***
+---
 
 ## `Bun.hash`
 
-`Bun.hash` is a collection of utilities for *non-cryptographic* hashing. Non-cryptographic hashing algorithms are optimized for speed of computation over collision-resistance or security.
+`Bun.hash` is a collection of utilities for _non-cryptographic_ hashing. Non-cryptographic hashing algorithms are optimized for speed of computation over collision-resistance or security.
 
 The standard `Bun.hash` function uses [Wyhash](https://github.com/wangyi-fudan/wyhash) to generate a 64-bit hash from an input of arbitrary size.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 Bun.hash("some data here");
 // 11562320457524636935n
 ```
 
 The input can be a string, `TypedArray`, `DataView`, `ArrayBuffer`, or `SharedArrayBuffer`.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const arr = new Uint8Array([1, 2, 3, 4]);
 
 Bun.hash("some data here");
@@ -165,14 +166,14 @@ Bun.hash(new DataView(arr.buffer));
 
 The second parameter is an optional integer seed. For 64-bit hashes, pass seeds above `Number.MAX_SAFE_INTEGER` as BigInt to avoid loss of precision.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 Bun.hash("some data here", 1234);
 // 15724820720172937558n
 ```
 
 Additional hashing algorithms are available as properties on `Bun.hash`. The API is the same for each; 32-bit hashes return a number and 64-bit hashes return a bigint.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 Bun.hash.wyhash("data", 1234); // equivalent to Bun.hash()
 Bun.hash.crc32("data", 1234);
 Bun.hash.adler32("data", 1234);
@@ -187,33 +188,33 @@ Bun.hash.murmur64v2("data", 1234);
 Bun.hash.rapidhash("data", 1234);
 ```
 
-***
+---
 
 ## `Bun.CryptoHasher`
 
 `Bun.CryptoHasher` incrementally computes a hash of string or binary data with a cryptographic hash algorithm. The following algorithms are supported:
 
-* `"blake2b256"`
-* `"blake2b512"`
-* `"blake2s256"`
-* `"md4"`
-* `"md5"`
-* `"ripemd160"`
-* `"sha1"`
-* `"sha224"`
-* `"sha256"`
-* `"sha384"`
-* `"sha512"`
-* `"sha512-224"`
-* `"sha512-256"`
-* `"sha3-224"`
-* `"sha3-256"`
-* `"sha3-384"`
-* `"sha3-512"`
-* `"shake128"`
-* `"shake256"`
+- `"blake2b256"`
+- `"blake2b512"`
+- `"blake2s256"`
+- `"md4"`
+- `"md5"`
+- `"ripemd160"`
+- `"sha1"`
+- `"sha224"`
+- `"sha256"`
+- `"sha384"`
+- `"sha512"`
+- `"sha512-224"`
+- `"sha512-256"`
+- `"sha3-224"`
+- `"sha3-256"`
+- `"sha3-384"`
+- `"sha3-512"`
+- `"shake128"`
+- `"shake256"`
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const hasher = new Bun.CryptoHasher("sha256");
 hasher.update("hello world");
 hasher.digest();
@@ -222,7 +223,7 @@ hasher.digest();
 
 Feed data to the hasher incrementally with `.update()`, which accepts `string`, `TypedArray`, and `ArrayBuffer`.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const hasher = new Bun.CryptoHasher("sha256");
 
 hasher.update("hello world");
@@ -238,7 +239,7 @@ For strings, an optional second parameter specifies the encoding (default `'utf-
 | Character encodings        | `"utf8"` `"utf-8"` `"utf16le"` `"latin1"`   |
 | Legacy character encodings | `"ascii"` `"binary"` `"ucs2"` `"ucs-2"`     |
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 hasher.update("hello world"); // defaults to utf8
 hasher.update("hello world", "hex");
 hasher.update("hello world", "base64");
@@ -247,7 +248,7 @@ hasher.update("hello world", "latin1");
 
 Once all the data is fed in, compute the final hash with `.digest()`. By default, this method returns a `Uint8Array` containing the hash.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const hasher = new Bun.CryptoHasher("sha256");
 hasher.update("hello world");
 
@@ -257,7 +258,7 @@ hasher.digest();
 
 To get the hash as a string, pass an encoding to `.digest()`:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 hasher.digest("base64");
 // => "uU0nuZNNPgilLlLX2n2r+sSE7+N6U4DukIj3rOLvzek="
 
@@ -267,7 +268,7 @@ hasher.digest("hex");
 
 Alternatively, `.digest()` can write the hash into an existing `TypedArray` instead of allocating a new one.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const arr = new Uint8Array(32);
 
 hasher.digest(arr);
@@ -280,7 +281,7 @@ console.log(arr);
 
 `Bun.CryptoHasher` can compute HMAC digests. Pass the key to the constructor.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const hasher = new Bun.CryptoHasher("sha256", "secret-key");
 hasher.update("hello world");
 console.log(hasher.digest("hex"));
@@ -289,28 +290,28 @@ console.log(hasher.digest("hex"));
 
 HMAC supports a more limited set of algorithms:
 
-* `"blake2b256"`
-* `"blake2b512"`
-* `"md4"`
-* `"md5"`
-* `"ripemd160"`
-* `"sha1"`
-* `"sha224"`
-* `"sha256"`
-* `"sha384"`
-* `"sha512"`
-* `"sha512-224"`
-* `"sha512-256"`
-* `"sha3-224"`
-* `"sha3-256"`
-* `"sha3-384"`
-* `"sha3-512"`
+- `"blake2b256"`
+- `"blake2b512"`
+- `"md4"`
+- `"md5"`
+- `"ripemd160"`
+- `"sha1"`
+- `"sha224"`
+- `"sha256"`
+- `"sha384"`
+- `"sha512"`
+- `"sha512-224"`
+- `"sha512-256"`
+- `"sha3-224"`
+- `"sha3-256"`
+- `"sha3-384"`
+- `"sha3-512"`
 
 Unlike the non-HMAC `Bun.CryptoHasher`, the HMAC `Bun.CryptoHasher` instance is not reset after `.digest()` is called, and using the same instance again throws an error.
 
 Other methods like `.copy()` and `.update()` are supported (as long as it's before `.digest()`), but methods like `.digest()` that finalize the hasher are not.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const hasher = new Bun.CryptoHasher("sha256", "secret-key");
 hasher.update("hello world");
 

@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/deployment/google-cloud-run.md
+Downloaded: 2026-08-14T20:31:00.569Z
+-->
 
 # Deploy a Bun application on Google Cloud Run
 
@@ -9,176 +10,182 @@
 This guide deploys a Bun HTTP server to Google Cloud Run using a `Dockerfile`.
 
 <Note>
-  Before continuing, make sure you have:
+	Before continuing, make sure you have:
 
-  * A Bun application ready for deployment
-  * A [Google Cloud account](https://cloud.google.com/) with billing enabled
-  * [Google Cloud CLI](https://cloud.google.com/sdk/docs/install) installed and configured
+    - A Bun application ready for deployment
+    - A [Google Cloud account](https://cloud.google.com/) with billing enabled
+    - [Google Cloud CLI](https://cloud.google.com/sdk/docs/install) installed and configured
+
 </Note>
 
-***
+---
 
-<Steps>
-  <Step title={<span>Initialize <code>gcloud</code> by select/creating a project</span>}>
-    Make sure that you've initialized the Google Cloud CLI. `gcloud init` logs you in and prompts you to either select an existing project or create a new one.
+<Steps> 
+<Step title={<span>Initialize <code>gcloud</code> by select/creating a project</span>}>
 
-    For more help with the Google Cloud CLI, see the [official documentation](https://docs.cloud.google.com/sdk/gcloud/reference/init).
+Make sure that you've initialized the Google Cloud CLI. `gcloud init` logs you in and prompts you to either select an existing project or create a new one.
 
-    ```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-    gcloud init
-    ```
+For more help with the Google Cloud CLI, see the [official documentation](https://docs.cloud.google.com/sdk/gcloud/reference/init).
 
-    ```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
-    Welcome! This command will take you through the configuration of gcloud.
+```bash terminal icon="terminal"
+gcloud init
+```
 
-    You must sign in to continue. Would you like to sign in (Y/n)? Y
-    You are signed in as [email@example.com].
+```txt
+Welcome! This command will take you through the configuration of gcloud.
 
-    Pick cloud project to use:
-     [1] existing-bun-app-1234
-     [2] Enter a project ID
-     [3] Create a new project
-    Please enter numeric choice or text value (must exactly match list item): 3
+You must sign in to continue. Would you like to sign in (Y/n)? Y
+You are signed in as [email@example.com].
 
-    Enter a Project ID. my-bun-app
-    Your current project has been set to: [my-bun-app]
+Pick cloud project to use:
+ [1] existing-bun-app-1234
+ [2] Enter a project ID
+ [3] Create a new project
+Please enter numeric choice or text value (must exactly match list item): 3
 
-    The Google Cloud CLI is configured and ready to use!
-    ```
-  </Step>
+Enter a Project ID. my-bun-app
+Your current project has been set to: [my-bun-app]
 
-  <Step title="(Optional) Store your project info in environment variables">
-    Set variables for your project ID and number so they're easier to reuse in the following steps.
+The Google Cloud CLI is configured and ready to use!
+```
 
-    ```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-    PROJECT_ID=$(gcloud projects list --format='value(projectId)' --filter='name="my bun app"')
-    PROJECT_NUMBER=$(gcloud projects list --format='value(projectNumber)' --filter='name="my bun app"')
+</Step>
+<Step title="(Optional) Store your project info in environment variables">
+Set variables for your project ID and number so they're easier to reuse in the following steps.
 
-    echo $PROJECT_ID $PROJECT_NUMBER
-    ```
+```bash terminal icon="terminal"
+PROJECT_ID=$(gcloud projects list --format='value(projectId)' --filter='name="my bun app"')
+PROJECT_NUMBER=$(gcloud projects list --format='value(projectNumber)' --filter='name="my bun app"')
 
-    ```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
-    my-bun-app-... [PROJECT_NUMBER]
-    ```
-  </Step>
+echo $PROJECT_ID $PROJECT_NUMBER
+```
 
-  <Step title="Link a billing account">
-    List your available billing accounts and link one to your project:
+```txt
+my-bun-app-... [PROJECT_NUMBER]
+```
 
-    ```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-    gcloud billing accounts list
-    ```
+</Step> 
+<Step title="Link a billing account">
+List your available billing accounts and link one to your project:
 
-    ```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
-    ACCOUNT_ID            NAME                OPEN  MASTER_ACCOUNT_ID
-    [BILLING_ACCOUNT_ID]  My Billing Account  True
-    ```
+```bash terminal icon="terminal"
+gcloud billing accounts list
+```
 
-    Link your billing account to your project. Replace `[BILLING_ACCOUNT_ID]` with the ID of your billing account.
+```txt
+ACCOUNT_ID            NAME                OPEN  MASTER_ACCOUNT_ID
+[BILLING_ACCOUNT_ID]  My Billing Account  True
+```
 
-    ```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-    gcloud billing projects link $PROJECT_ID --billing-account=[BILLING_ACCOUNT_ID]
-    ```
+Link your billing account to your project. Replace `[BILLING_ACCOUNT_ID]` with the ID of your billing account.
 
-    ```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
-    billingAccountName: billingAccounts/[BILLING_ACCOUNT_ID]
-    billingEnabled: true
-    name: projects/my-bun-app-.../billingInfo
-    projectId: my-bun-app-...
-    ```
-  </Step>
+```bash terminal icon="terminal"
+gcloud billing projects link $PROJECT_ID --billing-account=[BILLING_ACCOUNT_ID]
+```
 
-  <Step title="Enable APIs and configure IAM roles">
-    Activate the necessary services and grant Cloud Build permissions:
+```txt
+billingAccountName: billingAccounts/[BILLING_ACCOUNT_ID]
+billingEnabled: true
+name: projects/my-bun-app-.../billingInfo
+projectId: my-bun-app-...
+```
 
-    ```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-    gcloud services enable run.googleapis.com cloudbuild.googleapis.com
-    gcloud projects add-iam-policy-binding $PROJECT_ID \
-      --member=serviceAccount:$PROJECT_NUMBER-compute@developer.gserviceaccount.com \
-      --role=roles/run.builder
-    ```
+</Step> 
+<Step title="Enable APIs and configure IAM roles"> 
+Activate the necessary services and grant Cloud Build permissions:
 
-    <Note>
-      These commands enable Cloud Run (`run.googleapis.com`) and Cloud Build (`cloudbuild.googleapis.com`), which are required for deploying from source. Cloud Run runs your containerized app, while Cloud Build builds and packages it.
+```bash terminal icon="terminal"
+gcloud services enable run.googleapis.com cloudbuild.googleapis.com
+gcloud projects add-iam-policy-binding $PROJECT_ID \
+  --member=serviceAccount:$PROJECT_NUMBER-compute@developer.gserviceaccount.com \
+  --role=roles/run.builder
+```
 
-      The IAM binding grants the Compute Engine service account (`$PROJECT_NUMBER-compute@developer.gserviceaccount.com`) permission to build and deploy images on your behalf.
-    </Note>
-  </Step>
+<Note>  
+These commands enable Cloud Run (`run.googleapis.com`) and Cloud Build (`cloudbuild.googleapis.com`), which are required for deploying from source. Cloud Run runs your containerized app, while Cloud Build builds and packages it.
 
-  <Step title="Add a Dockerfile">
-    Create a new `Dockerfile` in the root of your project. This file contains the instructions to initialize the container, copy your local project files into it, install dependencies, and start the application.
+The IAM binding grants the Compute Engine service account (`$PROJECT_NUMBER-compute@developer.gserviceaccount.com`) permission to build and deploy images on your behalf.
 
-    ```docker Dockerfile icon="docker" theme={"theme":{"light":"github-light","dark":"dracula"}}
-    # Use the official Bun image to run the application
-    FROM oven/bun:latest
+</Note>
 
-    # Copy the package.json and bun.lock into the container
-    COPY package.json bun.lock ./
+</Step>
+<Step title="Add a Dockerfile">
+Create a new `Dockerfile` in the root of your project. This file contains the instructions to initialize the container, copy your local project files into it, install dependencies, and start the application.
 
-    # Install the dependencies
-    RUN bun install --production --frozen-lockfile
+```docker Dockerfile icon="docker"
+# Use the official Bun image to run the application
+FROM oven/bun:latest
 
-    # Copy the rest of the application into the container
-    COPY . .
+# Copy the package.json and bun.lock into the container
+COPY package.json bun.lock ./
 
-    # Run the application
-    CMD ["bun", "index.ts"]
-    ```
+# Install the dependencies
+RUN bun install --production --frozen-lockfile
 
-    <Note>
-      Make sure that the start command corresponds to your application's entry point. This can also be `CMD ["bun", "run", "start"]` if you have a start script in your `package.json`.
+# Copy the rest of the application into the container
+COPY . .
 
-      If your app doesn't have dependencies, you can omit the `RUN bun install --production --frozen-lockfile` line.
-    </Note>
+# Run the application
+CMD ["bun", "index.ts"]
+```
 
-    Create a new `.dockerignore` file in the root of your project. It lists the files and directories to *exclude* from the container image, such as `node_modules`, which keeps builds faster and smaller:
+<Note>
+  Make sure that the start command corresponds to your application's entry point. This can also be `CMD ["bun", "run", "start"]` if you have a start script in your `package.json`.
 
-    ```docker .dockerignore icon="Docker" theme={"theme":{"light":"github-light","dark":"dracula"}}
-    node_modules
-    Dockerfile*
-    .dockerignore
-    .git
-    .gitignore
-    README.md
-    LICENSE
-    .vscode
-    .env
-    # Any other files or directories you want to exclude
-    ```
-  </Step>
+If your app doesn't have dependencies, you can omit the `RUN bun install --production --frozen-lockfile` line.
 
-  <Step title="Deploy your service">
-    Make sure you're in the directory containing your `Dockerfile`, then deploy directly from your local source:
+</Note>
 
-    <Note>Update the `--region` flag to your preferred region, or omit it to select a region interactively.</Note>
+Create a new `.dockerignore` file in the root of your project. It lists the files and directories to _exclude_ from the container image, such as `node_modules`, which keeps builds faster and smaller:
 
-    ```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-    gcloud run deploy my-bun-app --source . --region=us-west1 --allow-unauthenticated
-    ```
+```docker .dockerignore icon="Docker"
+node_modules
+Dockerfile*
+.dockerignore
+.git
+.gitignore
+README.md
+LICENSE
+.vscode
+.env
+# Any other files or directories you want to exclude
+```
 
-    ```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
-    Deploying from source requires an Artifact Registry Docker repository to store built containers. A repository named
-    [cloud-run-source-deploy] in region [us-west1] will be created.
+</Step>
+<Step title="Deploy your service"> 
+Make sure you're in the directory containing your `Dockerfile`, then deploy directly from your local source:
 
-    Do you want to continue (Y/n)? Y
+<Note>Update the `--region` flag to your preferred region, or omit it to select a region interactively.</Note>
 
-    Building using Dockerfile and deploying container to Cloud Run service [my-bun-app] in project [my-bun-app-...] region [us-west1]
-    ✓ Building and deploying... Done.
-      ✓ Validating Service...
-      ✓ Uploading sources...
-      ✓ Building Container... Logs are available at [https://console.cloud.google.com/cloud-build/builds...].
-      ✓ Creating Revision...
-      ✓ Routing traffic...
-      ✓ Setting IAM Policy...
-    Done.
-    Service [my-bun-app] revision [my-bun-app-...] has been deployed and is serving 100 percent of traffic.
-    Service URL: https://my-bun-app-....us-west1.run.app
-    ```
-  </Step>
+```bash terminal icon="terminal"
+gcloud run deploy my-bun-app --source . --region=us-west1 --allow-unauthenticated
+```
 
-  <Step title="Visit your live application">
-    Your Bun application is now live.
+```txt
+Deploying from source requires an Artifact Registry Docker repository to store built containers. A repository named
+[cloud-run-source-deploy] in region [us-west1] will be created.
 
-    Visit the Service URL (`https://my-bun-app-....us-west1.run.app`) to confirm everything works as expected.
-  </Step>
+Do you want to continue (Y/n)? Y
+
+Building using Dockerfile and deploying container to Cloud Run service [my-bun-app] in project [my-bun-app-...] region [us-west1]
+✓ Building and deploying... Done.
+  ✓ Validating Service...
+  ✓ Uploading sources...
+  ✓ Building Container... Logs are available at [https://console.cloud.google.com/cloud-build/builds...].
+  ✓ Creating Revision...
+  ✓ Routing traffic...
+  ✓ Setting IAM Policy...
+Done.
+Service [my-bun-app] revision [my-bun-app-...] has been deployed and is serving 100 percent of traffic.
+Service URL: https://my-bun-app-....us-west1.run.app
+```
+
+</Step>
+<Step title="Visit your live application">
+
+Your Bun application is now live.
+
+Visit the Service URL (`https://my-bun-app-....us-west1.run.app`) to confirm everything works as expected.
+
+</Step>
 </Steps>

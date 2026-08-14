@@ -1,11 +1,7 @@
 <!--
 Source: https://bun.com/docs/project/license.md
-Downloaded: 2026-08-13T20:42:17.481Z
+Downloaded: 2026-08-14T20:31:00.557Z
 -->
-
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
 
 # License
 
@@ -19,11 +15,11 @@ Bun statically links JavaScriptCore (and WebKit), which is LGPL-2 licensed. WebC
 
 > (1) If you statically link against an LGPL'd library, you must also provide your application in an object (not necessarily source) format, so that a user has the opportunity to modify the library and relink the application.
 
-Bun's patched version of WebKit lives at [https://github.com/oven-sh/webkit](https://github.com/oven-sh/webkit). To relink Bun with changes:
+Bun's patched version of WebKit lives at https://github.com/oven-sh/webkit. To relink Bun with changes:
 
-* `git clone https://github.com/oven-sh/WebKit vendor/WebKit`
-* `bun sync-webkit-source` (checks out the version pinned in `WEBKIT_VERSION` in `scripts/build/deps/webkit.ts`)
-* `bun run build:local`
+- `git clone https://github.com/oven-sh/WebKit vendor/WebKit`
+- `bun sync-webkit-source` (checks out the version pinned in `WEBKIT_VERSION` in `scripts/build/deps/webkit.ts`)
+- `bun run build:local`
 
 `bun run build:local` compiles JavaScriptCore, compiles Bun's `.cpp` bindings for JavaScriptCore (the object files that use JavaScriptCore), and outputs a new `bun` binary with your changes.
 
@@ -84,5 +80,5 @@ For compatibility, Bun embeds the following packages into its binary and injects
 
 ## Additional credits
 
-* Bun's JS transpiler, CSS lexer, and Node.js module resolver source code is a port of [@evanw](https://github.com/evanw)’s [esbuild](https://github.com/evanw/esbuild) project.
-* Credit to [@kipply](https://github.com/kipply) for the name "Bun".
+- Bun's JS transpiler, CSS lexer, and Node.js module resolver source code is a port of [@evanw](https://github.com/evanw)’s [esbuild](https://github.com/evanw/esbuild) project.
+- Credit to [@kipply](https://github.com/kipply) for the name "Bun".

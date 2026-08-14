@@ -1,49 +1,50 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/runtime/build-time-constants.md
+Downloaded: 2026-08-14T20:31:00.570Z
+-->
 
 # Build-time constants with --define
 
 Pass `--define` to `bun build` or `bun build --compile` to inject build-time constants into your application. Use it to embed metadata like build versions, timestamps, or configuration flags directly into your compiled executables.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun build --compile --define BUILD_VERSION='"1.2.3"' --define BUILD_TIME='"2024-01-15T10:30:00Z"' src/index.ts --outfile myapp
 ```
 
-***
+---
 
 ## Why use build-time constants?
 
 Build-time constants are embedded directly into your compiled code, making them:
 
-* **Zero runtime overhead** - No environment variable lookups or file reads
-* **Immutable** - Values are baked into the binary at compile time
-* **Optimizable** - Dead code elimination can remove unused branches
-* **Secure** - No external dependencies or configuration files to manage
+- **Zero runtime overhead** - No environment variable lookups or file reads
+- **Immutable** - Values are baked into the binary at compile time
+- **Optimizable** - Dead code elimination can remove unused branches
+- **Secure** - No external dependencies or configuration files to manage
 
 This is similar to `gcc -D` or `#define` in C/C++, but for JavaScript/TypeScript.
 
-***
+---
 
 ## Basic usage
 
 ### With `bun build`
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 # Bundle with build-time constants
 bun build --define BUILD_VERSION='"1.0.0"' --define NODE_ENV='"production"' src/index.ts --outdir ./dist
 ```
 
 ### With `bun build --compile`
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 # Compile to executable with build-time constants
 bun build --compile --define BUILD_VERSION='"1.0.0"' --define BUILD_TIME='"2024-01-15T10:30:00Z"' src/cli.ts --outfile mycli
 ```
 
 ### JavaScript API
 
-```ts build.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts build.ts icon="/icons/typescript.svg"
 await Bun.build({
   entrypoints: ["./src/index.ts"],
   outdir: "./dist",
@@ -55,7 +56,7 @@ await Bun.build({
 });
 ```
 
-***
+---
 
 ## Common use cases
 
@@ -64,35 +65,37 @@ await Bun.build({
 Embed version and build metadata directly into your executable:
 
 <CodeGroup>
-  ```ts src/version.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  // These constants are replaced at build time
-  declare const BUILD_VERSION: string;
-  declare const BUILD_TIME: string;
-  declare const GIT_COMMIT: string;
 
-  export function getVersion() {
-    return {
-      version: BUILD_VERSION,
-      buildTime: BUILD_TIME,
-      commit: GIT_COMMIT,
-    };
-  }
-  ```
+```ts src/version.ts icon="/icons/typescript.svg"
+// These constants are replaced at build time
+declare const BUILD_VERSION: string;
+declare const BUILD_TIME: string;
+declare const GIT_COMMIT: string;
 
-  ```sh Build command theme={"theme":{"light":"github-light","dark":"dracula"}}
-  bun build --compile \
-    --define BUILD_VERSION='"1.2.3"' \
-    --define BUILD_TIME='"2024-01-15T10:30:00Z"' \
-    --define GIT_COMMIT='"abc123"' \
-    src/cli.ts --outfile mycli
-  ```
+export function getVersion() {
+  return {
+    version: BUILD_VERSION,
+    buildTime: BUILD_TIME,
+    commit: GIT_COMMIT,
+  };
+}
+```
+
+```sh Build command
+bun build --compile \
+  --define BUILD_VERSION='"1.2.3"' \
+  --define BUILD_TIME='"2024-01-15T10:30:00Z"' \
+  --define GIT_COMMIT='"abc123"' \
+  src/cli.ts --outfile mycli
+```
+
 </CodeGroup>
 
 ### Feature flags
 
 Use build-time constants to enable/disable features:
 
-```ts src/version.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts src/version.ts icon="/icons/typescript.svg"
 // Replaced at build time
 declare const ENABLE_ANALYTICS: boolean;
 declare const ENABLE_DEBUG: boolean;
@@ -109,7 +112,7 @@ if (ENABLE_DEBUG) {
 }
 ```
 
-```sh theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh
 # Production build - analytics enabled, debug disabled
 bun build --compile --define ENABLE_ANALYTICS=true --define ENABLE_DEBUG=false src/app.ts --outfile app-prod
 
@@ -121,7 +124,7 @@ bun build --compile --define ENABLE_ANALYTICS=false --define ENABLE_DEBUG=true s
 
 Replace configuration objects at build time:
 
-```ts src/version.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts src/version.ts icon="/icons/typescript.svg"
 declare const CONFIG: {
   apiUrl: string;
   timeout: number;
@@ -134,11 +137,11 @@ const response = await fetch(CONFIG.apiUrl, {
 });
 ```
 
-```sh theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh
 bun build --compile --define 'CONFIG={"apiUrl":"https://api.example.com","timeout":5000,"retries":3}' src/app.ts --outfile app
 ```
 
-***
+---
 
 ## Advanced patterns
 
@@ -146,7 +149,7 @@ bun build --compile --define 'CONFIG={"apiUrl":"https://api.example.com","timeou
 
 Create different executables for different environments:
 
-```json theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json
 {
   "scripts": {
     "build:dev": "bun build --compile --define NODE_ENV='\"development\"' --define API_URL='\"http://localhost:3000\"' src/app.ts --outfile app-dev",
@@ -160,7 +163,7 @@ Create different executables for different environments:
 
 Generate build-time constants from shell commands:
 
-```sh theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh
 # Use git to get current commit and timestamp
 bun build --compile \
   --define BUILD_VERSION="\"$(git describe --tags --always)\"" \
@@ -173,7 +176,7 @@ bun build --compile \
 
 Create a build script that injects build metadata:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 // build.ts
 import { $ } from "bun";
 
@@ -194,7 +197,7 @@ await Bun.build({
 console.log(`Built with version ${version.trim()}`);
 ```
 
-***
+---
 
 ## Important considerations
 
@@ -202,7 +205,7 @@ console.log(`Built with version ${version.trim()}`);
 
 Values must be valid JSON. Bun parses each value and inlines it as a JavaScript expression:
 
-```sh theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh
 # ✅ Strings must be JSON-quoted
 --define VERSION='"1.0.0"'
 
@@ -226,7 +229,7 @@ Values must be valid JSON. Bun parses each value and inlines it as a JavaScript 
 
 Keys can be property access patterns, not just simple identifiers:
 
-```sh theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh
 # ✅ Replace process.env.NODE_ENV with "production"
 --define 'process.env.NODE_ENV="production"'
 
@@ -239,7 +242,7 @@ Keys can be property access patterns, not just simple identifiers:
 
 Use this to inline environment variables at build time:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 // Before compilation
 if (process.env.NODE_ENV === "production") {
   console.log("Production mode");
@@ -258,7 +261,7 @@ console.log("Production mode");
 
 For TypeScript projects, declare your constants to avoid type errors:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 // types/build-constants.d.ts
 declare const BUILD_VERSION: string;
 declare const BUILD_TIME: string;
@@ -270,7 +273,7 @@ declare const DEBUG: boolean;
 
 When building for multiple platforms, constants work the same way:
 
-```sh theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh
 # Linux
 bun build --compile --target=bun-linux-x64 --define PLATFORM='"linux"' src/app.ts --outfile app-linux
 
@@ -281,10 +284,10 @@ bun build --compile --target=bun-darwin-x64 --define PLATFORM='"darwin"' src/app
 bun build --compile --target=bun-windows-x64 --define PLATFORM='"windows"' src/app.ts --outfile app-windows.exe
 ```
 
-***
+---
 
 ## Related
 
-* [Define constants at runtime](/docs/guides/runtime/define-constant) - Using `--define` with `bun run`
-* [Building executables](/docs/bundler/executables) - Complete guide to `bun build --compile`
-* [Bundler API](/docs/bundler) - Full bundler documentation including `define` option
+- [Define constants at runtime](/guides/runtime/define-constant) - Using `--define` with `bun run`
+- [Building executables](/bundler/executables) - Complete guide to `bun build --compile`
+- [Bundler API](/bundler) - Full bundler documentation including `define` option

@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/mark-notifications-read.md
-Downloaded: 2026-08-07T00:52:23.804Z
+Downloaded: 2026-08-14T20:31:01.254Z
 -->
 
 > ## Documentation Index
@@ -14,7 +14,6 @@ cursor to mark everything up to and including that point. You can only
 mark your own notifications.
 
 
-<Badge color="gray" size="md">Request Weight: **2**</Badge>
 
 
 ## OpenAPI

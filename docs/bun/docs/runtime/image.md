@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/runtime/image.md
+Downloaded: 2026-08-14T20:31:00.554Z
+-->
 
 # Image
 
@@ -8,7 +9,7 @@
 
 `Bun.Image` is a chainable image pipeline for decoding, resizing, rotating, and re-encoding JPEG, PNG, WebP, HEIC, and AVIF — built on libjpeg-turbo, spng, libwebp, and SIMD geometry kernels, with zero npm dependencies and no native addon build step.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 await Bun.file("photo.jpg").image().resize(400, 400, { fit: "inside" }).webp({ quality: 80 }).write("thumb.webp");
 ```
 
@@ -18,7 +19,7 @@ The API is shaped after [Sharp](https://sharp.pixelplumbing.com/): construct fro
 
 The constructor accepts a path, bytes, or a `Blob` — including `Bun.file()` and `Bun.s3.file()`. `Blob#image()` is shorthand for `new Bun.Image(blob)`:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 new Bun.Image("./photo.jpg"); // file path
 new Bun.Image(buffer); // Buffer / ArrayBuffer / TypedArray
 new Bun.Image(Bun.file("photo.jpg")); // BunFile (read lazily, off-thread)
@@ -34,7 +35,7 @@ When passing a `TypedArray`/`ArrayBuffer`, don't mutate it while a terminal is p
 
 A second `options` argument guards against decompression bombs and controls EXIF handling:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 new Bun.Image(input, {
   // Reject if width*height > this. Checked after reading the header,
   // before allocating the pixel buffer. Default matches Sharp (~268 MP).
@@ -48,14 +49,14 @@ new Bun.Image(input, {
 
 Read `width`, `height`, and `format` without decoding pixel data:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const { width, height, format } = await new Bun.Image(input).metadata();
 // => { width: 1920, height: 1080, format: "jpeg" }
 ```
 
 ## Resize
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 img.resize(800); // width 800, keep aspect ratio
 img.resize(800, 600); // exactly 800×600 (stretch)
 img.resize(800, 600, { fit: "inside" }); // fit within 800×600
@@ -66,13 +67,13 @@ img.resize(800, 600, { filter: "mitchell" });
 | `fit`              | Behavior                                            |
 | ------------------ | --------------------------------------------------- |
 | `"fill"` (default) | Stretch to exactly `width × height`                 |
-| `"inside"`         | Preserve aspect ratio; result fits *within* the box |
+| `"inside"`         | Preserve aspect ratio; result fits _within_ the box |
 
 `filter` selects the resampling kernel. The default `"lanczos3"` is the right choice for photographs.
 
 | Filter                    | Use when                                         |
 | ------------------------- | ------------------------------------------------ |
-| `"lanczos3"` *(default)*  | General-purpose, sharpest for photos             |
+| `"lanczos3"` _(default)_  | General-purpose, sharpest for photos             |
 | `"lanczos2"`              | Slightly softer, fewer ringing artifacts         |
 | `"mitchell"`              | Smooth gradients; the classic bicubic compromise |
 | `"cubic"`                 | Catmull-Rom — sharper than Mitchell, can ring    |
@@ -85,7 +86,7 @@ When the source is a JPEG and the target is at most half the source size, decode
 
 ## Rotate · flip
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 img.rotate(90); // 90° clockwise (multiples of 90 only)
 img.flip(); // mirror vertically (about the x-axis)
 img.flop(); // mirror horizontally (about the y-axis)
@@ -93,7 +94,7 @@ img.flop(); // mirror horizontally (about the y-axis)
 
 ## Modulate
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 img.modulate({
   brightness: 1.2, // 1 = unchanged
   saturation: 0, // 0 = greyscale, 1 = unchanged, >1 = boost
@@ -104,7 +105,7 @@ img.modulate({
 
 Calling a format method sets the encode target; without one, the source format is reused.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 img.jpeg({ quality: 85 }); // 1–100, default 80
 img.png({ compressionLevel: 6 }); // zlib level 0–9
 img.png({ palette: true, colors: 64, dither: true }); // indexed PNG
@@ -120,7 +121,7 @@ img.avif({ quality: 60 }); // macOS / Windows only
 
 A pipeline does no work until one of these is awaited:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 await img.bytes(); // Uint8Array
 await img.buffer(); // Buffer
 await img.blob(); // Blob with .type set to the output MIME
@@ -134,26 +135,26 @@ await img.write(Bun.s3.file("bucket/out.webp"));
 
 ## Placeholders
 
-For a low-quality placeholder to inline in HTML before the real image loads, `.placeholder()` returns a [ThumbHash](https://evanw.github.io/thumbhash/)-rendered ≤32px blur as a `data:` URL — \~400–700 bytes, no client-side decoder needed:
+For a low-quality placeholder to inline in HTML before the real image loads, `.placeholder()` returns a [ThumbHash](https://evanw.github.io/thumbhash/)-rendered ≤32px blur as a `data:` URL — ~400–700 bytes, no client-side decoder needed:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const lqip = await Bun.file("hero.jpg").image().placeholder();
 // <img src={lqip} … /> — then swap to the real URL on load.
 ```
 
-For coarse-to-fine rendering of the image *itself*, encode a progressive JPEG:
+For coarse-to-fine rendering of the image _itself_, encode a progressive JPEG:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 img.jpeg({ progressive: true });
 ```
 
-After the first terminal resolves, `img.width` and `img.height` reflect the *output* dimensions (they're `-1` before).
+After the first terminal resolves, `img.width` and `img.height` reflect the _output_ dimensions (they're `-1` before).
 
 ## `Bun.serve` integration
 
 A `Bun.Image` pipeline is a valid `Response` body and sets `Content-Type` automatically. To keep the encode off the JS thread in a server handler, await a terminal first:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 Bun.serve({
   routes: {
     "/avatar/:id": async req => {
@@ -170,7 +171,7 @@ Passing the pipeline directly (`new Response(img)`) also works, but runs the enc
 
 ## Clipboard
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const img = Bun.Image.fromClipboard();
 if (img) {
   const png = await img.resize(800, 800, { fit: "inside" }).png().bytes();
@@ -183,21 +184,21 @@ For a passive "image in clipboard, press ⌘V" hint, poll `clipboardChangeCount(
 
 ## Platform backends
 
-|                        | Linux                            | macOS             | Windows      |
-| ---------------------- | -------------------------------- | ----------------- | ------------ |
-| JPEG / PNG / WebP      | libjpeg-turbo · spng · libwebp   | same              | same         |
-| BMP / GIF (decode)     | built-in                         | ImageIO           | WIC          |
+|                        | Linux                             | macOS             | Windows      |
+| ---------------------- | --------------------------------- | ----------------- | ------------ |
+| JPEG / PNG / WebP      | libjpeg-turbo · spng · libwebp    | same              | same         |
+| BMP / GIF (decode)     | built-in                          | ImageIO           | WIC          |
 | TIFF (decode)          | ❌                                | ImageIO           | WIC          |
-| Resize / rotate / flip | Highway SIMD                     | Accelerate vImage | Highway SIMD |
+| Resize / rotate / flip | Highway SIMD                      | Accelerate vImage | Highway SIMD |
 | HEIC / AVIF            | ❌ `ERR_IMAGE_FORMAT_UNSUPPORTED` | ImageIO ²         | WIC ¹        |
 | Clipboard              | ❌ returns `null`                 | NSPasteboard      | Win32        |
 
 ¹ Windows requires the **HEIF Image Extensions** / **AV1 Video Extension** from the Microsoft Store.
-² AVIF *encode* needs an OS AV1 encoder — Apple Silicon M3+ only. Intel Mac and M1/M2 reject with `ERR_IMAGE_FORMAT_UNSUPPORTED`; AVIF *decode* works everywhere ImageIO does (macOS 13+).
+² AVIF _encode_ needs an OS AV1 encoder — Apple Silicon M3+ only. Intel Mac and M1/M2 reject with `ERR_IMAGE_FORMAT_UNSUPPORTED`; AVIF _decode_ works everywhere ImageIO does (macOS 13+).
 
 When a system-backend format isn't available on the current machine, the terminal rejects with `error.code === "ERR_IMAGE_FORMAT_UNSUPPORTED"` — branch on that to fall back to a portable format:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const out = await img
   .avif({ quality: 50 })
   .bytes()
@@ -209,6 +210,6 @@ const out = await img
 
 Formats handled by the system backend (TIFF, HEIC, AVIF, clipboard) inherit the **OS's** patch level — keep macOS / Windows updated. JPEG, PNG, and WebP go through the same statically-linked codecs on every platform, so encoded output is byte-identical across Linux, macOS, and Windows. To force the portable Highway path for geometry too — e.g. for golden-image tests — set the process-global backend:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 Bun.Image.backend = "bun"; // default is "system" on macOS/Windows
 ```

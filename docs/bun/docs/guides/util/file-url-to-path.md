@@ -1,16 +1,17 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/util/file-url-to-path.md
+Downloaded: 2026-08-14T20:31:00.572Z
+-->
 
 # Convert a file URL to an absolute path
 
 Use `Bun.fileURLToPath()` to convert a `file://` URL to an absolute path.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 Bun.fileURLToPath("file:///path/to/file.txt");
 // => "/path/to/file.txt"
 ```
 
-***
+---
 
-See [Utils](/docs/runtime/utils).
+See [Utils](/runtime/utils).

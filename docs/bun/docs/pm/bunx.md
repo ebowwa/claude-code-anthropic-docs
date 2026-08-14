@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/pm/bunx.md
+Downloaded: 2026-08-14T20:31:00.558Z
+-->
 
 # bunx
 
@@ -10,7 +11,7 @@
 
 Use `bunx` to auto-install and run packages from `npm`. It's Bun's equivalent of `npx` or `yarn dlx`.
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bunx cowsay "Hello world!"
 ```
 
@@ -19,9 +20,9 @@ bunx cowsay "Hello world!"
   faster](https://twitter.com/jarredsumner/status/1606163655527059458) than `npx` for locally installed packages.
 </Note>
 
-Packages can declare executables in the `"bin"` field of their `package.json`. These are known as *package executables* or *package binaries*.
+Packages can declare executables in the `"bin"` field of their `package.json`. These are known as _package executables_ or _package binaries_.
 
-```json package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json package.json icon="file-json"
 {
   // ... other fields
   "name": "my-cli",
@@ -31,9 +32,9 @@ Packages can declare executables in the `"bin"` field of their `package.json`. T
 }
 ```
 
-These executables are commonly plain JavaScript files marked with a [shebang line](https://en.wikipedia.org/wiki/Shebang_\(Unix\)) naming the program that should run them. The following file runs with `node`.
+These executables are commonly plain JavaScript files marked with a [shebang line](<https://en.wikipedia.org/wiki/Shebang_(Unix)>) naming the program that should run them. The following file runs with `node`.
 
-```js dist/index.js icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/javascript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=5148f41bbc784f9828f1363dab67340f" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```js dist/index.js icon="/icons/javascript.svg"
 #!/usr/bin/env node
 
 console.log("Hello world!");
@@ -41,33 +42,33 @@ console.log("Hello world!");
 
 Run these executables with `bunx`:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bunx my-cli
 ```
 
-As with `npx`, `bunx` checks for a locally installed package first, then falls back to auto-installing it from `npm`. Installed packages are stored in Bun's [global cache](/docs/pm/global-cache) for future use.
+As with `npx`, `bunx` checks for a locally installed package first, then falls back to auto-installing it from `npm`. Installed packages are stored in Bun's [global cache](/pm/global-cache) for future use.
 
 ## Arguments and flags
 
 To pass additional command-line flags and arguments through to the executable, place them after the executable name.
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bunx my-cli --foo bar
 ```
 
-***
+---
 
 ## Shebangs
 
 By default, Bun respects shebangs. If an executable is marked with `#!/usr/bin/env node`, Bun spins up a `node` process to execute the file. To run the executable with Bun's runtime instead, pass the `--bun` flag.
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bunx --bun my-cli
 ```
 
-The `--bun` flag must occur *before* the executable name. Flags that appear *after* the name are passed through to the executable.
+The `--bun` flag must occur _before_ the executable name. Flags that appear _after_ the name are passed through to the executable.
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bunx --bun my-cli # good
 bunx my-cli --bun # bad
 ```
@@ -76,22 +77,22 @@ bunx my-cli --bun # bad
 
 **`--package <pkg>` or `-p <pkg>`** - Run a binary from a specific package. Useful when the binary name differs from the package name:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bunx -p renovate renovate-config-validator
 bunx --package @angular/cli ng
 ```
 
 To force a script to always run with Bun, give it a `bun` shebang.
 
-```js dist/index.js icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/javascript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=5148f41bbc784f9828f1363dab67340f" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```js dist/index.js icon="/icons/javascript.svg"
 #!/usr/bin/env bun
 ```
 
-***
+---
 
 ## Usage
 
-```bash theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash
 bunx [flags] <package>[@version] [flags and arguments for the package]
 ```
 
@@ -101,7 +102,7 @@ Execute an npm package executable (CLI). If the package isn't installed in `node
 
 <ParamField path="--bun" type="boolean">
   Force the command to run with Bun instead of Node.js, even if the executable contains a Node shebang (`#!/usr/bin/env
-      node`)
+  node`)
 </ParamField>
 
 <ParamField path="-p, --package" type="string">
@@ -122,7 +123,7 @@ Execute an npm package executable (CLI). If the package isn't installed in `node
 
 ### Examples
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 # Run Prisma migrations
 bunx prisma migrate
 

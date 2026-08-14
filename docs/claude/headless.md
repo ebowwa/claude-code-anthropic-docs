@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/headless.md
-Downloaded: 2026-08-12T20:44:34.294Z
+Downloaded: 2026-08-14T20:31:08.320Z
 -->
 
 > ## Documentation Index
@@ -42,6 +42,8 @@ Claude Code exits with code 0 on success and a non-zero code when the run fails,
 Add `--bare` to reduce startup time by skipping auto-discovery of hooks, skills, plugins, MCP servers, auto memory, and CLAUDE.md. Without it, `claude -p` loads the same [context](/docs/en/how-claude-code-works#the-context-window) an interactive session would, including anything configured in the working directory or `~/.claude`.
 
 Bare mode is useful for CI and scripts where you need the same result on every machine. A hook in a teammate's `~/.claude` or an MCP server in the project's `.mcp.json` won't run, because bare mode never reads them.
+
+Without `--bare`, Claude Code runs the hooks in a project's `.claude/settings.json` even in a folder you've never trusted, because a `-p` session shows no workspace trust dialog. It also connects the servers in the project's `.mcp.json`, because a `-p` session can't show the per-server approval prompt either. [What runs before you trust a folder](/docs/en/permissions#what-runs-before-you-trust-a-folder) covers each kind of repository content under `-p` and how to keep it out.
 
 This example runs a one-off summarize task in bare mode and pre-approves the Read tool so the call completes without a permission prompt. Set `ANTHROPIC_API_KEY` before running it, because bare mode doesn't use your subscription login:
 

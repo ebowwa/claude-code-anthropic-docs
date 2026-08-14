@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-internal-transfers.md
-Downloaded: 2026-08-13T20:42:10.569Z
+Downloaded: 2026-08-14T20:31:01.252Z
 -->
 
 > ## Documentation Index
@@ -13,7 +13,6 @@ Downloaded: 2026-08-13T20:42:10.569Z
 Returns both inbound and outbound transfers.
 
 
-<Badge color="gray" size="md">Request Weight: **10**</Badge>
 
 
 ## OpenAPI

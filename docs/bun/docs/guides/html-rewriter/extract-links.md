@@ -1,14 +1,15 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/html-rewriter/extract-links.md
+Downloaded: 2026-08-14T20:31:00.593Z
+-->
 
 # Extract links from a webpage using HTMLRewriter
 
 ## Extract links from a webpage
 
-Bun's [HTMLRewriter](/docs/runtime/html-rewriter) API extracts links from HTML. Chain CSS selectors to match the elements, text, and attributes you want to process, then pass `.transform` a `Response`, `ArrayBuffer`, or `string`.
+Bun's [HTMLRewriter](/runtime/html-rewriter) API extracts links from HTML. Chain CSS selectors to match the elements, text, and attributes you want to process, then pass `.transform` a `Response`, `ArrayBuffer`, or `string`.
 
-```ts extract-links.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts extract-links.ts icon="/icons/typescript.svg"
 async function extractLinks(url: string) {
   const links = new Set<string>();
   const response = await fetch(url);
@@ -31,13 +32,14 @@ async function extractLinks(url: string) {
 await extractLinks("https://bun.com");
 ```
 
-***
+---
 
 ## Convert relative URLs to absolute
 
 When scraping websites, you often want to convert relative URLs (like `/docs`) to absolute URLs:
 
-```ts extract-links.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+{/* prettier-ignore */}
+```ts extract-links.ts icon="/icons/typescript.svg"
 async function extractLinksFromURL(url: string) {
   const response = await fetch(url);
   const links = new Set<string>();
@@ -65,6 +67,6 @@ async function extractLinksFromURL(url: string) {
 const websiteLinks = await extractLinksFromURL("https://example.com");
 ```
 
-***
+---
 
-See [`HTMLRewriter`](/docs/runtime/html-rewriter).
+See [`HTMLRewriter`](/runtime/html-rewriter).

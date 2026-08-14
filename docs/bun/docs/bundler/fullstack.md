@@ -1,11 +1,7 @@
 <!--
 Source: https://bun.com/docs/bundler/fullstack.md
-Downloaded: 2026-08-12T20:44:22.111Z
+Downloaded: 2026-08-14T20:31:00.562Z
 -->
-
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
 
 # Fullstack dev server
 
@@ -13,7 +9,7 @@ Downloaded: 2026-08-12T20:44:22.111Z
 
 To get started, import HTML files and pass them to the `routes` option in `Bun.serve()`.
 
-```ts title="app.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="app.ts" icon="/icons/typescript.svg"
 import { serve } from "bun";
 import dashboard from "./dashboard.html";
 import homepage from "./index.html";
@@ -57,7 +53,7 @@ const server = serve({
 console.log(`Listening on ${server.url}`);
 ```
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun run app.ts
 ```
 
@@ -67,14 +63,14 @@ bun run app.ts
 
 To specify entrypoints to your frontend, import HTML files into your JavaScript/TypeScript/TSX/JSX files.
 
-```ts title="app.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="app.ts" icon="/icons/typescript.svg"
 import dashboard from "./dashboard.html";
 import homepage from "./index.html";
 ```
 
 Pass the imported HTML files as routes to `Bun.serve()`.
 
-```ts title="app.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="app.ts" icon="/icons/typescript.svg"
 Bun.serve({
   routes: {
     "/": homepage,
@@ -93,7 +89,7 @@ When you make a request to `/dashboard` or `/`, Bun automatically bundles the `<
 
 An `index.html` file like this:
 
-```html title="index.html" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```html title="index.html" icon="file-code"
 <!DOCTYPE html>
 <html>
   <head>
@@ -111,7 +107,7 @@ An `index.html` file like this:
 
 Becomes something like this:
 
-```html title="index.html" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```html title="index.html" icon="file-code"
 <!DOCTYPE html>
 <html>
   <head>
@@ -130,65 +126,67 @@ Becomes something like this:
 To use React in your client-side code, import `react-dom/client` and render your app.
 
 <CodeGroup>
-  ```ts title="src/backend.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  import dashboard from "../public/dashboard.html";
-  import { serve } from "bun";
 
-  serve({
-    routes: {
-      "/": dashboard,
-    },
-    async fetch(req) {
-      // ...api requests
-      return new Response("hello world");
-    },
-  });
-  ```
+```ts title="src/backend.ts" icon="/icons/typescript.svg"
+import dashboard from "../public/dashboard.html";
+import { serve } from "bun";
 
-  ```tsx title="src/frontend.tsx" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  import { createRoot } from "react-dom/client";
-  import App from "./app";
+serve({
+  routes: {
+    "/": dashboard,
+  },
+  async fetch(req) {
+    // ...api requests
+    return new Response("hello world");
+  },
+});
+```
 
-  const container = document.getElementById("root");
-  const root = createRoot(container!);
-  root.render(<App />);
-  ```
+```tsx title="src/frontend.tsx" icon="/icons/typescript.svg"
+import { createRoot } from "react-dom/client";
+import App from "./app";
 
-  ```html title="public/dashboard.html" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  <!DOCTYPE html>
-  <html>
-    <head>
-      <title>Dashboard</title>
-      <link rel="stylesheet" href="../src/styles.css" />
-    </head>
-    <body>
-      <div id="root"></div>
-      <script type="module" src="../src/frontend.tsx"></script>
-    </body>
-  </html>
-  ```
+const container = document.getElementById("root");
+const root = createRoot(container!);
+root.render(<App />);
+```
 
-  ```tsx title="src/app.tsx" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  import { useState } from "react";
+```html title="public/dashboard.html" icon="file-code"
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../src/styles.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="../src/frontend.tsx"></script>
+  </body>
+</html>
+```
 
-  export default function App() {
-    const [count, setCount] = useState(0);
+```tsx title="src/app.tsx" icon="/icons/typescript.svg"
+import { useState } from "react";
 
-    return (
-      <div>
-        <h1>Dashboard</h1>
-        <button onClick={() => setCount(count + 1)}>Count: {count}</button>
-      </div>
-    );
-  }
-  ```
+export default function App() {
+  const [count, setCount] = useState(0);
+
+  return (
+    <div>
+      <h1>Dashboard</h1>
+      <button onClick={() => setCount(count + 1)}>Count: {count}</button>
+    </div>
+  );
+}
+```
+
 </CodeGroup>
 
 ## Development Mode
 
 When building locally, enable development mode by setting `development: true` in `Bun.serve()`.
 
-```ts title="src/backend.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="src/backend.ts" icon="/icons/typescript.svg"
 import homepage from "./index.html";
 import dashboard from "./dashboard.html";
 
@@ -210,16 +208,16 @@ Bun.serve({
 
 When `development` is `true`, Bun:
 
-* Includes the SourceMap header in the response so that devtools can show the original source code
-* Disables minification
-* Re-bundles assets on each request to a `.html` file
-* Enables hot module reloading (unless `hmr: false` is set)
+- Includes the SourceMap header in the response so that devtools can show the original source code
+- Disables minification
+- Re-bundles assets on each request to a `.html` file
+- Enables hot module reloading (unless `hmr: false` is set)
 
 ### Advanced Development Configuration
 
 To echo console logs from the browser to the terminal, pass `console: true` in the `development` object in `Bun.serve()`.
 
-```ts title="src/backend.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="src/backend.ts" icon="/icons/typescript.svg"
 import homepage from "./index.html";
 
 Bun.serve({
@@ -242,14 +240,14 @@ Bun sends the logs over the existing HMR WebSocket connection.
 
 ### Development vs Production
 
-| Feature             | Development            | Production |
-| ------------------- | ---------------------- | ---------- |
-| **Source maps**     | ✅ Enabled              | ❌ Disabled |
-| **Minification**    | ❌ Disabled             | ✅ Enabled  |
-| **Hot reloading**   | ✅ Enabled              | ❌ Disabled |
-| **Asset bundling**  | 🔄 On each request     | 💾 Cached  |
+| Feature             | Development           | Production  |
+| ------------------- | --------------------- | ----------- |
+| **Source maps**     | ✅ Enabled            | ❌ Disabled |
+| **Minification**    | ❌ Disabled           | ✅ Enabled  |
+| **Hot reloading**   | ✅ Enabled            | ❌ Disabled |
+| **Asset bundling**  | 🔄 On each request    | 💾 Cached   |
 | **Console logging** | 🖥️ Browser → Terminal | ❌ Disabled |
-| **Error details**   | 📝 Detailed            | 🔒 Minimal |
+| **Error details**   | 📝 Detailed           | 🔒 Minimal  |
 
 ## Production Mode
 
@@ -259,13 +257,13 @@ Hot reloading and `development: true` help you iterate quickly, but in productio
 
 As of Bun v1.2.17, you can use `Bun.build` or `bun build` to bundle your fullstack application ahead of time.
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun build --target=bun --production --outdir=dist ./src/index.ts
 ```
 
 When Bun's bundler sees an HTML import from server-side code, it bundles the referenced JavaScript/TypeScript/TSX/JSX and CSS files into a manifest object that `Bun.serve()` can use to serve the assets.
 
-```ts title="src/backend.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="src/backend.ts" icon="/icons/typescript.svg"
 import { serve } from "bun";
 import index from "./index.html";
 
@@ -280,11 +278,11 @@ If you'd rather not add a build step, set `development: false` in `Bun.serve()`.
 
 This:
 
-* Enables in-memory caching of bundled assets. Bun bundles assets lazily on the first request to an `.html` file and caches the result in memory until the server restarts.
-* Enables `Cache-Control` and `ETag` headers
-* Minifies JavaScript/TypeScript/TSX/JSX files
+- Enables in-memory caching of bundled assets. Bun bundles assets lazily on the first request to an `.html` file and caches the result in memory until the server restarts.
+- Enables `Cache-Control` and `ETag` headers
+- Minifies JavaScript/TypeScript/TSX/JSX files
 
-```ts title="src/backend.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="src/backend.ts" icon="/icons/typescript.svg"
 import { serve } from "bun";
 import homepage from "./index.html";
 
@@ -304,7 +302,7 @@ serve({
 
 Define API endpoints with HTTP method handlers:
 
-```ts title="src/backend.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="src/backend.ts" icon="/icons/typescript.svg"
 import { serve } from "bun";
 
 serve({
@@ -344,7 +342,7 @@ serve({
 
 Use URL parameters in your routes:
 
-```ts title="src/backend.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="src/backend.ts" icon="/icons/typescript.svg"
 serve({
   routes: {
     // Single parameter
@@ -373,7 +371,7 @@ serve({
 
 ### Request Handling
 
-```ts title="src/backend.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="src/backend.ts" icon="/icons/typescript.svg"
 serve({
   routes: {
     "/api/data": {
@@ -413,18 +411,18 @@ To configure plugins for `Bun.serve`, add a `plugins` array in the `[serve.stati
 
 To use TailwindCSS, install the `tailwindcss` package and the `bun-plugin-tailwind` plugin.
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun add tailwindcss bun-plugin-tailwind
 ```
 
-```toml title="bunfig.toml" icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml title="bunfig.toml" icon="settings"
 [serve.static]
 plugins = ["bun-plugin-tailwind"]
 ```
 
 You can now use TailwindCSS utility classes in your HTML and CSS files. Import `tailwindcss` somewhere in your project:
 
-```html title="index.html" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```html title="index.html" icon="file-code"
 <!doctype html>
 <html>
   <head>
@@ -437,7 +435,7 @@ You can now use TailwindCSS utility classes in your HTML and CSS files. Import `
 
 Alternatively, you can import TailwindCSS in your CSS file:
 
-```css title="style.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="style.css" icon="file-code"
 @import "tailwindcss";
 
 .custom-class {
@@ -445,7 +443,7 @@ Alternatively, you can import TailwindCSS in your CSS file:
 }
 ```
 
-```html index.html icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```html index.html icon="file-code"
 <!doctype html>
 <html>
   <head>
@@ -460,12 +458,12 @@ Alternatively, you can import TailwindCSS in your CSS file:
 
 Any JS file or module that exports a valid bundler plugin object (an object with a `name` and a `setup` field) can be placed in the plugins array:
 
-```toml title="bunfig.toml" icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml title="bunfig.toml" icon="settings"
 [serve.static]
 plugins = ["./my-plugin-implementation.ts"]
 ```
 
-```ts title="my-plugin-implementation.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="my-plugin-implementation.ts" icon="/icons/typescript.svg"
 import type { BunPlugin } from "bun";
 
 const myPlugin: BunPlugin = {
@@ -496,7 +494,7 @@ Bun lazily resolves and loads each plugin and uses them to bundle your routes.
 
 Bun can replace `process.env.*` references in your frontend JavaScript and TypeScript with their values at build time. Configure the `env` option in your `bunfig.toml`:
 
-```toml title="bunfig.toml" icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml title="bunfig.toml" icon="settings"
 [serve.static]
 env = "PUBLIC_*"  # only inline env vars starting with PUBLIC_ (recommended)
 # env = "inline"  # inline all environment variables
@@ -505,13 +503,14 @@ env = "PUBLIC_*"  # only inline env vars starting with PUBLIC_ (recommended)
 
 <Note>
   This only works with literal `process.env.FOO` references, not `import.meta.env` or indirect access like `const env =
-      process.env; env.FOO`.
+  process.env; env.FOO`.
 
-  If an environment variable is not set, you may see runtime errors like `ReferenceError: process
-      is not defined` in the browser.
+If an environment variable is not set, you may see runtime errors like `ReferenceError: process
+  is not defined` in the browser.
+
 </Note>
 
-See [HTML & static sites](/docs/bundler/html-static#inline-environment-variables) for build-time configuration and examples.
+See [HTML & static sites](/bundler/html-static#inline-environment-variables) for build-time configuration and examples.
 
 ## Sourcemaps
 
@@ -519,7 +518,7 @@ In development, Bun generates linked sourcemaps for bundled routes and serves th
 
 To override the default, set the `sourcemap` option in your `bunfig.toml`:
 
-```toml title="bunfig.toml" icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml title="bunfig.toml" icon="settings"
 [serve.static]
 sourcemap = "linked" # serve sourcemaps in production too
 # sourcemap = "inline"   # embed sourcemaps in the chunks
@@ -534,47 +533,45 @@ Bun uses `HTMLRewriter` to scan for `<script>` and `<link>` tags in HTML files, 
 ### Processing Pipeline
 
 <Steps>
-  <Step title="1. <script> Processing">
-    * Transpiles TypeScript, JSX, and TSX in `<script>` tags
-    * Bundles imported dependencies
-    * Generates sourcemaps for debugging in development
-    * Minifies when `development` is not `true` in `Bun.serve()`
+<Step title="1. <script> Processing">
+- Transpiles TypeScript, JSX, and TSX in `<script>` tags
+- Bundles imported dependencies
+- Generates sourcemaps for debugging in development
+- Minifies when `development` is not `true` in `Bun.serve()`
 
-    ```html title="index.html" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
-    <script type="module" src="./counter.tsx"></script>
-    ```
-  </Step>
+```html title="index.html" icon="file-code"
+<script type="module" src="./counter.tsx"></script>
+```
 
-  <Step title="2. <link> Processing">
-    * Processes CSS imports and `<link>` tags
-    * Concatenates CSS files
-    * Rewrites url and asset paths to include content-addressable hashes in URLs
+</Step>
+<Step title="2. <link> Processing">
+- Processes CSS imports and `<link>` tags
+- Concatenates CSS files
+- Rewrites url and asset paths to include content-addressable hashes in URLs
 
-    ```html title="index.html" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
-    <link rel="stylesheet" href="./styles.css" />
-    ```
-  </Step>
+```html title="index.html" icon="file-code"
+<link rel="stylesheet" href="./styles.css" />
+```
 
-  <Step title="3. <img> & Asset Processing">
-    * Links to assets are rewritten to include content-addressable hashes in URLs
-    * Small assets in CSS files are inlined into `data:` URLs, reducing the total number of HTTP requests sent over the wire
-  </Step>
-
-  <Step title="4. HTML Rewriting">
-    * Combines all `<script>` tags into a single `<script>` tag with a content-addressable hash in the URL
-    * Combines all `<link>` tags into a single `<link>` tag with a content-addressable hash in the URL
-    * Outputs a new HTML file
-  </Step>
-
-  <Step title="5. Serving">
-    * All the output files from the bundler are exposed as static routes, using the same mechanism internally as when you pass a Response object to `static` in `Bun.serve()`.
-    * This works similarly to how `Bun.build` processes HTML files.
-  </Step>
+</Step>
+<Step title="3. <img> & Asset Processing">
+- Links to assets are rewritten to include content-addressable hashes in URLs
+- Small assets in CSS files are inlined into `data:` URLs, reducing the total number of HTTP requests sent over the wire
+</Step>
+<Step title="4. HTML Rewriting">
+- Combines all `<script>` tags into a single `<script>` tag with a content-addressable hash in the URL
+- Combines all `<link>` tags into a single `<link>` tag with a content-addressable hash in the URL
+- Outputs a new HTML file
+</Step>
+<Step title="5. Serving">
+- All the output files from the bundler are exposed as static routes, using the same mechanism internally as when you pass a Response object to `static` in `Bun.serve()`.
+- This works similarly to how `Bun.build` processes HTML files.
+</Step>
 </Steps>
 
 ## Complete Example
 
-```ts title="server.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="server.ts" icon="/icons/typescript.svg"
 import { serve } from "bun";
 import { Database } from "bun:sqlite";
 import homepage from "./public/index.html";
@@ -667,7 +664,7 @@ const server = serve({
 console.log(`🚀 Server running on ${server.url}`);
 ```
 
-```html title="public/index.html" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```html title="public/index.html" icon="file-code"
 <!DOCTYPE html>
 <html>
   <head>
@@ -683,7 +680,7 @@ console.log(`🚀 Server running on ${server.url}`);
 </html>
 ```
 
-```tsx title="src/main.tsx" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```tsx title="src/main.tsx"
 import { createRoot } from "react-dom/client";
 import { App } from "./App";
 
@@ -692,7 +689,7 @@ const root = createRoot(container);
 root.render(<App />);
 ```
 
-```tsx title="src/App.tsx" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```tsx title="src/App.tsx"
 import { useState, useEffect } from "react";
 
 interface User {
@@ -792,7 +789,7 @@ export function App() {
 }
 ```
 
-```css title="src/styles.css" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```css title="src/styles.css" icon="file-code"
 * {
   margin: 0;
   padding: 0;
@@ -920,7 +917,7 @@ my-app/
 
 ### Environment-Based Configuration
 
-```ts title="server/config.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="server/config.ts" icon="/icons/typescript.svg"
 export const config = {
   development: process.env.NODE_ENV !== "production",
   port: process.env.PORT || 3000,
@@ -935,7 +932,7 @@ export const config = {
 
 ### Error Handling
 
-```ts title="server/middleware.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="server/middleware.ts" icon="/icons/typescript.svg"
 export function errorHandler(error: Error, req: Request) {
   console.error("Server error:", error);
 
@@ -955,7 +952,7 @@ export function errorHandler(error: Error, req: Request) {
 
 ### API Response Helpers
 
-```ts title="server/utils.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="server/utils.ts" icon="/icons/typescript.svg"
 export function json(data: any, status = 200) {
   return Response.json(data, { status });
 }
@@ -975,7 +972,7 @@ export function unauthorized(message = "Unauthorized") {
 
 ### Type Safety
 
-```ts title="types/api.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="types/api.ts" icon="/icons/typescript.svg"
 export interface User {
   id: number;
   name: string;
@@ -998,7 +995,7 @@ export interface ApiResponse<T> {
 
 ### Production Build
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 # Build for production
 bun build --target=bun --production --outdir=dist ./server/index.ts
 
@@ -1008,7 +1005,7 @@ NODE_ENV=production bun dist/index.js
 
 ### Docker Deployment
 
-```dockerfile title="Dockerfile" icon="docker" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```dockerfile title="Dockerfile" icon="docker"
 FROM oven/bun:1 as base
 WORKDIR /usr/src/app
 
@@ -1034,7 +1031,7 @@ CMD ["bun", "index.js"]
 
 ### Environment Variables
 
-```ini title=".env.production" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ini title=".env.production" icon="file-code"
 NODE_ENV=production
 PORT=3000
 DATABASE_URL=postgresql://user:pass@localhost:5432/myapp
@@ -1045,7 +1042,7 @@ CORS_ORIGIN=https://myapp.com
 
 ### From Express + Webpack
 
-```ts title="server.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="server.ts" icon="/icons/typescript.svg"
 // Before (Express + Webpack)
 app.use(express.static("dist"));
 app.get("/api/users", (req, res) => {
@@ -1067,7 +1064,7 @@ serve({
 
 ### From Next.js API Routes
 
-```ts title="server.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="server.ts" icon="/icons/typescript.svg"
 // Before (Next.js)
 export default function handler(req, res) {
   if (req.method === 'GET') {
@@ -1085,13 +1082,13 @@ export default function handler(req, res) {
 
 ### Current Limitations
 
-* Auto-discovery of API routes is not implemented
-* Server-side rendering (SSR) is not built-in
+- Auto-discovery of API routes is not implemented
+- Server-side rendering (SSR) is not built-in
 
 ### Planned Features
 
-* File-based routing for API endpoints
-* Built-in SSR support
-* Enhanced plugin ecosystem
+- File-based routing for API endpoints
+- Built-in SSR support
+- Enhanced plugin ecosystem
 
 <Note>This is a work in progress. Features and APIs may change.</Note>

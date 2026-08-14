@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/pm/global-cache.md
+Downloaded: 2026-08-14T20:31:00.561Z
+-->
 
 # Global cache
 
@@ -9,41 +10,44 @@
 Bun stores every package downloaded from the registry in a global cache at `~/.bun/install/cache`, or the path set by the `BUN_INSTALL_CACHE_DIR` environment variable. Packages live in subdirectories named like `${name}@${version}`, so multiple versions of a package can be cached.
 
 <Accordion title="Configuring cache behavior">
-  ```toml bunfig.toml icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  [install.cache]
-  # the directory to use for the cache
-  dir = "~/.bun/install/cache"
 
-  # when true, don't load from the global cache.
-  # Bun may still write to node_modules/.cache
-  disable = false
+```toml bunfig.toml icon="settings"
+[install.cache]
+# the directory to use for the cache
+dir = "~/.bun/install/cache"
 
-  # when true, always resolve the latest versions from the registry
-  disableManifest = false
-  ```
+# when true, don't load from the global cache.
+# Bun may still write to node_modules/.cache
+disable = false
+
+# when true, always resolve the latest versions from the registry
+disableManifest = false
+```
+
 </Accordion>
 
-***
+---
 
 ## Minimizing re-downloads
 
 When installing a package, if the cache already contains a version in the range specified by `package.json`, Bun uses the cached copy instead of downloading it again.
 
 <Accordion title="Installation details">
-  If the semver version has a pre-release suffix (`1.0.0-beta.0`) or a build suffix (`1.0.0+20220101`), it is replaced with a hash of that value instead, to reduce the chance of errors from long file paths.
+If the semver version has a pre-release suffix (`1.0.0-beta.0`) or a build suffix (`1.0.0+20220101`), it is replaced with a hash of that value instead, to reduce the chance of errors from long file paths.
 
-  When the `node_modules` folder exists, before installing, Bun checks that `node_modules` contains all expected packages with appropriate versions. If so, `bun install` completes. Bun uses a custom JSON parser which stops parsing as soon as it finds `"name"` and `"version"`.
+When the `node_modules` folder exists, before installing, Bun checks that `node_modules` contains all expected packages with appropriate versions. If so, `bun install` completes. Bun uses a custom JSON parser which stops parsing as soon as it finds `"name"` and `"version"`.
 
-  If a package is missing or has a version incompatible with the `package.json`, Bun checks for a compatible module in the cache. If found, it is installed into `node_modules`. Otherwise, Bun downloads the package from the registry, then installs it.
+If a package is missing or has a version incompatible with the `package.json`, Bun checks for a compatible module in the cache. If found, it is installed into `node_modules`. Otherwise, Bun downloads the package from the registry, then installs it.
+
 </Accordion>
 
-***
+---
 
 ## Fast copying
 
 Once a package is downloaded into the cache, Bun still needs to copy those files into `node_modules`. It uses the fastest syscalls available for this: hardlinks on Linux, `clonefile` on macOS.
 
-***
+---
 
 ## Saving disk space
 
@@ -52,20 +56,21 @@ Since Bun uses hardlinks to "copy" a module into a project's `node_modules` dire
 The same applies on macOS, with a caveat. There Bun uses `clonefile`, which is copy-on-write: the clone occupies no extra disk space, but it counts towards the drive's limit. Because the copy only happens on write, patching `node_modules/*` in one project can't affect other installations.
 
 <Accordion title="Installation strategies">
-  Configure this with the `--backend` flag, which all of Bun's package management commands respect.
+Configure this with the `--backend` flag, which all of Bun's package management commands respect.
 
-  * **`hardlink`**: Default on Linux and Windows.
-  * **`clonefile`**: Default on macOS.
-  * **`clonefile_each_dir`**: Similar to `clonefile`, except it clones each file individually per directory. It is only available on macOS and tends to perform slower than `clonefile`.
-  * **`copyfile`**: The fallback used when any of the above fail. It is the slowest option. On macOS, it uses `fcopyfile()`; on Linux it uses `copy_file_range()`.
-  * **`symlink`**: Used only for `file:` (and eventually `link:`) dependencies. To prevent infinite loops, it skips symlinking the `node_modules` folder.
+- **`hardlink`**: Default on Linux and Windows.
+- **`clonefile`**: Default on macOS.
+- **`clonefile_each_dir`**: Similar to `clonefile`, except it clones each file individually per directory. It is only available on macOS and tends to perform slower than `clonefile`.
+- **`copyfile`**: The fallback used when any of the above fail. It is the slowest option. On macOS, it uses `fcopyfile()`; on Linux it uses `copy_file_range()`.
+- **`symlink`**: Used only for `file:` (and eventually `link:`) dependencies. To prevent infinite loops, it skips symlinking the `node_modules` folder.
 
-  If you install with `--backend=symlink`, Node.js won't resolve node\_modules of dependencies unless each dependency has its own `node_modules` folder or you pass `--preserve-symlinks` to `node`. See [Node.js documentation on `--preserve-symlinks`](https://nodejs.org/api/cli.html#--preserve-symlinks).
+If you install with `--backend=symlink`, Node.js won't resolve node_modules of dependencies unless each dependency has its own `node_modules` folder or you pass `--preserve-symlinks` to `node`. See [Node.js documentation on `--preserve-symlinks`](https://nodejs.org/api/cli.html#--preserve-symlinks).
 
-  ```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  bun install --backend symlink
-  node --preserve-symlinks ./foo.js
-  ```
+```bash terminal icon="terminal"
+bun install --backend symlink
+node --preserve-symlinks ./foo.js
+```
 
-  Bun's runtime also supports `--preserve-symlinks`.
+Bun's runtime also supports `--preserve-symlinks`.
+
 </Accordion>

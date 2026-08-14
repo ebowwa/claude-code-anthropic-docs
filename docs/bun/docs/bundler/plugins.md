@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/bundler/plugins.md
+Downloaded: 2026-08-14T20:31:00.564Z
+-->
 
 # Plugins
 
@@ -14,17 +15,17 @@ Plugins intercept imports and perform custom loading logic, such as reading file
 
 Plugins register callbacks that run at various points in the lifecycle of a bundle:
 
-* `onStart()`: Run once the bundler has started a bundle
-* `onResolve()`: Run before a module is resolved
-* `onLoad()`: Run before a module is loaded
-* `onBeforeParse()`: Run zero-copy native addons in the parser thread before a file is parsed
-* `onEnd()`: Run after the bundle is complete
+- `onStart()`: Run once the bundler has started a bundle
+- `onResolve()`: Run before a module is resolved
+- `onLoad()`: Run before a module is loaded
+- `onBeforeParse()`: Run zero-copy native addons in the parser thread before a file is parsed
+- `onEnd()`: Run after the bundle is complete
 
 ## Reference
 
 A rough overview of the types (see Bun's `bun.d.ts` for the full type definitions):
 
-```ts title="bun.d.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="bun.d.ts" icon="/icons/typescript.svg"
 type PluginBuilder = {
   onStart(callback: () => void): void;
   onResolve: (
@@ -67,7 +68,7 @@ type Loader =
 
 A plugin is a JavaScript object with a `name` property and a `setup` function.
 
-```ts title="myPlugin.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="myPlugin.ts" icon="/icons/typescript.svg"
 import type { BunPlugin } from "bun";
 
 const myPlugin: BunPlugin = {
@@ -80,7 +81,7 @@ const myPlugin: BunPlugin = {
 
 Pass it in the `plugins` array when calling `Bun.build`.
 
-```ts title="index.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="index.ts" icon="/icons/typescript.svg"
 await Bun.build({
   entrypoints: ["./app.ts"],
   outdir: "./out",
@@ -100,18 +101,18 @@ The default namespace is `"file"` and you don't need to specify it: `import myMo
 
 Other common namespaces are:
 
-* `"bun"`: for Bun-specific modules (`"bun:test"`, `"bun:sqlite"`)
-* `"node"`: for Node.js modules (`"node:fs"`, `"node:path"`)
+- `"bun"`: for Bun-specific modules (`"bun:test"`, `"bun:sqlite"`)
+- `"node"`: for Node.js modules (`"node:fs"`, `"node:path"`)
 
 ### onStart
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 onStart(callback: () => void): Promise<void> | void;
 ```
 
 Registers a callback to be run when the bundler starts a new bundle.
 
-```ts title="index.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="index.ts" icon="/icons/typescript.svg"
 import { plugin } from "bun";
 
 plugin({
@@ -129,7 +130,7 @@ The callback can return a Promise. After the bundle process has initialized, the
 
 For example:
 
-```ts title="index.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="index.ts" icon="/icons/typescript.svg"
 const result = await Bun.build({
   entrypoints: ["./app.ts"],
   outdir: "./dist",
@@ -165,7 +166,7 @@ In this example, Bun waits for both `onStart()` callbacks to complete: the 10-se
 
 ### onResolve
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 onResolve(
   args: { filter: RegExp; namespace?: string },
   callback: (args: { path: string; importer: string }) => {
@@ -187,7 +188,7 @@ The callback receives the path to the matching module and can return a new path 
 
 For example, redirecting all imports to `images/` to `./public/images/`:
 
-```ts title="index.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="index.ts" icon="/icons/typescript.svg"
 import { plugin } from "bun";
 
 plugin({
@@ -206,7 +207,7 @@ plugin({
 
 ### onLoad
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 onLoad(
   args: { filter: RegExp; namespace?: string },
   callback: (args: { path: string; namespace: string; loader: Loader; defer: () => Promise<void> }) => {
@@ -231,7 +232,7 @@ The callback can return a new `contents` string for the module as well as a new 
 
 For example:
 
-```ts title="index.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="index.ts" icon="/icons/typescript.svg"
 import { plugin } from "bun";
 
 const envPlugin: BunPlugin = {
@@ -263,45 +264,47 @@ This plugin transforms all imports of the form `import env from "env"` into a Ja
 One of the arguments passed to the `onLoad` callback is a `defer` function. It returns a Promise that resolves once all other modules have been loaded. Await it when a module's contents depend on other modules.
 
 <Accordion title="Example: tracking and reporting unused exports">
-  ```ts title="index.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  import { plugin } from "bun";
 
-  plugin({
-    name: "track imports",
-    setup(build) {
-      const transpiler = new Bun.Transpiler();
+```ts title="index.ts" icon="/icons/typescript.svg"
+import { plugin } from "bun";
 
-      let trackedImports: Record<string, number> = {};
+plugin({
+  name: "track imports",
+  setup(build) {
+    const transpiler = new Bun.Transpiler();
 
-      // Each module that goes through this onLoad callback
-      // will record its imports in `trackedImports`
-      build.onLoad({ filter: /\.ts/ }, async ({ path }) => {
-        const contents = await Bun.file(path).arrayBuffer();
+    let trackedImports: Record<string, number> = {};
 
-        const imports = transpiler.scanImports(contents);
+    // Each module that goes through this onLoad callback
+    // will record its imports in `trackedImports`
+    build.onLoad({ filter: /\.ts/ }, async ({ path }) => {
+      const contents = await Bun.file(path).arrayBuffer();
 
-        for (const i of imports) {
-          trackedImports[i.path] = (trackedImports[i.path] || 0) + 1;
-        }
+      const imports = transpiler.scanImports(contents);
 
-        return undefined;
-      });
+      for (const i of imports) {
+        trackedImports[i.path] = (trackedImports[i.path] || 0) + 1;
+      }
 
-      build.onLoad({ filter: /stats\.json/ }, async ({ defer }) => {
-        // Wait for all files to be loaded, ensuring
-        // that every file goes through the above `onLoad()` function
-        // and their imports tracked
-        await defer();
+      return undefined;
+    });
 
-        // Emit JSON containing the stats of each import
-        return {
-          contents: `export default ${JSON.stringify(trackedImports)}`,
-          loader: "json",
-        };
-      });
-    },
-  });
-  ```
+    build.onLoad({ filter: /stats\.json/ }, async ({ defer }) => {
+      // Wait for all files to be loaded, ensuring
+      // that every file goes through the above `onLoad()` function
+      // and their imports tracked
+      await defer();
+
+      // Emit JSON containing the stats of each import
+      return {
+        contents: `export default ${JSON.stringify(trackedImports)}`,
+        loader: "json",
+      };
+    });
+  },
+});
+```
+
 </Accordion>
 
 <Warning>The `.defer()` function can only be called once per `onLoad` callback.</Warning>
@@ -314,20 +317,20 @@ Native plugins are NAPI modules that expose lifecycle hooks as C ABI functions. 
 
 These lifecycle hooks are available to native plugins:
 
-* `onBeforeParse()`: Called on any thread before a file is parsed by Bun's bundler.
+- `onBeforeParse()`: Called on any thread before a file is parsed by Bun's bundler.
 
 To create a native plugin, export a C ABI function that matches the signature of the native lifecycle hook you want to implement.
 
 ### Creating a native plugin in Rust
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun add -g @napi-rs/cli
 napi new
 ```
 
 Then install this crate:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 cargo add bun-native-plugin
 ```
 
@@ -335,7 +338,7 @@ Inside `lib.rs`, use the `bun_native_plugin::bun` proc macro to define the funct
 
 Here's an example implementing the `onBeforeParse` hook:
 
-```rust title="lib.rs" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/rust.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=c48e2f9ffc38d0c1d77ef723c617aca8" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```rust title="lib.rs" icon="/icons/rust.svg"
 use bun_native_plugin::{define_bun_plugin, OnBeforeParse, bun, Result, anyhow, BunLoader};
 use napi_derive::napi;
 
@@ -367,7 +370,7 @@ pub fn replace_foo_with_bar(handle: &mut OnBeforeParse) -> Result<()> {
 
 To use it in `Bun.build()`:
 
-```ts title="index.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="index.ts" icon="/icons/typescript.svg"
 import myNativeAddon from "./my-native-addon";
 
 Bun.build({
@@ -396,7 +399,7 @@ Bun.build({
 
 ### onBeforeParse
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 onBeforeParse(
   args: { filter: RegExp; namespace?: string },
   callback: { napiModule: NapiModule; symbol: string; external?: unknown },
@@ -411,13 +414,13 @@ It receives the file's contents and can optionally return new source code.
 
 ### onEnd
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 onEnd(callback: (result: BuildOutput) => void | Promise<void>): void;
 ```
 
-Registers a callback to be run after the bundle is complete. The callback receives the [`BuildOutput`](/docs/docs/bundler#outputs) object containing the build results, including output files and any build messages.
+Registers a callback to be run after the bundle is complete. The callback receives the [`BuildOutput`](/docs/bundler#outputs) object containing the build results, including output files and any build messages.
 
-```ts title="index.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="index.ts" icon="/icons/typescript.svg"
 const result = await Bun.build({
   entrypoints: ["./app.ts"],
   outdir: "./dist",
@@ -439,7 +442,7 @@ const result = await Bun.build({
 
 The callback can return a `Promise`. The promise returned by `Bun.build()` does not resolve until all `onEnd()` callbacks have completed.
 
-```ts title="index.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="index.ts" icon="/icons/typescript.svg"
 const result = await Bun.build({
   entrypoints: ["./app.ts"],
   outdir: "./dist",

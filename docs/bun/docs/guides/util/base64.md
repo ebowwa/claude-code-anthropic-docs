@@ -1,12 +1,13 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/util/base64.md
+Downloaded: 2026-08-14T20:31:00.571Z
+-->
 
 # Encode and decode base64 data
 
 Prefer [`Uint8Array.prototype.toBase64()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array/toBase64) and [`Uint8Array.fromBase64()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array/fromBase64) for encoding and decoding base64 data in Bun. These APIs work directly with bytes, so they are a better fit for binary data than the older `btoa()` and `atob()` globals.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const bytes = new Uint8Array([98, 117, 110]);
 const encoded = bytes.toBase64(); // => "YnVu"
 
@@ -16,7 +17,7 @@ const decoded = Uint8Array.fromBase64(encoded);
 
 For strings, convert to and from UTF-8 bytes with [`TextEncoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextEncoder) and [`TextDecoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder).
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const bytes = new TextEncoder().encode("hello world");
 const encoded = bytes.toBase64(); // => "aGVsbG8gd29ybGQ="
 
@@ -26,7 +27,7 @@ const text = new TextDecoder().decode(decoded); // => "hello world"
 
 Node.js `Buffer` extends `Uint8Array`, so buffers can be encoded with `toBase64()` and passed to APIs that accept `Uint8Array`. `Buffer` also provides Node.js-compatible base64 decoding with `Buffer.from(encoded, "base64")`.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const encoded = Buffer.from("hello world").toBase64();
 // => "aGVsbG8gd29ybGQ="
 
@@ -40,12 +41,13 @@ const text = bytes.toString("utf8");
 <Warning>
   The older [`btoa()`](https://developer.mozilla.org/en-US/docs/Web/API/Window/btoa) and [`atob()`](https://developer.mozilla.org/en-US/docs/Web/API/Window/atob) APIs are still available for compatibility, but they operate on binary strings instead of byte arrays. Avoid them in new code, especially when handling arbitrary binary data or non-ASCII text.
 
-  ```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
-  const encoded = btoa("bun"); // => "YnVu"
-  const decoded = atob(encoded); // => "bun"
-  ```
+```ts
+const encoded = btoa("bun"); // => "YnVu"
+const decoded = atob(encoded); // => "bun"
+```
+
 </Warning>
 
-***
+---
 
-See [Web APIs](/docs/runtime/web-apis).
+See [Web APIs](/runtime/web-apis).

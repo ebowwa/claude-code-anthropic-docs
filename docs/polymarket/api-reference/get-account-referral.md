@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-account-referral.md
-Downloaded: 2026-08-07T00:52:23.797Z
+Downloaded: 2026-08-14T20:31:01.253Z
 -->
 
 > ## Documentation Index
@@ -13,7 +13,6 @@ Downloaded: 2026-08-07T00:52:23.797Z
 referral count, and fee share rate.
 
 
-<Badge color="gray" size="md">Request Weight: **1**</Badge>
 
 
 ## OpenAPI

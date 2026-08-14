@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/glossary.md
-Downloaded: 2026-08-13T20:42:22.046Z
+Downloaded: 2026-08-14T20:31:08.336Z
 -->
 
 > ## Documentation Index
@@ -17,7 +17,7 @@ This glossary defines Claude Code terminology. Each entry links to the page wher
 
 ### Agent teams
 
-Multiple independent Claude Code sessions coordinated by a team lead, with a shared task list and peer-to-peer messaging. Unlike [subagents](#subagent), which run within a single session and report only to the parent, teammates each have their own context window and you can interact with any of them directly. Agent teams are experimental and must be enabled by setting `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1`.
+Multiple independent Claude Code sessions coordinated by a team lead, with a shared task list and peer-to-peer messaging. Unlike [subagents](#subagent), which run within a single session and report only to the parent, teammates each have their own context window and you can interact with any of them directly. Agent teams are experimental and disabled by default; see [Enable agent teams](/docs/en/agent-teams#enable-agent-teams).
 
 Learn more: [Run agent teams](/docs/en/agent-teams)
 
@@ -233,7 +233,7 @@ Learn more: [Plugins](/docs/en/plugins)
 
 ### Project trust
 
-A dialog accepting a directory before Claude Code loads its configuration. Acceptance is saved per project directory, except your home directory, where trust is held for the current session only and the prompt reappears on each launch. Trust gates auto-installation of marketplace plugins and execution of project-defined hooks. Trusting a directory means its `.claude/settings.json`, `.mcp.json`, and other config files take effect.
+A dialog accepting a directory before Claude Code loads its configuration. Acceptance is saved per project directory, except your home directory, where trust is held for the current session only and the prompt reappears on each launch. Until you trust a directory, Claude Code holds back some of the content its repository supplies, such as project allow rules and marketplaces from `.claude/settings.json`. [What runs before you trust a folder](/docs/en/permissions#what-runs-before-you-trust-a-folder) lists each kind of content, including what a `-p` session runs without a dialog.
 
 Learn more: [The `.claude` directory](/docs/en/claude-directory)
 

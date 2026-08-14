@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/pm/cli/publish.md
+Downloaded: 2026-08-14T20:31:00.559Z
+-->
 
 # bun publish
 
@@ -8,12 +9,12 @@
 
 `bun publish` packs your package into a tarball, strips catalog and workspace protocols from the `package.json` (resolving versions if necessary), and publishes to the registry specified in your configuration files. Both `bunfig.toml` and `.npmrc` files are supported.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 ## Publishing the package from the current working directory
 bun publish
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 bun publish v1.3.3 (ca7428e9)
 
 packed 203B package.json
@@ -35,7 +36,7 @@ Registry: http://localhost:4873/
 
 To pack and publish separately, run `bun pm pack`, then `bun publish` with the path to the output tarball.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun pm pack
 ...
 bun publish ./package.tgz
@@ -50,13 +51,13 @@ bun publish ./package.tgz
 
 `--access` sets the access level of the package being published, either `public` or `restricted`. Unscoped packages are always public, and publishing an unscoped package with `--access restricted` is an error.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun publish --access public
 ```
 
 `--access` can also be set in the `publishConfig` field of your `package.json`.
 
-```json package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json package.json icon="file-json"
 {
   "publishConfig": {
     "access": "restricted"
@@ -68,13 +69,13 @@ bun publish --access public
 
 Set the tag of the package version being published. By default, the tag is `latest`. The initial version of a package is always given the `latest` tag in addition to the specified tag.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun publish --tag alpha
 ```
 
 `--tag` can also be set in the `publishConfig` field of your `package.json`.
 
-```json package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json package.json icon="file-json"
 {
   "publishConfig": {
     "tag": "next"
@@ -86,7 +87,7 @@ bun publish --tag alpha
 
 `--dry-run` runs the publish process without publishing the package, so you can verify what would be published.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun publish --dry-run
 ```
 
@@ -94,7 +95,7 @@ bun publish --dry-run
 
 Exit with code 0 instead of 1 if the package version already exists. Useful in CI/CD where jobs may be re-run.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun publish --tolerate-republish
 ```
 
@@ -106,7 +107,7 @@ Set the gzip compression level used when packing the package, from `0` to `9` (d
 
 If you have 2FA enabled for your npm account, `bun publish` prompts you for a one-time password, either through a browser or in the CLI. `--auth-type` tells the npm registry which method you prefer: `web` (the default) or `legacy`.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun publish --auth-type legacy
 ...
 This operation requires a one-time password.
@@ -118,7 +119,7 @@ Enter OTP: 123456
 
 Provide a one-time password directly to the CLI. If the password is valid, `bun publish` skips the extra one-time password prompt before publishing:
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun publish --otp 123456
 ```
 
@@ -127,11 +128,11 @@ bun publish --otp 123456
   other automated workflows.
 </Note>
 
-***
+---
 
 ## CLI Usage
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun publish dist
 ```
 
@@ -140,45 +141,48 @@ bun publish dist
 <ParamField path="--access" type="string">
   Set the access level of the package being published, either `public` or `restricted`. Unscoped packages are always public; publishing an unscoped package with `--access restricted` is an error.
 
-  ```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  bun publish --access public
-  ```
+```sh terminal icon="terminal"
+bun publish --access public
+```
 
-  `--access` can also be set in the `publishConfig` field of your `package.json`.
+`--access` can also be set in the `publishConfig` field of your `package.json`.
 
-  ```json package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  {
-    "publishConfig": {
-      "access": "restricted" // [!code ++]
-    }
+```json package.json icon="file-json"
+{
+  "publishConfig": {
+    "access": "restricted" // [!code ++]
   }
-  ```
+}
+```
+
 </ParamField>
 
 <ParamField path="--tag" type="string" default="latest">
-  Set the tag of the package version being published. By default, the tag is `latest`. The initial version of a package is always given the `latest` tag in addition to the specified tag.
+Set the tag of the package version being published. By default, the tag is `latest`. The initial version of a package is always given the `latest` tag in addition to the specified tag.
 
-  ```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  bun publish --tag alpha
-  ```
+```sh terminal icon="terminal"
+bun publish --tag alpha
+```
 
-  `--tag` can also be set in the `publishConfig` field of your `package.json`.
+`--tag` can also be set in the `publishConfig` field of your `package.json`.
 
-  ```json package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  {
-    "publishConfig": {
-      "tag": "next" // [!code ++]
-    }
+```json package.json icon="file-json"
+{
+  "publishConfig": {
+    "tag": "next" // [!code ++]
   }
-  ```
+}
+```
+
 </ParamField>
 
 <ParamField path="--dry-run" type="boolean">
-  Simulate the publish process without publishing the package, to verify its contents first.
+Simulate the publish process without publishing the package, to verify its contents first.
 
-  ```sh theme={"theme":{"light":"github-light","dark":"dracula"}}
-  bun publish --dry-run
-  ```
+```sh
+bun publish --dry-run
+```
+
 </ParamField>
 
 <ParamField path="--gzip-level" type="string" default="9">
@@ -187,28 +191,32 @@ bun publish dist
 </ParamField>
 
 <ParamField path="--auth-type" type="string" default="web">
-  If you have 2FA enabled for your npm account, `bun publish` prompts you for a one-time password, either through a browser or the CLI. `--auth-type` tells the npm registry which method you prefer: `web` (the default) or `legacy`.
 
-  ```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  bun publish --auth-type legacy
-  ...
-  This operation requires a one-time password.
-  Enter OTP: 123456
-  ...
-  ```
+If you have 2FA enabled for your npm account, `bun publish` prompts you for a one-time password, either through a browser or the CLI. `--auth-type` tells the npm registry which method you prefer: `web` (the default) or `legacy`.
+
+```sh terminal icon="terminal"
+bun publish --auth-type legacy
+...
+This operation requires a one-time password.
+Enter OTP: 123456
+...
+```
+
 </ParamField>
 
 <ParamField path="--otp" type="string">
-  Provide a one-time password directly to the CLI. A valid password skips the extra one-time password prompt before publishing.
 
-  ```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  bun publish --otp 123456
-  ```
+Provide a one-time password directly to the CLI. A valid password skips the extra one-time password prompt before publishing.
 
-  <Note>
-    `bun publish` respects the `NPM_CONFIG_TOKEN` environment variable, so you can publish from GitHub Actions or other
-    automated workflows.
-  </Note>
+```sh terminal icon="terminal"
+bun publish --otp 123456
+```
+
+<Note>
+  `bun publish` respects the `NPM_CONFIG_TOKEN` environment variable, so you can publish from GitHub Actions or other
+  automated workflows.
+</Note>
+
 </ParamField>
 
 ### Registry Configuration
@@ -219,7 +227,7 @@ bun publish dist
   Specify registry URL, overriding .npmrc and bunfig.toml
 </ParamField>
 
-```bash theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash
 bun publish --registry https://my-private-registry.com
 ```
 
@@ -234,13 +242,14 @@ bun publish --registry https://my-private-registry.com
 </ParamField>
 
 <CodeGroup>
-  ```bash Inline Certificate theme={"theme":{"light":"github-light","dark":"dracula"}}
-  bun publish --ca "-----BEGIN CERTIFICATE-----..."
-  ```
+```bash Inline Certificate
+bun publish --ca "-----BEGIN CERTIFICATE-----..."
+```
 
-  ```bash Certificate File theme={"theme":{"light":"github-light","dark":"dracula"}}
-  bun publish --cafile ./ca-cert.pem
-  ```
+```bash Certificate File
+bun publish --cafile ./ca-cert.pem
+```
+
 </CodeGroup>
 
 ### Publishing Options

@@ -1,48 +1,51 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/ecosystem/gel.md
+Downloaded: 2026-08-14T20:31:00.574Z
+-->
 
 # Use Gel with Bun
 
 Gel (formerly EdgeDB) is a graph-relational database built on Postgres. It provides a declarative schema language, migrations system, and object-oriented query language, and also supports raw SQL queries. It solves object-relational mapping at the database layer, so your application code doesn't need an ORM library.
 
-***
+---
 
 First, [install Gel](https://docs.geldata.com/learn/installation) if you haven't already.
 
 <CodeGroup>
-  ```sh Linux/macOS terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  curl https://www.geldata.com/sh --proto "=https" -sSf1 | sh
-  ```
 
-  ```sh Windows terminal icon="windows" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  irm https://www.geldata.com/ps1 | iex
-  ```
+```sh Linux/macOS terminal icon="terminal"
+curl https://www.geldata.com/sh --proto "=https" -sSf1 | sh
+```
 
-  ```sh Homebrew terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  brew install geldata/tap/gel-cli
-  ```
+```sh Windows terminal icon="windows"
+irm https://www.geldata.com/ps1 | iex
+```
+
+```sh Homebrew terminal icon="terminal"
+brew install geldata/tap/gel-cli
+```
+
 </CodeGroup>
 
-***
+---
 
 Use `bun init` to create a fresh project.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 mkdir my-edgedb-app
 cd my-edgedb-app
 bun init -y
 ```
 
-***
+---
 
 Initialize a Gel instance for the project with the Gel CLI. The `gel project init` command creates a `gel.toml` file in the project root.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 gel project init
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 No `gel.toml` found in `/Users/colinmcd94/Documents/bun/fun/examples/my-gel-app` or above
 Do you want to initialize a new project? [Y/n]
 > Y
@@ -67,40 +70,40 @@ Project initialized.
 To connect to my_gel_app, run `gel`
 ```
 
-***
+---
 
 To check that the database is running, open a REPL and run a query.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 gel
 gel> select 1 + 1;
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 2
 ```
 
 Then run `\quit` to exit the REPL.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 gel> \quit
 ```
 
-***
+---
 
 Next, define a schema. The `gel project init` command already created a `dbschema/default.esdl` file to hold it.
 
-```txt File Tree icon="folder-tree" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt File Tree icon="folder-tree"
 dbschema
 ├── default.esdl
 └── migrations
 ```
 
-***
+---
 
 Open that file and paste the following contents.
 
-```ts default.esdl icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts default.esdl icon="file-code"
 module default {
   type Movie {
     required title: str;
@@ -109,43 +112,43 @@ module default {
 };
 ```
 
-***
+---
 
 Then generate and apply an initial migration.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 gel migration create
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 Created /Users/colinmcd94/Documents/bun/fun/examples/my-gel-app/dbschema/migrations/00001.edgeql, id: m1uwekrn4ni4qs7ul7hfar4xemm5kkxlpswolcoyqj3xdhweomwjrq
 ```
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 gel migrate
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 Applied m1uwekrn4ni4qs7ul7hfar4xemm5kkxlpswolcoyqj3xdhweomwjrq (00001.edgeql)
 ```
 
-***
+---
 
 With the schema applied, query the database with Gel's JavaScript client library. Install the client library and Gel's codegen CLI, then create a `seed.ts` file.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun add gel
 bun add -D @gel/generate
 touch seed.ts
 ```
 
-***
+---
 
 Paste the following code into `seed.ts`.
 
 The client auto-connects to the database. The script inserts a few movies with the `.execute()` method, using EdgeQL's `for` expression to turn the bulk insert into a single query.
 
-```ts seed.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts seed.ts icon="/icons/typescript.svg"
 import { createClient } from "gel";
 
 const client = createClient();
@@ -172,27 +175,27 @@ console.log(`Seeding complete.`);
 process.exit();
 ```
 
-***
+---
 
 Then run this file with Bun.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun run seed.ts
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 Seeding complete.
 ```
 
-***
+---
 
 Gel implements several code generation tools for TypeScript. To write typesafe queries against the seeded database, generate the EdgeQL query builder with `@gel/generate`.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bunx @gel/generate edgeql-js
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 Generating query builder...
 Detected tsconfig.json, generating TypeScript files.
    To override this, use the --target flag.
@@ -210,11 +213,11 @@ the query builder directory? The following line will be added:
 > y
 ```
 
-***
+---
 
 In `index.ts`, import the generated query builder from `./dbschema/edgeql-js` and write a select query.
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 import { createClient } from "gel";
 import e from "./dbschema/edgeql-js";
 
@@ -231,15 +234,15 @@ console.log(results);
 results; // { title: string, releaseYear: number | null }[]
 ```
 
-***
+---
 
 Run the file with Bun to see the movies you inserted.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun run index.ts
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 [
   {
     title: "The Matrix",
@@ -254,6 +257,6 @@ bun run index.ts
 ]
 ```
 
-***
+---
 
 See the [Gel docs](https://docs.geldata.com/).

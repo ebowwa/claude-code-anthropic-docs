@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/changelog/index.md
-Downloaded: 2026-08-11T20:43:37.935Z
+Downloaded: 2026-08-14T20:31:01.998Z
 -->
 
 > ## Documentation Index
@@ -20,6 +20,44 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="August 24, 2026"
+  tags={["REST", "WebSocket", "FIX", "Predictions"]}
+  rss={{
+title: "Upcoming exchange sharding",
+description: "Crypto, Tennis, and Baseball moving to dedicated exchange instances"
+}}
+>
+  Upcoming exchange sharding: Crypto, Tennis, and Baseball will be provisioned
+  on dedicated exchange instances. Please see
+  [Exchange Sharding](/getting_started/exchange_sharding) for changes to trading.
+</Update>
+
+<Update
+  label="August 20, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Resting order value breakdown by exchange index",
+description: "Get Total Resting Order Value now returns a per-exchange-index breakdown."
+}}
+>
+  `GET /trade-api/v2/portfolio/summary/total_resting_order_value` now returns
+  `resting_order_value_breakdown`, with a fixed-point dollar `balance` for each
+  exchange index.
+</Update>
+
+<Update
+  label="August 20, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Exchange index filters for portfolio lists",
+description: "Orders, positions, and fills can be filtered by exchange_index."
+}}
+>
+  `GET /portfolio/orders`, `GET /portfolio/positions`, and `GET /portfolio/fills` now accept an optional `exchange_index` filter.
+  Omitting it returns results from all exchange indexes.
+</Update>
 
 <Update
   label="August 13, 2026"

@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/runtime/module-resolution.md
+Downloaded: 2026-08-14T20:31:00.545Z
+-->
 
 # Module Resolution
 
@@ -13,46 +14,48 @@ The JavaScript ecosystem is in a years-long transition from CommonJS modules to 
 Consider the following files.
 
 <CodeGroup>
-  ```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  import { hello } from "./hello";
 
-  hello();
-  ```
+```ts index.ts icon="/icons/typescript.svg"
+import { hello } from "./hello";
 
-  ```ts hello.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  export function hello() {
-    console.log("Hello world!");
-  }
-  ```
+hello();
+```
+
+```ts hello.ts icon="/icons/typescript.svg"
+export function hello() {
+  console.log("Hello world!");
+}
+```
+
 </CodeGroup>
 
 Running `index.ts` prints "Hello world!".
 
-```bash icon="terminal" terminal theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash icon="terminal" terminal
 bun index.ts
 Hello world!
 ```
 
 Here `./hello` is a relative path with no extension. **Extensioned imports are optional but supported.** To resolve this import, Bun checks for the following files in order:
 
-* `./hello.tsx`
-* `./hello.jsx`
-* `./hello.mts`
-* `./hello.ts`
-* `./hello.mjs`
-* `./hello.js`
-* `./hello.cts`
-* `./hello.cjs`
-* `./hello.json`
-* `./hello/index.tsx`
-* `./hello/index.jsx`
-* `./hello/index.mts`
-* `./hello/index.ts`
-* `./hello/index.mjs`
-* `./hello/index.js`
-* `./hello/index.cts`
-* `./hello/index.cjs`
-* `./hello/index.json`
+- `./hello.tsx`
+- `./hello.jsx`
+- `./hello.mts`
+- `./hello.ts`
+- `./hello.mjs`
+- `./hello.js`
+- `./hello.cts`
+- `./hello.cjs`
+- `./hello.json`
+- `./hello/index.tsx`
+- `./hello/index.jsx`
+- `./hello/index.mts`
+- `./hello/index.ts`
+- `./hello/index.mjs`
+- `./hello/index.js`
+- `./hello/index.cts`
+- `./hello/index.cjs`
+- `./hello/index.json`
 
 <Note>
   The exact order varies by context: `require()` tries CommonJS extensions (`.cts`, `.cjs`) before ESM ones (`.mts`,
@@ -62,14 +65,14 @@ Here `./hello` is a relative path with no extension. **Extensioned imports are o
 
 If the import path includes an extension, Bun checks for that exact file first. If no exact match exists, Bun falls back to trying the extension list above appended to the full path (so `./hello.world` can resolve to `./hello.world.ts`).
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 import { hello } from "./hello";
 import { hello } from "./hello.ts"; // this works
 ```
 
 There's one additional rule for TypeScript compatibility: if you import `from "*.js"` or `from "*.jsx"`, Bun also checks for a matching `*.ts` or `*.tsx` file, and outside `node_modules` `from "*.mjs"` also matches `*.mts`. This follows the TypeScript compiler's [file extension substitution](https://www.typescriptlang.org/docs/handbook/modules/reference.html#file-extension-substitution), which lets source files reference each other by their compiled output paths. Note that unlike TypeScript, Bun doesn't rewrite `.cjs` to `.cts`.
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 import { hello } from "./hello";
 import { hello } from "./hello.ts"; // this works
 import { hello } from "./hello.js"; // this also works
@@ -78,24 +81,26 @@ import { hello } from "./hello.js"; // this also works
 Bun supports both ES modules (`import`/`export` syntax) and CommonJS modules (`require()`/`module.exports`). The following CommonJS version also works in Bun.
 
 <CodeGroup>
-  ```js index.js icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/javascript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=5148f41bbc784f9828f1363dab67340f" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  const { hello } = require("./hello");
 
-  hello();
-  ```
+```js index.js icon="/icons/javascript.svg"
+const { hello } = require("./hello");
 
-  ```js hello.js icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/javascript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=5148f41bbc784f9828f1363dab67340f" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  function hello() {
-    console.log("Hello world!");
-  }
+hello();
+```
 
-  exports.hello = hello;
-  ```
+```js hello.js icon="/icons/javascript.svg"
+function hello() {
+  console.log("Hello world!");
+}
+
+exports.hello = hello;
+```
+
 </CodeGroup>
 
 That said, using CommonJS is discouraged in new projects.
 
-***
+---
 
 ## Module systems
 
@@ -112,36 +117,38 @@ In Bun's JavaScript runtime, both ES modules and CommonJS modules can use `requi
 
 You can `require()` any file or package, even `.ts` or `.mjs` files.
 
-```ts title="index.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="index.ts" icon="/icons/typescript.svg"
 const { foo } = require("./foo"); // extensions are optional
 const { bar } = require("./bar.mjs");
 const { baz } = require("./baz.tsx");
 ```
 
 <Accordion title="What is a CommonJS module?">
-  In 2016, ECMAScript added support for [ES modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules). ES modules are the standard for JavaScript modules. However, millions of npm packages still use CommonJS modules.
 
-  CommonJS modules use `module.exports` to export values and are typically imported with `require`.
+In 2016, ECMAScript added support for [ES modules](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Modules). ES modules are the standard for JavaScript modules. However, millions of npm packages still use CommonJS modules.
 
-  ```ts my-commonjs.cjs icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/javascript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=5148f41bbc784f9828f1363dab67340f" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  const stuff = require("./stuff");
-  module.exports = { stuff };
-  ```
+CommonJS modules use `module.exports` to export values and are typically imported with `require`.
 
-  The biggest difference between CommonJS and ES modules is that CommonJS modules are synchronous, while ES modules are asynchronous. Other differences:
+```ts my-commonjs.cjs icon="/icons/javascript.svg"
+const stuff = require("./stuff");
+module.exports = { stuff };
+```
 
-  * ES modules support top-level `await` and CommonJS modules don't.
-  * ES modules are always in [strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode), while CommonJS modules are not.
-  * Browsers do not have native support for CommonJS modules, but they do have native support for ES modules through `<script type="module">`.
-  * CommonJS modules are not statically analyzable, while ES modules only allow static imports and exports.
-  * Static `import` statements run synchronously, just like CommonJS `require`. ES modules can also be loaded on the fly with the asynchronous `import()` function, called a "dynamic import".
+The biggest difference between CommonJS and ES modules is that CommonJS modules are synchronous, while ES modules are asynchronous. Other differences:
+
+- ES modules support top-level `await` and CommonJS modules don't.
+- ES modules are always in [strict mode](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode), while CommonJS modules are not.
+- Browsers do not have native support for CommonJS modules, but they do have native support for ES modules through `<script type="module">`.
+- CommonJS modules are not statically analyzable, while ES modules only allow static imports and exports.
+- Static `import` statements run synchronously, just like CommonJS `require`. ES modules can also be loaded on the fly with the asynchronous `import()` function, called a "dynamic import".
+
 </Accordion>
 
 ### Using `import`
 
 You can `import` any file or package, even `.cjs` files.
 
-```ts title="index.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="index.ts" icon="/icons/typescript.svg"
 import { foo } from "./foo"; // extensions are optional
 import bar from "./bar.ts";
 import { stuff } from "./my-commonjs.cjs";
@@ -151,7 +158,7 @@ import { stuff } from "./my-commonjs.cjs";
 
 In Bun, you can use `import` or `require` in the same file—they both work, all the time.
 
-```ts title="index.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="index.ts" icon="/icons/typescript.svg"
 import { stuff } from "./my-commonjs.cjs";
 import Stuff from "./my-commonjs.cjs";
 
@@ -164,27 +171,27 @@ The only exception to this rule is top-level await. You can't `require()` a file
 
 Fortunately, very few libraries use top-level await, so this is rarely a problem. But if you're using top-level await in your application code, make sure that file isn't `require()`'d from elsewhere in your application. Use `import` or [dynamic `import()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/import) instead.
 
-***
+---
 
 ## Importing packages
 
 Bun implements the Node.js module resolution algorithm, so you can import packages from `node_modules` with a bare specifier.
 
-```ts title="index.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="index.ts" icon="/icons/typescript.svg"
 import { stuff } from "foo";
 ```
 
 The full algorithm is specified in the [Node.js documentation](https://nodejs.org/api/modules.html). Briefly: if you import `from "foo"`, Bun scans up the file system for a `node_modules` directory containing the package `foo`.
 
-### NODE\_PATH
+### NODE_PATH
 
 Bun supports `NODE_PATH` for additional module resolution directories:
 
-```bash theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash
 NODE_PATH=./packages bun run src/index.js
 ```
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 // packages/foo/index.js
 export const hello = "world";
 
@@ -194,14 +201,14 @@ import { hello } from "foo";
 
 Multiple paths use the platform's delimiter (`:` on Unix, `;` on Windows):
 
-```bash theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash
 NODE_PATH=./packages:./lib bun run src/index.js  # Unix/macOS
 NODE_PATH=./packages;./lib bun run src/index.js  # Windows
 ```
 
 Once it finds the `foo` package, Bun reads its `package.json` to determine the package's entrypoint. Bun first reads the `exports` field and checks for the following conditions.
 
-```json package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json package.json icon="file-json"
 {
   "name": "foo",
   "exports": {
@@ -215,11 +222,11 @@ Once it finds the `foo` package, Bun reads its `package.json` to determine the p
 }
 ```
 
-Whichever of these conditions occurs *first* in the `package.json` determines the package's entrypoint.
+Whichever of these conditions occurs _first_ in the `package.json` determines the package's entrypoint.
 
 Bun respects subpath [`"exports"`](https://nodejs.org/api/packages.html#subpath-exports) and [`"imports"`](https://nodejs.org/api/packages.html#imports).
 
-```json package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json package.json icon="file-json"
 {
   "name": "foo",
   "exports": {
@@ -230,7 +237,7 @@ Bun respects subpath [`"exports"`](https://nodejs.org/api/packages.html#subpath-
 
 Subpath imports and conditional imports work in conjunction with each other.
 
-```json package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json package.json icon="file-json"
 {
   "name": "foo",
   "exports": {
@@ -244,7 +251,7 @@ Subpath imports and conditional imports work in conjunction with each other.
 
 As in Node.js, specifying any subpath in the `"exports"` map prevents other subpaths from being importable; you can only import files that are explicitly exported. Given the preceding `package.json`:
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 import stuff from "foo"; // this works
 import stuff from "foo/index.mjs"; // this doesn't
 ```
@@ -257,7 +264,7 @@ import stuff from "foo/index.mjs"; // this doesn't
 
 If `exports` is not defined, Bun falls back to the legacy top-level entrypoint fields. At runtime Bun prefers [`"main"`](https://nodejs.org/api/packages.html#main) (or an implicit `index.*` file) when present, and uses `"module"` otherwise.
 
-```json package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json package.json icon="file-json"
 {
   "name": "foo",
   "module": "./index.js",
@@ -271,7 +278,7 @@ The `--conditions` flag specifies the conditions to use when resolving packages 
 
 Both `bun build` and Bun's runtime support this flag.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 # Use it with bun build:
 bun build --conditions="react-server" --target=bun ./app/foo/route.js
 
@@ -281,7 +288,7 @@ bun --conditions="react-server" ./app/foo/route.js
 
 You can also use `conditions` programmatically with `Bun.build`:
 
-```ts build.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts build.ts icon="/icons/typescript.svg"
 await Bun.build({
   conditions: ["react-server"],
   target: "bun",
@@ -289,13 +296,13 @@ await Bun.build({
 });
 ```
 
-***
+---
 
 ## Path re-mapping
 
 Bun supports import path re-mapping through TypeScript's [`compilerOptions.paths`](https://www.typescriptlang.org/tsconfig#paths) in `tsconfig.json`, which works well with editors. If you aren't a TypeScript user, use a [`jsconfig.json`](https://code.visualstudio.com/docs/languages/jsconfig) in your project root for the same behavior.
 
-```json tsconfig.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json tsconfig.json icon="file-json"
 {
   "compilerOptions": {
     "paths": {
@@ -308,7 +315,7 @@ Bun supports import path re-mapping through TypeScript's [`compilerOptions.paths
 
 Bun also supports [Node.js-style subpath imports](https://nodejs.org/api/packages.html#subpath-imports) in `package.json`, where mapped paths must start with `#`. TypeScript and editors resolve these too, and you can use both mechanisms together.
 
-```json package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json package.json icon="file-json"
 {
   "imports": {
     "#config": "./config.ts", // map specifier to file
@@ -318,22 +325,24 @@ Bun also supports [Node.js-style subpath imports](https://nodejs.org/api/package
 ```
 
 <Accordion title="Low-level details of CommonJS interop in Bun">
-  Bun's JavaScript runtime has native support for CommonJS. When Bun's JavaScript transpiler detects usages of `module.exports`, it treats the file as CommonJS. The module loader then wraps the transpiled module in a function shaped like this:
 
-  ```js theme={"theme":{"light":"github-light","dark":"dracula"}}
-  (function (module, exports, require) {
-    // transpiled module
-  })(module, exports, require);
-  ```
+Bun's JavaScript runtime has native support for CommonJS. When Bun's JavaScript transpiler detects usages of `module.exports`, it treats the file as CommonJS. The module loader then wraps the transpiled module in a function shaped like this:
 
-  `module`, `exports`, and `require` are very much like the `module`, `exports`, and `require` in Node.js. These are assigned through a [`with scope`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/with) in C++. An internal `Map` stores the `exports` object to handle cyclical `require` calls before the module is fully loaded.
+```js
+(function (module, exports, require) {
+  // transpiled module
+})(module, exports, require);
+```
 
-  Once the CommonJS module is successfully evaluated, a Synthetic Module Record is created with the `default` ES Module [export set to `module.exports`](https://github.com/oven-sh/bun/blob/9b6913e1a674ceb7f670f917fc355bb8758c6c72/src/bun.js/bindings/CommonJSModuleRecord.cpp#L212-L213) and keys of the `module.exports` object are re-exported as named exports (if the `module.exports` object is an object).
+`module`, `exports`, and `require` are very much like the `module`, `exports`, and `require` in Node.js. These are assigned through a [`with scope`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/with) in C++. An internal `Map` stores the `exports` object to handle cyclical `require` calls before the module is fully loaded.
 
-  Bun's bundler works differently: it wraps the CommonJS module in a `require_${moduleName}` function which returns the `module.exports` object.
+Once the CommonJS module is successfully evaluated, a Synthetic Module Record is created with the `default` ES Module [export set to `module.exports`](https://github.com/oven-sh/bun/blob/9b6913e1a674ceb7f670f917fc355bb8758c6c72/src/bun.js/bindings/CommonJSModuleRecord.cpp#L212-L213) and keys of the `module.exports` object are re-exported as named exports (if the `module.exports` object is an object).
+
+Bun's bundler works differently: it wraps the CommonJS module in a `require_${moduleName}` function which returns the `module.exports` object.
+
 </Accordion>
 
-***
+---
 
 ## `import.meta`
 
@@ -341,7 +350,7 @@ The `import.meta` object exposes information about the current module. It's part
 
 Bun implements the following properties.
 
-```ts /path/to/project/file.ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts /path/to/project/file.ts
 import.meta.dir; // => "/path/to/project"
 import.meta.file; // => "file.ts"
 import.meta.path; // => "/path/to/project/file.ts"

@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/portfolio/get-positions.md
-Downloaded: 2026-08-12T20:44:24.184Z
+Downloaded: 2026-08-14T20:31:01.981Z
 -->
 
 > ## Documentation Index
@@ -82,6 +82,7 @@ paths:
         - $ref: '#/components/parameters/TickerQuery'
         - $ref: '#/components/parameters/SingleEventTickerQuery'
         - $ref: '#/components/parameters/SubaccountQueryDefaultPrimary'
+        - $ref: '#/components/parameters/ExchangeIndexFilterQuery'
       responses:
         '200':
           description: Positions retrieved successfully
@@ -149,6 +150,18 @@ components:
       description: Subaccount number (0 for primary, 1-63 for subaccounts). Defaults to 0.
       schema:
         type: integer
+    ExchangeIndexFilterQuery:
+      name: exchange_index
+      in: query
+      description: >-
+        Filter results by exchange shard. Omit to return results from all
+        exchange shards.
+      schema:
+        type: integer
+        format: int32
+        minimum: 0
+        x-oapi-codegen-extra-tags:
+          validate: omitempty,gte=0
   schemas:
     GetPositionsResponse:
       type: object
@@ -255,10 +268,10 @@ components:
     FixedPointDollars:
       type: string
       description: >-
-        US dollar amount as a fixed-point decimal string with up to 6 decimal
-        places of precision. This is the maximum supported precision; valid
-        quote intervals for a given market are constrained by that market's
-        price level structure.
+        Fixed-point US dollar string. Most request fields accept 2-4 decimal
+        places (e.g., "0.56", "0.5600"); responses emit up to 6. Valid quote
+        intervals for a given market are constrained by that market's price
+        level structure.
       example: '0.5600'
     FixedPointCount:
       type: string

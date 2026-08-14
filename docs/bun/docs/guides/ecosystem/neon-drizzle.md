@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/ecosystem/neon-drizzle.md
+Downloaded: 2026-08-14T20:31:00.575Z
+-->
 
 # Use Neon Postgres through Drizzle ORM
 
@@ -8,7 +9,7 @@
 
 Drizzle ORM supports both a SQL-like "query builder" API and an ORM-like [Queries API](https://orm.drizzle.team/docs/rqb). Get started by creating a project directory, initializing it with `bun init`, and installing Drizzle and the [Neon serverless driver](https://github.com/neondatabase/serverless/).
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 mkdir bun-drizzle-neon
 cd bun-drizzle-neon
 bun init -y
@@ -16,19 +17,19 @@ bun add drizzle-orm @neondatabase/serverless
 bun add -D drizzle-kit
 ```
 
-***
+---
 
 Create a `.env.local` file and add your [Neon Postgres connection string](https://neon.tech/docs/connect/connect-from-any-app) to it.
 
-```ini .env.local icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ini .env.local icon="settings"
 DATABASE_URL=postgresql://usertitle:password@ep-adj-noun-guid.us-east-1.aws.neon.tech/neondb?sslmode=require
 ```
 
-***
+---
 
 In `db.ts`, connect to the Neon database with the Neon serverless driver, wrapped in a Drizzle database instance.
 
-```ts db.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts db.ts icon="/icons/typescript.svg"
 import { neon } from "@neondatabase/serverless";
 import { drizzle } from "drizzle-orm/neon-http";
 
@@ -39,11 +40,11 @@ const sql = neon(process.env.DATABASE_URL!);
 export const db = drizzle(sql);
 ```
 
-***
+---
 
 To see the database in action, add these lines to `index.ts`.
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 import { db } from "./db";
 import { sql } from "drizzle-orm";
 
@@ -52,15 +53,15 @@ const result = await db.execute(query);
 console.log(result.rows);
 ```
 
-***
+---
 
 Then run `index.ts` with Bun.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun run index.ts
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 [
   {
     text: "hello world",
@@ -68,11 +69,11 @@ bun run index.ts
 ]
 ```
 
-***
+---
 
 Define a schema for the database with Drizzle ORM primitives. Create a `schema.ts` file and add this code.
 
-```ts schema.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts schema.ts icon="/icons/typescript.svg"
 import { pgTable, integer, serial, text, timestamp } from "drizzle-orm/pg-core";
 
 export const authors = pgTable("authors", {
@@ -83,19 +84,19 @@ export const authors = pgTable("authors", {
 });
 ```
 
-***
+---
 
 Then use the `drizzle-kit` CLI to generate an initial SQL migration.
 
-```sh theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh
 bunx drizzle-kit generate --dialect postgresql --schema ./schema.ts --out ./drizzle
 ```
 
-***
+---
 
 The command creates a `drizzle` directory containing a `.sql` migration file and a `meta` directory.
 
-```txt File Tree icon="folder-tree" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt File Tree icon="folder-tree"
 drizzle
 ├── 0000_aspiring_post.sql
 └── meta
@@ -103,11 +104,11 @@ drizzle
     └── _journal.json
 ```
 
-***
+---
 
 Execute these migrations with a `migrate.ts` script. The script opens a new connection to the Neon database and executes all unexecuted migrations in the `drizzle` directory.
 
-```ts migrate.ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts migrate.ts
 import { db } from "./db";
 import { migrate } from "drizzle-orm/neon-http/migrator";
 
@@ -124,23 +125,23 @@ const main = async () => {
 main();
 ```
 
-***
+---
 
 Run the script with `bun`.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun run migrate.ts
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 Migration completed
 ```
 
-***
+---
 
 Now add some data to the database. Create a `seed.ts` file with the following contents.
 
-```ts seed.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts seed.ts icon="/icons/typescript.svg"
 import { db } from "./db";
 import * as schema from "./schema";
 
@@ -174,23 +175,23 @@ async function main() {
 main();
 ```
 
-***
+---
 
 Then run this file.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun run seed.ts
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 Seeding completed
 ```
 
-***
+---
 
 The database now has a schema and sample data. Query it with Drizzle by replacing the contents of `index.ts` with the following.
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 import * as schema from "./schema";
 import { db } from "./db";
 
@@ -198,15 +199,15 @@ const result = await db.select().from(schema.authors);
 console.log(result);
 ```
 
-***
+---
 
 Then run the file. It prints the three authors you inserted.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun run index.ts
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 [
   {
     id: 1,
@@ -227,7 +228,7 @@ bun run index.ts
 ]
 ```
 
-***
+---
 
 This example used the Neon serverless driver's SQL-over-HTTP functionality. Neon's serverless driver also exposes `Client` and `Pool` constructors to enable sessions, interactive transactions, and node-postgres compatibility. Refer to [Neon's documentation](https://neon.tech/docs/serverless/serverless-driver) for a complete overview.
 

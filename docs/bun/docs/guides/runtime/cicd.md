@@ -1,12 +1,13 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/runtime/cicd.md
+Downloaded: 2026-08-14T20:31:00.570Z
+-->
 
 # Install and run Bun in GitHub Actions
 
 Use the official [`setup-bun`](https://github.com/oven-sh/setup-bun) GitHub Action to install `bun` in your GitHub Actions runner.
 
-```yaml workflow.yml icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```yaml workflow.yml icon="file-code"
 name: my-workflow
 jobs:
   my-job:
@@ -23,11 +24,11 @@ jobs:
       - run: bun run build # [!code ++]
 ```
 
-***
+---
 
 To specify a version of Bun to install:
 
-```yaml workflow.yml icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```yaml workflow.yml icon="file-code"
 name: my-workflow
 jobs:
   my-job:
@@ -40,6 +41,6 @@ jobs:
           bun-version: 1.3.3 # or "latest", "canary", <sha> # [!code ++]
 ```
 
-***
+---
 
 See the [`setup-bun` README](https://github.com/oven-sh/setup-bun) for all options.

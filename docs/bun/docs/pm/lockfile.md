@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/pm/lockfile.md
+Downloaded: 2026-08-14T20:31:00.561Z
+-->
 
 # Lockfile
 
@@ -16,7 +17,7 @@ Yes
 
 To generate a lockfile without installing to `node_modules`, use the `--lockfile-only` flag. The lockfile is always saved to disk, even if it is already up to date with your project's `package.json`(s).
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun install --lockfile-only
 ```
 
@@ -28,23 +29,25 @@ bun install --lockfile-only
 
 To install without creating a lockfile:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun install --no-save
 ```
 
-To write a Yarn lockfile *in addition* to `bun.lock`:
+To write a Yarn lockfile _in addition_ to `bun.lock`:
 
 <CodeGroup>
-  ```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  bun install --yarn
-  ```
 
-  ```toml bunfig.toml icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  [install.lockfile]
-  # whether to save a non-Bun lockfile alongside bun.lock
-  # only "yarn" is supported
-  print = "yarn"
-  ```
+```bash terminal icon="terminal"
+bun install --yarn
+```
+
+```toml bunfig.toml icon="settings"
+[install.lockfile]
+# whether to save a non-Bun lockfile alongside bun.lock
+# only "yarn" is supported
+print = "yarn"
+```
+
 </CodeGroup>
 
 #### Text-based lockfile
@@ -57,8 +60,8 @@ For more on the format, see [the blog post](https://bun.com/blog/bun-lock-text-l
 
 When running `bun install` in a project without a `bun.lock`, Bun automatically migrates existing lockfiles:
 
-* `yarn.lock` (v1)
-* `package-lock.json` (npm)
-* `pnpm-lock.yaml` (pnpm)
+- `yarn.lock` (v1)
+- `package-lock.json` (npm)
+- `pnpm-lock.yaml` (pnpm)
 
 The original lockfile is preserved and can be removed manually after verification.

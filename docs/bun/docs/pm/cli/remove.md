@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/pm/cli/remove.md
+Downloaded: 2026-08-14T20:31:00.558Z
+-->
 
 # bun remove
 
@@ -8,15 +9,15 @@
 
 ## Basic Usage
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun remove ts-node
 ```
 
-***
+---
 
 ## CLI Usage
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun remove <package>
 ```
 
@@ -95,7 +96,7 @@ bun remove <package>
 </ParamField>
 
 <ParamField path="--force" type="boolean">
-  Always request the latest versions from the registry & reinstall all dependencies. Alias: <code>-f</code>
+  Always request the latest versions from the registry &amp; reinstall all dependencies. Alias: <code>-f</code>
 </ParamField>
 
 <ParamField path="--no-verify" type="boolean">
@@ -123,7 +124,7 @@ bun remove <package>
 ### Caching
 
 <ParamField path="--cache-dir" type="string">
-  Store & load cached data from a specific directory path
+  Store &amp; load cached data from a specific directory path
 </ParamField>
 
 <ParamField path="--no-cache" type="boolean">

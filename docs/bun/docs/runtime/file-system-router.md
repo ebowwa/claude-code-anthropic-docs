@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/runtime/file-system-router.md
+Downloaded: 2026-08-14T20:31:00.546Z
+-->
 
 # File System Router
 
@@ -12,7 +13,7 @@ This API is intended primarily for library authors. It supports only Next.js-sty
 
 The `FileSystemRouter` class resolves routes against a `pages` directory. (The Next.js 13 `app` directory is not supported.) Consider the following `pages` directory:
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 pages
 ├── index.tsx
 ├── settings.tsx
@@ -24,7 +25,7 @@ pages
 
 To resolve routes against this directory:
 
-```ts router.ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts router.ts
 const router = new Bun.FileSystemRouter({
   style: "nextjs",
   dir: "./pages",
@@ -46,7 +47,7 @@ router.match("/");
 
 Query parameters are parsed and returned in the `query` property.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 router.match("/settings?foo=bar");
 
 // =>
@@ -64,7 +65,7 @@ router.match("/settings?foo=bar");
 
 The router parses URL parameters and returns them in the `params` property:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 router.match("/blog/my-cool-post");
 
 // =>
@@ -82,19 +83,19 @@ router.match("/blog/my-cool-post");
 
 The `.match()` method also accepts `Request` and `Response` objects; their `url` property is used to resolve the route.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 router.match(new Request("https://example.com/blog/my-cool-post"));
 ```
 
 The router reads the directory contents on initialization. To re-scan the files, use the `.reload()` method.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 router.reload();
 ```
 
 ## Reference
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 interface Bun {
   class FileSystemRouter {
     constructor(params: {

@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/update-leverage-for-multiple-instruments.md
-Downloaded: 2026-08-07T20:40:43.980Z
+Downloaded: 2026-08-14T20:31:01.249Z
 -->
 
 > ## Documentation Index
@@ -16,7 +16,6 @@ updates applied is unknown. If no responses arrive, the request returns 500.
 Requires proxy signature, see [Update Leverage](/perps/trading#update-leverage).
 
 
-<Badge color="gray" size="md">Request Weight: **1 + floor(n / 20)**</Badge> <Badge color="gray" size="md">Action Weight: **1 / instrument**</Badge>
 
 
 ## OpenAPI

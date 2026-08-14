@@ -1,49 +1,52 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/runtime/set-env.md
+Downloaded: 2026-08-14T20:31:00.583Z
+-->
 
 # Set environment variables
 
 Access the current environment variables with `process.env` or `Bun.env`.
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 Bun.env.API_TOKEN; // => "secret"
 process.env.API_TOKEN; // => "secret"
 ```
 
-***
+---
 
 Set these variables in a `.env` file.
 
 Bun reads the following files automatically (listed in order of increasing precedence).
 
-* `.env`
-* `.env.production`, `.env.development`, `.env.test` (depending on value of `NODE_ENV`)
-* `.env.local` (not loaded when `NODE_ENV=test`)
+- `.env`
+- `.env.production`, `.env.development`, `.env.test` (depending on value of `NODE_ENV`)
+- `.env.local` (not loaded when `NODE_ENV=test`)
 
-```ini .env icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ini .env icon="settings"
 FOO=hello
 BAR=world
 ```
 
-***
+---
 
 You can also set variables on the command line.
 
 <CodeGroup>
-  ```sh Linux/macOS icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  FOO=helloworld bun run dev
-  ```
 
-  ```sh Windows icon="windows" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  # Using CMD
-  set FOO=helloworld && bun run dev
+```sh Linux/macOS icon="terminal"
+FOO=helloworld bun run dev
+```
 
-  # Using PowerShell
-  $env:FOO="helloworld"; bun run dev
-  ```
+```sh Windows icon="windows"
+# Using CMD
+set FOO=helloworld && bun run dev
+
+# Using PowerShell
+$env:FOO="helloworld"; bun run dev
+```
+
 </CodeGroup>
 
-***
+---
 
-See [Environment variables](/docs/runtime/environment-variables).
+See [Environment variables](/runtime/environment-variables).

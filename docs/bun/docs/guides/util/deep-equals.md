@@ -1,25 +1,26 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/util/deep-equals.md
+Downloaded: 2026-08-14T20:31:00.572Z
+-->
 
 # Check if two objects are deeply equal
 
-`Bun.deepEquals()` checks if two objects are deeply equal. `expect().toEqual()` in Bun's [test runner](/docs/test/writing-tests) uses it internally.
+`Bun.deepEquals()` checks if two objects are deeply equal. `expect().toEqual()` in Bun's [test runner](/test/writing-tests) uses it internally.
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 const a = { a: 1, b: 2, c: { d: 3 } };
 const b = { a: 1, b: 2, c: { d: 3 } };
 
 Bun.deepEquals(a, b); // true
 ```
 
-***
+---
 
 Pass `true` as a third argument to enable strict mode. `expect().toStrictEqual()` uses strict mode.
 
 The following examples return `true` in non-strict mode but `false` in strict mode.
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 // undefined values
 Bun.deepEquals({}, { a: undefined }, true); // false
 
@@ -36,6 +37,6 @@ class Foo {
 Bun.deepEquals(new Foo(), { a: 1 }, true); // false
 ```
 
-***
+---
 
-See [Utils](/docs/runtime/utils).
+See [Utils](/runtime/utils).

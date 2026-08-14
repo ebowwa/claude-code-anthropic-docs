@@ -1,12 +1,13 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/test/snapshot.md
+Downloaded: 2026-08-14T20:31:00.587Z
+-->
 
 # Use snapshot testing in `bun test`
 
 Bun's test runner supports Jest-style snapshot testing with `.toMatchSnapshot()`.
 
-```ts snap.test.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts snap.test.ts icon="/icons/typescript.svg"
 import { test, expect } from "bun:test";
 
 test("snapshot", () => {
@@ -14,15 +15,15 @@ test("snapshot", () => {
 });
 ```
 
-***
+---
 
 The first time this test runs, Bun evaluates the value passed into `expect()` and writes it to a `__snapshots__` directory alongside the test file. (Note the `snapshots: +1 added` line in the output.)
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun test test/snap
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 test/snap.test.ts:
 ✓ snapshot [1.48ms]
 
@@ -33,22 +34,22 @@ test/snap.test.ts:
 Ran 1 tests across 1 files. [82.00ms]
 ```
 
-***
+---
 
 The `__snapshots__` directory contains a `.snap` file for each test file in the directory.
 
-```txt File Tree icon="folder-tree" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt File Tree icon="folder-tree"
 test
 ├── __snapshots__
 │   └── snap.test.ts.snap
 └── snap.test.ts
 ```
 
-***
+---
 
 The `snap.test.ts.snap` file is a JavaScript file that exports a serialized version of the value passed into `expect()`. The `{foo: "bar"}` object has been serialized to JSON.
 
-```js snap.test.ts.snap icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```js snap.test.ts.snap icon="file-code"
 // Bun Snapshot v1, https://bun.sh/docs/test/snapshots
 
 exports[`snapshot 1`] = `
@@ -58,15 +59,15 @@ exports[`snapshot 1`] = `
 `;
 ```
 
-***
+---
 
 On later runs, Bun reads the snapshot file and compares it to the value passed into `expect()`. If they differ, the test fails.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun test
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 bun test v1.3.3 (9c68abdb)
 test/snap.test.ts:
 ✓ snapshot [1.05ms]
@@ -77,15 +78,15 @@ test/snap.test.ts:
 Ran 1 tests across 1 files. [101.00ms]
 ```
 
-***
+---
 
 To update snapshots, use the `--update-snapshots` flag.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun test --update-snapshots
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 bun test v1.3.3 (9c68abdb)
 test/snap.test.ts:
 ✓ snapshot [0.86ms]
@@ -97,6 +98,6 @@ test/snap.test.ts:
 Ran 1 tests across 1 files. [102.00ms]
 ```
 
-***
+---
 
-See [Snapshots](/docs/test/snapshots).
+See [Snapshots](/test/snapshots).

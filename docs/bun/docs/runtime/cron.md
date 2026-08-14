@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/runtime/cron.md
+Downloaded: 2026-08-14T20:31:00.551Z
+-->
 
 # Cron
 
@@ -12,7 +13,7 @@ Bun has built-in support for cron — parse expressions, run a callback on a sch
 
 **Run a callback on a schedule in the current process:**
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 Bun.cron("0 * * * *", async () => {
   await cleanupTempFiles();
 });
@@ -20,24 +21,24 @@ Bun.cron("0 * * * *", async () => {
 
 **Parse a cron expression to find the next matching time:**
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 // Next weekday at 9:30 AM local time
 const next = Bun.cron.parse("30 9 * * MON-FRI");
 ```
 
 **Register an OS-level cron job that runs a script on a schedule:**
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 await Bun.cron("./worker.ts", "30 2 * * MON", "weekly-report");
 ```
 
-***
+---
 
 ## `Bun.cron.parse()`
 
 Parse a cron expression and return the next matching `Date` in the system's local time zone.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const next = Bun.cron.parse("*/15 * * * *");
 console.log(next); // => next quarter-hour boundary
 ```
@@ -58,7 +59,7 @@ console.log(next); // => next quarter-hour boundary
 
 Call `parse()` repeatedly to get a sequence of upcoming times:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 let cursor: Date | number = Date.now();
 for (let i = 0; i < 3; i++) {
   cursor = Bun.cron.parse("0 * * * *", cursor)!;
@@ -66,7 +67,7 @@ for (let i = 0; i < 3; i++) {
 }
 ```
 
-***
+---
 
 ## Cron expression syntax
 
@@ -93,7 +94,7 @@ Standard 5-field format: `minute hour day-of-month month day-of-week`
 
 Month and weekday fields accept case-insensitive names:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 // 3-letter abbreviations
 Bun.cron.parse("0 9 * * MON-FRI"); // weekdays
 Bun.cron.parse("0 0 1 JAN,JUN *"); // January and June
@@ -115,7 +116,7 @@ Both `0` and `7` mean Sunday in the weekday field.
 | `@daily` / `@midnight`  | `0 0 * * *` | Once a day (midnight)     |
 | `@hourly`               | `0 * * * *` | Once an hour              |
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const next = Bun.cron.parse("@daily");
 console.log(next); // => next local midnight
 ```
@@ -126,7 +127,7 @@ Schedules are interpreted in the system's **local time zone** — the same way c
 
 To override, pass an IANA time-zone name as `{ tz }` to `Bun.cron.parse()` or the in-process `Bun.cron(schedule, handler, options)`:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 // 09:00 UTC, regardless of the server's TZ
 Bun.cron.parse("0 9 * * *", Date.now(), { tz: "UTC" });
 
@@ -136,27 +137,27 @@ Bun.cron("0 9 * * *", handler, { tz: "America/New_York" });
 
 DST transitions:
 
-* **Spring-forward** — a schedule that lands in the missing hour fires that day, shifted forward by the gap (e.g. `30 2 * * *` runs at 3:30 on the spring-forward day). For multi-minute patterns inside the gap (`*/15 2 * * *`), only the first match fires.
-* **Fall-back** — a fixed-time schedule in the duplicated hour (`30 1 * * *`) fires once, at the first occurrence. A schedule whose minute or hour field is `*` (`0 * * * *`, `* * * * *`) fires through **both** occurrences — once per real-time minute, matching crontab on Linux.
+- **Spring-forward** — a schedule that lands in the missing hour fires that day, shifted forward by the gap (e.g. `30 2 * * *` runs at 3:30 on the spring-forward day). For multi-minute patterns inside the gap (`*/15 2 * * *`), only the first match fires.
+- **Fall-back** — a fixed-time schedule in the duplicated hour (`30 1 * * *`) fires once, at the first occurrence. A schedule whose minute or hour field is `*` (`0 * * * *`, `* * * * *`) fires through **both** occurrences — once per real-time minute, matching crontab on Linux.
 
 ### Day-of-month and day-of-week interaction
 
 When **both** day-of-month and day-of-week are specified (neither is `*`), the expression matches when **either** condition is true. This follows the [POSIX cron](https://pubs.opengroup.org/onlinepubs/9699919799/utilities/crontab.html) standard.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 // Fires on the 15th of every month OR every Friday
 Bun.cron.parse("0 0 15 * FRI");
 ```
 
 When only one is specified (the other is `*`), only that field is used for matching.
 
-***
+---
 
 ## `Bun.cron(schedule, handler)` — in-process
 
 Run a callback on a cron schedule inside the current process.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const job = Bun.cron("*/5 * * * *", async () => {
   await syncToDatabase();
 });
@@ -184,18 +185,18 @@ Returns a [`CronJob`](#the-cronjob-handle) synchronously. Throws a `TypeError` i
 
 ### No-overlap guarantee
 
-The next fire time is computed only after the handler — including any returned `Promise` — settles. If your handler takes 90 seconds and the schedule is `* * * * *`, the second fire is the first minute boundary *after* the handler finishes, not 60 seconds after the first fire. Invocations never stack.
+The next fire time is computed only after the handler — including any returned `Promise` — settles. If your handler takes 90 seconds and the schedule is `* * * * *`, the second fire is the first minute boundary _after_ the handler finishes, not 60 seconds after the first fire. Invocations never stack.
 
 ### Error handling
 
 Errors match `setTimeout` semantics:
 
-* A synchronous `throw` emits `process.on("uncaughtException")`.
-* A rejected returned `Promise` emits `process.on("unhandledRejection")`.
+- A synchronous `throw` emits `process.on("uncaughtException")`.
+- A rejected returned `Promise` emits `process.on("unhandledRejection")`.
 
 Without a listener, the process exits with code `1`. With a listener, the job keeps running — it does not stop on the first failure.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 process.on("unhandledRejection", err => log.error("cron failed:", err));
 
 Bun.cron("* * * * *", async () => {
@@ -209,7 +210,7 @@ Under `bun --hot`, all in-process cron jobs are stopped immediately before the m
 
 ### The `CronJob` handle
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 using job = Bun.cron("0 * * * *", () => {});
 
 job.cron; // => "0 * * * *"
@@ -224,13 +225,13 @@ job.ref(); // keep the process alive (default)
 
 In-process cron honors `jest.useFakeTimers()`. `setSystemTime()`, `advanceTimersByTime()`, and `runAllTimers()` control when it fires, so you can test scheduled callbacks without waiting on the real clock.
 
-***
+---
 
 ## `Bun.cron(path, schedule, title)` — OS-level
 
 Register an OS-level cron job that runs a JavaScript/TypeScript module on a schedule.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 await Bun.cron("./worker.ts", "30 2 * * MON", "weekly-report");
 ```
 
@@ -244,7 +245,7 @@ await Bun.cron("./worker.ts", "30 2 * * MON", "weekly-report");
 
 Re-registering with the same `title` overwrites the existing job in-place — the old schedule is replaced, not duplicated.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 await Bun.cron("./worker.ts", "0 * * * *", "my-job"); // every hour
 await Bun.cron("./worker.ts", "*/15 * * * *", "my-job"); // replaces: every 15 min
 ```
@@ -253,7 +254,7 @@ await Bun.cron("./worker.ts", "*/15 * * * *", "my-job"); // replaces: every 15 m
 
 The registered script must export a default object with a `scheduled()` method, following the [Cloudflare Workers Cron Triggers API](https://developers.cloudflare.com/workers/runtime-apis/handlers/scheduled/):
 
-```ts worker.ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts worker.ts
 export default {
   scheduled(controller: Bun.CronController) {
     console.log(controller.cron); // "30 2 * * 1"
@@ -265,7 +266,7 @@ export default {
 
 The handler can be `async`. Bun waits for the returned promise to settle before exiting.
 
-***
+---
 
 ## How it works per platform
 
@@ -283,13 +284,13 @@ When the cron daemon fires the job, Bun imports your module and calls the `sched
 
 **Viewing registered jobs:**
 
-```sh theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh
 crontab -l
 ```
 
 **Logs:** On Linux, cron output goes to the system log. Check with:
 
-```sh theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh
 # systemd-based (Ubuntu, Fedora, Arch, etc.)
 journalctl -u cron       # or crond on some distros
 journalctl -u cron --since "1 hour ago"
@@ -302,7 +303,7 @@ To capture stdout/stderr to a file, redirect output in the crontab entry directl
 
 **Manually uninstalling without code:**
 
-```sh theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh
 # Edit your crontab and remove the "# bun-cron: <title>" comment
 # and the command line below it
 crontab -e
@@ -323,7 +324,7 @@ The plist uses `StartCalendarInterval` to define the schedule. Complex patterns 
 
 **Viewing registered jobs:**
 
-```sh theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh
 launchctl list | grep bun.cron
 ```
 
@@ -336,14 +337,14 @@ launchctl list | grep bun.cron
 
 For example, a job titled `weekly-report`:
 
-```sh theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh
 cat /tmp/bun.cron.weekly-report.stdout.log
 tail -f /tmp/bun.cron.weekly-report.stderr.log
 ```
 
 **Manually uninstalling without code:**
 
-```sh theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh
 # Unload the job from launchd
 launchctl bootout gui/$(id -u)/bun.cron.<title>
 
@@ -406,7 +407,7 @@ The key factor is whether the expression can use a [`Repetition`](https://learn.
 
 To work around it, simplify the expression or restrict the hour range:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 // ❌ Fails on Windows: */7 with all hours = 216 triggers
 await Bun.cron("./job.ts", "*/7 * * * *", "my-job");
 
@@ -426,7 +427,7 @@ await Bun.cron("./job.ts", "*/5 * * * *", "my-job");
 
 **Viewing registered jobs:**
 
-```powershell theme={"theme":{"light":"github-light","dark":"dracula"}}
+```powershell
 schtasks /query /tn "bun-cron-<title>"
 
 # List all bun cron tasks
@@ -435,7 +436,7 @@ schtasks /query | findstr "bun-cron-"
 
 **Manually uninstalling without code:**
 
-```powershell theme={"theme":{"light":"github-light","dark":"dracula"}}
+```powershell
 schtasks /delete /tn "bun-cron-<title>" /f
 
 # Example:
@@ -444,13 +445,13 @@ schtasks /delete /tn "bun-cron-weekly-report" /f
 
 Or open **Task Scheduler** (taskschd.msc), find the task named `bun-cron-<title>`, right-click, and delete it.
 
-***
+---
 
 ## `Bun.cron.remove()`
 
 Remove a previously registered cron job by its title. Works on all platforms.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 await Bun.cron.remove("weekly-report");
 ```
 

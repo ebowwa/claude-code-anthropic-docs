@@ -1,29 +1,30 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/http/proxy.md
+Downloaded: 2026-08-14T20:31:00.579Z
+-->
 
 # Proxy HTTP requests using fetch()
 
 In Bun, `fetch` supports sending requests through an HTTP or HTTPS proxy. Use it on corporate networks or when a request must come from a specific IP address.
 
-```ts proxy.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts proxy.ts icon="/icons/typescript.svg"
 await fetch("https://example.com", {
   // The URL of the proxy server
   proxy: "https://username:password@proxy.example.com:8080",
 });
 ```
 
-***
+---
 
 The `proxy` option can be a URL string, a `URL` instance, or an object with `url` (a string or a `URL`) and optional `headers`. The URL can include the username and password if the proxy requires authentication. It can be `http://` or `https://`.
 
-***
+---
 
 ## Custom proxy headers
 
 To send custom headers to the proxy server (for proxy authentication tokens or custom routing), use the object format:
 
-```ts proxy-headers.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts proxy-headers.ts icon="/icons/typescript.svg"
 await fetch("https://example.com", {
   proxy: {
     url: "https://proxy.example.com:8080",
@@ -39,12 +40,12 @@ The `headers` property accepts a plain object or a `Headers` instance. These hea
 
 If you provide a `Proxy-Authorization` header, it overrides any credentials in the proxy URL.
 
-***
+---
 
 ## Environment variables
 
 To use the same proxy for all requests, set the `$HTTP_PROXY` or `$HTTPS_PROXY` environment variable to the proxy URL.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 HTTPS_PROXY=https://username:password@proxy.example.com:8080 bun run index.ts
 ```

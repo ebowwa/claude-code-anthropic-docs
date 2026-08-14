@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-funding-charges.md
-Downloaded: 2026-08-10T20:41:52.061Z
+Downloaded: 2026-08-14T20:31:01.251Z
 -->
 
 > ## Documentation Index
@@ -14,7 +14,6 @@ If no end time is provided, the current time will be used.
 Maximum of 100 entries returned per request.
 
 
-<Badge color="gray" size="md">Request Weight: **10**</Badge>
 
 
 ## OpenAPI

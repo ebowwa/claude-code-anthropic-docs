@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/test/concurrent-test-glob.md
+Downloaded: 2026-08-14T20:31:00.587Z
+-->
 
 # Selectively run tests concurrently with glob patterns
 
@@ -10,7 +11,7 @@ The `concurrentTestGlob` option in `bunfig.toml` runs tests concurrently in file
 
 ## Project Structure
 
-```sh title="Project Structure" icon="folder-tree" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh title="Project Structure" icon="folder-tree"
 my-project/
 ├── bunfig.toml
 ├── tests/
@@ -26,7 +27,7 @@ my-project/
 
 Configure your `bunfig.toml` to run test files with the "concurrent-" prefix concurrently:
 
-```toml title="bunfig.toml" icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml title="bunfig.toml" icon="settings"
 [test]
 # Run all test files with "concurrent-" prefix concurrently
 concurrentTestGlob = "**/concurrent-*.test.ts"
@@ -38,7 +39,7 @@ concurrentTestGlob = "**/concurrent-*.test.ts"
 
 Tests that share state or depend on ordering should stay sequential:
 
-```ts title="tests/unit/math.test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="tests/unit/math.test.ts" icon="/icons/typescript.svg"
 import { test, expect } from "bun:test";
 
 // These tests run sequentially by default
@@ -59,7 +60,7 @@ test("uses previous state", () => {
 
 Tests in files matching the glob pattern automatically run concurrently:
 
-```ts title="tests/integration/concurrent-api.test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="tests/integration/concurrent-api.test.ts" icon="/icons/typescript.svg"
 import { test, expect } from "bun:test";
 
 // These tests automatically run concurrently due to filename matching the glob pattern.
@@ -86,7 +87,7 @@ test.serial("fetch comments", async () => {
 
 ## Running Tests
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 # Run all tests - concurrent-*.test.ts files will run concurrently
 bun test
 
@@ -119,17 +120,17 @@ To migrate existing tests to concurrent execution:
 
 ## Tips
 
-* **Use descriptive prefixes**: `concurrent-`, `parallel-`, `async-`
-* **Keep related sequential tests together** in the same directory
-* **Document why certain tests must remain sequential** with comments
-* **Use `test.concurrent()` for fine-grained control** in sequential files
+- **Use descriptive prefixes**: `concurrent-`, `parallel-`, `async-`
+- **Keep related sequential tests together** in the same directory
+- **Document why certain tests must remain sequential** with comments
+- **Use `test.concurrent()` for fine-grained control** in sequential files
   (in files matched by `concurrentTestGlob`, plain `test()` already runs concurrently)
 
 ## Multiple Patterns
 
 `concurrentTestGlob` also accepts multiple patterns:
 
-```toml title="bunfig.toml" icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml title="bunfig.toml" icon="settings"
 [test]
 concurrentTestGlob = [
   "**/integration/*.test.ts",
@@ -140,6 +141,6 @@ concurrentTestGlob = [
 
 Tests in files matching any of these patterns run concurrently:
 
-* All tests in `integration/` directories
-* All tests in `e2e/` directories
-* All tests with `concurrent-` prefix anywhere in the project
+- All tests in `integration/` directories
+- All tests in `e2e/` directories
+- All tests with `concurrent-` prefix anywhere in the project

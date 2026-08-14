@@ -1,28 +1,29 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/runtime/delete-directory.md
+Downloaded: 2026-08-14T20:31:00.593Z
+-->
 
 # Delete directories
 
 To recursively delete a directory and all its contents, use `rm` from `node:fs/promises`. This is like running `rm -rf` in JavaScript.
 
-```ts delete-directory.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts delete-directory.ts icon="/icons/typescript.svg"
 import { rm } from "node:fs/promises";
 
 // Delete a directory and all its contents
 await rm("path/to/directory", { recursive: true, force: true });
 ```
 
-***
+---
 
 These options configure the deletion behavior:
 
-* `recursive: true` - Delete subdirectories and their contents
-* `force: true` - Don't throw errors if the directory doesn't exist
+- `recursive: true` - Delete subdirectories and their contents
+- `force: true` - Don't throw errors if the directory doesn't exist
 
 Omit `force` to get an error if the directory doesn't exist:
 
-```ts delete-directory.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts delete-directory.ts icon="/icons/typescript.svg"
 try {
   await rm("path/to/directory", { recursive: true });
 } catch (error) {
@@ -34,6 +35,6 @@ try {
 }
 ```
 
-***
+---
 
-See [File I/O](/docs/runtime/file-io) for more filesystem operations.
+See [File I/O](/runtime/file-io) for more filesystem operations.

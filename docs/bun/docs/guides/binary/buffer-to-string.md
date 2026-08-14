@@ -1,27 +1,28 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/binary/buffer-to-string.md
+Downloaded: 2026-08-14T20:31:00.594Z
+-->
 
 # Convert a Buffer to a string
 
 The [`Buffer`](https://nodejs.org/api/buffer.html) class provides a `.toString()` method that converts a `Buffer` to a string.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const buf = Buffer.from("hello");
 const str = buf.toString();
 // => "hello"
 ```
 
-***
+---
 
 You can optionally specify an encoding and byte range.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const buf = Buffer.from("hello world!");
 const str = buf.toString("utf8", 0, 5);
 // => "hello"
 ```
 
-***
+---
 
-See [Binary Data](/docs/runtime/binary-data#conversion).
+See [Binary Data](/runtime/binary-data#conversion).

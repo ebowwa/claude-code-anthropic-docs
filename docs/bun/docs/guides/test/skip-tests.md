@@ -1,12 +1,13 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/test/skip-tests.md
+Downloaded: 2026-08-14T20:31:00.587Z
+-->
 
 # Skip tests with the Bun test runner
 
 To skip a test with the Bun test runner, use the `test.skip` function.
 
-```ts test.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts test.ts icon="/icons/typescript.svg"
 import { test } from "bun:test";
 
 test.skip("unimplemented feature", () => {
@@ -14,15 +15,15 @@ test.skip("unimplemented feature", () => {
 });
 ```
 
-***
+---
 
 Running `bun test` doesn't execute this test. The terminal output marks it as skipped.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun test
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 test.test.ts:
 ✓ add [0.03ms]
 ✓ multiply [0.02ms]
@@ -35,9 +36,9 @@ test.test.ts:
 Ran 3 tests across 1 file. [74.00ms]
 ```
 
-***
+---
 
 See also:
 
-* [Mark a test as a todo](/docs/guides/test/todo-tests)
-* [Writing tests](/docs/test/writing-tests)
+- [Mark a test as a todo](/guides/test/todo-tests)
+- [Writing tests](/test/writing-tests)

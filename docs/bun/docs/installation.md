@@ -1,11 +1,7 @@
 <!--
 Source: https://bun.com/docs/installation.md
-Downloaded: 2026-08-09T20:32:29.731Z
+Downloaded: 2026-08-14T20:31:00.543Z
 -->
-
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
 
 # Installation
 
@@ -21,51 +17,58 @@ Bun ships as a single, dependency-free executable. Install it with the install s
 
 <Tabs>
   <Tab title="macOS & Linux">
+
     <CodeGroup>
-      ```bash curl icon="globe" theme={"theme":{"light":"github-light","dark":"dracula"}}
+      ```bash curl icon="globe"
       curl -fsSL https://bun.com/install | bash
       ```
-    </CodeGroup>
 
+    </CodeGroup>
     <Note>
       **Linux users:** The `unzip` package is required to install Bun (`sudo apt install unzip`). Kernel version 5.6 or higher is recommended; Bun runs on kernels as old as 3.10 (RHEL 7) with graceful degradation of newer syscalls. Use `uname -r` to check your kernel version.
-    </Note>
+      </Note>
+
   </Tab>
 
   <Tab title="Windows">
     <CodeGroup>
-      ```powershell PowerShell icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+      ```powershell PowerShell icon="terminal"
       powershell -c "irm bun.sh/install.ps1|iex"
       ```
-    </CodeGroup>
 
+    </CodeGroup>
     <Warning>
       Bun requires Windows 10 version 1809 or later.
     </Warning>
 
+
     For support and discussion, join the **#windows** channel on the [Discord](https://bun.com/discord).
+
   </Tab>
 
-  <Tab title="Package Managers">
-    <CodeGroup>
-      ```bash npm icon="npm" theme={"theme":{"light":"github-light","dark":"dracula"}}
-      npm install -g bun # the last `npm` command you'll ever need
-      ```
+    <Tab title="Package Managers">
+    	<CodeGroup>
 
-      ```bash Homebrew icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/homebrew.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=72e2bae1e891694752fa3352050dc96f" theme={"theme":{"light":"github-light","dark":"dracula"}}
-      brew install oven-sh/bun/bun
-      ```
+    	```bash npm icon="npm"
+    	npm install -g bun # the last `npm` command you'll ever need
+    	```
 
-      ```bash Scoop icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-      scoop install bun
-      ```
-    </CodeGroup>
-  </Tab>
+    	```bash Homebrew icon="/icons/homebrew.svg"
+    	brew install oven-sh/bun/bun
+    	```
+
+    	```bash Scoop icon="terminal"
+    	scoop install bun
+    	```
+
+    	</CodeGroup>
+
+    </Tab>
 
   <Tab title="Docker">
     Bun provides a Docker image that supports both Linux x64 and arm64.
 
-    ```bash Docker icon="docker" theme={"theme":{"light":"github-light","dark":"dracula"}}
+    ```bash Docker icon="docker"
     docker pull oven/bun
     docker run --rm --init --ulimit memlock=-1:-1 oven/bun
     ```
@@ -74,18 +77,19 @@ Bun ships as a single, dependency-free executable. Install it with the install s
 
     Bun also publishes image variants for different operating systems:
 
-    ```bash Docker icon="docker" theme={"theme":{"light":"github-light","dark":"dracula"}}
+    ```bash Docker icon="docker"
     docker pull oven/bun:debian
     docker pull oven/bun:slim
     docker pull oven/bun:distroless
     docker pull oven/bun:alpine
     ```
+
   </Tab>
 </Tabs>
 
 To check that Bun was installed successfully, open a new terminal window and run:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun --version
 # Output: 1.x.y
 
@@ -104,84 +108,83 @@ bun --revision
     <Tab title="macOS & Linux">
       <Steps>
         <Step title="Determine which shell you're using">
-          ```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-          echo $SHELL
-          # /bin/zsh  or /bin/bash or /bin/fish
-          ```
+        ```bash terminal icon="terminal"
+        echo $SHELL
+        # /bin/zsh  or /bin/bash or /bin/fish
+        ```
         </Step>
-
         <Step title="Open your shell configuration file">
-          * For bash: `~/.bashrc`
-          * For zsh: `~/.zshrc`
-          * For fish: `~/.config/fish/config.fish`
+          - For bash: `~/.bashrc`
+          - For zsh: `~/.zshrc`
+          - For fish: `~/.config/fish/config.fish`
         </Step>
-
+        
         <Step title="Add the Bun directory to PATH">
           Add this line to your configuration file:
-
-          ```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+          ```bash terminal icon="terminal"
           export BUN_INSTALL="$HOME/.bun"
           export PATH="$BUN_INSTALL/bin:$PATH"
           ```
         </Step>
-
+        
         <Step title="Reload your shell configuration">
-          ```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+          ```bash terminal icon="terminal"
           source ~/.bashrc  # or ~/.zshrc
           ```
         </Step>
       </Steps>
     </Tab>
-
     <Tab title="Windows">
       <Steps>
         <Step title="Determine if the bun binary is properly installed">
-          ```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-          & "$env:USERPROFILE\.bun\bin\bun" --version
-          ```
+        ```bash terminal icon="terminal"
+        & "$env:USERPROFILE\.bun\bin\bun" --version
+        ```
 
-          If the command runs successfully but `bun --version` is not recognized, bun is not in your system's PATH. To fix this, open a PowerShell terminal and run the following command:
+        If the command runs successfully but `bun --version` is not recognized, bun is not in your system's PATH. To fix this, open a PowerShell terminal and run the following command:
 
-          ```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-          [System.Environment]::SetEnvironmentVariable(
-            "Path",
-            [System.Environment]::GetEnvironmentVariable("Path", "User") + ";$env:USERPROFILE\.bun\bin",
-            [System.EnvironmentVariableTarget]::User
-          )
-          ```
+        ```bash terminal icon="terminal"
+        [System.Environment]::SetEnvironmentVariable(
+          "Path",
+          [System.Environment]::GetEnvironmentVariable("Path", "User") + ";$env:USERPROFILE\.bun\bin",
+          [System.EnvironmentVariableTarget]::User
+        )
+        ```
+
         </Step>
-
         <Step title="Restart your terminal">
-          Restart your terminal and test with `bun --version`.
+           Restart your terminal and test with `bun --version`.
 
-          ```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+          ```bash terminal icon="terminal"
           bun --version
           ```
         </Step>
       </Steps>
     </Tab>
+
   </Tabs>
 </Accordion>
 
-***
+---
 
 ## Upgrading
 
 Once installed, the binary can upgrade itself:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun upgrade
 ```
 
 <Tip>
-  **Homebrew users** <br />
-  To avoid conflicts with Homebrew, use `brew upgrade bun` instead.
+**Homebrew users** <br />
+To avoid conflicts with Homebrew, use `brew upgrade bun` instead.
 
-  **Scoop users** <br />
-  To avoid conflicts with Scoop, use `scoop update bun` instead.
+**Scoop users** <br />
+To avoid conflicts with Scoop, use `scoop update bun` instead.
+
 </Tip>
 
-***
+---
 
 ## Canary Builds
 
@@ -189,7 +192,7 @@ bun upgrade
 
 Bun automatically releases an (untested) canary build on every commit to main. To upgrade to the latest canary build:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 # Upgrade to latest canary
 bun upgrade --canary
 
@@ -199,7 +202,7 @@ bun upgrade --stable
 
 Use a canary build to test new features and bug fixes before they reach a stable release. To help the Bun team fix bugs faster, canary builds automatically upload crash reports.
 
-***
+---
 
 ## Installing Older Versions
 
@@ -209,21 +212,22 @@ Since Bun is a single binary, you can install older versions by re-running the i
   <Tab title="Linux & macOS">
     To install a specific version, pass the git tag to the install script:
 
-    ```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+    ```bash terminal icon="terminal"
     curl -fsSL https://bun.com/install | bash -s "bun-v1.3.3"
     ```
-  </Tab>
 
+  </Tab>
   <Tab title="Windows">
     On Windows, pass the version number to the PowerShell install script:
 
-    ```powershell PowerShell icon="windows" theme={"theme":{"light":"github-light","dark":"dracula"}}
+    ```powershell PowerShell icon="windows"
     iex "& {$(irm https://bun.com/install.ps1)} -Version 1.3.3"
     ```
+
   </Tab>
 </Tabs>
 
-***
+---
 
 ## Direct Downloads
 
@@ -232,35 +236,60 @@ To download Bun binaries directly, visit the [releases page on GitHub](https://g
 ### Latest Version Downloads
 
 <CardGroup cols={2}>
-  <Card icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/linux.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=f45928d13c067bfd53a41fb7c0860fff" title="Linux x64" href="https://github.com/oven-sh/bun/releases/latest/download/bun-linux-x64.zip" width="216" height="256" data-path="icons/linux.svg">
+  <Card
+    icon="/icons/linux.svg"
+    title="Linux x64"
+    href="https://github.com/oven-sh/bun/releases/latest/download/bun-linux-x64.zip"
+  >
     Standard Linux x64 binary
   </Card>
-
-  <Card icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/linux.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=f45928d13c067bfd53a41fb7c0860fff" title="Linux x64 Baseline" href="https://github.com/oven-sh/bun/releases/latest/download/bun-linux-x64-baseline.zip" width="216" height="256" data-path="icons/linux.svg">
+  <Card
+    icon="/icons/linux.svg"
+    title="Linux x64 Baseline"
+    href="https://github.com/oven-sh/bun/releases/latest/download/bun-linux-x64-baseline.zip"
+  >
     For older CPUs without AVX2
   </Card>
-
-  <Card icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/windows.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=c1e6c9fd5641fcc457e95413202af191" title="Windows x64" href="https://github.com/oven-sh/bun/releases/latest/download/bun-windows-x64.zip" width="88" height="88" data-path="icons/windows.svg">
+  <Card
+    icon="/icons/windows.svg"
+    title="Windows x64"
+    href="https://github.com/oven-sh/bun/releases/latest/download/bun-windows-x64.zip"
+  >
     Standard Windows binary
   </Card>
-
-  <Card icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/windows.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=c1e6c9fd5641fcc457e95413202af191" title="Windows x64 Baseline" href="https://github.com/oven-sh/bun/releases/latest/download/bun-windows-x64-baseline.zip" width="88" height="88" data-path="icons/windows.svg">
+  <Card
+    icon="/icons/windows.svg"
+    title="Windows x64 Baseline"
+    href="https://github.com/oven-sh/bun/releases/latest/download/bun-windows-x64-baseline.zip"
+  >
     For older CPUs without AVX2
   </Card>
-
-  <Card icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/windows.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=c1e6c9fd5641fcc457e95413202af191" title="Windows ARM64" href="https://github.com/oven-sh/bun/releases/latest/download/bun-windows-aarch64.zip" width="88" height="88" data-path="icons/windows.svg">
+  <Card
+    icon="/icons/windows.svg"
+    title="Windows ARM64"
+    href="https://github.com/oven-sh/bun/releases/latest/download/bun-windows-aarch64.zip"
+  >
     Windows on ARM (Snapdragon, etc.)
   </Card>
-
-  <Card icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/apple.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=eeb6d9360a2dc50a9df88bdb002fd768" title="macOS ARM64" href="https://github.com/oven-sh/bun/releases/latest/download/bun-darwin-aarch64.zip" width="842" height="1000" data-path="icons/apple.svg">
+  <Card
+    icon="/icons/apple.svg"
+    title="macOS ARM64"
+    href="https://github.com/oven-sh/bun/releases/latest/download/bun-darwin-aarch64.zip"
+  >
     Apple Silicon (M1/M2/M3)
   </Card>
-
-  <Card icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/apple.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=eeb6d9360a2dc50a9df88bdb002fd768" title="macOS x64" href="https://github.com/oven-sh/bun/releases/latest/download/bun-darwin-x64.zip" width="842" height="1000" data-path="icons/apple.svg">
+  <Card
+    icon="/icons/apple.svg"
+    title="macOS x64"
+    href="https://github.com/oven-sh/bun/releases/latest/download/bun-darwin-x64.zip"
+  >
     Intel Macs
   </Card>
-
-  <Card icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/linux.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=f45928d13c067bfd53a41fb7c0860fff" title="Linux ARM64" href="https://github.com/oven-sh/bun/releases/latest/download/bun-linux-aarch64.zip" width="216" height="256" data-path="icons/linux.svg">
+  <Card
+    icon="/icons/linux.svg"
+    title="Linux ARM64"
+    href="https://github.com/oven-sh/bun/releases/latest/download/bun-linux-aarch64.zip"
+  >
     ARM64 Linux systems
   </Card>
 </CardGroup>
@@ -269,43 +298,42 @@ To download Bun binaries directly, visit the [releases page on GitHub](https://g
 
 For distributions without `glibc` (Alpine Linux, Void Linux):
 
-* [Linux x64 musl](https://github.com/oven-sh/bun/releases/latest/download/bun-linux-x64-musl.zip)
-* [Linux x64 musl baseline](https://github.com/oven-sh/bun/releases/latest/download/bun-linux-x64-musl-baseline.zip)
-* [Linux ARM64 musl](https://github.com/oven-sh/bun/releases/latest/download/bun-linux-aarch64-musl.zip)
+- [Linux x64 musl](https://github.com/oven-sh/bun/releases/latest/download/bun-linux-x64-musl.zip)
+- [Linux x64 musl baseline](https://github.com/oven-sh/bun/releases/latest/download/bun-linux-x64-musl-baseline.zip)
+- [Linux ARM64 musl](https://github.com/oven-sh/bun/releases/latest/download/bun-linux-aarch64-musl.zip)
 
 <Note>
   Bun's glibc binaries require glibc 2.17 or newer. If you encounter an error like `bun:
-      /lib/x86_64-linux-gnu/libc.so.6: version GLIBC_... not found`, try using the musl binary. Bun's install script
+  /lib/x86_64-linux-gnu/libc.so.6: version GLIBC_... not found`, try using the musl binary. Bun's install script
   automatically chooses the correct binary for your system.
 </Note>
 
-***
+---
 
 ## CPU Requirements
 
 CPU requirements depend on which binary you're using:
 
 <Tabs>
-  <Tab title="Standard Builds">
-    **x64 binaries** target the Haswell CPU architecture (AVX and AVX2 instructions required)
+	<Tab title="Standard Builds">
+		**x64 binaries** target the Haswell CPU architecture (AVX and AVX2 instructions required)
+    | Platform | Intel Requirement | AMD Requirement |
+		|----------|-------------------|-----------------| 
+    | x64 | Haswell (4th gen Core) or newer | Excavator or newer |
+	</Tab>
 
-    | Platform | Intel Requirement               | AMD Requirement    |
-    | -------- | ------------------------------- | ------------------ |
-    | x64      | Haswell (4th gen Core) or newer | Excavator or newer |
-  </Tab>
-
-  <Tab title="Baseline Builds">
-    **x64-baseline binaries** target the Nehalem architecture for older CPUs
-
-    | Platform     | Intel Requirement               | AMD Requirement    |
-    | ------------ | ------------------------------- | ------------------ |
+    <Tab title="Baseline Builds">
+    	**x64-baseline binaries** target the Nehalem architecture for older CPUs
+    | Platform | Intel Requirement | AMD Requirement |
+    |----------|-------------------|-----------------|
     | x64-baseline | Nehalem (1st gen Core) or newer | Bulldozer or newer |
 
-    <Warning>
-      Baseline builds are slower than regular builds. Use them only if you encounter an "Illegal
-      Instruction" error.
-    </Warning>
-  </Tab>
+    	<Warning>
+    		Baseline builds are slower than regular builds. Use them only if you encounter an "Illegal
+    		Instruction" error.
+    	</Warning>
+    </Tab>
+
 </Tabs>
 
 <Note>
@@ -313,38 +341,37 @@ CPU requirements depend on which binary you're using:
   or later.
 </Note>
 
-***
+---
 
 ## Uninstall
 
 To remove Bun from your system:
 
 <Tabs>
-  <Tab title="macOS & Linux">
-    ```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-    rm -rf ~/.bun
-    ```
+	<Tab title="macOS & Linux">
+  ```bash terminal icon="terminal"
+  rm -rf ~/.bun
+  ```
   </Tab>
 
-  <Tab title="Windows">
-    ```powershell PowerShell icon="windows" theme={"theme":{"light":"github-light","dark":"dracula"}}
+    <Tab title="Windows">
+    	```powershell PowerShell icon="windows"
     powershell -c ~\.bun\uninstall.ps1
     ```
-  </Tab>
+    </Tab>
 
-  <Tab title="Package Managers">
-    <CodeGroup>
-      ```bash npm icon="npm" theme={"theme":{"light":"github-light","dark":"dracula"}}
+    <Tab title="Package Managers">
+    	<CodeGroup>
+    		```bash npm icon="npm"
       npm uninstall -g bun
       ```
-
-      ```bash Homebrew icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/homebrew.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=72e2bae1e891694752fa3352050dc96f" theme={"theme":{"light":"github-light","dark":"dracula"}}
+      ```bash Homebrew icon="/icons/homebrew.svg"
       brew uninstall bun
       ```
-
-      ```bash Scoop icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+      ```bash Scoop icon="terminal"
       scoop uninstall bun
       ```
-    </CodeGroup>
-  </Tab>
+    	</CodeGroup>
+    </Tab>
+
 </Tabs>

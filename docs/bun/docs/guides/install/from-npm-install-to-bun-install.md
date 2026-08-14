@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/install/from-npm-install-to-bun-install.md
+Downloaded: 2026-08-14T20:31:00.585Z
+-->
 
 # Migrate from npm install to bun install
 
@@ -8,12 +9,12 @@
 
 To migrate from `npm install` to `bun install`, run `bun install` instead of `npm install`.
 
-* **Designed for Node.js & Bun**: `bun install` installs a Node.js compatible `node_modules` folder. You can use it in place of `npm install` for Node.js projects without any code changes and without using Bun's runtime.
-* **Automatically converts `package-lock.json`** to Bun's `bun.lock` lockfile format, preserving your existing resolved dependency versions. You can secretly use `bun install` in place of `npm install` at work without anyone noticing.
-* **`.npmrc` compatible**: `bun install` reads npm registry configuration from npm's `.npmrc`, so you can use the same configuration for both npm and Bun.
-* **Hardlinks**: On Windows and Linux, `bun install` uses hardlinks to save disk space and speed up installs.
+- **Designed for Node.js & Bun**: `bun install` installs a Node.js compatible `node_modules` folder. You can use it in place of `npm install` for Node.js projects without any code changes and without using Bun's runtime.
+- **Automatically converts `package-lock.json`** to Bun's `bun.lock` lockfile format, preserving your existing resolved dependency versions. You can secretly use `bun install` in place of `npm install` at work without anyone noticing.
+- **`.npmrc` compatible**: `bun install` reads npm registry configuration from npm's `.npmrc`, so you can use the same configuration for both npm and Bun.
+- **Hardlinks**: On Windows and Linux, `bun install` uses hardlinks to save disk space and speed up installs.
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 # It only takes one command to migrate
 bun i
 
@@ -27,7 +28,7 @@ bun i -d @types/bun
 bun rm @types/bun
 ```
 
-***
+---
 
 ## Run package.json scripts faster
 
@@ -42,7 +43,7 @@ Run scripts from `package.json`, executables from `node_modules/.bin` (like `npx
 
 `bun run <executable>` uses the locally-installed executable.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 # Run a package.json script:
 bun my-script
 bun run my-script
@@ -55,7 +56,7 @@ bun run my-executable
 bun ./index.ts
 ```
 
-***
+---
 
 ## Workspaces? Yes.
 
@@ -63,32 +64,32 @@ bun ./index.ts
 
 In `package.json`, set `"workspaces"` to an array of relative paths.
 
-```json package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json package.json icon="file-json"
 {
   "name": "my-app",
   "workspaces": ["packages/*", "apps/*"]
 }
 ```
 
-***
+---
 
 ### Filter scripts by workspace name
 
 In Bun, the `--filter` flag accepts a glob pattern and runs the command concurrently for every workspace package whose `name` matches it, respecting dependency order.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun --filter 'lib-*' my-script
 # instead of:
 # npm run --workspace lib-foo --workspace lib-bar my-script
 ```
 
-***
+---
 
 ## Update dependencies
 
 `bun update <package>` updates a dependency to the latest version that satisfies the semver range in `package.json`.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 # Update a single dependency
 bun update @types/bun
 
@@ -105,17 +106,17 @@ bun update @types/bun@1.3.3
 bun update --latest
 ```
 
-***
+---
 
 ### View outdated dependencies
 
 To view outdated dependencies, run `bun outdated`. It works like `npm outdated`, with more compact output.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun outdated
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 ┌────────────────────────────────────────┬─────────┬────────┬────────┐
 │ Package                                │ Current │ Update │ Latest │
 ├────────────────────────────────────────┼─────────┼────────┼────────┤
@@ -143,18 +144,18 @@ bun outdated
 └────────────────────────────────────────┴─────────┴────────┴────────┘
 ```
 
-***
+---
 
 ## List installed packages
 
 `bun pm ls` lists the packages installed in the `node_modules` folder, using Bun's lockfile as the source of truth. Pass the `-a` flag to also list transitive dependencies.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 # List top-level installed packages:
 bun pm ls
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 my-pkg node_modules (781)
 ├── @types/node@20.16.5
 ├── @types/react@18.3.8
@@ -164,12 +165,12 @@ my-pkg node_modules (781)
 ...
 ```
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 # List all installed packages:
 bun pm ls -a
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 my-pkg node_modules
 ├── @alloc/quick-lru@5.2.0
 ├── @isaacs/cliui@8.0.2
@@ -180,18 +181,18 @@ my-pkg node_modules
 ...
 ```
 
-***
+---
 
 ## Create a package tarball
 
 `bun pm pack` creates a tarball of the package in the current directory.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 # Create a tarball
 bun pm pack
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 Total files: 46
 Shasum: 2ee19b6f0c6b001358449ca0eadead703f326216
 Integrity: sha512-ZV0lzWTEkGAMz[...]Gl4f8lA9sl97g==
@@ -199,7 +200,7 @@ Unpacked size: 0.41MB
 Packed size: 117.50KB
 ```
 
-***
+---
 
 ## Shebang
 
@@ -207,7 +208,7 @@ If the package references `node` in the `#!/usr/bin/env node` shebang, `bun run`
 
 When you pass `--bun`, Bun creates a symlink to the locally-installed Bun executable named `"node"` in a temporary directory and adds it to your `PATH` for the duration of the script.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 # Force using Bun's runtime instead of node
 bun --bun my-script
 
@@ -215,13 +216,13 @@ bun --bun my-script
 bun run --bun my-script
 ```
 
-***
+---
 
 ## Global installs
 
 Install packages globally with `bun i -g <package>`. By default, they go into a `.bun/install/global/node_modules` folder inside your home directory.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 # Install a package globally
 bun i -g eslint
 

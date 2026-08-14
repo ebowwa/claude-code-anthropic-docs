@@ -1,12 +1,13 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/util/upgrade.md
+Downloaded: 2026-08-14T20:31:00.570Z
+-->
 
 # Upgrade Bun to the latest version
 
 Bun upgrades itself with the built-in `bun upgrade` command.
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun upgrade
 ```
 
@@ -14,13 +15,13 @@ bun upgrade
 
 <Note>To see the current version of Bun, run `bun --version`.</Note>
 
-***
+---
 
 ## Verify the upgrade
 
 After upgrading, verify the new version:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun --version
 # Output: 1.x.y
 
@@ -29,29 +30,29 @@ bun --revision
 # Output: 1.x.y+abc123def
 ```
 
-***
+---
 
 ## Upgrade to canary builds
 
 Canary builds are released on every commit to the `main` branch. They're untested, but useful for trying new features or verifying bug fixes before a release.
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun upgrade --canary
 ```
 
 <Warning>Canary builds are not recommended for production use. They may contain bugs or breaking changes.</Warning>
 
-***
+---
 
 ## Switch back to stable
 
 If you're on a canary build and want to return to the latest stable release:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun upgrade --stable
 ```
 
-***
+---
 
 ## Install a specific version
 
@@ -59,35 +60,35 @@ To install a specific version of Bun, use the install script with a version tag:
 
 <Tabs>
   <Tab title="macOS & Linux">
-    ```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+    ```bash terminal icon="terminal"
     curl -fsSL https://bun.sh/install | bash -s "bun-v1.3.3"
     ```
   </Tab>
-
   <Tab title="Windows">
-    ```powershell PowerShell icon="windows" theme={"theme":{"light":"github-light","dark":"dracula"}}
+    ```powershell PowerShell icon="windows"
     iex "& {$(irm https://bun.sh/install.ps1)} -Version 1.3.3"
     ```
   </Tab>
 </Tabs>
 
-***
+---
 
 ## Package manager users
 
 If you installed Bun with a package manager, upgrade with that package manager instead of `bun upgrade` to avoid conflicts.
 
 <Tip>
-  **Homebrew users** <br />
-  Use `brew upgrade bun` instead.
+**Homebrew users** <br />
+Use `brew upgrade bun` instead.
 
-  **Scoop users** <br />
-  Use `scoop update bun` instead.
+**Scoop users** <br />
+Use `scoop update bun` instead.
+
 </Tip>
 
-***
+---
 
 ## See also
 
-* [Installation](/docs/installation) — Install Bun for the first time
-* [Update packages](/docs/pm/cli/update) — Update dependencies to latest versions
+- [Installation](/installation) — Install Bun for the first time
+- [Update packages](/pm/cli/update) — Update dependencies to latest versions

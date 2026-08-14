@@ -1,11 +1,7 @@
 <!--
 Source: https://bun.com/docs/runtime/watch-mode.md
-Downloaded: 2026-08-07T20:41:00.574Z
+Downloaded: 2026-08-14T20:31:00.544Z
 -->
-
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
 
 # Watch Mode
 
@@ -13,10 +9,10 @@ Downloaded: 2026-08-07T20:41:00.574Z
 
 Bun supports two kinds of automatic reloading:
 
-* `--watch` mode, which hard restarts Bun's process when imported files change.
-* `--hot` mode, which soft reloads the code (without restarting the process) when imported files change.
+- `--watch` mode, which hard restarts Bun's process when imported files change.
+- `--hot` mode, which soft reloads the code (without restarting the process) when imported files change.
 
-***
+---
 
 ## `--watch` mode
 
@@ -24,31 +20,33 @@ Watch mode works with `bun test` and when running TypeScript, JSX, and JavaScrip
 
 To run a file in `--watch` mode:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun --watch index.tsx
 ```
 
 To run your tests in `--watch` mode:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun --watch test
 ```
 
 In `--watch` mode, Bun keeps track of all imported files and watches them for changes. When a file changes, Bun restarts the process with the same CLI arguments and environment variables as the initial run. If Bun crashes, `--watch` attempts to restart the process.
 
 <Note>
-  **⚡️ Reloads are fast.** The filesystem watchers you're probably used to have several layers of libraries wrapping the native APIs or, worse, rely on polling.
 
-  Instead, Bun uses the operating system's native filesystem watcher APIs, like kqueue or inotify, to detect file changes. Bun also applies several optimizations to scale to larger projects, such as setting a high rlimit for file descriptors, statically allocating file path buffers, and reusing file descriptors when possible.
+**⚡️ Reloads are fast.** The filesystem watchers you're probably used to have several layers of libraries wrapping the native APIs or, worse, rely on polling.
+
+Instead, Bun uses the operating system's native filesystem watcher APIs, like kqueue or inotify, to detect file changes. Bun also applies several optimizations to scale to larger projects, such as setting a high rlimit for file descriptors, statically allocating file path buffers, and reusing file descriptors when possible.
+
 </Note>
 
 The following examples show Bun live-reloading a file as it is edited, with VSCode configured to save the file [on each keystroke](https://code.visualstudio.com/docs/editor/codebasics#_save-auto-save).
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun run --watch watchy.tsx
 ```
 
-```tsx title="watchy.tsx" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```tsx title="watchy.tsx" icon="/icons/typescript.svg"
 import { serve } from "bun";
 
 console.log("I restarted at:", Date.now());
@@ -67,7 +65,7 @@ serve({
 
 Running `bun test` in watch mode with `save-on-keypress` enabled:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun --watch test
 ```
 
@@ -78,7 +76,8 @@ bun --watch test
 <Note>
   The **`--no-clear-screen`** flag, like TypeScript's `--preserveWatchOutput`, keeps Bun from clearing the terminal in
   watch mode. Use it when running multiple `bun build --watch` commands at the same time with a tool like
-  `concurrently`, where one instance clearing the screen could hide another's errors: `bun build --watch   --no-clear-screen`.
+  `concurrently`, where one instance clearing the screen could hide another's errors: `bun build --watch
+  --no-clear-screen`.
 </Note>
 
 <Note>
@@ -87,7 +86,7 @@ bun --watch test
   signal, e.g. `bun --watch --watch-kill-signal SIGINT index.ts`.
 </Note>
 
-***
+---
 
 ## `--hot` mode
 
@@ -100,13 +99,13 @@ Use `bun --hot` to enable hot reloading when executing code with Bun. Unlike `--
   browser, use a framework like [Vite](https://vite.dev).
 </Note>
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun --hot server.ts
 ```
 
 Starting from the entrypoint (`server.ts` in this example), Bun builds a registry of all imported source files (excluding those in `node_modules`) and watches them for changes. When a file changes, Bun performs a "soft reload". All files are re-evaluated, but global state (notably, the `globalThis` object) persists.
 
-```ts title="server.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="server.ts" icon="/icons/typescript.svg"
 // make TypeScript happy
 declare global {
   var count: number;
@@ -122,11 +121,11 @@ setInterval(function () {}, 1000000);
 
 If you run this file with `bun --hot server.ts`, you'll see the reload count increment every time you save the file.
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun --hot index.ts
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 Reloaded 1 times
 Reloaded 2 times
 Reloaded 3 times
@@ -138,7 +137,7 @@ Traditional file watchers like `nodemon` restart the entire process, so HTTP ser
 
 You can update your HTTP request handler without shutting down the server: when you save the file, Bun reloads the server with the updated code without restarting the process. This results in seriously fast refresh speeds.
 
-```ts title="server.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="server.ts" icon="/icons/typescript.svg"
 globalThis.count ??= 0;
 globalThis.count++;
 
@@ -151,16 +150,19 @@ Bun.serve({
 ```
 
 <Note>
-  Support for Vite's `import.meta.hot` is planned, to enable better lifecycle management for hot reloading and to align with the ecosystem.
+Support for Vite's `import.meta.hot` is planned, to enable better lifecycle management for hot reloading and to align with the ecosystem.
+
 </Note>
 
 <Accordion title="Implementation details">
-  On hot reload, Bun:
 
-  * Resets the internal `require` cache and ES module registry (`Loader.registry`)
-  * Runs the garbage collector synchronously (to minimize memory leaks, at the cost of runtime performance)
-  * Re-transpiles all of your code from scratch (including sourcemaps)
-  * Re-evaluates the code with JavaScriptCore
+On hot reload, Bun:
 
-  This implementation isn't particularly optimized. It re-transpiles files that haven't changed. It makes no attempt at incremental compilation. It's a starting point.
+- Resets the internal `require` cache and ES module registry (`Loader.registry`)
+- Runs the garbage collector synchronously (to minimize memory leaks, at the cost of runtime performance)
+- Re-transpiles all of your code from scratch (including sourcemaps)
+- Re-evaluates the code with JavaScriptCore
+
+This implementation isn't particularly optimized. It re-transpiles files that haven't changed. It makes no attempt at incremental compilation. It's a starting point.
+
 </Accordion>

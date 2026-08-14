@@ -1,8 +1,3 @@
-<!--
-Source: https://code.claude.com/docs/en/github-actions-cloud-providers.md
-Downloaded: 2026-08-07T00:52:31.631Z
--->
-
 > ## Documentation Index
 > Fetch the complete documentation index at: https://code.claude.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.

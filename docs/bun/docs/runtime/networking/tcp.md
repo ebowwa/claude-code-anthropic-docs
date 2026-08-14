@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/runtime/networking/tcp.md
+Downloaded: 2026-08-14T20:31:00.548Z
+-->
 
 # TCP
 
@@ -12,7 +13,7 @@ Bun's TCP API is low-level, intended for library authors and advanced use cases.
 
 Start a TCP server with `Bun.listen`:
 
-```ts server.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts server.ts icon="/icons/typescript.svg"
 Bun.listen({
   hostname: "localhost",
   port: 8080,
@@ -27,28 +28,30 @@ Bun.listen({
 ```
 
 <Accordion title="An API designed for speed">
-  In Bun, you declare one set of handlers per server instead of assigning callbacks to each socket, as with Node.js `EventEmitters` or the web-standard `WebSocket` API.
 
-  ```ts server.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  Bun.listen({
-    hostname: "localhost",
-    port: 8080,
-    socket: {
-      open(socket) {},
-      data(socket, data) {},
-      drain(socket) {},
-      close(socket, error) {},
-      error(socket, error) {},
-    },
-  });
-  ```
+In Bun, you declare one set of handlers per server instead of assigning callbacks to each socket, as with Node.js `EventEmitters` or the web-standard `WebSocket` API.
 
-  For performance-sensitive servers, assigning listeners to each socket can cause significant garbage collector pressure and increase memory usage. By contrast, Bun only allocates one handler function for each event and shares it among all sockets. This is a small optimization, but it adds up.
+```ts server.ts icon="/icons/typescript.svg"
+Bun.listen({
+  hostname: "localhost",
+  port: 8080,
+  socket: {
+    open(socket) {},
+    data(socket, data) {},
+    drain(socket) {},
+    close(socket, error) {},
+    error(socket, error) {},
+  },
+});
+```
+
+For performance-sensitive servers, assigning listeners to each socket can cause significant garbage collector pressure and increase memory usage. By contrast, Bun only allocates one handler function for each event and shares it among all sockets. This is a small optimization, but it adds up.
+
 </Accordion>
 
 Attach contextual data to a socket in the `open` handler.
 
-```ts server.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts server.ts icon="/icons/typescript.svg"
 type SocketData = { sessionId: string };
 
 Bun.listen<SocketData>({
@@ -67,7 +70,7 @@ Bun.listen<SocketData>({
 
 To enable TLS, pass a `tls` object containing `key` and `cert` fields.
 
-```ts server.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts server.ts icon="/icons/typescript.svg"
 Bun.listen({
   hostname: "localhost",
   port: 8080,
@@ -82,9 +85,9 @@ Bun.listen({
 });
 ```
 
-The `key` and `cert` fields expect the *contents* of your TLS key and certificate. This can be a string, `BunFile`, `TypedArray`, or `Buffer`.
+The `key` and `cert` fields expect the _contents_ of your TLS key and certificate. This can be a string, `BunFile`, `TypedArray`, or `Buffer`.
 
-```ts server.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts server.ts icon="/icons/typescript.svg"
 Bun.listen({
   // ...
   tls: {
@@ -98,7 +101,7 @@ Bun.listen({
 
 `Bun.listen` returns a server that conforms to the `TCPSocketListener` interface.
 
-```ts server.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts server.ts icon="/icons/typescript.svg"
 const server = Bun.listen({
   /* config*/
 });
@@ -111,13 +114,13 @@ server.stop(true);
 server.unref();
 ```
 
-***
+---
 
 ## Create a connection (`Bun.connect()`)
 
 Use `Bun.connect` to connect to a TCP server. Specify the server with `hostname` and `port`. TCP clients can define the same set of handlers as `Bun.listen`, plus a few client-specific handlers.
 
-```ts server.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts server.ts icon="/icons/typescript.svg"
 // The client
 const socket = await Bun.connect({
   hostname: "localhost",
@@ -140,7 +143,7 @@ const socket = await Bun.connect({
 
 To require TLS, specify `tls: true`.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 // The client
 const socket = await Bun.connect({
   // ... config
@@ -148,48 +151,50 @@ const socket = await Bun.connect({
 });
 ```
 
-***
+---
 
 ## Hot reloading
 
 Both TCP servers and sockets can be hot reloaded with new handlers.
 
 <CodeGroup>
-  ```ts server.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  const server = Bun.listen({
-    /* config */
-  });
 
-  // reloads handlers for all active server-side sockets
-  server.reload({
-    socket: {
-      data() {
-        // new 'data' handler
-      },
-    },
-  });
-  ```
+```ts server.ts icon="/icons/typescript.svg"
+const server = Bun.listen({
+  /* config */
+});
 
-  ```ts client.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  const socket = await Bun.connect({
-    /* config */
-  });
-
-  socket.reload({
+// reloads handlers for all active server-side sockets
+server.reload({
+  socket: {
     data() {
       // new 'data' handler
     },
-  });
-  ```
+  },
+});
+```
+
+```ts client.ts icon="/icons/typescript.svg"
+const socket = await Bun.connect({
+  /* config */
+});
+
+socket.reload({
+  data() {
+    // new 'data' handler
+  },
+});
+```
+
 </CodeGroup>
 
-***
+---
 
 ## Buffering
 
 TCP sockets in Bun do not buffer data, so performance-sensitive code should buffer writes itself. For example, this:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 socket.write("h");
 socket.write("e");
 socket.write("l");
@@ -199,13 +204,13 @@ socket.write("o");
 
 ...performs significantly worse than this:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 socket.write("hello");
 ```
 
 To buffer writes, use Bun's `ArrayBufferSink` with the `{stream: true}` option:
 
-```ts server.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts server.ts icon="/icons/typescript.svg"
 import { ArrayBufferSink } from "bun";
 
 const sink = new ArrayBufferSink();
@@ -231,7 +236,8 @@ queueMicrotask(() => {
 ```
 
 <Note>
-  **Corking**
+**Corking**
 
-  Support for corking is planned, but in the meantime backpressure must be managed manually with the `drain` handler.
+Support for corking is planned, but in the meantime backpressure must be managed manually with the `drain` handler.
+
 </Note>

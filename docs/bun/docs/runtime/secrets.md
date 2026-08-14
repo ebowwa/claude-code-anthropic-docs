@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/runtime/secrets.md
+Downloaded: 2026-08-14T20:31:00.552Z
+-->
 
 # Secrets
 
@@ -10,7 +11,7 @@ Store and retrieve sensitive credentials securely using the operating system's n
 
 <Warning>This API is new and experimental. It may change in the future.</Warning>
 
-```typescript index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```typescript index.ts icon="/icons/typescript.svg"
 import { secrets } from "bun";
 
 let githubToken: string | null = await secrets.get({
@@ -37,15 +38,15 @@ const response = await fetch("https://api.github.com/user", {
 console.log(`Logged in as ${(await response.json()).login}`);
 ```
 
-***
+---
 
 ## Overview
 
 `Bun.secrets` provides a cross-platform API for managing sensitive credentials that CLI tools and development applications typically store in plaintext files like `~/.npmrc`, `~/.aws/credentials`, or `.env`. It uses:
 
-* **macOS**: Keychain Services
-* **Linux**: libsecret (GNOME Keyring, KWallet, and other secret service daemons)
-* **Windows**: Windows Credential Manager
+- **macOS**: Keychain Services
+- **Linux**: libsecret (GNOME Keyring, KWallet, and other secret service daemons)
+- **Windows**: Windows Credential Manager
 
 All operations are asynchronous and non-blocking, running on Bun's threadpool.
 
@@ -54,7 +55,7 @@ All operations are asynchronous and non-blocking, running on Bun's threadpool.
   secrets.
 </Note>
 
-***
+---
 
 ## API
 
@@ -62,7 +63,7 @@ All operations are asynchronous and non-blocking, running on Bun's threadpool.
 
 Retrieve a stored credential.
 
-```typescript theme={"theme":{"light":"github-light","dark":"dracula"}}
+```typescript
 import { secrets } from "bun";
 
 const password = await Bun.secrets.get({
@@ -77,18 +78,18 @@ const password = await Bun.secrets.get("my-app", "alice@example.com");
 
 **Parameters:**
 
-* `options.service` (string, required) - The service or application name
-* `options.name` (string, required) - The username or account identifier
+- `options.service` (string, required) - The service or application name
+- `options.name` (string, required) - The username or account identifier
 
 **Returns:**
 
-* `Promise<string | null>` - The stored password, or `null` if not found
+- `Promise<string | null>` - The stored password, or `null` if not found
 
 ### `Bun.secrets.set(options)`
 
 Store or update a credential.
 
-```typescript theme={"theme":{"light":"github-light","dark":"dracula"}}
+```typescript
 import { secrets } from "bun";
 
 await secrets.set({
@@ -100,20 +101,20 @@ await secrets.set({
 
 **Parameters:**
 
-* `options.service` (string, required) - The service or application name
-* `options.name` (string, required) - The username or account identifier
-* `options.value` (string, required) - The password or secret to store
+- `options.service` (string, required) - The service or application name
+- `options.name` (string, required) - The username or account identifier
+- `options.value` (string, required) - The password or secret to store
 
 **Notes:**
 
-* If a credential already exists for the given service/name combination, it is replaced
-* The stored value is encrypted by the operating system
+- If a credential already exists for the given service/name combination, it is replaced
+- The stored value is encrypted by the operating system
 
 ### `Bun.secrets.delete(options)`
 
 Delete a stored credential.
 
-```typescript theme={"theme":{"light":"github-light","dark":"dracula"}}
+```typescript
 const deleted = await Bun.secrets.delete({
   service: "my-app",
   name: "alice@example.com",
@@ -123,20 +124,20 @@ const deleted = await Bun.secrets.delete({
 
 **Parameters:**
 
-* `options.service` (string, required) - The service or application name
-* `options.name` (string, required) - The username or account identifier
+- `options.service` (string, required) - The service or application name
+- `options.name` (string, required) - The username or account identifier
 
 **Returns:**
 
-* `Promise<boolean>` - `true` if a credential was deleted, `false` if not found
+- `Promise<boolean>` - `true` if a credential was deleted, `false` if not found
 
-***
+---
 
 ## Examples
 
 ### Storing CLI Tool Credentials
 
-```javascript theme={"theme":{"light":"github-light","dark":"dracula"}}
+```javascript
 // Store GitHub CLI token (instead of ~/.config/gh/hosts.yml)
 await Bun.secrets.set({
   service: "my-app.com",
@@ -171,7 +172,7 @@ if (token) {
 
 ### Migrating from Plaintext Config Files
 
-```javascript theme={"theme":{"light":"github-light","dark":"dracula"}}
+```javascript
 // Instead of storing in ~/.aws/credentials
 await Bun.secrets.set({
   service: "aws-cli",
@@ -196,7 +197,7 @@ const apiKey =
 
 ### Error Handling
 
-```javascript theme={"theme":{"light":"github-light","dark":"dracula"}}
+```javascript
 try {
   await Bun.secrets.set({
     service: "my-app",
@@ -220,7 +221,7 @@ if (password === null) {
 
 ### Updating Credentials
 
-```javascript theme={"theme":{"light":"github-light","dark":"dracula"}}
+```javascript
 // Initial password
 await Bun.secrets.set({
   service: "email-server",
@@ -238,30 +239,30 @@ await Bun.secrets.set({
 // The old password is replaced
 ```
 
-***
+---
 
 ## Platform Behavior
 
 ### macOS (Keychain)
 
-* Credentials are stored in the user's login keychain
-* The keychain may prompt for access permission on first use
-* Credentials persist across system restarts
-* Accessible by the user who stored them
+- Credentials are stored in the user's login keychain
+- The keychain may prompt for access permission on first use
+- Credentials persist across system restarts
+- Accessible by the user who stored them
 
 ### Linux (libsecret)
 
-* Requires a secret service daemon such as GNOME Keyring or KWallet
-* Credentials are stored in the default collection
-* May prompt for unlock if the keyring is locked
-* The secret service must be running
+- Requires a secret service daemon such as GNOME Keyring or KWallet
+- Credentials are stored in the default collection
+- May prompt for unlock if the keyring is locked
+- The secret service must be running
 
 ### Windows (Credential Manager)
 
-* Credentials are stored in Windows Credential Manager
-* Visible in Control Panel → Credential Manager → Windows Credentials
-* Persisted with the `CRED_PERSIST_ENTERPRISE` flag, so they're scoped per user
-* Encrypted using Windows Data Protection API
+- Credentials are stored in Windows Credential Manager
+- Visible in Control Panel → Credential Manager → Windows Credentials
+- Persisted with the `CRED_PERSIST_ENTERPRISE` flag, so they're scoped per user
+- Encrypted using Windows Data Protection API
 
 ## Security Considerations
 
@@ -273,36 +274,36 @@ await Bun.secrets.set({
 
 ## Limitations
 
-* Maximum password length varies by platform (typically 2048-4096 bytes)
-* Keep `service` and `name` reasonably short (under 256 characters)
-* Some special characters may need escaping depending on the platform
-* Requires appropriate system services:
-  * Linux: Secret service daemon must be running
-  * macOS: Keychain Access must be available
-  * Windows: Credential Manager service must be enabled
+- Maximum password length varies by platform (typically 2048-4096 bytes)
+- Keep `service` and `name` reasonably short (under 256 characters)
+- Some special characters may need escaping depending on the platform
+- Requires appropriate system services:
+  - Linux: Secret service daemon must be running
+  - macOS: Keychain Access must be available
+  - Windows: Credential Manager service must be enabled
 
-***
+---
 
 ## Comparison with Environment Variables
 
 Unlike environment variables, `Bun.secrets`:
 
-* ✅ Encrypts credentials at rest (thanks to the operating system)
-* ✅ Avoids exposing secrets in process memory dumps (memory is zeroed after it's no longer needed)
-* ✅ Survives application restarts
-* ✅ Can be updated without restarting the application
-* ✅ Provides user-level access control
-* ❌ Requires OS credential service
-* ❌ Not very useful for deployment secrets (use environment variables in production)
+- ✅ Encrypts credentials at rest (thanks to the operating system)
+- ✅ Avoids exposing secrets in process memory dumps (memory is zeroed after it's no longer needed)
+- ✅ Survives application restarts
+- ✅ Can be updated without restarting the application
+- ✅ Provides user-level access control
+- ❌ Requires OS credential service
+- ❌ Not very useful for deployment secrets (use environment variables in production)
 
-***
+---
 
 ## Best Practices
 
 1. **Use descriptive service names**: Match the tool or application name
    If you're building a CLI for external use, use a UTI (Uniform Type Identifier) for the service name.
 
-   ```javascript theme={"theme":{"light":"github-light","dark":"dracula"}}
+   ```javascript
    // Good - matches the actual tool
    { service: "com.docker.hub", name: "username" }
    { service: "com.vercel.cli", name: "team-name" }
@@ -315,16 +316,16 @@ Unlike environment variables, `Bun.secrets`:
    This API is slow; keep non-secret settings in a config file.
 
 3. **Use for local development tools**:
-   * ✅ CLI tools (gh, npm, docker, kubectl)
-   * ✅ Local development servers
-   * ✅ Personal API keys for testing
-   * ❌ Production servers (use proper secret management)
+   - ✅ CLI tools (gh, npm, docker, kubectl)
+   - ✅ Local development servers
+   - ✅ Personal API keys for testing
+   - ❌ Production servers (use proper secret management)
 
-***
+---
 
 ## TypeScript
 
-```typescript theme={"theme":{"light":"github-light","dark":"dracula"}}
+```typescript
 namespace Bun {
   interface SecretsOptions {
     service: string;

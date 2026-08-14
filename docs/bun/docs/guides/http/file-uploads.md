@@ -1,12 +1,13 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/http/file-uploads.md
+Downloaded: 2026-08-14T20:31:00.579Z
+-->
 
 # Upload files via HTTP using FormData
 
 To upload files over HTTP with Bun, use the [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) API. Start with an HTTP server that serves an HTML form.
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 const server = Bun.serve({
   port: 4000,
   async fetch(req) {
@@ -27,11 +28,11 @@ const server = Bun.serve({
 console.log(`Listening on http://localhost:${server.port}`);
 ```
 
-***
+---
 
 Define the HTML form in another file, `index.html`.
 
-```html index.html icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```html index.html icon="file-code"
 <!DOCTYPE html>
 <html>
   <head>
@@ -48,24 +49,25 @@ Define the HTML form in another file, `index.html`.
 </html>
 ```
 
-***
+---
 
 Run the server and visit [`localhost:4000`](http://localhost:4000) to see the form.
 
-```bash theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash
 bun run index.ts
 Listening on http://localhost:4000
 ```
 
-***
+---
 
 The form sends a `POST` request with the form data to the `/action` endpoint. Handle that request in the server.
 
 First, call [`.formData()`](https://developer.mozilla.org/en-US/docs/Web/API/Request/formData) on the incoming `Request` to asynchronously parse its contents into a `FormData` instance. Then use [`.get()`](https://developer.mozilla.org/en-US/docs/Web/API/FormData/get) to extract the `name` and `profilePicture` fields; `name` is a `string` and `profilePicture` is a `Blob`.
 
-Finally, write the `Blob` to disk with [`Bun.write()`](/docs/runtime/file-io#writing-files-bun-write).
+Finally, write the `Blob` to disk with [`Bun.write()`](/runtime/file-io#writing-files-bun-write).
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+{/* prettier-ignore */}
+```ts index.ts icon="/icons/typescript.svg"
 const server = Bun.serve({
   port: 4000,
   async fetch(req) {

@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/pm/cli/audit.md
+Downloaded: 2026-08-14T20:31:00.559Z
+-->
 
 # bun audit
 
@@ -8,7 +9,7 @@
 
 Run the command in a project with a `bun.lock` file:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun audit
 ```
 
@@ -34,19 +35,19 @@ To update all dependencies to the latest versions (including breaking changes):
 
 **`--audit-level=<low|moderate|high|critical>`** - Only show vulnerabilities at this severity level or higher:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun audit --audit-level=high
 ```
 
 **`--prod`** - Audit only production dependencies (excludes devDependencies):
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun audit --prod
 ```
 
 **`--ignore <CVE>`** - Ignore specific CVEs (repeat the flag to ignore several):
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun audit --ignore CVE-2022-25883 --ignore CVE-2023-26136
 ```
 
@@ -54,7 +55,7 @@ bun audit --ignore CVE-2022-25883 --ignore CVE-2023-26136
 
 Use the `--json` flag to print the raw JSON response from the registry instead of the formatted report:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun audit --json
 ```
 

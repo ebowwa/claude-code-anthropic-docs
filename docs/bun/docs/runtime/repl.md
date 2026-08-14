@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/runtime/repl.md
+Downloaded: 2026-08-14T20:31:00.544Z
+-->
 
 # REPL
 
@@ -8,11 +9,11 @@
 
 `bun repl` starts an interactive Read-Eval-Print Loop (REPL) for evaluating JavaScript and TypeScript expressions. Use it to test code snippets, explore APIs, and debug.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun repl
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 Welcome to Bun v1.3.3
 Type .copy [code] to copy to clipboard. .help for more info.
 
@@ -24,19 +25,19 @@ undefined
 'Hello, Bun!'
 ```
 
-***
+---
 
 ## Features
 
-* **TypeScript & JSX** — Write TypeScript and JSX directly. Bun transpiles everything on the fly.
-* **Top-level `await`** — Await promises directly at the prompt without wrapping in an async function.
-* **Syntax highlighting** — Input is highlighted as you type.
-* **Persistent history** — History is saved to `~/.bun_repl_history` and persists across sessions.
-* **Tab completion** — Press `Tab` to complete property names and REPL commands.
-* **Multi-line input** — Unclosed brackets, braces, and parentheses automatically continue on the next line.
-* **Node.js globals** — `require`, `module`, `__dirname`, and `__filename` are available, resolved relative to your current working directory.
+- **TypeScript & JSX** — Write TypeScript and JSX directly. Bun transpiles everything on the fly.
+- **Top-level `await`** — Await promises directly at the prompt without wrapping in an async function.
+- **Syntax highlighting** — Input is highlighted as you type.
+- **Persistent history** — History is saved to `~/.bun_repl_history` and persists across sessions.
+- **Tab completion** — Press `Tab` to complete property names and REPL commands.
+- **Multi-line input** — Unclosed brackets, braces, and parentheses automatically continue on the next line.
+- **Node.js globals** — `require`, `module`, `__dirname`, and `__filename` are available, resolved relative to your current working directory.
 
-***
+---
 
 ## Special variables
 
@@ -47,7 +48,7 @@ The REPL exposes two special variables that update after each evaluation.
 | `_`      | The result of the last expression |
 | `_error` | The last error that was thrown    |
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 > 2 + 2
 4
 > _ * 10
@@ -58,13 +59,13 @@ SyntaxError: JSON Parse error: Unexpected identifier "oops"
 SyntaxError: JSON Parse error: Unexpected identifier "oops"
 ```
 
-***
+---
 
 ## Top-level `await`
 
 You can `await` any expression directly at the prompt.
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 > await fetch("https://api.github.com/repos/oven-sh/bun").then(r => r.json()).then(r => r.stargazers_count)
 81234
 > const response = await fetch("https://example.com")
@@ -73,13 +74,13 @@ undefined
 200
 ```
 
-***
+---
 
 ## Importing modules
 
 Just like Bun's runtime, the REPL accepts both `require` and `import`: mix ES modules and CommonJS freely at the prompt. Module resolution uses the same rules as `bun run`, so you can import from `node_modules`, relative paths, or `node:` builtins.
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 > import { z } from "zod"
 undefined
 > const path = require("path")
@@ -90,13 +91,13 @@ undefined
 
 Declarations persist for the rest of the session, and `const`/`let` can be redeclared across evaluations (unlike in regular scripts), so you can re-run `import` and `require` statements while iterating.
 
-***
+---
 
 ## Multi-line input
 
 When you press `Enter` on a line with unclosed brackets, braces, or parentheses, the REPL automatically continues on the next line. The prompt changes to `...` to indicate continuation.
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 > function add(a, b) {
 ...   return a + b;
 ... }
@@ -107,7 +108,7 @@ undefined
 
 For longer multi-line entries, use `.editor` to enter editor mode, which buffers all input until you press `Ctrl+D`.
 
-***
+---
 
 ## REPL commands
 
@@ -125,7 +126,7 @@ Type `.help` at the prompt to see all available REPL commands.
 | `.break`   | Cancel the current multi-line input                                                              |
 | `.history` | Print the command history                                                                        |
 
-***
+---
 
 ## Keybindings
 
@@ -147,7 +148,7 @@ The REPL supports Emacs-style line editing.
 | `Tab`               | Auto-complete                                            |
 | `Ctrl+C`            | Cancel current input (press twice on empty line to exit) |
 
-***
+---
 
 ## History
 
@@ -155,17 +156,17 @@ REPL history is automatically saved to `~/.bun_repl_history` (up to 1000 entries
 
 To export your history to a different file, use `.save`:
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 > .save ./my-session.txt
 ```
 
-***
+---
 
 ## Non-interactive mode
 
 Use `-e` / `--eval` to evaluate a script with REPL semantics and exit. Use `-p` / `--print` to additionally print the result.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun repl -e "const x: number = 42; console.log(x)"
 # 42
 

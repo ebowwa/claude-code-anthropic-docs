@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/deployment/vercel.md
+Downloaded: 2026-08-14T20:31:00.568Z
+-->
 
 # Deploy a Bun application on Vercel
 
@@ -16,82 +17,82 @@
   Hono, or Nitro.
 </Note>
 
-***
+---
 
 <Steps>
-  <Step title="Configure Bun in vercel.json">
-    To enable the Bun runtime for your Functions, add a `bunVersion` field in your `vercel.json` file:
+	<Step title="Configure Bun in vercel.json">
+		To enable the Bun runtime for your Functions, add a `bunVersion` field in your `vercel.json` file:
 
-    ```json vercel.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
-    {
-    	"bunVersion": "1.x" // [!code ++]
-    }
-    ```
-
-    Vercel automatically detects this configuration and runs your application on Bun. The value must be `"1.x"`; Vercel handles the minor version internally.
-
-    For best results, match your local Bun version with the version used by Vercel.
-  </Step>
-
-  <Step title="Next.js configuration">
-    If you’re deploying a **Next.js** project (including ISR), update your `package.json` scripts to use the Bun runtime:
-
-    ```json package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
-    {
-    	"scripts": {
-    		"dev": "bun --bun next dev", // [!code ++]
-    		"build": "bun --bun next build" // [!code ++]
+    	```json vercel.json icon="file-json"
+    	{
+    		"bunVersion": "1.x" // [!code ++]
     	}
-    }
-    ```
+    	```
 
-    <Note>
-      The `--bun` flag runs the Next.js CLI under Bun. Bundling (with Turbopack or Webpack) is unchanged.
-    </Note>
+    	Vercel automatically detects this configuration and runs your application on Bun. The value must be `"1.x"`; Vercel handles the minor version internally.
 
-    With these scripts, both local development and builds use Bun.
-  </Step>
+    	For best results, match your local Bun version with the version used by Vercel.
+    </Step>
 
-  <Step title="Deploy your app">
-    Connect your repository to Vercel, or deploy from the CLI:
+    <Step title="Next.js configuration">
+    	If you’re deploying a **Next.js** project (including ISR), update your `package.json` scripts to use the Bun runtime:
 
-    ```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-    # Using bunx (no global install)
-    bunx vercel login
-    bunx vercel deploy
-    ```
+    	```json package.json icon="file-json"
+    	{
+    		"scripts": {
+    			"dev": "bun --bun next dev", // [!code ++]
+    			"build": "bun --bun next build" // [!code ++]
+    		}
+    	}
+    	```
 
-    Or install the Vercel CLI globally:
+    	<Note>
+    		The `--bun` flag runs the Next.js CLI under Bun. Bundling (with Turbopack or Webpack) is unchanged.
+    	</Note>
 
-    ```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-    bun i -g vercel
-    vercel login
-    vercel deploy
-    ```
+    	With these scripts, both local development and builds use Bun.
+    </Step>
 
-    [Learn more in the Vercel Deploy CLI documentation →](https://vercel.com/docs/cli/deploy)
-  </Step>
+    <Step title="Deploy your app">
+    	Connect your repository to Vercel, or deploy from the CLI:
 
-  <Step title="Verify the runtime">
-    To confirm your deployment uses Bun, log the Bun version:
+    	```bash terminal icon="terminal"
+    	# Using bunx (no global install)
+    	bunx vercel login
+    	bunx vercel deploy
+    	```
 
-    ```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
-    console.log("runtime", process.versions.bun);
-    ```
+    	Or install the Vercel CLI globally:
 
-    ```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
-    runtime 1.3.3
-    ```
+    	```bash terminal icon="terminal"
+    	bun i -g vercel
+    	vercel login
+    	vercel deploy
+    	```
 
-    [See the Vercel Bun Runtime documentation for feature support →](https://vercel.com/docs/functions/runtimes/bun#feature-support)
-  </Step>
+    	[Learn more in the Vercel Deploy CLI documentation →](https://vercel.com/docs/cli/deploy)
+    </Step>
+
+    <Step title="Verify the runtime">
+    	To confirm your deployment uses Bun, log the Bun version:
+
+    	```ts index.ts icon="/icons/typescript.svg"
+    	console.log("runtime", process.versions.bun);
+    	```
+    	```txt
+    	runtime 1.3.3
+    	```
+
+    	[See the Vercel Bun Runtime documentation for feature support →](https://vercel.com/docs/functions/runtimes/bun#feature-support)
+    </Step>
+
 </Steps>
 
-***
+---
 
-* [Fluid compute](https://vercel.com/docs/fluid-compute): Both Bun and Node.js runtimes run on Fluid compute and support the same core Vercel Functions features.
-* [Middleware](https://vercel.com/docs/routing-middleware): To run Routing Middleware with Bun, set the runtime to `nodejs`:
+- [Fluid compute](https://vercel.com/docs/fluid-compute): Both Bun and Node.js runtimes run on Fluid compute and support the same core Vercel Functions features.
+- [Middleware](https://vercel.com/docs/routing-middleware): To run Routing Middleware with Bun, set the runtime to `nodejs`:
 
-```ts middleware.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts middleware.ts icon="/icons/typescript.svg"
 export const config = { runtime: "nodejs" }; // [!code ++]
 ```

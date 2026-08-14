@@ -1,27 +1,28 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/ecosystem/systemd.md
+Downloaded: 2026-08-14T20:31:00.577Z
+-->
 
 # Run Bun as a daemon with systemd
 
 [systemd](https://systemd.io) is an init system and service manager for Linux. It manages the startup and control of system processes and services.
 
-***
+---
 
-To run a Bun application as a daemon with **systemd**, create a *service file* in `/lib/systemd/system/`.
+To run a Bun application as a daemon with **systemd**, create a _service file_ in `/lib/systemd/system/`.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 cd /lib/systemd/system
 touch my-app.service
 ```
 
-***
+---
 
 Here is a typical service file that runs an application on system start. Use it as a template for your own service. Replace `YOUR_USER` with the name of the user to run the application as. To run as `root`, replace `YOUR_USER` with `root`, though this is not recommended for security reasons.
 
 Refer to the [systemd documentation](https://www.freedesktop.org/software/systemd/man/systemd.service.html) for details on each setting.
 
-```ini my-app.service icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ini my-app.service icon="file-code"
 [Unit]
 # describe the app
 Description=My App
@@ -48,39 +49,39 @@ Restart=always
 WantedBy=multi-user.target
 ```
 
-***
+---
 
 If your application starts a webserver, non-`root` users cannot listen on ports 80 or 443 by default. To permanently allow Bun to listen on these ports when run by a non-`root` user, use the following command. This step isn't necessary when running as `root`.
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 setcap CAP_NET_BIND_SERVICE=+eip ~/.bun/bin/bun
 ```
 
-***
+---
 
-With the service file configured, *enable* the service. Once enabled, it starts automatically on reboot. This requires `sudo` permissions.
+With the service file configured, _enable_ the service. Once enabled, it starts automatically on reboot. This requires `sudo` permissions.
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 systemctl enable my-app
 ```
 
-***
+---
 
-To start the service without rebooting, *start* it manually.
+To start the service without rebooting, _start_ it manually.
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 systemctl start my-app
 ```
 
-***
+---
 
 Check the status of your application with `systemctl status`. If the app started successfully, the output looks like this:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 systemctl status my-app
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 ● my-app.service - My App
      Loaded: loaded (/lib/systemd/system/my-app.service; enabled; preset: enabled)
      Active: active (running) since Thu 2023-10-12 11:34:08 UTC; 1h 8min ago
@@ -92,19 +93,19 @@ systemctl status my-app
              └─309641 /home/YOUR_USER/.bun/bin/bun run /home/YOUR_USER/application/index.ts
 ```
 
-***
+---
 
 To update the service, edit the service file, then reload the daemon.
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 systemctl daemon-reload
 ```
 
-***
+---
 
 For a complete guide to service unit configuration, see the [systemd.service documentation](https://www.freedesktop.org/software/systemd/man/systemd.service.html). Or use this cheatsheet of common commands:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 systemctl daemon-reload # tell systemd that some files got changed
 systemctl enable my-app # enable the app (to allow auto-start)
 systemctl disable my-app # disable the app (turns off auto-start)

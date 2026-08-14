@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/runtime/workers.md
+Downloaded: 2026-08-14T20:31:00.550Z
+-->
 
 # Workers
 
@@ -21,7 +22,7 @@ Like in browsers, [`Worker`](https://developer.mozilla.org/en-US/docs/Web/API/Wo
 
 ### From the main thread
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 const worker = new Worker("./worker.ts");
 
 worker.postMessage("hello");
@@ -32,7 +33,7 @@ worker.onmessage = event => {
 
 ### Worker thread
 
-```ts worker.ts icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts worker.ts icon="file-code"
 // prevents TS errors
 declare var self: Worker;
 
@@ -44,7 +45,7 @@ self.onmessage = (event: MessageEvent) => {
 
 To prevent TypeScript errors when using `self`, add this line to the top of your worker file.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 declare var self: Worker;
 ```
 
@@ -52,7 +53,7 @@ You can use `import` and `export` syntax in your worker code. Unlike in browsers
 
 If the worker's script fails to resolve, an `"error"` event is emitted on the `Worker` object.
 
-```js theme={"theme":{"light":"github-light","dark":"dracula"}}
+```js
 const worker = new Worker("/not-found.js");
 worker.addEventListener("error", event => {
   console.log(event.message);
@@ -65,7 +66,7 @@ The specifier passed to `Worker` is resolved relative to the project root (like 
 
 Pass an array of module specifiers to the `preload` option to load them before the worker's own code runs, like the `--preload` CLI argument. Use it for code that must load first, such as OpenTelemetry, Sentry, or DataDog.
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 const worker = new Worker("./worker.ts", {
   preload: ["./load-sentry.js"],
 });
@@ -73,7 +74,7 @@ const worker = new Worker("./worker.ts", {
 
 You can also pass a single string to the `preload` option:
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 const worker = new Worker("./worker.ts", {
   preload: "./load-sentry.js",
 });
@@ -83,7 +84,7 @@ const worker = new Worker("./worker.ts", {
 
 You can also pass a `blob:` URL to `Worker` to create a worker from a string or other in-memory source.
 
-```js theme={"theme":{"light":"github-light","dark":"dracula"}}
+```js
 const blob = new Blob([`self.onmessage = (event: MessageEvent) => postMessage(event.data)`], {
   type: "application/typescript",
 });
@@ -93,7 +94,7 @@ const worker = new Worker(url);
 
 Like the rest of Bun, workers created from `blob:` URLs support TypeScript, JSX, and other file types. To tell Bun the source is TypeScript, set the `type` on the `Blob` or pass a `filename` to the `File` constructor.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const file = new File([`self.onmessage = (event: MessageEvent) => postMessage(event.data)`], "worker.ts");
 const url = URL.createObjectURL(file);
 const worker = new Worker(url);
@@ -103,7 +104,7 @@ const worker = new Worker(url);
 
 The `"open"` event is emitted when a worker is created and ready to receive messages. (This event does not exist in browsers.)
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 const worker = new Worker(new URL("worker.ts", import.meta.url).href);
 
 worker.addEventListener("open", () => {
@@ -127,16 +128,16 @@ Bun has fast paths for `postMessage` with common data types:
 
 The simple object fast path activates when the object:
 
-* Is a plain object with no prototype chain modifications
-* Contains only enumerable, configurable data properties
-* Has no indexed properties or getter/setter methods
-* All property values are primitives or strings
+- Is a plain object with no prototype chain modifications
+- Contains only enumerable, configurable data properties
+- Has no indexed properties or getter/setter methods
+- All property values are primitives or strings
 
 With these fast paths, Bun's `postMessage` performs **2-241x faster** because the message length no longer has a meaningful impact on performance.
 
 **Bun (with fast paths):**
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 postMessage({ prop: 11 chars string, ...9 more props }) - 648ns
 postMessage({ prop: 14 KB string, ...9 more props })    - 719ns
 postMessage({ prop: 3 MB string, ...9 more props })     - 1.26µs
@@ -144,13 +145,13 @@ postMessage({ prop: 3 MB string, ...9 more props })     - 1.26µs
 
 **Node.js v24.6.0 (for comparison):**
 
-```js theme={"theme":{"light":"github-light","dark":"dracula"}}
+```js
 postMessage({ prop: 11 chars string, ...9 more props }) - 1.19µs
 postMessage({ prop: 14 KB string, ...9 more props })    - 2.69µs
 postMessage({ prop: 3 MB string, ...9 more props })     - 304µs
 ```
 
-```js theme={"theme":{"light":"github-light","dark":"dracula"}}
+```js
 // String fast path - optimized
 postMessage("Hello, worker!");
 
@@ -170,7 +171,7 @@ postMessage({
 });
 ```
 
-```js theme={"theme":{"light":"github-light","dark":"dracula"}}
+```js
 // On the worker thread, `postMessage` is automatically "routed" to the parent thread.
 postMessage({ hello: "world" });
 
@@ -180,7 +181,7 @@ worker.postMessage({ hello: "world" });
 
 To receive messages, use the [`message` event handler](https://developer.mozilla.org/en-US/docs/Web/API/Worker/message_event) on the worker and main thread.
 
-```js theme={"theme":{"light":"github-light","dark":"dracula"}}
+```js
 // Worker thread:
 self.addEventListener("message", event => {
   console.log(event.data);
@@ -200,7 +201,7 @@ worker.addEventListener("message", event => {
 
 A `Worker` instance terminates automatically once its event loop has no work left to do. Attaching a `"message"` listener on the global or any `MessagePort`s keeps the event loop alive. To forcefully terminate a `Worker`, call `worker.terminate()`.
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 const worker = new Worker(new URL("worker.ts", import.meta.url).href);
 
 // ...some time later
@@ -217,7 +218,7 @@ A worker can terminate itself with `process.exit()`. This does not terminate the
 
 The `"close"` event is emitted when a worker has been marked as terminated; the worker itself can take some time to fully exit. The `CloseEvent` contains the exit code passed to `process.exit()`, or 0 if it closed for another reason.
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 const worker = new Worker(new URL("worker.ts", import.meta.url).href);
 
 worker.addEventListener("close", event => {
@@ -235,7 +236,7 @@ By default, an active `Worker` keeps the main (spawning) process alive, so async
 
 To stop a running worker from keeping the process alive, call `worker.unref()`. This decouples the worker's lifetime from the main process's, matching the behavior of Node.js' `worker_threads`.
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 const worker = new Worker(new URL("worker.ts", import.meta.url).href);
 worker.unref();
 ```
@@ -246,7 +247,7 @@ worker.unref();
 
 To keep the process alive until the `Worker` terminates, call `worker.ref()`. Workers are ref'd by default; a ref'd worker still needs something on its event loop (such as a `"message"` listener) to continue running.
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 const worker = new Worker(new URL("worker.ts", import.meta.url).href);
 worker.unref();
 // later...
@@ -255,7 +256,7 @@ worker.ref();
 
 Alternatively, you can also pass an `options` object to `Worker`:
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 const worker = new Worker(new URL("worker.ts", import.meta.url).href, {
   ref: false,
 });
@@ -267,7 +268,7 @@ const worker = new Worker(new URL("worker.ts", import.meta.url).href, {
 
 Bun's `Worker` supports a `smol` mode that reduces memory usage at a cost of performance. To enable it, pass `smol: true` in the `Worker` constructor's `options` object.
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 const worker = new Worker("./i-am-smol.ts", {
   smol: true,
 });
@@ -281,7 +282,7 @@ const worker = new Worker("./i-am-smol.ts", {
 
 Share data between the main thread and workers using `setEnvironmentData()` and `getEnvironmentData()`.
 
-```ts title="index.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="index.ts" icon="/icons/typescript.svg"
 import { setEnvironmentData, getEnvironmentData } from "worker_threads";
 
 // In main thread
@@ -296,7 +297,7 @@ console.log(config); // => { apiUrl: "https://api.example.com" }
 
 Listen for worker creation events using `process.on()`:
 
-```ts title="index.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="index.ts" icon="/icons/typescript.svg"
 process.on("worker", worker => {
   console.log("New worker created:", worker.threadId);
 });
@@ -306,7 +307,7 @@ process.on("worker", worker => {
 
 Check `Bun.isMainThread` to tell whether you're on the main thread.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 if (Bun.isMainThread) {
   console.log("I'm the main thread");
 } else {

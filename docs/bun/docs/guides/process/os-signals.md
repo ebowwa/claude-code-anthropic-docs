@@ -1,22 +1,23 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/process/os-signals.md
+Downloaded: 2026-08-14T20:31:00.582Z
+-->
 
 # Listen to OS signals
 
 Bun supports the Node.js `process` global, including the `process.on()` method for listening to OS signals.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 process.on("SIGINT", () => {
   console.log("Received SIGINT");
 });
 ```
 
-***
+---
 
 If you don't know which signal to listen for, listen for the [`"beforeExit"`](https://nodejs.org/api/process.html#event-beforeexit) and [`"exit"`](https://nodejs.org/api/process.html#event-exit) events.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 process.on("beforeExit", code => {
   console.log(`Event loop is empty!`);
 });
@@ -26,6 +27,6 @@ process.on("exit", code => {
 });
 ```
 
-***
+---
 
-See [Utils](/docs/runtime/utils) for more utilities.
+See [Utils](/runtime/utils) for more utilities.

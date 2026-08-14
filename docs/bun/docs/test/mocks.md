@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/test/mocks.md
+Downloaded: 2026-08-14T20:31:00.567Z
+-->
 
 # Mocks
 
@@ -12,7 +13,7 @@ Mocking replaces a dependency with a controlled implementation. Bun supports fun
 
 Create mocks with the `mock` function.
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 import { test, expect, mock } from "bun:test";
 
 const random = mock(() => Math.random());
@@ -29,7 +30,7 @@ test("random", () => {
 
 You can also use `jest.fn()`, as in Jest. It behaves identically.
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 import { test, expect, jest } from "bun:test";
 
 const random = jest.fn(() => Math.random());
@@ -46,7 +47,7 @@ test("random", () => {
 
 `mock()` returns a new function decorated with additional properties.
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 import { mock } from "bun:test";
 
 const random = mock((multiplier: number) => multiplier * Math.random());
@@ -95,7 +96,7 @@ Mock functions implement the following properties and methods:
 
 #### Basic Mock Usage
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 import { test, expect, mock } from "bun:test";
 
 test("mock function behavior", () => {
@@ -125,7 +126,7 @@ test("mock function behavior", () => {
 
 #### Dynamic Mock Implementations
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 import { test, expect, mock } from "bun:test";
 
 test("dynamic mock implementations", () => {
@@ -145,7 +146,7 @@ test("dynamic mock implementations", () => {
 
 #### Async Mocks
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 import { test, expect, mock } from "bun:test";
 
 test("async mock functions", async () => {
@@ -170,7 +171,7 @@ test("async mock functions", async () => {
 
 Use `spyOn()` to track calls to a function without replacing it with a mock. Spies can be passed to `.toHaveBeenCalled()` and `.toHaveBeenCalledTimes()`.
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 import { test, expect, spyOn } from "bun:test";
 
 const ringo = {
@@ -191,7 +192,7 @@ test("spyon", () => {
 
 ### Advanced Spy Usage
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 import { test, expect, spyOn, afterEach } from "bun:test";
 
 class UserService {
@@ -245,7 +246,7 @@ test("spy with mock implementation", async () => {
 
 Use `mock.module(path: string, callback: () => Object)` to override the behavior of a module.
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 import { test, expect, mock } from "bun:test";
 
 mock.module("./module", () => {
@@ -269,7 +270,7 @@ Like the rest of Bun, module mocks support both `import` and `require`.
 
 Calling `mock.module()` overrides the module even if it has already been imported.
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 import { test, expect, mock } from "bun:test";
 
 // The module we're going to mock is here:
@@ -299,7 +300,7 @@ test("mock.module", async () => {
 
 To make sure a module is mocked before it's imported, use `--preload` to load your mocks before your tests run.
 
-```ts title="my-preload.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="my-preload.ts" icon="/icons/typescript.svg"
 import { mock } from "bun:test";
 
 mock.module("./module", () => {
@@ -309,13 +310,13 @@ mock.module("./module", () => {
 });
 ```
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun test --preload ./my-preload
 ```
 
 To avoid typing `--preload` every time you run tests, add it to your `bunfig.toml`:
 
-```toml title="bunfig.toml" icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml title="bunfig.toml" icon="settings"
 [test]
 # Load these modules before running tests.
 preload = ["./my-preload"]
@@ -331,7 +332,7 @@ To prevent the original module from being evaluated at all, use `--preload` to l
 
 #### Practical Module Mock Examples
 
-```ts title="api-client.test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="api-client.test.ts" icon="/icons/typescript.svg"
 import { test, expect, mock, beforeEach } from "bun:test";
 
 // Mock the API client module
@@ -355,7 +356,7 @@ test("user service with mocked API", async () => {
 
 #### Mocking External Dependencies
 
-```ts title="database.test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="database.test.ts" icon="/icons/typescript.svg"
 import { test, expect, mock } from "bun:test";
 
 // Mock external database library
@@ -387,7 +388,7 @@ test("database operations", async () => {
 
 `mock.clearAllMocks()` resets the `.mock.calls`, `.mock.instances`, `.mock.contexts`, and `.mock.results` properties of every mock. Unlike `mock.restore()`, it does not restore the original implementation:
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 import { expect, mock, test } from "bun:test";
 
 const random1 = mock(() => Math.random());
@@ -415,7 +416,7 @@ test("clearing all mocks", () => {
 
 `jest.resetAllMocks()` (and its `vi.resetAllMocks()` alias) calls `mockFn.mockReset()` on every mock: on top of what `clearAllMocks()` does, it drops the implementations set by `mockImplementation()`, `mockReturnValue()` and friends. It does not restore the original implementation of a spy:
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 import { expect, jest, test } from "bun:test";
 
 const random = jest.fn(() => Math.random());
@@ -436,7 +437,7 @@ test("resetting all mocks", () => {
 
 `mock.restore()` restores every mock at once, instead of calling `mockFn.mockRestore()` on each one. It does not reset modules overridden with `mock.module()`.
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 import { expect, mock, spyOn, test } from "bun:test";
 
 import * as fooModule from "./foo.ts";
@@ -477,7 +478,7 @@ Call `mock.restore()` in an `afterEach` block, or in your test preload script, i
 
 For added compatibility with tests written for Vitest, Bun provides the `vi` object as an alias for parts of the Jest mocking API:
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 import { test, expect, vi } from "bun:test";
 
 // Using the 'vi' alias similar to Vitest
@@ -513,14 +514,14 @@ The mock factory callback is only evaluated when the module is imported or requi
 
 Bun resolves the module specifier the same way it resolves an `import`, supporting:
 
-* Relative paths (`'./module'`)
-* Absolute paths (`'/path/to/module'`)
-* Package names (`'lodash'`)
+- Relative paths (`'./module'`)
+- Absolute paths (`'/path/to/module'`)
+- Package names (`'lodash'`)
 
 ### Import Timing Effects
 
-* **When mocking before first import**: No side effects from the original module occur
-* **When mocking after import**: The original module's side effects have already happened
+- **When mocking before first import**: No side effects from the original module occur
+- **When mocking after import**: The original module's side effects have already happened
 
 For this reason, use `--preload` for mocks that need to prevent side effects.
 
@@ -532,7 +533,7 @@ Mocked ESM modules maintain live bindings, so changing the mock updates all exis
 
 ### Factory Functions
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 import { mock } from "bun:test";
 
 function createMockUser(overrides = {}) {
@@ -553,7 +554,7 @@ const mockUserService = {
 
 ### Conditional Mocking
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 import { test, expect, mock } from "bun:test";
 
 const shouldUseMockApi = process.env.NODE_ENV === "test";
@@ -576,7 +577,7 @@ test("conditional API usage", async () => {
 
 ### Mock Cleanup Patterns
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 import { afterEach, beforeEach } from "bun:test";
 
 beforeEach(() => {
@@ -599,7 +600,7 @@ afterEach(() => {
 
 ### Keep Mocks Simple
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 // Good: Simple, focused mock
 const mockUserApi = {
   getUser: mock(async id => ({ id, name: "Test User" })),
@@ -618,7 +619,7 @@ const complexMock = mock(input => {
 
 ### Use Type-Safe Mocks
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 interface UserService {
   getUser(id: string): Promise<User>;
   createUser(data: CreateUserData): Promise<User>;
@@ -632,7 +633,7 @@ const mockUserService: UserService = {
 
 ### Test Mock Behavior
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 test("service calls API correctly", async () => {
   const mockApi = { fetchUser: mock(async () => ({ id: "1" })) };
 

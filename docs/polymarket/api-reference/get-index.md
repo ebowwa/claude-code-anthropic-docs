@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-index.md
-Downloaded: 2026-08-07T00:52:23.800Z
+Downloaded: 2026-08-14T20:31:01.247Z
 -->
 
 > ## Documentation Index
@@ -11,7 +11,6 @@ Downloaded: 2026-08-07T00:52:23.800Z
 
 > Get index price and the list of constituents for an asset.
 
-<Badge color="gray" size="md">Request Weight: **2**</Badge>
 
 
 ## OpenAPI

@@ -1,21 +1,22 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/write-file/blob.md
+Downloaded: 2026-08-14T20:31:00.591Z
+-->
 
 # Write a Blob to a file
 
-Use [`Bun.write()`](/docs/runtime/file-io#writing-files-bun-write) to write a `Blob` to disk. The first argument is a *destination*, like an absolute path or `BunFile` instance. The second argument is the *data* to write.
+Use [`Bun.write()`](/runtime/file-io#writing-files-bun-write) to write a `Blob` to disk. The first argument is a _destination_, like an absolute path or `BunFile` instance. The second argument is the _data_ to write.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const path = "/path/to/file.txt";
 await Bun.write(path, "Lorem ipsum");
 ```
 
-***
+---
 
 The `BunFile` class extends `Blob`, so you can pass a `BunFile` directly into `Bun.write()` as well.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const path = "./out.txt";
 const data = Bun.file("./in.txt");
 
@@ -23,6 +24,6 @@ const data = Bun.file("./in.txt");
 await Bun.write(path, data);
 ```
 
-***
+---
 
-See [`Bun.write()`](/docs/runtime/file-io#writing-files-bun-write).
+See [`Bun.write()`](/runtime/file-io#writing-files-bun-write).

@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/runtime/nodejs-compat.md
+Downloaded: 2026-08-14T20:31:00.556Z
+-->
 
 # Node.js Compatibility
 
@@ -10,7 +11,7 @@ Every day, Bun gets closer to 100% Node.js API compatibility. Popular frameworks
 
 **If a package works in Node.js but doesn't work in Bun, we consider it a bug in Bun.** [Open an issue](https://bun.com/issues) and we'll fix it.
 
-This page is updated regularly and reflects the latest version of Bun's compatibility with *Node.js v23*.
+This page is updated regularly and reflects the latest version of Bun's compatibility with _Node.js v23_.
 
 ## Built-in Node.js modules
 
@@ -64,7 +65,7 @@ This page is updated regularly and reflects the latest version of Bun's compatib
 
 ### [`node:punycode`](https://nodejs.org/api/punycode.html)
 
-🟢 Fully implemented. 100% of Node.js's test suite passes, *deprecated by Node.js*.
+🟢 Fully implemented. 100% of Node.js's test suite passes, _deprecated by Node.js_.
 
 ### [`node:querystring`](https://nodejs.org/api/querystring.html)
 
@@ -124,7 +125,7 @@ This page is updated regularly and reflects the latest version of Bun's compatib
 
 ### [`node:module`](https://nodejs.org/api/module.html)
 
-🟡 Missing `syncBuiltinESMExports`, `Module#load()`. Overriding `require.cache` is supported for ESM & CJS modules. `module._extensions`, `module._pathCache`, `module._cache` are no-ops. `module.register` is not implemented; we recommend [`Bun.plugin`](/docs/runtime/plugins) instead.
+🟡 Missing `syncBuiltinESMExports`, `Module#load()`. Overriding `require.cache` is supported for ESM & CJS modules. `module._extensions`, `module._pathCache`, `module._cache` are no-ops. `module.register` is not implemented; we recommend [`Bun.plugin`](/runtime/plugins) instead.
 
 ### [`node:net`](https://nodejs.org/api/net.html)
 
@@ -152,7 +153,7 @@ This page is updated regularly and reflects the latest version of Bun's compatib
 
 ### [`node:v8`](https://nodejs.org/api/v8.html)
 
-🟡 `writeHeapSnapshot` and `getHeapSnapshot` are implemented. `serialize` and `deserialize` use JavaScriptCore's wire format instead of V8's. Other methods are not implemented. For profiling, use [`bun:jsc`](/docs/project/benchmarking#javascript-heap-stats) instead.
+🟡 `writeHeapSnapshot` and `getHeapSnapshot` are implemented. `serialize` and `deserialize` use JavaScriptCore's wire format instead of V8's. Other methods are not implemented. For profiling, use [`bun:jsc`](/project/benchmarking#javascript-heap-stats) instead.
 
 ### [`node:vm`](https://nodejs.org/api/vm.html)
 
@@ -180,7 +181,7 @@ This page is updated regularly and reflects the latest version of Bun's compatib
 
 ### [`node:test`](https://nodejs.org/api/test.html)
 
-🟡 Partially implemented. The in-process API works when test files run under `bun test`: tests, suites, subtests, hooks, `t.plan()`, `t.assert`, `assert.register()`, `t.waitFor()`, `getTestContext()`, and `t.mock` (function/method/getter/setter/property mocks and mock timers). Missing `run()`, `node:test/reporters`, snapshot testing, `mock.module()`, code coverage, `--test-only`, test-level `signal`/`t.signal` abort, and Node's `--test` CLI runner mode. `test.only()` / `{only: true}` are accepted but do not filter. `concurrency` is validated but subtests always run serially. Use [`bun:test`](/docs/test) instead.
+🟡 Partially implemented. The in-process API works when test files run under `bun test`: tests, suites, subtests, hooks, `t.plan()`, `t.assert`, `assert.register()`, `t.waitFor()`, `getTestContext()`, and `t.mock` (function/method/getter/setter/property mocks and mock timers). Missing `run()`, `node:test/reporters`, snapshot testing, `mock.module()`, code coverage, `--test-only`, test-level `signal`/`t.signal` abort, and Node's `--test` CLI runner mode. `test.only()` / `{only: true}` are accepted but do not filter. `concurrency` is validated but subtests always run serially. Use [`bun:test`](/test) instead.
 
 ### [`node:trace_events`](https://nodejs.org/api/tracing.html)
 

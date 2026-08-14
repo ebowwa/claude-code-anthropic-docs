@@ -1,12 +1,13 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/process/spawn-stderr.md
+Downloaded: 2026-08-14T20:31:00.581Z
+-->
 
 # Read stderr from a child process
 
-When you spawn a child process with [`Bun.spawn()`](/docs/runtime/child-process), it inherits the `stderr` of the spawning process. To read and handle `stderr` instead, set the `stderr` option to `"pipe"`.
+When you spawn a child process with [`Bun.spawn()`](/runtime/child-process), it inherits the `stderr` of the spawning process. To read and handle `stderr` instead, set the `stderr` option to `"pipe"`.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const proc = Bun.spawn(["echo", "hello"], {
   stderr: "pipe",
 });
@@ -14,11 +15,11 @@ const proc = Bun.spawn(["echo", "hello"], {
 proc.stderr; // => ReadableStream
 ```
 
-***
+---
 
 To read `stderr` until the child process exits, use `.text()`.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const proc = Bun.spawn(["echo", "hello"], {
   stderr: "pipe",
 });
@@ -29,6 +30,6 @@ if (errors) {
 }
 ```
 
-***
+---
 
-See [Child processes](/docs/runtime/child-process).
+See [Child processes](/runtime/child-process).

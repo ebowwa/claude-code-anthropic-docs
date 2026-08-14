@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/set-auto-cancel.md
-Downloaded: 2026-08-07T00:52:23.810Z
+Downloaded: 2026-08-14T20:31:01.249Z
 -->
 
 > ## Documentation Index
@@ -26,7 +26,6 @@ trigger count, call [Get Auto-Cancel Status](/api-reference/get-auto-cancel-stat
 Requires proxy signature, see [proxy signing](/http/signing#2-proxy-signing).
 
 
-<Badge color="gray" size="md">Request Weight: **1**</Badge> <Badge color="gray" size="md">Action Weight: **10**</Badge>
 
 
 ## OpenAPI

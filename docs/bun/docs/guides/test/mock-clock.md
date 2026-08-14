@@ -1,12 +1,13 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/test/mock-clock.md
+Downloaded: 2026-08-14T20:31:00.586Z
+-->
 
 # Set the system time in Bun's test runner
 
 Set the system time in tests with the `setSystemTime` function from `bun:test`.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import { test, expect, setSystemTime } from "bun:test";
 
 test("party like it's 1999", () => {
@@ -20,11 +21,11 @@ test("party like it's 1999", () => {
 });
 ```
 
-***
+---
 
-Call `setSystemTime` in a [lifecycle hook](/docs/test/lifecycle) like `beforeAll` to give your tests a deterministic "fake clock".
+Call `setSystemTime` in a [lifecycle hook](/test/lifecycle) like `beforeAll` to give your tests a deterministic "fake clock".
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import { test, expect, beforeAll, setSystemTime } from "bun:test";
 
 beforeAll(() => {
@@ -35,16 +36,16 @@ beforeAll(() => {
 // tests...
 ```
 
-***
+---
 
 To reset the system clock to the actual time, call `setSystemTime` with no arguments.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import { test, expect, beforeAll, setSystemTime } from "bun:test";
 
 setSystemTime(); // reset to actual time
 ```
 
-***
+---
 
-See [Dates and times](/docs/test/dates-times).
+See [Dates and times](/test/dates-times).

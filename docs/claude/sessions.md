@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/sessions.md
-Downloaded: 2026-08-12T20:44:34.285Z
+Downloaded: 2026-08-14T20:31:08.311Z
 -->
 
 > ## Documentation Index
@@ -92,6 +92,14 @@ Give sessions descriptive names so they're findable in the session picker and re
 | From the desktop app             | Rename a session in the [desktop app](/docs/en/desktop#work-in-parallel-with-sessions)                                                                                       |
 
 Once you name a session through a CLI route or from claude.ai, return to it with `claude --resume <name>` or `/resume <name>`; a desktop-app session resumes in the app, which keeps its own session history. See [Resume a session](#resume-a-session) for how name resolution behaves across worktrees.
+
+When you start or resume an interactive session with a name that another live session on this machine already uses, or rename a session into such a name, Claude Code leaves the name with the session that already has it, renames yours to a variant with a two-word suffix, such as `auth-refactor-graceful-unicorn`, and tells you. Run `/rename` with a new name if you'd rather pick one yourself. Before v2.1.232, both sessions kept the name.
+
+In three cases Claude Code doesn't rename the duplicate, so you can still see two sessions with the same name in listings:
+
+* It doesn't check AI-generated titles or default display names.
+* It doesn't check the `--name` of a [background](/docs/en/agent-view#from-your-shell) or `-p` session at startup.
+* It can't rename a session on an earlier version of Claude Code.
 
 Interactive sessions you never name still get a default display name when they start. Requires Claude Code v2.1.196 or later. The default combines the working directory's name with a two-character suffix, for example `my-app-3f`, and identifies the session in listings of running sessions, such as [agent view](/docs/en/agent-view) and `claude agents --json` output.
 
@@ -198,8 +206,6 @@ The location, retention, and write behavior are configurable:
 | Suppress writes for one non-interactive run | [`--no-session-persistence`](/docs/en/cli-reference)        | CLI flag with `claude -p` |
 
 ## See also
-
-These pages cover related session and parallelism mechanics:
 
 * [Worktrees](/docs/en/worktrees): run isolated parallel sessions on separate branches
 * [Checkpointing](/docs/en/checkpointing): rewind code and conversation to an earlier point

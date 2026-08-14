@@ -1,44 +1,45 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/write-file/basic.md
+Downloaded: 2026-08-14T20:31:00.591Z
+-->
 
 # Write a string to a file
 
-Use [`Bun.write()`](/docs/runtime/file-io#writing-files-bun-write) to write a string to disk at an *absolute path*. The first argument is a *destination*; the second is the *data* to write.
+Use [`Bun.write()`](/runtime/file-io#writing-files-bun-write) to write a string to disk at an _absolute path_. The first argument is a _destination_; the second is the _data_ to write.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const path = "/path/to/file.txt";
 await Bun.write(path, "Lorem ipsum");
 ```
 
-***
+---
 
 Bun resolves relative paths from the current working directory.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const path = "./file.txt";
 await Bun.write(path, "Lorem ipsum");
 ```
 
-***
+---
 
 You can pass a `BunFile` as the destination. `Bun.write()` writes the data to its associated path.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const path = Bun.file("./file.txt");
 await Bun.write(path, "Lorem ipsum");
 ```
 
-***
+---
 
 `Bun.write()` returns the number of bytes written to disk.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const path = "./file.txt";
 const bytes = await Bun.write(path, "Lorem ipsum");
 // => 11
 ```
 
-***
+---
 
-See [`Bun.write()`](/docs/runtime/file-io#writing-files-bun-write).
+See [`Bun.write()`](/runtime/file-io#writing-files-bun-write).

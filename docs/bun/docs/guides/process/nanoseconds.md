@@ -1,15 +1,16 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/process/nanoseconds.md
+Downloaded: 2026-08-14T20:31:00.582Z
+-->
 
 # Get the process uptime in nanoseconds
 
 Use `Bun.nanoseconds()` to get the total number of nanoseconds the `bun` process has been alive.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 Bun.nanoseconds();
 ```
 
-***
+---
 
-See [Utils](/docs/runtime/utils) for more utilities.
+See [Utils](/runtime/utils) for more utilities.

@@ -1,12 +1,13 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/test/update-snapshots.md
+Downloaded: 2026-08-14T20:31:00.587Z
+-->
 
 # Update snapshots in `bun test`
 
 Bun's test runner supports Jest-style snapshot testing with `.toMatchSnapshot()`.
 
-```ts snap.test.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts snap.test.ts icon="/icons/typescript.svg"
 import { test, expect } from "bun:test";
 
 test("snapshot", () => {
@@ -14,26 +15,26 @@ test("snapshot", () => {
 });
 ```
 
-***
+---
 
 The first time this test runs, Bun writes a snapshot file to a `__snapshots__` directory alongside the test file.
 
-```txt File Tree icon="folder-tree" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt File Tree icon="folder-tree"
 test
 ├── __snapshots__
 │   └── snap.test.ts.snap
 └── snap.test.ts
 ```
 
-***
+---
 
 To regenerate snapshots, use the `--update-snapshots` flag.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun test --update-snapshots
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 test/snap.test.ts:
 ✓ snapshot [0.86ms]
 
@@ -44,6 +45,6 @@ test/snap.test.ts:
 Ran 1 tests across 1 files. [102.00ms]
 ```
 
-***
+---
 
-See [Snapshots](/docs/test/snapshots).
+See [Snapshots](/test/snapshots).

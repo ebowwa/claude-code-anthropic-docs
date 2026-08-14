@@ -1,12 +1,13 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/runtime/import-yaml.md
+Downloaded: 2026-08-14T20:31:00.589Z
+-->
 
 # Import a YAML file
 
 Bun natively supports `.yaml` and `.yml` imports.
 
-```yaml config.yaml icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```yaml config.yaml icon="file-code"
 database:
   host: localhost
   port: 5432
@@ -21,11 +22,11 @@ features:
   rateLimit: true
 ```
 
-***
+---
 
 Import the file like any other source file.
 
-```ts config.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts config.ts icon="/icons/typescript.svg"
 import config from "./config.yaml";
 
 config.database.host; // => "localhost"
@@ -33,11 +34,11 @@ config.server.port; // => 3000
 config.features.auth; // => true
 ```
 
-***
+---
 
 You can also destructure top-level properties with named imports:
 
-```ts config.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts config.ts icon="/icons/typescript.svg"
 import { database, server, features } from "./config.yaml";
 
 console.log(database.name); // => "myapp"
@@ -45,21 +46,21 @@ console.log(server.timeout); // => 30
 console.log(features.rateLimit); // => true
 ```
 
-***
+---
 
 Bun also supports [Import Attributes](https://github.com/tc39/proposal-import-attributes) syntax:
 
-```ts config.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts config.ts icon="/icons/typescript.svg"
 import config from "./config.yaml" with { type: "yaml" };
 
 config.database.port; // => 5432
 ```
 
-***
+---
 
 For parsing YAML strings at runtime, use `Bun.YAML.parse()`:
 
-```ts config.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts config.ts icon="/icons/typescript.svg"
 const yamlString = `
 name: John Doe
 age: 30
@@ -73,13 +74,13 @@ console.log(data.name); // => "John Doe"
 console.log(data.hobbies); // => ["reading", "coding"]
 ```
 
-***
+---
 
 ## TypeScript Support
 
 To add TypeScript support for your YAML imports, create a declaration file with `.d.ts` appended to the YAML filename (for example, `config.yaml` → `config.yaml.d.ts`):
 
-```ts config.yaml.d.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts config.yaml.d.ts icon="/icons/typescript.svg"
 const contents: {
   database: {
     host: string;
@@ -99,6 +100,6 @@ const contents: {
 export = contents;
 ```
 
-***
+---
 
-See [YAML](/docs/runtime/yaml).
+See [YAML](/runtime/yaml).

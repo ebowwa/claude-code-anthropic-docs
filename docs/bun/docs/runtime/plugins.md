@@ -1,12 +1,13 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/runtime/plugins.md
+Downloaded: 2026-08-14T20:31:00.546Z
+-->
 
 # Plugins
 
 > Universal plugin API for extending Bun's runtime and bundler
 
-Bun has a universal plugin API that extends both the *runtime* and the *bundler*.
+Bun has a universal plugin API that extends both the _runtime_ and the _bundler_.
 
 Plugins intercept imports and perform custom loading logic, like reading files or transpiling code. Use them to add support for additional file types, such as `.scss` or `.yaml`. In Bun's bundler, plugins can implement framework-level features like CSS extraction, macros, and client-server code co-location.
 
@@ -14,16 +15,16 @@ Plugins intercept imports and perform custom loading logic, like reading files o
 
 Plugins register callbacks that run at various points in the lifecycle of a bundle:
 
-* [`onStart()`](#onstart): Run once the bundler has started a bundle
-* [`onResolve()`](#onresolve): Run before a module is resolved
-* [`onLoad()`](#onload): Run before a module is loaded
-* [`onBeforeParse()`](#onbeforeparse): Run zero-copy native addons in the parser thread before a file is parsed
+- [`onStart()`](#onstart): Run once the bundler has started a bundle
+- [`onResolve()`](#onresolve): Run before a module is resolved
+- [`onLoad()`](#onload): Run before a module is loaded
+- [`onBeforeParse()`](#onbeforeparse): Run zero-copy native addons in the parser thread before a file is parsed
 
 ### Reference
 
 A rough overview of the types (see Bun's `bun.d.ts` for the full type definitions):
 
-```ts Plugin Types icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts Plugin Types icon="/icons/typescript.svg"
 type PluginBuilder = {
   onStart(callback: () => void): void;
   onResolve: (
@@ -65,7 +66,7 @@ type Loader =
 
 A plugin is defined as a JavaScript object containing a `name` property and a `setup` function.
 
-```tsx myPlugin.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```tsx myPlugin.ts icon="/icons/typescript.svg"
 import type { BunPlugin } from "bun";
 
 const myPlugin: BunPlugin = {
@@ -78,7 +79,7 @@ const myPlugin: BunPlugin = {
 
 Pass the plugin in the `plugins` array when calling `Bun.build`.
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 await Bun.build({
   entrypoints: ["./app.ts"],
   outdir: "./out",
@@ -96,18 +97,18 @@ The default namespace is `"file"` and you don't need to specify it: `import myMo
 
 Other common namespaces are:
 
-* `"bun"`: for Bun-specific modules (`"bun:test"`, `"bun:sqlite"`)
-* `"node"`: for Node.js modules (`"node:fs"`, `"node:path"`)
+- `"bun"`: for Bun-specific modules (`"bun:test"`, `"bun:sqlite"`)
+- `"node"`: for Node.js modules (`"node:fs"`, `"node:path"`)
 
 ### `onStart`
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 onStart(callback: () => void): Promise<void> | void;
 ```
 
 Registers a callback that runs when the bundler starts a new bundle.
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 import { plugin } from "bun";
 
 plugin({
@@ -125,7 +126,7 @@ The callback can return a `Promise`. After the bundle process has initialized, t
 
 For example:
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 const result = await Bun.build({
   entrypoints: ["./app.ts"],
   outdir: "./dist",
@@ -158,7 +159,7 @@ Here, Bun waits for both `onStart()` callbacks to complete: the first sleeps for
 
 ### `onResolve`
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 onResolve(
   args: { filter: RegExp; namespace?: string },
   callback: (args: { path: string; importer: string }) => {
@@ -176,11 +177,11 @@ The first argument to `onResolve()` is an object with a `filter` and [`namespace
 
 The second argument to `onResolve()` is a callback that runs for each module import Bun finds that matches the `filter` and `namespace` defined in the first argument.
 
-The callback receives the *path* to the matching module and can return a *new path* for it. Bun reads the contents of the *new path* and parses it as a module.
+The callback receives the _path_ to the matching module and can return a _new path_ for it. Bun reads the contents of the _new path_ and parses it as a module.
 
 For example, redirecting all imports to `images/` to `./public/images/`:
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 import { plugin } from "bun";
 
 plugin({
@@ -199,7 +200,7 @@ plugin({
 
 ### `onLoad`
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 onLoad(
   args: { filter: RegExp; namespace?: string },
   callback: (args: { path: string; namespace: string; loader: Loader; defer: () => Promise<void> }) => {
@@ -212,19 +213,19 @@ onLoad(
 
 After Bun's bundler has resolved a module, it needs to read and parse the module's contents.
 
-Use the `onLoad()` lifecycle callback to modify the *contents* of a module before Bun reads and parses it.
+Use the `onLoad()` lifecycle callback to modify the _contents_ of a module before Bun reads and parses it.
 
 Like `onResolve()`, the first argument to `onLoad()` filters which modules this invocation of `onLoad()` applies to.
 
-The second argument to `onLoad()` is a callback that runs for each matching module *before* Bun loads its contents into memory.
+The second argument to `onLoad()` is a callback that runs for each matching module _before_ Bun loads its contents into memory.
 
-The callback receives the matching module's *path*, its *namespace*, the default *loader* for that file, and a *defer* function.
+The callback receives the matching module's _path_, its _namespace_, the default _loader_ for that file, and a _defer_ function.
 
 The callback can return a new `contents` string for the module as well as a new `loader`.
 
 For example:
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 import { plugin } from "bun";
 
 const envPlugin: BunPlugin = {
@@ -253,11 +254,11 @@ This plugin transforms all imports of the form `import env from "env"` into a Ja
 
 #### `.defer()`
 
-The `onLoad` callback receives a `defer` function, which returns a `Promise` that resolves once all *other* modules have been loaded. Await it when a module's contents depend on other modules.
+The `onLoad` callback receives a `defer` function, which returns a `Promise` that resolves once all _other_ modules have been loaded. Await it when a module's contents depend on other modules.
 
 ##### Example: tracking and reporting unused exports
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 import { plugin } from "bun";
 
 plugin({
@@ -303,24 +304,24 @@ The `.defer()` function can only be called once per `onLoad` callback.
 
 Bun's bundler is fast partly because it is written in native code and uses multiple threads to load and parse modules in parallel. Plugins written in JavaScript cannot take advantage of this, because JavaScript itself is single-threaded.
 
-Native plugins are written as [NAPI](/docs/runtime/node-api) modules and can run on multiple threads, so they run much faster than JavaScript plugins. They can also skip unnecessary work such as the UTF-8 -> UTF-16 conversion needed to pass strings to JavaScript.
+Native plugins are written as [NAPI](/runtime/node-api) modules and can run on multiple threads, so they run much faster than JavaScript plugins. They can also skip unnecessary work such as the UTF-8 -> UTF-16 conversion needed to pass strings to JavaScript.
 
 The following lifecycle hooks are available to native plugins:
 
-* [`onBeforeParse()`](#onbeforeparse): Called on any thread before a file is parsed by Bun's bundler.
+- [`onBeforeParse()`](#onbeforeparse): Called on any thread before a file is parsed by Bun's bundler.
 
 Native plugins are NAPI modules which expose lifecycle hooks as C ABI functions. To create one, export a C ABI function that matches the signature of the lifecycle hook you want to implement.
 
 ### Creating a native plugin in Rust
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun add -g @napi-rs/cli
 napi new
 ```
 
 Then install this crate:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 cargo add bun-native-plugin
 ```
 
@@ -328,7 +329,7 @@ Inside `lib.rs`, use the `bun_native_plugin::bun` proc macro to define a functio
 
 Here's an example implementing the `onBeforeParse` hook:
 
-```rs lib.rs icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/rust.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=c48e2f9ffc38d0c1d77ef723c617aca8" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```rs lib.rs icon="/icons/rust.svg"
 use bun_native_plugin::{define_bun_plugin, OnBeforeParse, bun, Result, anyhow, BunLoader};
 use napi_derive::napi;
 
@@ -361,7 +362,7 @@ pub fn replace_foo_with_bar(handle: &mut OnBeforeParse) -> Result<()> {
 
 To use it in `Bun.build()`:
 
-```typescript theme={"theme":{"light":"github-light","dark":"dracula"}}
+```typescript
 import myNativeAddon from "./my-native-addon";
 Bun.build({
   entrypoints: ["./app.tsx"],
@@ -389,7 +390,7 @@ Bun.build({
 
 ### `onBeforeParse`
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 onBeforeParse(
   args: { filter: RegExp; namespace?: string },
   callback: { napiModule: NapiModule; symbol: string; external?: unknown },

@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/pm/cli/link.md
+Downloaded: 2026-08-14T20:31:00.560Z
+-->
 
 # bun link
 
@@ -8,13 +9,13 @@
 
 Use `bun link` in a local directory to register the current package as a "linkable" package.
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 cd /path/to/cool-pkg
 cat package.json
 bun link
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 bun link v1.3.3 (7416672e)
 Success! Registered "cool-pkg"
 
@@ -27,14 +28,14 @@ Or add it in dependencies in your package.json file:
 
 This package can now be "linked" into other projects using `bun link cool-pkg`, which creates a symlink in the target project's `node_modules` directory pointing to the local directory.
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 cd /path/to/my-app
 bun link cool-pkg
 ```
 
 The `--save` flag also adds `cool-pkg` to the `dependencies` field of your app's package.json, with a version specifier that tells Bun to load from the registered local directory instead of installing from `npm`:
 
-```json package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json package.json icon="file-json"
 {
   "name": "my-app",
   "version": "1.0.0",
@@ -48,21 +49,21 @@ The `--save` flag also adds `cool-pkg` to the `dependencies` field of your app's
 
 Use `bun unlink` in the root directory to unregister a local package.
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 cd /path/to/cool-pkg
 bun unlink
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 bun unlink v1.3.3 (7416672e)
 success: unlinked package "cool-pkg"
 ```
 
-***
+---
 
 # CLI Usage
 
-```bash theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash
 bun link <packages>
 ```
 
@@ -82,7 +83,7 @@ bun link <packages>
   Exclude <code>dev</code>, <code>optional</code>, or <code>peer</code> dependencies from install
 </ParamField>
 
-### Project Files & Lockfiles
+### Project Files &amp; Lockfiles
 
 <ParamField path="--yarn" type="boolean">
   Write a <code>yarn.lock</code> file (yarn v1). Alias: <code>-y</code>
@@ -115,7 +116,7 @@ bun link <packages>
 ### Installation Control
 
 <ParamField path="--force" type="boolean">
-  Always request the latest versions from the registry & reinstall all dependencies. Alias: <code>-f</code>
+  Always request the latest versions from the registry &amp; reinstall all dependencies. Alias: <code>-f</code>
 </ParamField>
 
 <ParamField path="--no-verify" type="boolean">
@@ -139,7 +140,7 @@ bun link <packages>
   Skip lifecycle scripts in the project's <code>package.json</code> (dependency scripts are never run)
 </ParamField>
 
-### Network & Registry
+### Network &amp; Registry
 
 <ParamField path="--ca" type="string">
   Provide a Certificate Authority signing certificate
@@ -158,7 +159,7 @@ bun link <packages>
   Maximum number of concurrent network requests
 </ParamField>
 
-### Performance & Resource
+### Performance &amp; Resource
 
 <ParamField path="--concurrent-scripts" type="number">
   Maximum number of concurrent jobs for lifecycle scripts (default: 2x CPU cores)
@@ -167,14 +168,14 @@ bun link <packages>
 ### Caching
 
 <ParamField path="--cache-dir" type="string">
-  Store & load cached data from a specific directory path
+  Store &amp; load cached data from a specific directory path
 </ParamField>
 
 <ParamField path="--no-cache" type="boolean">
   Ignore manifest cache entirely
 </ParamField>
 
-### Output & Logging
+### Output &amp; Logging
 
 <ParamField path="--silent" type="boolean">
   Don't log anything
@@ -199,16 +200,16 @@ bun link <packages>
 ### Platform Targeting
 
 <ParamField path="--cpu" type="string">
-  Override CPU architecture for optional dependencies (e.g., <code>x64</code>, <code>arm64</code>, <code>\*</code> for
+  Override CPU architecture for optional dependencies (e.g., <code>x64</code>, <code>arm64</code>, <code>*</code> for
   all)
 </ParamField>
 
 <ParamField path="--os" type="string">
-  Override operating system for optional dependencies (e.g., <code>linux</code>, <code>darwin</code>, <code>\*</code> for
+  Override operating system for optional dependencies (e.g., <code>linux</code>, <code>darwin</code>, <code>*</code> for
   all)
 </ParamField>
 
-### Global Configuration & Context
+### Global Configuration &amp; Context
 
 <ParamField path="--config" type="string">
   Specify path to config file (<code>bunfig.toml</code>). Alias: <code>-c</code>

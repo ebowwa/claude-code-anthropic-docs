@@ -1,22 +1,23 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/pm/cli/update.md
+Downloaded: 2026-08-14T20:31:00.558Z
+-->
 
 # bun update
 
 > Update dependencies to latest versions
 
-<Note>To upgrade your Bun CLI version, see [`bun upgrade`](/docs/installation#upgrading).</Note>
+<Note>To upgrade your Bun CLI version, see [`bun upgrade`](/installation#upgrading).</Note>
 
 To update all dependencies to the latest version:
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun update
 ```
 
 To update a specific dependency to the latest version:
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun update [package]
 ```
 
@@ -24,7 +25,7 @@ bun update [package]
 
 Use the `--interactive` flag to choose which packages to update:
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun update --interactive
 bun update -i
 ```
@@ -35,7 +36,7 @@ The flag opens a terminal interface that lists every outdated package with its c
 
 The interface displays packages grouped by dependency type:
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 ? Select packages to update - Space to toggle, Enter to confirm, a to select all, n to select none, i to invert, l to toggle latest
 
   dependencies                Current  Target   Latest
@@ -52,51 +53,51 @@ The interface displays packages grouped by dependency type:
 
 **Sections:**
 
-* Packages are grouped under section headers: `dependencies`, `devDependencies`, `peerDependencies`, `optionalDependencies`
-* Each section shows column headers aligned with the package data
+- Packages are grouped under section headers: `dependencies`, `devDependencies`, `peerDependencies`, `optionalDependencies`
+- Each section shows column headers aligned with the package data
 
 **Columns:**
 
-* **Package**: Package name (may have a suffix such as ` dev`, ` peer`, or ` optional`)
-* **Current**: Currently installed version
-* **Target**: Version that would be installed (respects semver constraints)
-* **Latest**: Latest available version
+- **Package**: Package name (may have a suffix such as ` dev`, ` peer`, or ` optional`)
+- **Current**: Currently installed version
+- **Target**: Version that would be installed (respects semver constraints)
+- **Latest**: Latest available version
 
 ### Keyboard Controls
 
 **Selection:**
 
-* **Space**: Toggle package selection
-* **Enter**: Confirm selections and update
-* **a/A**: Select all packages
-* **n/N**: Select none
-* **i/I**: Invert selection
+- **Space**: Toggle package selection
+- **Enter**: Confirm selections and update
+- **a/A**: Select all packages
+- **n/N**: Select none
+- **i/I**: Invert selection
 
 **Navigation:**
 
-* **↑/↓ Arrow keys** or **j/k**: Move cursor
-* **l/L**: Toggle between target and latest version for current package
+- **↑/↓ Arrow keys** or **j/k**: Move cursor
+- **l/L**: Toggle between target and latest version for current package
 
 **Exit:**
 
-* **Ctrl+C** or **Ctrl+D**: Cancel without updating
+- **Ctrl+C** or **Ctrl+D**: Cancel without updating
 
 ### Visual Indicators
 
-* **■** Selected packages (will be updated)
-* **□** Unselected packages
-* **❯** Current cursor position
-* **Colors**: Red (major), yellow (minor), green (patch) version changes
-* **Underlined**: Currently selected update target
+- **■** Selected packages (will be updated)
+- **□** Unselected packages
+- **❯** Current cursor position
+- **Colors**: Red (major), yellow (minor), green (patch) version changes
+- **Underlined**: Currently selected update target
 
 ### Package Grouping
 
 Packages are organized in sections by dependency type:
 
-* **dependencies** - Regular runtime dependencies
-* **devDependencies** - Development dependencies
-* **peerDependencies** - Peer dependencies
-* **optionalDependencies** - Optional dependencies
+- **dependencies** - Regular runtime dependencies
+- **devDependencies** - Development dependencies
+- **peerDependencies** - Peer dependencies
+- **optionalDependencies** - Optional dependencies
 
 Within each section, individual packages may have a suffix (` dev`, ` peer`, ` optional`).
 
@@ -104,7 +105,7 @@ Within each section, individual packages may have a suffix (` dev`, ` peer`, ` o
 
 Use the `--recursive` flag with `--interactive` to update dependencies across all workspaces in a monorepo:
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun update --interactive --recursive
 bun update -i -r
 ```
@@ -117,7 +118,7 @@ By default, `bun update` updates each dependency to the latest version that sati
 
 To update to the latest version regardless of whether it satisfies that range, use the `--latest` flag:
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun update --latest
 ```
 
@@ -125,7 +126,7 @@ In interactive mode, press **l** to toggle a package between its target version 
 
 For example, with the following `package.json`:
 
-```json package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json package.json icon="file-json"
 {
   "dependencies": {
     "react": "^17.0.2"
@@ -133,21 +134,21 @@ For example, with the following `package.json`:
 }
 ```
 
-* `bun update` would update to a version that matches `17.x`.
-* `bun update --latest` would update to a version that matches `18.x` or later.
+- `bun update` would update to a version that matches `17.x`.
+- `bun update --latest` would update to a version that matches `18.x` or later.
 
-***
+---
 
 ## CLI Usage
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun update <name>@<version>
 ```
 
 ### Update Strategy
 
 <ParamField path="--force" type="boolean">
-  Always request the latest versions from the registry & reinstall all dependencies. Alias: <code>-f</code>
+  Always request the latest versions from the registry &amp; reinstall all dependencies. Alias: <code>-f</code>
 </ParamField>
 
 <ParamField path="--latest" type="boolean">
@@ -215,7 +216,7 @@ bun update <name>@<version>
 ### Caching
 
 <ParamField path="--cache-dir" type="string">
-  Store & load cached data from a specific directory path
+  Store &amp; load cached data from a specific directory path
 </ParamField>
 
 <ParamField path="--no-cache" type="boolean">

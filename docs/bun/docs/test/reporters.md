@@ -1,12 +1,13 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/test/reporters.md
+Downloaded: 2026-08-14T20:31:00.568Z
+-->
 
 # Test Reporters
 
 `bun test` supports different output formats through reporters, both built-in and custom.
 
-***
+---
 
 ## Built-in Reporters
 
@@ -14,7 +15,7 @@
 
 By default, `bun test` outputs results to the console in a human-readable format:
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 test/package-json-lint.test.ts:
 ✓ test/package.json [0.88ms]
 ✓ test/js/third_party/grpc-js/package.json [0.18ms]
@@ -29,7 +30,7 @@ Ran 4 tests in 1.44ms
 
 When a terminal doesn't support colors, the output avoids non-ASCII characters:
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 test/package-json-lint.test.ts:
 (pass) test/package.json [0.48ms]
 (pass) test/js/third_party/grpc-js/package.json [0.10ms]
@@ -46,7 +47,7 @@ Ran 4 tests across 1 files. [0.66ms]
 
 The dots reporter shows `.` for passing tests and prints full error details for failures, useful for large test suites.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun test --dots
 bun test --reporter=dots
 ```
@@ -59,7 +60,7 @@ For CI/CD environments, Bun can generate JUnit XML reports, a widely-adopted tes
 
 To generate a JUnit XML report, use the `--reporter=junit` flag along with `--reporter-outfile` to specify the output file:
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun test --reporter=junit --reporter-outfile=./junit.xml
 ```
 
@@ -69,7 +70,7 @@ Console output is unchanged; Bun writes the JUnit XML report to the specified pa
 
 You can also configure the JUnit reporter in `bunfig.toml`:
 
-```toml title="bunfig.toml" icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml title="bunfig.toml" icon="settings"
 [test.reporter]
 junit = "path/to/junit.xml"  # Output path for JUnit XML report
 ```
@@ -90,16 +91,16 @@ It includes the following environment variables when available:
 
 The JUnit reporter does not include:
 
-* `stdout` and `stderr` output from individual tests
-* Precise timestamp fields per test case
+- `stdout` and `stderr` output from individual tests
+- Precise timestamp fields per test case
 
 ### GitHub Actions reporter
 
 `bun test` detects when it's running inside GitHub Actions and emits GitHub Actions annotations to the console directly. No configuration is needed beyond installing Bun and running `bun test`.
 
-For an example GitHub Actions workflow, see [CI/CD integration](/docs/pm/cli/install#ci%2Fcd).
+For an example GitHub Actions workflow, see [CI/CD integration](/pm/cli/install#ci%2Fcd).
 
-***
+---
 
 ## Custom Reporters
 
@@ -116,8 +117,8 @@ Bun extends the standard WebKit Inspector Protocol with two custom domains:
 
 Custom reporters can listen for these events:
 
-* `TestReporter.found`: Emitted when a test is discovered
-* `TestReporter.start`: Emitted when a test starts running
-* `TestReporter.end`: Emitted when a test completes
-* `Console.messageAdded`: Emitted when console output occurs during a test
-* `LifecycleReporter.error`: Emitted when an error or exception occurs
+- `TestReporter.found`: Emitted when a test is discovered
+- `TestReporter.start`: Emitted when a test starts running
+- `TestReporter.end`: Emitted when a test completes
+- `Console.messageAdded`: Emitted when console output occurs during a test
+- `LifecycleReporter.error`: Emitted when an error or exception occurs

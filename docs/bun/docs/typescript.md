@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/typescript.md
+Downloaded: 2026-08-14T20:31:00.543Z
+-->
 
 # TypeScript
 
@@ -8,7 +9,7 @@
 
 To get TypeScript definitions for Bun's built-in APIs, install `@types/bun`.
 
-```zsh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```zsh terminal icon="terminal"
 bun add -d @types/bun # dev dependency
 ```
 
@@ -18,7 +19,7 @@ You can now reference the `Bun` global in your TypeScript files without errors i
 
 Bun supports top-level await, JSX, and imports with `.ts` extensions, which TypeScript doesn't allow by default. Use these `compilerOptions` in a Bun project so TypeScript doesn't warn about those features.
 
-```json tsconfig.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json tsconfig.json icon="file-json"
 {
   "compilerOptions": {
     // Environment setup & latest features
@@ -53,10 +54,10 @@ Bun supports top-level await, JSX, and imports with `.ts` extensions, which Type
 
 Running `bun init` in a new directory generates this `tsconfig.json` for you.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun init
 ```
 
 ## TypeScript 6 and 7
 
-If you're using TypeScript 6.0 or later, you also need `"types": ["bun"]` in your `compilerOptions`. See [TypeScript 6 and 7](/docs/typescript-6).
+If you're using TypeScript 6.0 or later, you also need `"types": ["bun"]` in your `compilerOptions`. See [TypeScript 6 and 7](/typescript-6).

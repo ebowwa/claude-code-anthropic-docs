@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/plugins-reference.md
-Downloaded: 2026-08-13T20:42:22.045Z
+Downloaded: 2026-08-14T20:31:08.335Z
 -->
 
 > ## Documentation Index
@@ -374,12 +374,12 @@ A skills directory tree supports three distinct things:
 
 ### Choose where the plugin loads from
 
-| Skills directory        | Scope    | Loads                                                                            |
-| :---------------------- | :------- | :------------------------------------------------------------------------------- |
-| `~/.claude/skills/`     | personal | In every project, since the location is yours alone                              |
-| `<cwd>/.claude/skills/` | project  | Only after you accept the workspace [trust dialog](/docs/en/settings) for that folder |
+| Skills directory        | Scope    | Loads                                                                                                                   |
+| :---------------------- | :------- | :---------------------------------------------------------------------------------------------------------------------- |
+| `~/.claude/skills/`     | personal | In every project, since the location is yours alone                                                                     |
+| `<cwd>/.claude/skills/` | project  | Only after you accept the workspace [trust dialog](/docs/en/permissions#what-runs-before-you-trust-a-folder) for that folder |
 
-A project-scope plugin is checked into the repository and reaches every collaborator who clones it. Because that content comes from the repository rather than from you, it loads only after the same trust gate that governs `.claude/settings.json`, and components that run code are restricted further:
+A project-scope plugin is checked into the repository and reaches every collaborator who clones it. Because that content comes from the repository rather than from you, it loads only after the same trust gate that governs project allow rules in `.claude/settings.json`, so trusting a parent folder or running with `-p` isn't enough, and components that run code are restricted further:
 
 * MCP servers it declares go through the [same per-server approval](/docs/en/mcp) as a project `.mcp.json`
 * LSP servers start only after you trust the workspace
@@ -643,7 +643,7 @@ For all path fields:
   * Claude Code takes the skill's invocation name from the frontmatter `name` field in `SKILL.md`, so the name stays stable whatever the install directory is named
   * If `name` isn't set in the frontmatter, Claude Code falls back to the directory basename
 
-A plugin that has a `SKILL.md` at its root, no `skills/` subdirectory, and no `skills` manifest field is automatically loaded as a single-skill plugin in Claude Code v2.1.142 and later. You do not need to set `"skills": ["./"]` in `plugin.json` for this layout.
+A plugin that has a `SKILL.md` at its root, no `skills/` subdirectory, and no `skills` manifest field is automatically loaded as a single-skill plugin. You do not need to set `"skills": ["./"]` in `plugin.json` for this layout.
 
 **Path examples**:
 

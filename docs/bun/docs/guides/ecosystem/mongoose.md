@@ -1,34 +1,35 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/ecosystem/mongoose.md
+Downloaded: 2026-08-14T20:31:00.575Z
+-->
 
 # Read and write data to MongoDB using Mongoose and Bun
 
 MongoDB and Mongoose work with Bun with no extra configuration. This guide assumes you've already installed MongoDB and are running it as a background process or service on your development machine. See the [MongoDB installation guide](https://www.mongodb.com/docs/manual/installation/) for details.
 
-***
+---
 
 Once MongoDB is running, create a directory and initialize it with `bun init`.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 mkdir mongoose-app
 cd mongoose-app
 bun init
 ```
 
-***
+---
 
 Then add Mongoose as a dependency.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun add mongoose
 ```
 
-***
+---
 
 In `schema.ts`, declare and export an `Animal` model.
 
-```ts schema.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts schema.ts icon="/icons/typescript.svg"
 import * as mongoose from "mongoose";
 
 const animalSchema = new mongoose.Schema(
@@ -49,11 +50,11 @@ export type Animal = mongoose.InferSchemaType<typeof animalSchema>;
 export const Animal = mongoose.model("Animal", animalSchema);
 ```
 
-***
+---
 
 In `index.ts`, import `Animal`, connect to MongoDB, and add some data to the database.
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 import * as mongoose from "mongoose";
 import { Animal } from "./schema";
 
@@ -75,18 +76,18 @@ animals[0].speak(); // logs "Moo!"
 await mongoose.disconnect();
 ```
 
-***
+---
 
 Run the file with `bun run`.
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun run index.ts
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 Moo!
 ```
 
-***
+---
 
 As you build your application, refer to the official [MongoDB](https://www.mongodb.com/docs) and [Mongoose](https://mongoosejs.com/docs/) docs.

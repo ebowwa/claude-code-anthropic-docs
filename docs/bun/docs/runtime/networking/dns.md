@@ -1,11 +1,7 @@
 <!--
 Source: https://bun.com/docs/runtime/networking/dns.md
-Downloaded: 2026-08-11T20:43:42.154Z
+Downloaded: 2026-08-14T20:31:00.548Z
 -->
-
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
 
 # DNS
 
@@ -13,7 +9,7 @@ Downloaded: 2026-08-11T20:43:42.154Z
 
 Bun implements its own `dns` module and the `node:dns` module.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import * as dns from "node:dns";
 
 const addrs = await dns.promises.resolve4("bun.com", { ttl: true });
@@ -21,23 +17,23 @@ console.log(addrs);
 // => [{ address: "172.67.161.226", ttl: 0 }, ...]
 ```
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import { dns } from "bun";
 
 dns.prefetch("bun.com", 443);
 ```
 
-***
+---
 
 ## Choosing a resolver backend
 
 `Bun.dns.lookup()` accepts a `backend` option that selects the resolver implementation:
 
-* `"c-ares"`: the [c-ares](https://c-ares.org/) asynchronous resolver. It reads `/etc/resolv.conf` directly, so it does not consult NSS modules such as `systemd-resolved`. This is the default for `Bun.dns.lookup()` on Linux.
-* `"system"`: the platform's own resolver (the non-blocking system API on macOS, `getaddrinfo` on a thread pool everywhere else). This is the default on macOS, Windows, and Android.
-* `"getaddrinfo"` (alias `"libc"`): the POSIX `getaddrinfo(3)` function on a thread pool.
+- `"c-ares"`: the [c-ares](https://c-ares.org/) asynchronous resolver. It reads `/etc/resolv.conf` directly, so it does not consult NSS modules such as `systemd-resolved`. This is the default for `Bun.dns.lookup()` on Linux.
+- `"system"`: the platform's own resolver (the non-blocking system API on macOS, `getaddrinfo` on a thread pool everywhere else). This is the default on macOS, Windows, and Android.
+- `"getaddrinfo"` (alias `"libc"`): the POSIX `getaddrinfo(3)` function on a thread pool.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import { dns } from "bun";
 
 const [{ address }] = await dns.lookup("example.com", { backend: "system" });
@@ -53,18 +49,18 @@ The cache holds up to 256 entries for a maximum of 30 seconds each. If a connect
 
 This cache is automatically used by:
 
-* `bun install`
-* `fetch()`
-* `node:http` (client)
-* `Bun.connect`
-* `node:net`
-* `node:tls`
+- `bun install`
+- `fetch()`
+- `node:http` (client)
+- `Bun.connect`
+- `node:net`
+- `node:tls`
 
 ### When should I prefetch a DNS entry?
 
 Web browsers expose [`<link rel="dns-prefetch">`](https://developer.mozilla.org/en-US/docs/Web/Performance/dns-prefetch) to resolve a hostname before it's needed. In Bun, `dns.prefetch` does the same thing: use it when you know you'll connect to a host soon and want to avoid the initial DNS lookup.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import { dns } from "bun";
 
 dns.prefetch("my.database-host.com", 5432);
@@ -78,13 +74,13 @@ A database driver is a good example: prefetch the database host's DNS entry when
 
 `dns.prefetch` resolves a hostname before you need it.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 dns.prefetch(hostname: string, port?: number): void;
 ```
 
 Here's an example:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import { dns } from "bun";
 
 dns.prefetch("bun.com", 443);
@@ -99,7 +95,7 @@ await fetch("https://bun.com");
 
 `dns.getCacheStats()` returns the current cache stats as an object with the following properties:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 {
   cacheHitsCompleted: number; // Cache hits completed
   cacheHitsInflight: number; // Cache hits in flight
@@ -112,7 +108,7 @@ await fetch("https://bun.com");
 
 Example:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import { dns } from "bun";
 
 const stats = dns.getCacheStats();
@@ -124,7 +120,7 @@ console.log(stats);
 
 Bun caches DNS entries for 30 seconds by default. To change the TTL, set the `$BUN_CONFIG_DNS_TIME_TO_LIVE_SECONDS` environment variable. For example, to set it to 5 seconds:
 
-```sh theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh
 BUN_CONFIG_DNS_TIME_TO_LIVE_SECONDS=5 bun run my-script.ts
 ```
 

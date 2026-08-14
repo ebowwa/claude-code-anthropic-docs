@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/read-file/uint8array.md
+Downloaded: 2026-08-14T20:31:00.590Z
+-->
 
 # Read a file to a Uint8Array
 
@@ -8,7 +9,7 @@ The `Bun.file()` function accepts a path and returns a `BunFile` instance. `BunF
 
 To read the file into a `Uint8Array`, use `.bytes()`.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const path = "/path/to/package.json";
 const file = Bun.file(path);
 
@@ -18,6 +19,6 @@ byteArray[0]; // first byteArray
 byteArray.length; // length of byteArray
 ```
 
-***
+---
 
-See [Typed arrays](/docs/runtime/binary-data#typedarray) for more on working with `Uint8Array` and other binary data formats in Bun.
+See [Typed arrays](/runtime/binary-data#typedarray) for more on working with `Uint8Array` and other binary data formats in Bun.

@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/runtime/codesign-macos-executable.md
+Downloaded: 2026-08-14T20:31:00.570Z
+-->
 
 # Codesign a single-file JavaScript executable on macOS
 
@@ -8,28 +9,28 @@
 
 Compile your executable using the `--compile` flag.
 
-```sh theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh
 bun build --compile ./path/to/entry.ts --outfile myapp
 ```
 
-***
+---
 
 List your available signing identities. You'll pass one of these to `codesign` in a later step. This command requires macOS.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 security find-identity -v -p codesigning
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 1. XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX "Developer ID Application: Your Name (ZZZZZZZZZZ)"
    1 valid identities found
 ```
 
-***
+---
 
 Optional, but recommended: create an `entitlements.plist` file with the necessary permissions for the JavaScript engine to work correctly.
 
-```xml entitlements.plist icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```xml entitlements.plist icon="file-code"
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
@@ -48,15 +49,15 @@ Optional, but recommended: create an `entitlements.plist` file with the necessar
 </plist>
 ```
 
-***
+---
 
 Sign your executable using the `codesign` command and verify it works.
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 codesign --entitlements entitlements.plist -vvvv --deep --sign "XXXXXXXXXX" ./myapp --force
 codesign -vvv --verify ./myapp
 ```
 
-***
+---
 
-For more information on macOS codesigning, refer to [Apple's Code Signing documentation](https://developer.apple.com/documentation/security/code_signing_services). For details about creating single-file executables with Bun, see [Standalone Executables](/docs/bundler/executables). This guide requires Bun v1.2.4 or newer.
+For more information on macOS codesigning, refer to [Apple's Code Signing documentation](https://developer.apple.com/documentation/security/code_signing_services). For details about creating single-file executables with Bun, see [Standalone Executables](/bundler/executables). This guide requires Bun v1.2.4 or newer.

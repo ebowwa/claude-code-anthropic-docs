@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/pm/catalogs.md
+Downloaded: 2026-08-14T20:31:00.560Z
+-->
 
 # Catalogs
 
@@ -41,7 +42,7 @@ my-monorepo/
 
 In your root-level `package.json`, add a `catalog` or `catalogs` field within the `workspaces` object:
 
-```json package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json package.json icon="file-json"
 {
   "name": "my-monorepo",
   "workspaces": {
@@ -66,7 +67,7 @@ In your root-level `package.json`, add a `catalog` or `catalogs` field within th
 
 In your workspace packages, use the `catalog:` protocol to reference versions:
 
-```json packages/app/package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json packages/app/package.json icon="file-json"
 {
   "name": "app",
   "dependencies": {
@@ -77,7 +78,7 @@ In your workspace packages, use the `catalog:` protocol to reference versions:
 }
 ```
 
-```json packages/ui/package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json packages/ui/package.json icon="file-json"
 {
   "name": "ui",
   "dependencies": {
@@ -101,7 +102,7 @@ Bun supports two ways to define catalogs:
 
 1. **`catalog`** (singular): A single default catalog for commonly used dependencies
 
-   ```json package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+   ```json package.json icon="file-json"
    "catalog": {
      "react": "^19.0.0",
      "react-dom": "^19.0.0"
@@ -110,7 +111,7 @@ Bun supports two ways to define catalogs:
 
    Reference with `catalog:`:
 
-   ```json packages/app/package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+   ```json packages/app/package.json icon="file-json"
    "dependencies": {
      "react": "catalog:"
    }
@@ -118,7 +119,7 @@ Bun supports two ways to define catalogs:
 
 2. **`catalogs`** (plural): Multiple named catalogs for grouping dependencies
 
-   ```json package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+   ```json package.json icon="file-json"
    "catalogs": {
      "testing": {
        "jest": "30.0.0"
@@ -131,7 +132,7 @@ Bun supports two ways to define catalogs:
 
    Reference with `catalog:<name>`:
 
-   ```json packages/app/package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+   ```json packages/app/package.json icon="file-json"
    "dependencies": {
      "jest": "catalog:testing",
      "tailwind": "catalog:ui"
@@ -140,10 +141,10 @@ Bun supports two ways to define catalogs:
 
 ## Benefits of Using Catalogs
 
-* **Consistency**: All packages use the same version of critical dependencies
-* **Maintenance**: Update a dependency version in one place instead of across multiple `package.json` files
-* **Clarity**: Makes it obvious which dependencies are standardized across your monorepo
-* **Simplicity**: No extra version resolution strategies or external tools
+- **Consistency**: All packages use the same version of critical dependencies
+- **Maintenance**: Update a dependency version in one place instead of across multiple `package.json` files
+- **Clarity**: Makes it obvious which dependencies are standardized across your monorepo
+- **Simplicity**: No extra version resolution strategies or external tools
 
 ## Real-World Example
 
@@ -151,7 +152,7 @@ A larger example, for a React application:
 
 **Root package.json**
 
-```json package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json package.json icon="file-json"
 {
   "name": "react-monorepo",
   "workspaces": {
@@ -178,7 +179,7 @@ A larger example, for a React application:
 }
 ```
 
-```json packages/app/package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json packages/app/package.json icon="file-json"
 {
   "name": "app",
   "dependencies": {
@@ -197,7 +198,7 @@ A larger example, for a React application:
 }
 ```
 
-```json packages/ui/package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json packages/ui/package.json icon="file-json"
 {
   "name": "@monorepo/ui",
   "dependencies": {
@@ -211,7 +212,7 @@ A larger example, for a React application:
 }
 ```
 
-```json packages/utils/package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json packages/utils/package.json icon="file-json"
 {
   "name": "@monorepo/utils",
   "dependencies": {
@@ -227,7 +228,7 @@ A larger example, for a React application:
 
 To update versions across all packages, change the version in the root package.json:
 
-```json package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json package.json icon="file-json"
 "catalog": {
   "react": "^19.1.0",  // Updated from ^19.0.0
   "react-dom": "^19.1.0"  // Updated from ^19.0.0
@@ -240,10 +241,10 @@ Then run `bun install` to update all packages.
 
 Bun's lockfile tracks catalog versions, so installs are consistent across environments. The lockfile includes:
 
-* The catalog definitions from your package.json
-* The resolution of each cataloged dependency
+- The catalog definitions from your package.json
+- The resolution of each cataloged dependency
 
-```json bun.lock(excerpt) icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json bun.lock(excerpt) icon="file-json"
 {
   "lockfileVersion": 2,
   "workspaces": {
@@ -280,10 +281,10 @@ Bun's lockfile tracks catalog versions, so installs are consistent across enviro
 
 ## Limitations and Edge Cases
 
-* Catalog references must match a dependency defined in either `catalog` or one of the named `catalogs`
-* Empty strings and whitespace in catalog names are ignored (treated as default catalog)
-* Invalid dependency versions in catalogs fail to resolve during `bun install`
-* Catalogs are only available within workspaces; they cannot be used outside the monorepo
+- Catalog references must match a dependency defined in either `catalog` or one of the named `catalogs`
+- Empty strings and whitespace in catalog names are ignored (treated as default catalog)
+- Invalid dependency versions in catalogs fail to resolve during `bun install`
+- Catalogs are only available within workspaces; they cannot be used outside the monorepo
 
 ## Publishing
 

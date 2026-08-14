@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/test-connection.md
-Downloaded: 2026-08-07T00:52:23.811Z
+Downloaded: 2026-08-14T20:31:01.245Z
 -->
 
 > ## Documentation Index
@@ -12,7 +12,6 @@ Downloaded: 2026-08-07T00:52:23.811Z
 > Test connection to the server.
 
 
-<Badge color="gray" size="md">Request Weight: **1**</Badge>
 
 
 ## OpenAPI

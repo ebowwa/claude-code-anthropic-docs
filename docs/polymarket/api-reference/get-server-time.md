@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-server-time.md
-Downloaded: 2026-08-07T00:52:23.803Z
+Downloaded: 2026-08-14T20:31:01.245Z
 -->
 
 > ## Documentation Index
@@ -12,7 +12,6 @@ Downloaded: 2026-08-07T00:52:23.803Z
 > Get server time.
 
 
-<Badge color="gray" size="md">Request Weight: **1**</Badge>
 
 
 ## OpenAPI

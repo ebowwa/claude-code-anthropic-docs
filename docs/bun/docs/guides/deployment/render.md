@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/deployment/render.md
+Downloaded: 2026-08-14T20:31:00.568Z
+-->
 
 # Deploy a Bun application on Render
 
@@ -10,70 +11,71 @@ It provides auto deploys from GitHub, a global CDN, private networks, automatic 
 
 Render supports Bun natively. You can deploy Bun apps as web services, background workers, cron jobs, and more.
 
-***
+---
 
 As an example, this guide deploys an Express HTTP server to Render.
 
 <Steps>
-  <Step title="Step 1">
-    Create a new GitHub repo named `myapp`. Git clone it locally.
+	<Step title="Step 1">
+		Create a new GitHub repo named `myapp`. Git clone it locally.
 
-    ```sh theme={"theme":{"light":"github-light","dark":"dracula"}}
-    git clone git@github.com:my-github-username/myapp.git
-    cd myapp
-    ```
-  </Step>
+    	```sh
+    	git clone git@github.com:my-github-username/myapp.git
+    	cd myapp
+    	```
+    	</Step>
+    	<Step title="Step 2">
+    	Add the Express library.
 
-  <Step title="Step 2">
-    Add the Express library.
+    	```sh
+    	bun add express
+    	```
 
-    ```sh theme={"theme":{"light":"github-light","dark":"dracula"}}
-    bun add express
-    ```
-  </Step>
+    </Step>
 
-  <Step title="Step 3">
-    Define a server with Express:
+    <Step title="Step 3">
+    	Define a server with Express:
 
-    ```ts app.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
-    import express from "express";
+    	```ts app.ts icon="/icons/typescript.svg"
+    	import express from "express";
 
-    const app = express();
-    const port = process.env.PORT || 3001;
+    	const app = express();
+    	const port = process.env.PORT || 3001;
 
-    app.get("/", (req, res) => {
-    	res.send("Hello World!");
-    });
+    	app.get("/", (req, res) => {
+    		res.send("Hello World!");
+    	});
 
-    app.listen(port, () => {
-    	console.log(`Listening on port ${port}...`);
-    });
-    ```
-  </Step>
+    	app.listen(port, () => {
+    		console.log(`Listening on port ${port}...`);
+    	});
+    	```
+    </Step>
+    <Step title="Step 4">
 
-  <Step title="Step 4">
-    Commit your changes and push to GitHub.
+    	Commit your changes and push to GitHub.
 
-    ```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-    git add app.ts bun.lock package.json
-    git commit -m "Create simple Express app"
-    git push origin main
-    ```
-  </Step>
+    	```sh terminal icon="terminal"
+    	git add app.ts bun.lock package.json
+    	git commit -m "Create simple Express app"
+    	git push origin main
+    	```
+    </Step>
+    <Step title="Step 5">
+    	In your [Render Dashboard](https://dashboard.render.com/), click `New` > `Web Service` and connect your `myapp` repo.
 
-  <Step title="Step 5">
-    In your [Render Dashboard](https://dashboard.render.com/), click `New` > `Web Service` and connect your `myapp` repo.
-  </Step>
+    </Step>
+    <Step title="Step 6">
+    	In the Render UI, provide the following values during web service creation:
 
-  <Step title="Step 6">
-    In the Render UI, provide the following values during web service creation:
+    	|                   |               |
+    	| ----------------- | ------------- |
+    	| **Runtime**       | `Node`        |
+    	| **Build Command** | `bun install` |
+    	| **Start Command** | `bun app.ts`  |
 
-    |                   |               |
-    | ----------------- | ------------- |
-    | **Runtime**       | `Node`        |
-    | **Build Command** | `bun install` |
-    | **Start Command** | `bun app.ts`  |
-  </Step>
+    </Step>
+
 </Steps>
 
 Once the build finishes, your web service is live at its assigned `onrender.com` URL.

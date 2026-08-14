@@ -1,46 +1,47 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/pm/security-scanner-api.md
+Downloaded: 2026-08-14T20:31:00.562Z
+-->
 
 # Security Scanner API
 
 Bun's package manager can scan packages before installing them, to catch supply chain attacks and known vulnerabilities.
 
-***
+---
 
 ## Quick Start
 
 Configure a security scanner in your `bunfig.toml`:
 
-```toml bunfig.toml icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml bunfig.toml icon="settings"
 [install.security]
 scanner = "@oven/bun-security-scanner" # example name, replace with your scanner's package
 ```
 
 With a scanner configured, Bun:
 
-* Scans all packages before installation
-* Displays security warnings and advisories
-* Cancels installation if fatal advisories are found
+- Scans all packages before installation
+- Displays security warnings and advisories
+- Cancels installation if fatal advisories are found
 
-***
+---
 
 ## How It Works
 
 Security scanners analyze packages during `bun install`, `bun add`, and other package operations. They can detect:
 
-* Known security vulnerabilities (CVEs)
-* Malicious packages
-* License compliance issues
+- Known security vulnerabilities (CVEs)
+- Malicious packages
+- License compliance issues
 
 ### Security Levels
 
 Scanners report issues at two severity levels:
 
-* **`fatal`** - Installation stops immediately, exits with non-zero code
-* **`warn`** - In interactive terminals, prompts to continue; in CI, exits immediately
+- **`fatal`** - Installation stops immediately, exits with non-zero code
+- **`warn`** - In interactive terminals, prompts to continue; in CI, exits immediately
 
-***
+---
 
 ## Using Pre-built Scanners
 
@@ -50,7 +51,7 @@ Security companies publish Bun security scanners as npm packages.
 
 Install a security scanner from npm:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun add -d @oven/bun-security-scanner
 ```
 
@@ -64,7 +65,7 @@ bun add -d @oven/bun-security-scanner
 
 After installation, configure it in your `bunfig.toml`:
 
-```toml bunfig.toml icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml bunfig.toml icon="settings"
 [install.security]
 scanner = "@oven/bun-security-scanner" # example name, replace with your scanner's package
 ```
@@ -73,7 +74,7 @@ scanner = "@oven/bun-security-scanner" # example name, replace with your scanner
 
 Some enterprise scanners take authentication and other configuration from environment variables:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 # This might go in ~/.bashrc, for example
 export SECURITY_API_KEY="your-api-key"
 
@@ -90,6 +91,6 @@ For a complete example with tests and CI setup, see the official template:
 
 ## Related
 
-* [Configuration (bunfig.toml)](/docs/runtime/bunfig#install-security-scanner)
-* [Package Manager](/docs/installation)
-* [Security Scanner Template](https://github.com/oven-sh/security-scanner-template)
+- [Configuration (bunfig.toml)](/runtime/bunfig#install-security-scanner)
+- [Package Manager](/installation)
+- [Security Scanner Template](https://github.com/oven-sh/security-scanner-template)

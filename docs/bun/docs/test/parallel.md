@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/test/parallel.md
+Downloaded: 2026-08-14T20:31:00.566Z
+-->
 
 # Parallel & isolated test runs
 
@@ -18,14 +19,14 @@ They compose: a CI job can run `bun test --shard=2/4 --parallel`, and files in t
 
 ## `--parallel`
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun test --parallel        # one worker per CPU core
 bun test --parallel=4      # exactly 4 workers
 ```
 
 The main `bun test` process becomes a coordinator. It discovers test files as usual, then starts worker processes and hands each one file at a time. Results stream back as each test finishes, so the output looks the same as a serial run — each file's results are printed together under its filename, and `console.log` output from a test is never interleaved with another file's.
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 bun test v1.4.0 8x PARALLEL
 
 src/router.test.ts:
@@ -54,7 +55,7 @@ Files are sorted by path and split into one contiguous chunk per worker, so file
 
 Each worker gets `BUN_TEST_WORKER_ID` and `JEST_WORKER_ID` set to its 1-based index, so tests can pick a distinct database, port range, or temp directory per worker:
 
-```ts title="db.test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="db.test.ts" icon="/icons/typescript.svg"
 const dbName = `app_test_${process.env.BUN_TEST_WORKER_ID ?? "1"}`;
 ```
 
@@ -70,16 +71,16 @@ If a worker crashes (a native addon segfaults, or a test calls `process.exit`) t
 
 ## `--isolate`
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun test --isolate
 ```
 
 Runs each test file in a fresh JavaScript global object inside the same process. Between files Bun:
 
-* creates a new `globalThis` (so properties a file stuck on `globalThis`, patched built-ins, and module-level state are gone),
-* clears the ESM and CommonJS module registries (every file re-evaluates its imports),
-* closes servers, sockets, file watchers and subprocesses the file left open, cancels its timers, and restores fake timers,
-* re-runs `--preload` scripts in the new global.
+- creates a new `globalThis` (so properties a file stuck on `globalThis`, patched built-ins, and module-level state are gone),
+- clears the ESM and CommonJS module registries (every file re-evaluates its imports),
+- closes servers, sockets, file watchers and subprocesses the file left open, cancels its timers, and restores fake timers,
+- re-runs `--preload` scripts in the new global.
 
 This is how Jest and Vitest behave by default. It makes "passes alone, fails in the full suite" bugs go away at the cost of re-evaluating imports per file.
 
@@ -89,9 +90,9 @@ Without `--isolate` (the default), all files share one global and one module reg
 
 ## Concurrent tests within a file
 
-`--parallel` spreads *files* across cores. Within one file tests still run one at a time unless you opt in to concurrency, which lets `async` tests overlap while one is waiting on I/O:
+`--parallel` spreads _files_ across cores. Within one file tests still run one at a time unless you opt in to concurrency, which lets `async` tests overlap while one is waiting on I/O:
 
-```ts title="api.test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="api.test.ts" icon="/icons/typescript.svg"
 import { test, expect } from "bun:test";
 
 test.concurrent("GET /users", async () => {
@@ -110,16 +111,16 @@ test.serial("resets the database", async () => {
 });
 ```
 
-* `test.concurrent(...)` / `describe.concurrent(...)` mark individual tests or whole groups.
-* `--concurrent` treats every test as concurrent; `test.serial` opts back out.
-* `--max-concurrency=N` caps how many run at once (default 20).
-* [`concurrentTestGlob`](/docs/test/configuration#concurrenttestglob) in `bunfig.toml` turns it on for matching files only.
+- `test.concurrent(...)` / `describe.concurrent(...)` mark individual tests or whole groups.
+- `--concurrent` treats every test as concurrent; `test.serial` opts back out.
+- `--max-concurrency=N` caps how many run at once (default 20).
+- [`concurrentTestGlob`](/test/configuration#concurrenttestglob) in `bunfig.toml` turns it on for matching files only.
 
-Concurrent tests share a thread and a global; this is cooperative concurrency for I/O-bound tests, not extra CPU cores. `expect.assertions()` and other per-test global state need care under concurrency — see [Concurrent test execution](/docs/test/index#concurrent-test-execution).
+Concurrent tests share a thread and a global; this is cooperative concurrency for I/O-bound tests, not extra CPU cores. `expect.assertions()` and other per-test global state need care under concurrency — see [Concurrent test execution](/test/index#concurrent-test-execution).
 
 ## Splitting a suite across CI machines with `--shard`
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun test --shard=1/3   # machine 1
 bun test --shard=2/3   # machine 2
 bun test --shard=3/3   # machine 3
@@ -131,7 +132,7 @@ Every machine sorts the discovered test files by path and takes a deterministic 
 
 File count is a poor proxy for duration: one shard can end up with all the slow integration tests. Give `bun test` a record of how long each file takes and it will cut shards by total time instead, keeping neighbouring files (which share imports) together:
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 # Record durations (any run can do this; --parallel is fine)
 bun test --timings=.bun-test-timings.json --update-timings
 
@@ -141,7 +142,7 @@ bun test --shard=2/8 --parallel --timings=.bun-test-timings.json
 
 The file is plain JSON, slowest first, so it doubles as a "what's slow" report:
 
-```json title=".bun-test-timings.json" icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json title=".bun-test-timings.json" icon="file-json"
 {
   "version": 1,
   "files": {
@@ -152,15 +153,15 @@ The file is plain JSON, slowest first, so it doubles as a "what's slow" report:
 }
 ```
 
-* Paths are relative to the project root; values are wall-clock milliseconds for the whole file.
-* Without `--shard`, `--update-timings` merges into what it read, so re-running part of the suite locally refreshes those entries and keeps the rest. Entries for files that no longer exist are left alone; delete the file to start over.
-* With `--shard`, `--update-timings` writes **only the files that shard ran** — see below.
-* Files with no entry are assumed to take the median time when cutting shards, and are started first under `--parallel`.
-* With `--timings`, `--parallel` also uses the durations: worker chunks are cut by time and each worker starts its slowest file first.
+- Paths are relative to the project root; values are wall-clock milliseconds for the whole file.
+- Without `--shard`, `--update-timings` merges into what it read, so re-running part of the suite locally refreshes those entries and keeps the rest. Entries for files that no longer exist are left alone; delete the file to start over.
+- With `--shard`, `--update-timings` writes **only the files that shard ran** — see below.
+- Files with no entry are assumed to take the median time when cutting shards, and are started first under `--parallel`.
+- With `--timings`, `--parallel` also uses the durations: worker chunks are cut by time and each worker starts its slowest file first.
 
 #### One timings file per shard
 
-`--timings` can be passed more than once; the files are read as one table (paths that don't exist yet are skipped), and `--update-timings` writes to the **first** path. Under `--shard` that output contains just the files the shard ran, so the shards' outputs are disjoint and, read together on the next run, add up to the whole suite — no merge step. [Large codebases](/docs/test/index#large-codebases) on the main page has the full CI workflow.
+`--timings` can be passed more than once; the files are read as one table (paths that don't exist yet are skipped), and `--update-timings` writes to the **first** path. Under `--shard` that output contains just the files the shard ran, so the shards' outputs are disjoint and, read together on the next run, add up to the whole suite — no merge step. [Large codebases](/test/index#large-codebases) on the main page has the full CI workflow.
 
 ## How it compares
 

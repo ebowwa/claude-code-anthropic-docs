@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/http/stream-node-streams-in-bun.md
+Downloaded: 2026-08-14T20:31:00.580Z
+-->
 
 # Streaming HTTP Server with Node.js Streams
 
@@ -8,7 +9,7 @@ In Bun, a [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response
 
 This works because Bun's `Response` accepts any async iterable as its body, and Node.js streams are async iterables.
 
-```ts server.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts server.ts icon="/icons/typescript.svg"
 import { Readable } from "stream";
 import { serve } from "bun";
 serve({

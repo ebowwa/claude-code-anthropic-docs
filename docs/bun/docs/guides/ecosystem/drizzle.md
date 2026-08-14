@@ -1,26 +1,27 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/ecosystem/drizzle.md
+Downloaded: 2026-08-14T20:31:00.574Z
+-->
 
 # Use Drizzle ORM with Bun
 
 Drizzle is an ORM that supports both a SQL-like "query builder" API and an ORM-like [Queries API](https://orm.drizzle.team/docs/rqb). It supports the `bun:sqlite` built-in module.
 
-***
+---
 
 Create a fresh project with `bun init` and install Drizzle.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun init -y
 bun add drizzle-orm
 bun add -D drizzle-kit
 ```
 
-***
+---
 
 Then connect to a SQLite database with the `bun:sqlite` module and create the Drizzle database instance.
 
-```ts db.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts db.ts icon="/icons/typescript.svg"
 import { drizzle } from "drizzle-orm/bun-sqlite";
 import { Database } from "bun:sqlite";
 
@@ -28,11 +29,11 @@ const sqlite = new Database("sqlite.db");
 export const db = drizzle(sqlite);
 ```
 
-***
+---
 
 To see the database in action, add these lines to `index.ts`.
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 import { db } from "./db";
 import { sql } from "drizzle-orm";
 
@@ -41,25 +42,25 @@ const result = db.get<{ text: string }>(query);
 console.log(result);
 ```
 
-***
+---
 
 Then run `index.ts` with Bun. Bun creates `sqlite.db` and executes the query.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun run index.ts
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 {
   text: "hello world"
 }
 ```
 
-***
+---
 
 Now give the database a schema. Create a `schema.ts` file and define a `movies` table.
 
-```ts schema.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts schema.ts icon="/icons/typescript.svg"
 import { sqliteTable, text, integer } from "drizzle-orm/sqlite-core";
 
 export const movies = sqliteTable("movies", {
@@ -69,19 +70,19 @@ export const movies = sqliteTable("movies", {
 });
 ```
 
-***
+---
 
 Generate an initial SQL migration with the `drizzle-kit` CLI.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bunx drizzle-kit generate --dialect sqlite --schema ./schema.ts
 ```
 
-***
+---
 
 The command creates a `drizzle` directory containing a `.sql` migration file and a `meta` directory.
 
-```txt File Tree icon="folder-tree" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt File Tree icon="folder-tree"
 drizzle
 ├── 0000_ordinary_beyonder.sql
 └── meta
@@ -89,11 +90,11 @@ drizzle
     └── _journal.json
 ```
 
-***
+---
 
 Execute these migrations with a `migrate.ts` script. It connects to `sqlite.db`, then executes all unexecuted migrations in the `drizzle` directory.
 
-```ts migrate.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts migrate.ts icon="/icons/typescript.svg"
 import { migrate } from "drizzle-orm/bun-sqlite/migrator";
 
 import { drizzle } from "drizzle-orm/bun-sqlite";
@@ -104,19 +105,19 @@ const db = drizzle(sqlite);
 migrate(db, { migrationsFolder: "./drizzle" });
 ```
 
-***
+---
 
 Run the script with `bun` to execute the migration.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun run migrate.ts
 ```
 
-***
+---
 
 Now add some data to the database. Create a `seed.ts` file with the following contents.
 
-```ts seed.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts seed.ts icon="/icons/typescript.svg"
 import { db } from "./db";
 import * as schema from "./schema";
 
@@ -138,23 +139,23 @@ await db.insert(schema.movies).values([
 console.log(`Seeding complete.`);
 ```
 
-***
+---
 
 Then run this file.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun run seed.ts
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 Seeding complete.
 ```
 
-***
+---
 
 The database now has a schema and some sample data. Query it with Drizzle by replacing the contents of `index.ts` with the following.
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 import * as schema from "./schema";
 import { db } from "./db";
 
@@ -162,15 +163,15 @@ const result = await db.select().from(schema.movies);
 console.log(result);
 ```
 
-***
+---
 
 Then run the file. You should see the three movies you inserted.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun run index.ts
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 [
   {
     id: 1,
@@ -188,6 +189,6 @@ bun run index.ts
 ]
 ```
 
-***
+---
 
 See the [Drizzle docs](https://orm.drizzle.team/docs/overview).

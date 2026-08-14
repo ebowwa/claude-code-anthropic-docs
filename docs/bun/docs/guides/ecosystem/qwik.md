@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/ecosystem/qwik.md
+Downloaded: 2026-08-14T20:31:00.576Z
+-->
 
 # Build an app with Qwik and Bun
 
@@ -8,11 +9,11 @@ Initialize a new Qwik app with `bunx create-qwik`.
 
 The `create-qwik` package detects when you are using `bunx` and installs dependencies with `bun`.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun create qwik
 ```
 
-```txts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txts
       ............
     .::: :--------:.
    .::::  .:-------:.
@@ -85,15 +86,15 @@ bun create qwik
 
 ```
 
-***
+---
 
 Run `bun run dev` to start the development server.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun run dev
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 $ vite--mode ssr
 
 VITE v4.4.7  ready in 1190 ms
@@ -103,12 +104,12 @@ VITE v4.4.7  ready in 1190 ms
 ➜  press h to show help
 ```
 
-***
+---
 
 Open [http://localhost:5173](http://localhost:5173) in your browser to see the result. Qwik hot-reloads your app as you edit your source files.
 
 <Frame>![Qwik screenshot](https://github.com/oven-sh/bun/assets/3084745/ec35f2f7-03dd-4c90-851e-fb4ad150bb28)</Frame>
 
-***
+---
 
 See the [Qwik docs](https://qwik.dev/docs/getting-started/) to learn more.

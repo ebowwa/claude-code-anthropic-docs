@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/pm/global-store.md
+Downloaded: 2026-08-14T20:31:00.561Z
+-->
 
 # Global virtual store
 
@@ -14,11 +15,11 @@ The result: warm installs are roughly **7× faster** (one symlink per package in
 
 ## Enabling
 
-The global virtual store is **off by default**. It only applies to the [isolated linker](/docs/pm/isolated-installs); it is not used by the hoisted linker.
+The global virtual store is **off by default**. It only applies to the [isolated linker](/pm/isolated-installs); it is not used by the hoisted linker.
 
 To enable it for a project:
 
-```toml title="bunfig.toml" icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml title="bunfig.toml" icon="settings"
 [install]
 linker = "isolated"
 globalStore = true
@@ -26,7 +27,7 @@ globalStore = true
 
 Or per invocation, through the environment:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 BUN_INSTALL_GLOBAL_STORE=1 bun install --linker isolated
 ```
 
@@ -61,15 +62,15 @@ Warm CI install — lockfile present, package cache warm, `node_modules` deleted
 
 ### Disk
 
-`node_modules` sizes for the same fixture (`du -sh node_modules` on APFS; clonefile copies are copy-on-write, so the hoisted/per-project numbers are the *logical* size — on filesystems without CoW that is also the physical size):
+`node_modules` sizes for the same fixture (`du -sh node_modules` on APFS; clonefile copies are copy-on-write, so the hoisted/per-project numbers are the _logical_ size — on filesystems without CoW that is also the physical size):
 
 |                                          | `node_modules` per project | shared on disk |
 | ---------------------------------------- | -------------------------- | -------------- |
 | `--linker hoisted`                       | 391 MB                     | —              |
 | `--linker isolated`, `globalStore=false` | 391 MB                     | —              |
-| **`--linker isolated`, global store**    | **\~5 MB of symlinks**     | 391 MB once    |
+| **`--linker isolated`, global store**    | **~5 MB of symlinks**      | 391 MB once    |
 
-Clone the same project five times and the difference is \~2 GB of duplicated package files versus \~400 MB total. The break-even is one project; every additional checkout, branch worktree, or CI workspace after that is free.
+Clone the same project five times and the difference is ~2 GB of duplicated package files versus ~400 MB total. The break-even is one project; every additional checkout, branch worktree, or CI workspace after that is free.
 
 ### Real-world cold→warm
 
@@ -77,17 +78,17 @@ Cold-to-warm timings on cloned real-world repositories (macOS arm64):
 
 | project                        | packages | cold   | warm       |
 | ------------------------------ | -------- | ------ | ---------- |
-| cal.com                        | \~3,580  | 37.4 s | **4.7 s**  |
-| remix                          | \~1,750  | 23.1 s | **2.0 s**  |
-| excalidraw                     | \~1,332  | 5.9 s  | **1.1 s**  |
-| hono                           | \~790    | 4.5 s  | **1.3 s**  |
-| `next build` (create-next-app) | \~382    | 1.0 s  | **0.35 s** |
+| cal.com                        | ~3,580   | 37.4 s | **4.7 s**  |
+| remix                          | ~1,750   | 23.1 s | **2.0 s**  |
+| excalidraw                     | ~1,332   | 5.9 s  | **1.1 s**  |
+| hono                           | ~790     | 4.5 s  | **1.3 s**  |
+| `next build` (create-next-app) | ~382     | 1.0 s  | **0.35 s** |
 
 ## Directory structure
 
-The on-disk layout adds one level of indirection compared to [isolated installs](/docs/pm/isolated-installs#directory-structure):
+The on-disk layout adds one level of indirection compared to [isolated installs](/pm/isolated-installs#directory-structure):
 
-```bash tree layout icon="list-tree" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash tree layout icon="list-tree"
 ~/.bun/install/cache/
 ├── react@18.3.1@@@1/                     # Package cache (unchanged)
 │   └── ...package files...
@@ -113,9 +114,9 @@ The 16-hex `entry_hash` suffix encodes the entry's **resolved dependency closure
 
 An entry only lives in the global store when it can be safely shared. Entries fall back to a per-project `node_modules/.bun/<storepath>/` directory when:
 
-* the package has a **patch** applied via `bun patch` — the patched contents are project-specific;
-* the package is listed in **`trustedDependencies`** (or trusted via `bun add --trust`) — its lifecycle script may mutate the install directory, and a script running through the project symlink would mutate the shared copy;
-* the package, or **any** dependency it links to, is a `workspace:`, `file:`, or `link:` dependency — those resolve to project-local paths that other projects can't see.
+- the package has a **patch** applied via `bun patch` — the patched contents are project-specific;
+- the package is listed in **`trustedDependencies`** (or trusted via `bun add --trust`) — its lifecycle script may mutate the install directory, and a script running through the project symlink would mutate the shared copy;
+- the package, or **any** dependency it links to, is a `workspace:`, `file:`, or `link:` dependency — those resolve to project-local paths that other projects can't see.
 
 Ineligibility propagates: if `your-app` depends on `internal-utils` which is a workspace package, `internal-utils` is project-local, and so is every entry that links to it. An entry that loses eligibility between installs (newly patched, newly trusted) is detached from the global store and rebuilt project-locally on the next install; the shared entry is left untouched.
 
@@ -131,7 +132,7 @@ When packages live under the project's `node_modules/.bun/`, Node's module resol
 
 In practice this only affects **true phantom dependencies**: a package doing `require('helper')` for something it never declared in `dependencies`, `peerDependencies`, or `peerDependenciesMeta`. If you hit this, add the helper to the consuming package's dependencies (the right fix) or set `globalStore = false`.
 
-[`publicHoistPattern`](/docs/runtime/bunfig#install-publichoistpattern) and [`hoistPattern`](/docs/runtime/bunfig#install-hoistpattern) hoist into the project's `node_modules`, which packages inside the global store can't reach. They still work for resolving hoisted packages from your own source code.
+[`publicHoistPattern`](/runtime/bunfig#install-publichoistpattern) and [`hoistPattern`](/runtime/bunfig#install-hoistpattern) hoist into the project's `node_modules`, which packages inside the global store can't reach. They still work for resolving hoisted packages from your own source code.
 
 ### `node_modules` is mostly symlinks
 
@@ -147,6 +148,6 @@ Multiple `bun install` processes (parallel CI jobs, concurrent workspace builds)
 
 ## Related documentation
 
-* [Package manager > Isolated installs](/docs/pm/isolated-installs) — The linker the global store builds on
-* [Package manager > Global cache](/docs/pm/global-cache) — Where downloaded packages are stored
-* [Runtime > bunfig](/docs/runtime/bunfig#install-globalstore) — `bunfig.toml` reference
+- [Package manager > Isolated installs](/pm/isolated-installs) — The linker the global store builds on
+- [Package manager > Global cache](/pm/global-cache) — Where downloaded packages are stored
+- [Runtime > bunfig](/runtime/bunfig#install-globalstore) — `bunfig.toml` reference

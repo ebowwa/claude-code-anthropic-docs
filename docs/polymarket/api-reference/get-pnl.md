@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-pnl.md
-Downloaded: 2026-08-07T00:52:23.802Z
+Downloaded: 2026-08-14T20:31:01.251Z
 -->
 
 > ## Documentation Index
@@ -14,7 +14,6 @@ If no end time is provided, the current time will be used.
 Maximum of 1000 entries returned per request.
 
 
-<Badge color="gray" size="md">Request Weight: **10**</Badge>
 
 
 ## OpenAPI

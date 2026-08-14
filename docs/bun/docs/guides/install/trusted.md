@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/install/trusted.md
+Downloaded: 2026-08-14T20:31:00.585Z
+-->
 
 # Add a trusted dependency
 
@@ -13,23 +14,23 @@ Unlike other npm clients, Bun does not execute arbitrary lifecycle scripts for i
   dependencies), you must explicitly add them to `trustedDependencies`.
 </Note>
 
-***
+---
 
 If you see one of the following errors, you are probably using a package that needs its `postinstall` script to work:
 
-* `error: could not determine executable to run for package`
-* `InvalidExe`
+- `error: could not determine executable to run for package`
+- `InvalidExe`
 
-***
+---
 
 To allow Bun to execute lifecycle scripts for a specific package, add the package to `trustedDependencies` in your `package.json`. You can do this automatically by running `bun pm trust <pkg>`.
 
 <Note>
-  This only allows lifecycle scripts for the specific package listed in `trustedDependencies`, *not* the dependencies of
+  This only allows lifecycle scripts for the specific package listed in `trustedDependencies`, _not_ the dependencies of
   that dependency.
 </Note>
 
-```json package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json package.json icon="file-json"
 {
   "name": "my-app",
   "version": "1.0.0",
@@ -37,16 +38,16 @@ To allow Bun to execute lifecycle scripts for a specific package, add the packag
 }
 ```
 
-***
+---
 
 Once this is added, run a fresh install. Bun re-installs your dependencies and runs the package's lifecycle scripts.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 rm -rf node_modules
 rm bun.lock
 bun install
 ```
 
-***
+---
 
-See [trusted dependencies](/docs/pm/lifecycle).
+See [trusted dependencies](/pm/lifecycle).

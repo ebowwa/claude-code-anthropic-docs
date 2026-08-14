@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/orders/cancel-order-v2.md
-Downloaded: 2026-08-12T20:44:24.182Z
+Downloaded: 2026-08-14T20:31:01.979Z
 -->
 
 > ## Documentation Index
@@ -11,9 +11,6 @@ Downloaded: 2026-08-12T20:44:24.182Z
 
 > Endpoint for cancelling event-market orders using the V2 response shape. Returns `{order_id, client_order_id, reduced_by}` rather than a full order object.
 
-<Note>
-  **Rate limit:** 2 tokens per request. See `GET /trade-api/v2/account/endpoint_costs` for current non-default endpoint costs.
-</Note>
 
 
 ## OpenAPI

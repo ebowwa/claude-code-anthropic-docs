@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/ecosystem/prisma.md
+Downloaded: 2026-08-14T20:31:00.576Z
+-->
 
 # Use Prisma with Bun
 
@@ -10,155 +11,152 @@
 </Note>
 
 <Steps>
-  <Step title="Create a new project">
-    Create a directory and initialize it with `bun init`.
+	<Step title="Create a new project">
+		Create a directory and initialize it with `bun init`.
 
-    ```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-    mkdir prisma-app
-    cd prisma-app
-    bun init
-    ```
-  </Step>
+    	```bash terminal icon="terminal"
+    	mkdir prisma-app
+    	cd prisma-app
+    	bun init
+    	```
+    </Step>
 
-  <Step title="Install Prisma dependencies">
-    Then install the Prisma CLI (`prisma`), Prisma Client (`@prisma/client`), and the LibSQL adapter as dependencies.
+    <Step title="Install Prisma dependencies">
+    	Then install the Prisma CLI (`prisma`), Prisma Client (`@prisma/client`), and the LibSQL adapter as dependencies.
 
-    ```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-    bun add -d prisma
-    bun add @prisma/client @prisma/adapter-libsql
-    ```
-  </Step>
+    	```bash terminal icon="terminal"
+    	bun add -d prisma
+    	bun add @prisma/client @prisma/adapter-libsql
+    	```
+    </Step>
 
-  <Step title="Initialize Prisma with SQLite">
-    Use the Prisma CLI with `bunx` to initialize the schema and migration directory. This guide uses an in-memory SQLite database.
+    <Step title="Initialize Prisma with SQLite">
+    	Use the Prisma CLI with `bunx` to initialize the schema and migration directory. This guide uses an in-memory SQLite database.
 
-    ```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-    bunx --bun prisma init --datasource-provider sqlite
-    ```
+    	```bash terminal icon="terminal"
+    	bunx --bun prisma init --datasource-provider sqlite
+    	```
 
-    This creates a basic schema. Open `prisma/schema.prisma`, update the generator block to use the Rust-free client with the `bun` runtime, and add a `User` model.
+    	This creates a basic schema. Open `prisma/schema.prisma`, update the generator block to use the Rust-free client with the `bun` runtime, and add a `User` model.
 
-    ```prisma prisma/schema.prisma icon="https://mintcdn.com/bun-1dd33a4e/nIz6GtMH5K-dfXeV/icons/ecosystem/prisma.svg?fit=max&auto=format&n=nIz6GtMH5K-dfXeV&q=85&s=c37203455320f85a20a7b29ce374661c" theme={"theme":{"light":"github-light","dark":"dracula"}}
-      generator client {
-        provider = "prisma-client" // [!code ++]
-        output = "./generated" // [!code ++]
-        engineType = "client" // [!code ++]
-        runtime = "bun" // [!code ++]
-      }
+    	```prisma prisma/schema.prisma icon="/icons/ecosystem/prisma.svg"
+    	  generator client {
+    	    provider = "prisma-client" // [!code ++]
+    	    output = "./generated" // [!code ++]
+    	    engineType = "client" // [!code ++]
+    	    runtime = "bun" // [!code ++]
+    	  }
 
-      datasource db {
-        provider = "sqlite"
-        url      = env("DATABASE_URL")
-      }
+    	  datasource db {
+    	    provider = "sqlite"
+    	    url      = env("DATABASE_URL")
+    	  }
 
-      model User { // [!code ++]
-        id    Int     @id @default(autoincrement()) // [!code ++]
-        email String  @unique // [!code ++]
-        name  String? // [!code ++]
-      } // [!code ++]
-    ```
-  </Step>
+    	  model User { // [!code ++]
+    	    id    Int     @id @default(autoincrement()) // [!code ++]
+    	    email String  @unique // [!code ++]
+    	    name  String? // [!code ++]
+    	  } // [!code ++]
+    	```
+    </Step>
 
-  <Step title="Create and run database migration">
-    Generate and run the initial migration. This writes a `.sql` migration file to `prisma/migrations`, creates a new SQLite database, and runs the migration against it.
+    <Step title="Create and run database migration">
+    	Generate and run the initial migration. This writes a `.sql` migration file to `prisma/migrations`, creates a new SQLite database, and runs the migration against it.
 
-    ```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-     bunx --bun prisma migrate dev --name init
-    ```
+    	```bash terminal icon="terminal"
+    	 bunx --bun prisma migrate dev --name init
+    	 ```
+    	 ```txt
+    	Environment variables loaded from .env
+    	Prisma schema loaded from prisma/schema.prisma
+    	Datasource "db": SQLite database "dev.db" at "file:./dev.db"
 
-    ```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
-    Environment variables loaded from .env
-    Prisma schema loaded from prisma/schema.prisma
-    Datasource "db": SQLite database "dev.db" at "file:./dev.db"
+    	SQLite database dev.db created at file:./dev.db
 
-    SQLite database dev.db created at file:./dev.db
+    	Applying migration `20251014141233_init`
 
-    Applying migration `20251014141233_init`
+    	The following migration(s) have been created and applied from new schema changes:
 
-    The following migration(s) have been created and applied from new schema changes:
+    	prisma/migrations/
+    	  └─ 20251014141233_init/
+    	    └─ migration.sql
 
-    prisma/migrations/
-     └─ 20251014141233_init/
-       └─ migration.sql
+    	Your database is now in sync with your schema.
 
-    Your database is now in sync with your schema.
+    	✔ Generated Prisma Client (6.17.1) to ./generated in 18ms
+    	```
+    </Step>
 
-    ✔ Generated Prisma Client (6.17.1) to ./generated in 18ms
-    ```
-  </Step>
+    <Step title="Generate Prisma Client">
+    	As the output indicates, Prisma re-generates the _Prisma client_ whenever you run a new migration. The client provides a fully typed API for reading and writing to your database. You can also re-generate it manually with the Prisma CLI.
 
-  <Step title="Generate Prisma Client">
-    As the output indicates, Prisma re-generates the *Prisma client* whenever you run a new migration. The client provides a fully typed API for reading and writing to your database. You can also re-generate it manually with the Prisma CLI.
+    	```sh terminal icon="terminal"
+    	bunx --bun prisma generate
+    	```
+    </Step>
 
-    ```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-    bunx --bun prisma generate
-    ```
-  </Step>
+    <Step title="Initialize Prisma Client with LibSQL">
+    	Create a new file `prisma/db.ts` that initializes the PrismaClient with the LibSQL adapter.
 
-  <Step title="Initialize Prisma Client with LibSQL">
-    Create a new file `prisma/db.ts` that initializes the PrismaClient with the LibSQL adapter.
+    	```ts prisma/db.ts icon="/icons/typescript.svg"
+    	import { PrismaClient } from "./generated/client";
+    	import { PrismaLibSQL } from "@prisma/adapter-libsql";
 
-    ```ts prisma/db.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
-    import { PrismaClient } from "./generated/client";
-    import { PrismaLibSQL } from "@prisma/adapter-libsql";
+    	const adapter = new PrismaLibSQL({ url: process.env.DATABASE_URL || "" });
+    	export const prisma = new PrismaClient({ adapter });
+    	```
+    </Step>
 
-    const adapter = new PrismaLibSQL({ url: process.env.DATABASE_URL || "" });
-    export const prisma = new PrismaClient({ adapter });
-    ```
-  </Step>
+    <Step title="Create a test script">
+    	Write a script that creates a new user, then counts the users in the database.
 
-  <Step title="Create a test script">
-    Write a script that creates a new user, then counts the users in the database.
+    	```ts index.ts icon="/icons/typescript.svg"
+    	import { prisma } from "./prisma/db";
 
-    ```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
-    import { prisma } from "./prisma/db";
+    	// create a new user
+    	await prisma.user.create({
+    	  data: {
+    	    name: "John Dough",
+    	    email: `john-${Math.random()}@example.com`,
+    	  },
+    	});
 
-    // create a new user
-    await prisma.user.create({
-      data: {
-        name: "John Dough",
-        email: `john-${Math.random()}@example.com`,
-      },
-    });
+    	// count the number of users
+    	const count = await prisma.user.count();
+    	console.log(`There are ${count} users in the database.`);
+    	```
+    </Step>
 
-    // count the number of users
-    const count = await prisma.user.count();
-    console.log(`There are ${count} users in the database.`);
-    ```
-  </Step>
+    <Step title="Run and test the application">
+    	Run the script with `bun run`. Each run creates a new user.
 
-  <Step title="Run and test the application">
-    Run the script with `bun run`. Each run creates a new user.
+    	```bash terminal icon="terminal"
+    	bun run index.ts
+    	```
+    	```txg
+    	Created john-0.12802932895402364@example.com
+    	There are 1 users in the database.
+    	```
 
-    ```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-    bun run index.ts
-    ```
+    	```bash terminal icon="terminal"
+    	bun run index.ts
+    	```
+    	```txt
+    	Created john-0.8671308799782803@example.com
+    	There are 2 users in the database.
+    	```
 
-    ```txg theme={"theme":{"light":"github-light","dark":"dracula"}}
-    Created john-0.12802932895402364@example.com
-    There are 1 users in the database.
-    ```
+    	```bash terminal icon="terminal"
+    	bun run index.ts
+    	```
+    	```txt
+    	Created john-0.4465968383115295@example.com
+    	There are 3 users in the database.
+    	```
+    </Step>
 
-    ```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-    bun run index.ts
-    ```
-
-    ```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
-    Created john-0.8671308799782803@example.com
-    There are 2 users in the database.
-    ```
-
-    ```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
-    bun run index.ts
-    ```
-
-    ```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
-    Created john-0.4465968383115295@example.com
-    There are 3 users in the database.
-    ```
-  </Step>
 </Steps>
 
-***
+---
 
 Prisma is now set up with Bun. See the [Prisma docs](https://www.prisma.io/docs/orm/prisma-client) as you build out your application.

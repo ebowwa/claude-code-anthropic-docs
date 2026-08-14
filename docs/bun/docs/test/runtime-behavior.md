@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/test/runtime-behavior.md
+Downloaded: 2026-08-14T20:31:00.566Z
+-->
 
 # Runtime behavior
 
@@ -10,11 +11,11 @@
 
 ## Environment Variables
 
-### NODE\_ENV
+### NODE_ENV
 
 `bun test` sets `$NODE_ENV` to `"test"` unless it's already set in the environment or in `.env` files. Most test runners do the same.
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 import { test, expect } from "bun:test";
 
 test("NODE_ENV is set to test", () => {
@@ -24,7 +25,7 @@ test("NODE_ENV is set to test", () => {
 
 You can override this by setting `NODE_ENV` explicitly:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 NODE_ENV=development bun test
 ```
 
@@ -32,7 +33,7 @@ NODE_ENV=development bun test
 
 `bun test` uses UTC (`Etc/UTC`) as the time zone unless the `TZ` environment variable overrides it. This keeps date and time behavior consistent across machines.
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 import { test, expect } from "bun:test";
 
 test("timezone is UTC by default", () => {
@@ -43,7 +44,7 @@ test("timezone is UTC by default", () => {
 
 To test with a specific time zone:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 TZ=America/New_York bun test
 ```
 
@@ -55,7 +56,7 @@ Each test has a default timeout of 5000ms (5 seconds). Tests that exceed it fail
 
 Change the timeout globally with the `--timeout` flag:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun test --timeout 10000  # 10 seconds
 ```
 
@@ -63,7 +64,7 @@ bun test --timeout 10000  # 10 seconds
 
 Set a per-test timeout as the third argument to the test function:
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 import { test, expect } from "bun:test";
 
 test("fast test", () => {
@@ -79,7 +80,7 @@ test("slow test", async () => {
 
 Use `0` or `Infinity` to disable the timeout:
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 test("test without timeout", async () => {
   // This test can run indefinitely
   await someVeryLongOperation();
@@ -94,7 +95,7 @@ test("test without timeout", async () => {
 
 This helps catch errors in asynchronous code that might otherwise go unnoticed:
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 import { test } from "bun:test";
 
 test("test 1", () => {
@@ -120,7 +121,7 @@ test("test 2", () => {
 
 Unhandled promise rejections are also caught:
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 import { test } from "bun:test";
 
 test("passing test", () => {
@@ -135,7 +136,7 @@ Promise.reject(new Error("Unhandled rejection"));
 
 You can set up custom error handlers in your test setup:
 
-```ts title="test-setup.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test-setup.ts" icon="/icons/typescript.svg"
 process.on("uncaughtException", error => {
   console.error("Uncaught Exception:", error);
   process.exit(1);
@@ -153,14 +154,14 @@ Several Bun CLI flags also work with `bun test`:
 
 ### Memory Usage
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 # Reduces memory usage for the test runner VM
 bun test --smol
 ```
 
 ### Debugging
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 # Attaches the debugger to the test runner process
 bun test --inspect
 bun test --inspect-brk
@@ -168,7 +169,7 @@ bun test --inspect-brk
 
 ### Module Loading
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 # Runs scripts before test files (useful for global setup/mocks)
 bun test --preload ./setup.ts
 
@@ -190,7 +191,7 @@ bun test --env-file .env.test
 
 ### Installation-related Flags
 
-```bash theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash
 # Affect any network requests or auto-installs during test execution
 bun test --prefer-offline
 bun test --frozen-lockfile
@@ -202,7 +203,7 @@ bun test --frozen-lockfile
 
 With the `--watch` flag, the test runner watches for file changes and re-runs tests.
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun test --watch
 ```
 
@@ -210,7 +211,7 @@ bun test --watch
 
 The `--hot` flag is similar, but more aggressive about preserving state between runs:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun test --hot
 ```
 
@@ -220,7 +221,7 @@ For most tests, use `--watch`: it gives better isolation between runs.
 
 The following globals are available in test files without importing:
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 // All of these are available globally
 test("global test function", () => {
   expect(true).toBe(true);
@@ -245,7 +246,7 @@ vi.fn();
 
 You can also import them explicitly:
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 import { test, it, describe, expect, beforeAll, beforeEach, afterAll, afterEach, jest, vi } from "bun:test";
 ```
 
@@ -255,14 +256,14 @@ import { test, it, describe, expect, beforeAll, beforeEach, afterAll, afterEach,
 
 `bun test` uses standard exit codes:
 
-* `0`: All tests passed, no unhandled errors
-* `1`: Test failures or unhandled errors occurred
+- `0`: All tests passed, no unhandled errors
+- `1`: Test failures or unhandled errors occurred
 
 ### Signal Handling
 
 The test runner handles common signals:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 # Gracefully stops test execution
 kill -SIGTERM <test-process-pid>
 
@@ -274,7 +275,7 @@ kill -SIGKILL <test-process-pid>
 
 Bun automatically detects certain environments and adjusts behavior:
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 // GitHub Actions detection
 if (process.env.GITHUB_ACTIONS) {
   // Bun automatically emits GitHub Actions annotations
@@ -292,19 +293,19 @@ if (process.env.CI) {
 
 The test runner runs all tests in a single process by default. This provides:
 
-* **Faster startup** - No need to spawn multiple processes
-* **Shared memory** - Efficient resource usage
-* **Simple debugging** - All tests in one process
+- **Faster startup** - No need to spawn multiple processes
+- **Shared memory** - Efficient resource usage
+- **Simple debugging** - All tests in one process
 
 However, this means:
 
-* Tests share global state (use lifecycle hooks to clean up)
-* One test crash can affect others
-* No true parallelization of individual tests
+- Tests share global state (use lifecycle hooks to clean up)
+- One test crash can affect others
+- No true parallelization of individual tests
 
 ### Memory Management
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 # Monitor memory usage
 bun test --smol  # Reduces memory footprint
 
@@ -317,7 +318,7 @@ bun test src/integration/
 
 Since tests run in the same process, ensure proper cleanup:
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 import { afterEach } from "bun:test";
 
 afterEach(() => {

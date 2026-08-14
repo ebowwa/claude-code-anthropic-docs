@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-public-portfolio.md
-Downloaded: 2026-08-07T00:52:23.802Z
+Downloaded: 2026-08-14T20:31:01.247Z
 -->
 
 > ## Documentation Index
@@ -12,7 +12,6 @@ Downloaded: 2026-08-07T00:52:23.802Z
 > Get public portfolio for an address including equity and open positions.
 
 
-<Badge color="gray" size="md">Request Weight: **5**</Badge>
 
 
 ## OpenAPI

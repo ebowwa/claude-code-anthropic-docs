@@ -1,52 +1,53 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/ecosystem/vite.md
+Downloaded: 2026-08-14T20:31:00.577Z
+-->
 
 # Build a frontend using Vite and Bun
 
 <Note>
   You can use Vite with Bun, but many projects get faster builds & drop hundreds of dependencies by switching to [HTML
-  imports](/docs/bundler/html-static).
+  imports](/bundler/html-static).
 </Note>
 
-***
+---
 
 Vite works with Bun with no extra configuration. Get started with one of Vite's templates.
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun create vite my-app
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 ✔ Select a framework: › React
 ✔ Select a variant: › TypeScript + SWC
 Scaffolding project in /path/to/my-app...
 ```
 
-***
+---
 
 Then `cd` into the project directory and install dependencies.
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 cd my-app
 bun install
 ```
 
-***
+---
 
 Start the development server with the `vite` CLI using `bunx`.
 
-The `--bun` flag tells Bun to run Vite's CLI using `bun` instead of `node`; by default Bun respects Vite's `#!/usr/bin/env node` [shebang line](https://en.wikipedia.org/wiki/Shebang_\(Unix\)).
+The `--bun` flag tells Bun to run Vite's CLI using `bun` instead of `node`; by default Bun respects Vite's `#!/usr/bin/env node` [shebang line](<https://en.wikipedia.org/wiki/Shebang_(Unix)>).
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bunx --bun vite
 ```
 
-***
+---
 
 To simplify this command, update the `"dev"` script in `package.json` to the following.
 
-```json package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json package.json icon="file-json"
   "scripts": {
     "dev": "vite", // [!code --]
     "dev": "bunx --bun vite", // [!code ++]
@@ -56,22 +57,22 @@ To simplify this command, update the `"dev"` script in `package.json` to the fol
   // ...
 ```
 
-***
+---
 
 Now you can start the development server with `bun run dev`.
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun run dev
 ```
 
-***
+---
 
 Build your app for production.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bunx --bun vite build
 ```
 
-***
+---
 
 For more information, see the [Vite documentation](https://vite.dev/guide/).

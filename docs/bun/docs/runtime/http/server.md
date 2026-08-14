@@ -1,11 +1,7 @@
 <!--
 Source: https://bun.com/docs/runtime/http/server.md
-Downloaded: 2026-08-07T20:41:00.571Z
+Downloaded: 2026-08-14T20:31:00.546Z
 -->
-
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
 
 # Server
 
@@ -13,7 +9,7 @@ Downloaded: 2026-08-07T20:41:00.571Z
 
 ## Basic Setup
 
-```ts title="index.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="index.ts" icon="/icons/typescript.svg"
 const server = Bun.serve({
   // `routes` requires Bun v1.2.3+
   routes: {
@@ -54,7 +50,7 @@ const server = Bun.serve({
 console.log(`Server running at ${server.url}`);
 ```
 
-***
+---
 
 ## HTML imports
 
@@ -64,7 +60,7 @@ Import HTML files directly into your server code to build full-stack application
 
 **Production (`bun build`):** When you build with `bun build --target=bun`, the `import index from "./index.html"` statement resolves to a pre-built manifest object containing all bundled client assets. `Bun.serve` serves the assets from this manifest with no bundling at runtime.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import myReactSinglePageApp from "./index.html";
 
 Bun.serve({
@@ -74,11 +70,11 @@ Bun.serve({
 });
 ```
 
-HTML imports don't just serve HTML: they run Bun's [bundler](/docs/bundler), JavaScript transpiler, and CSS parser, so you can build frontends with React, TypeScript, and Tailwind CSS.
+HTML imports don't just serve HTML: they run Bun's [bundler](/bundler), JavaScript transpiler, and CSS parser, so you can build frontends with React, TypeScript, and Tailwind CSS.
 
-For a complete guide to building full-stack applications with HTML imports, see [fullstack dev server](/docs/bundler/fullstack).
+For a complete guide to building full-stack applications with HTML imports, see [fullstack dev server](/bundler/fullstack).
 
-***
+---
 
 ## Configuration
 
@@ -86,7 +82,7 @@ For a complete guide to building full-stack applications with HTML imports, see 
 
 To configure which port and hostname the server listens on, set `port` and `hostname` in the options object.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 Bun.serve({
   port: 8080, // defaults to $BUN_PORT, $PORT, $NODE_PORT otherwise 3000 // [!code ++]
   hostname: "mydomain.com", // defaults to "0.0.0.0" // [!code ++]
@@ -98,7 +94,7 @@ Bun.serve({
 
 To randomly select an available port, set `port` to `0`.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const server = Bun.serve({
   port: 0, // random port // [!code ++]
   fetch(req) {
@@ -112,7 +108,7 @@ console.log(server.port);
 
 Read the chosen port from the server's `port` or `url` property.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 console.log(server.port); // 3000
 console.log(server.url); // http://localhost:3000
 ```
@@ -121,37 +117,37 @@ console.log(server.url); // http://localhost:3000
 
 Several flags and environment variables set the default port, which Bun uses when the `port` option is not set.
 
-* `--port` CLI flag
+- `--port` CLI flag
 
-```sh theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh
 bun --port=4002 server.ts
 ```
 
-* `BUN_PORT` environment variable
+- `BUN_PORT` environment variable
 
-```sh theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh
 BUN_PORT=4002 bun server.ts
 ```
 
-* `PORT` environment variable
+- `PORT` environment variable
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 PORT=4002 bun server.ts
 ```
 
-* `NODE_PORT` environment variable
+- `NODE_PORT` environment variable
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 NODE_PORT=4002 bun server.ts
 ```
 
-***
+---
 
 ## Unix domain sockets
 
 To listen on a [unix domain socket](https://en.wikipedia.org/wiki/Unix_domain_socket), pass the `unix` option with the path to the socket.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 Bun.serve({
   unix: "/tmp/my-socket.sock", // path to socket
   fetch(req) {
@@ -164,7 +160,7 @@ Bun.serve({
 
 On Linux, Bun also supports abstract namespace sockets: prefix the `unix` path with a null byte.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 Bun.serve({
   unix: "\0my-abstract-socket", // abstract namespace socket
   fetch(req) {
@@ -175,7 +171,7 @@ Bun.serve({
 
 Unlike unix domain sockets, abstract namespace sockets are not bound to the filesystem and are automatically removed when the last reference to the socket is closed.
 
-***
+---
 
 ## HTTP/3 (QUIC)
 
@@ -183,7 +179,7 @@ Unlike unix domain sockets, abstract namespace sockets are not bound to the file
 
 `Bun.serve` can also listen for HTTP/3 over QUIC. Set `http3: true` together with [`tls`](./tls); HTTP/3 requires TLS.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 Bun.serve({
   tls: {
     key: Bun.file("./key.pem"),
@@ -200,7 +196,7 @@ When `http3` is enabled, the server listens on the same port over both TCP (HTTP
 
 To serve HTTP/3 only — no TCP listener at all — set `http1: false`:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 Bun.serve({
   tls: {
     key: Bun.file("./key.pem"),
@@ -218,7 +214,7 @@ Bun.serve({
   `http3` is not supported with unix domain sockets — QUIC requires a UDP port. `http1: false` requires `http3: true`.
 </Note>
 
-***
+---
 
 ## idleTimeout
 
@@ -226,7 +222,7 @@ By default, `Bun.serve` closes connections after **10 seconds** of inactivity. A
 
 To configure this, set the `idleTimeout` field (in seconds). The maximum value is `255`, and `0` disables the timeout entirely.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 Bun.serve({
   // 30 seconds (default is 10)
   idleTimeout: 30,
@@ -243,13 +239,13 @@ Bun.serve({
   timeout for that request with [`server.timeout(req, 0)`](#server-timeout-request-seconds).
 </Note>
 
-***
+---
 
 ## export default syntax
 
 Instead of passing the server options into `Bun.serve`, you can `export default` them.
 
-```ts server.ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts server.ts
 import type { Serve } from "bun";
 
 export default {
@@ -263,13 +259,13 @@ The type parameter `<undefined>` is the WebSocket data type. If you add a `webso
 
 You can run this file as-is: when Bun sees a file with a `default` export containing a `fetch` handler, it passes it into `Bun.serve`.
 
-***
+---
 
 ## Hot Route Reloading
 
 Update routes without server restarts using `server.reload()`:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const server = Bun.serve({
   routes: {
     "/api/version": () => Response.json({ version: "1.0.0" }),
@@ -284,7 +280,7 @@ server.reload({
 });
 ```
 
-***
+---
 
 ## Server Lifecycle Methods
 
@@ -292,7 +288,7 @@ server.reload({
 
 To stop the server from accepting new connections:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const server = Bun.serve({
   fetch(req) {
     return new Response("Hello!");
@@ -312,7 +308,7 @@ By default, `stop()` allows in-flight requests and WebSocket connections to comp
 
 To close keep-alive connections that are not currently serving a request, without stopping the server:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const closed = server.closeIdleConnections();
 console.log(`closed ${closed} idle connections`);
 ```
@@ -323,7 +319,7 @@ It returns the number of connections it closed. Connections with a request in fl
 
 Control whether the server keeps the Bun process alive:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 // Don't keep process alive if server is the only thing running
 server.unref();
 
@@ -335,7 +331,7 @@ server.ref();
 
 Update the server's handlers without restarting:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const server = Bun.serve({
   routes: {
     "/api/version": Response.json({ version: "v1" }),
@@ -358,7 +354,7 @@ server.reload({
 
 Use this for development and hot reloading. Only `fetch`, `error`, `routes`, and `websocket` can be updated.
 
-***
+---
 
 ## Per-Request Controls
 
@@ -366,7 +362,7 @@ Use this for development and hot reloading. Only `fetch`, `error`, `routes`, and
 
 Override the idle timeout for an individual request. Pass `0` to disable the timeout entirely for that request.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const server = Bun.serve({
   async fetch(req, server) {
     // Give this request up to 60 seconds of inactivity instead of the default 10
@@ -382,7 +378,7 @@ const server = Bun.serve({
 
 Use `server.timeout(req, 0)` to keep a long-lived streaming response (like Server-Sent Events) alive without raising the global `idleTimeout` for every request:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 Bun.serve({
   routes: {
     "/events": (req, server) => {
@@ -407,7 +403,7 @@ Bun.serve({
 
 Get client IP and port information:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const server = Bun.serve({
   fetch(req, server) {
     const address = server.requestIP(req);
@@ -421,7 +417,7 @@ const server = Bun.serve({
 
 Returns `null` for closed requests or Unix domain sockets.
 
-***
+---
 
 ## Server Metrics
 
@@ -429,7 +425,7 @@ Returns `null` for closed requests or Unix domain sockets.
 
 Monitor server activity with built-in counters:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const server = Bun.serve({
   fetch(req, server) {
     return new Response(
@@ -443,7 +439,7 @@ const server = Bun.serve({
 
 Get count of subscribers for a WebSocket topic:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const server = Bun.serve({
   fetch(req, server) {
     const chatUsers = server.subscriberCount("chat");
@@ -457,13 +453,13 @@ const server = Bun.serve({
 });
 ```
 
-***
+---
 
 ## Benchmarks
 
 The following Bun and Node.js servers respond `Bun!` to each incoming `Request`.
 
-```ts Bun theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts Bun
 Bun.serve({
   fetch(req: Request) {
     return new Response("Bun!");
@@ -472,7 +468,7 @@ Bun.serve({
 });
 ```
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 require("http")
   .createServer((req, res) => res.end("Bun!"))
   .listen(8080);
@@ -482,91 +478,93 @@ The `Bun.serve` server can handle roughly 2.5x more requests per second than Nod
 
 | Runtime | Requests per second |
 | ------- | ------------------- |
-| Node 16 | \~64,000            |
-| Bun     | \~160,000           |
+| Node 16 | ~64,000             |
+| Bun     | ~160,000            |
 
 <Frame>
   ![image](https://user-images.githubusercontent.com/709451/162389032-fc302444-9d03-46be-ba87-c12bd8ce89a0.png)
 </Frame>
 
-***
+---
 
 ## Practical example: REST API
 
 Here's a basic database-backed REST API using Bun's router with zero dependencies:
 
 <CodeGroup>
-  ```ts server.ts expandable icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  import type { Post } from "./types.ts";
-  import { Database } from "bun:sqlite";
 
-  const db = new Database("posts.db");
-  db.exec(`
-    CREATE TABLE IF NOT EXISTS posts (
-      id TEXT PRIMARY KEY,
-      title TEXT NOT NULL,
-      content TEXT NOT NULL,
-      created_at TEXT NOT NULL
-    )
-  `);
+```ts server.ts expandable icon="file-code"
+import type { Post } from "./types.ts";
+import { Database } from "bun:sqlite";
 
-  Bun.serve({
-    routes: {
-      // List posts
-      "/api/posts": {
-        GET: () => {
-          const posts = db.query("SELECT * FROM posts").all();
-          return Response.json(posts);
-        },
+const db = new Database("posts.db");
+db.exec(`
+  CREATE TABLE IF NOT EXISTS posts (
+    id TEXT PRIMARY KEY,
+    title TEXT NOT NULL,
+    content TEXT NOT NULL,
+    created_at TEXT NOT NULL
+  )
+`);
 
-        // Create post
-        POST: async req => {
-          const post: Omit<Post, "id" | "created_at"> = await req.json();
-          const id = crypto.randomUUID();
-
-          db.query(
-            `INSERT INTO posts (id, title, content, created_at)
-             VALUES (?, ?, ?, ?)`,
-          ).run(id, post.title, post.content, new Date().toISOString());
-
-          return Response.json({ id, ...post }, { status: 201 });
-        },
+Bun.serve({
+  routes: {
+    // List posts
+    "/api/posts": {
+      GET: () => {
+        const posts = db.query("SELECT * FROM posts").all();
+        return Response.json(posts);
       },
 
-      // Get post by ID
-      "/api/posts/:id": req => {
-        const post = db.query("SELECT * FROM posts WHERE id = ?").get(req.params.id);
+      // Create post
+      POST: async req => {
+        const post: Omit<Post, "id" | "created_at"> = await req.json();
+        const id = crypto.randomUUID();
 
-        if (!post) {
-          return new Response("Not Found", { status: 404 });
-        }
+        db.query(
+          `INSERT INTO posts (id, title, content, created_at)
+           VALUES (?, ?, ?, ?)`,
+        ).run(id, post.title, post.content, new Date().toISOString());
 
-        return Response.json(post);
+        return Response.json({ id, ...post }, { status: 201 });
       },
     },
 
-    error(error) {
-      console.error(error);
-      return new Response("Internal Server Error", { status: 500 });
-    },
-  });
-  ```
+    // Get post by ID
+    "/api/posts/:id": req => {
+      const post = db.query("SELECT * FROM posts WHERE id = ?").get(req.params.id);
 
-  ```ts types.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
-  export interface Post {
-    id: string;
-    title: string;
-    content: string;
-    created_at: string;
-  }
-  ```
+      if (!post) {
+        return new Response("Not Found", { status: 404 });
+      }
+
+      return Response.json(post);
+    },
+  },
+
+  error(error) {
+    console.error(error);
+    return new Response("Internal Server Error", { status: 500 });
+  },
+});
+```
+
+```ts types.ts icon="/icons/typescript.svg"
+export interface Post {
+  id: string;
+  title: string;
+  content: string;
+  created_at: string;
+}
+```
+
 </CodeGroup>
 
-***
+---
 
 ## Reference
 
-```ts expandable See TypeScript Definitions theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts expandable See TypeScript Definitions
 interface Server extends Disposable {
   /**
    * Stop the server from accepting new connections.

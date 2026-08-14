@@ -1,20 +1,21 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/install/add-peer.md
+Downloaded: 2026-08-14T20:31:00.583Z
+-->
 
 # Add a peer dependency
 
 To add an npm package as a peer dependency, use the `--peer` flag.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun add @types/bun --peer
 ```
 
-***
+---
 
 This adds the package to `peerDependencies` in `package.json`.
 
-```json package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json package.json icon="file-json"
 {
   "peerDependencies": {
     "@types/bun": "^1.3.3" // [!code ++]
@@ -22,11 +23,12 @@ This adds the package to `peerDependencies` in `package.json`.
 }
 ```
 
-***
+---
 
 `bun install` installs peer dependencies by default, unless they are marked optional in `peerDependenciesMeta`.
 
-```json package.json icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+{/* prettier-ignore */}
+```json package.json icon="file-json"
 {
   "peerDependencies": {
     "@types/bun": "^1.3.3"
@@ -39,6 +41,6 @@ This adds the package to `peerDependencies` in `package.json`.
 }
 ```
 
-***
+---
 
-See [`bun install`](/docs/pm/cli/install).
+See [`bun install`](/pm/cli/install).

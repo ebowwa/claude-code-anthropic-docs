@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/test/discovery.md
+Downloaded: 2026-08-14T20:31:00.566Z
+-->
 
 # Finding tests
 
@@ -12,18 +13,18 @@
 
 By default, `bun test` recursively searches the project directory for files that match these patterns:
 
-* `*.test.{js|jsx|ts|tsx|mjs|cjs|mts|cts}` - Files ending with `.test.js`, `.test.jsx`, `.test.ts`, `.test.tsx`, `.test.mjs`, `.test.cjs`, `.test.mts`, or `.test.cts`
-* `*_test.{js|jsx|ts|tsx|mjs|cjs|mts|cts}` - Files ending with `_test.js`, `_test.jsx`, `_test.ts`, `_test.tsx`, `_test.mjs`, `_test.cjs`, `_test.mts`, or `_test.cts`
-* `*.spec.{js|jsx|ts|tsx|mjs|cjs|mts|cts}` - Files ending with `.spec.js`, `.spec.jsx`, `.spec.ts`, `.spec.tsx`, `.spec.mjs`, `.spec.cjs`, `.spec.mts`, or `.spec.cts`
-* `*_spec.{js|jsx|ts|tsx|mjs|cjs|mts|cts}` - Files ending with `_spec.js`, `_spec.jsx`, `_spec.ts`, `_spec.tsx`, `_spec.mjs`, `_spec.cjs`, `_spec.mts`, or `_spec.cts`
+- `*.test.{js|jsx|ts|tsx|mjs|cjs|mts|cts}` - Files ending with `.test.js`, `.test.jsx`, `.test.ts`, `.test.tsx`, `.test.mjs`, `.test.cjs`, `.test.mts`, or `.test.cts`
+- `*_test.{js|jsx|ts|tsx|mjs|cjs|mts|cts}` - Files ending with `_test.js`, `_test.jsx`, `_test.ts`, `_test.tsx`, `_test.mjs`, `_test.cjs`, `_test.mts`, or `_test.cts`
+- `*.spec.{js|jsx|ts|tsx|mjs|cjs|mts|cts}` - Files ending with `.spec.js`, `.spec.jsx`, `.spec.ts`, `.spec.tsx`, `.spec.mjs`, `.spec.cjs`, `.spec.mts`, or `.spec.cts`
+- `*_spec.{js|jsx|ts|tsx|mjs|cjs|mts|cts}` - Files ending with `_spec.js`, `_spec.jsx`, `_spec.ts`, `_spec.tsx`, `_spec.mjs`, `_spec.cjs`, `_spec.mts`, or `_spec.cts`
 
 ## Exclusions
 
 By default, `bun test` ignores:
 
-* `node_modules` directories
-* Hidden directories (those starting with a period `.`)
-* Files that don't have JavaScript-like extensions (based on available [loaders](/docs/bundler/loaders))
+- `node_modules` directories
+- Hidden directories (those starting with a period `.`)
+- Files that don't have JavaScript-like extensions (based on available [loaders](/bundler/loaders))
 
 ## Customizing Test Discovery
 
@@ -31,7 +32,7 @@ By default, `bun test` ignores:
 
 To filter which test files run, pass additional positional arguments to `bun test`:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun test <filter> <filter> ...
 ```
 
@@ -39,7 +40,7 @@ Any test file with a path that contains one of the filters runs. Filters are sub
 
 For example, to run all tests in a `utils` directory:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun test utils
 ```
 
@@ -49,7 +50,7 @@ This matches files like `src/utils/string.test.ts` and `lib/utils/array_test.js`
 
 To run a specific file in the test runner, make sure the path starts with `./` or `/` to distinguish it from a filter name:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun test ./test/specific-file.test.ts
 ```
 
@@ -57,14 +58,14 @@ bun test ./test/specific-file.test.ts
 
 To filter tests by name rather than file path, use the `-t`/`--test-name-pattern` flag with a regex pattern:
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 # run all tests with "addition" in the name
 bun test --test-name-pattern addition
 ```
 
 The pattern is matched against the test name prefixed with the labels of all its parent `describe` blocks, separated by spaces. For example, a test defined as:
 
-```ts title="math.test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="math.test.ts" icon="/icons/typescript.svg"
 describe("Math", () => {
   describe("operations", () => {
     test("should add correctly", () => {
@@ -80,7 +81,7 @@ This test is matched against the string "Math operations should add correctly".
 
 By default, Bun looks for test files starting from the current working directory. Change this with the `root` option in `bunfig.toml`:
 
-```toml title="bunfig.toml" icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml title="bunfig.toml" icon="settings"
 [test]
 root = "src"  # Only scan for tests in the src directory
 ```
@@ -89,5 +90,5 @@ root = "src"  # Only scan for tests in the src directory
 
 Tests run in the following order:
 
-1. Test files run sequentially, or across worker processes with [`--parallel`](/docs/test/parallel)
+1. Test files run sequentially, or across worker processes with [`--parallel`](/test/parallel)
 2. Within each file, tests run sequentially in definition order

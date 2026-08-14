@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/pm/filter.md
+Downloaded: 2026-08-14T20:31:00.560Z
+-->
 
 # bun --filter
 
@@ -10,7 +11,7 @@ The `--filter` (or `-F`) flag selects packages in a monorepo by pattern. Pattern
 
 `bun install` and `bun outdated` support `--filter`, and you can use it to run scripts in multiple packages at once.
 
-***
+---
 
 ## Matching
 
@@ -22,7 +23,7 @@ Name patterns select packages by the `name` field in `package.json`. For example
 
 Path patterns start with `./` and select all packages in directories matching the pattern. For example, to match all packages in subdirectories of `packages`, use `--filter './packages/**'`. To match the package in `packages/foo`, use `--filter ./packages/foo`.
 
-***
+---
 
 ## `bun install` and `bun outdated`
 
@@ -30,7 +31,7 @@ By default, `bun install` installs dependencies for every package in the monorep
 
 Given a monorepo with workspaces `pkg-a`, `pkg-b`, and `pkg-c` under `./packages`:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 # Install dependencies for all workspaces except `pkg-c`
 bun install --filter '!pkg-c'
 
@@ -43,7 +44,7 @@ bun install --filter '!./' --filter './packages/*'
 
 Similarly, `bun outdated` displays outdated dependencies for all packages in the monorepo, and `--filter` restricts the command to a subset of them:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 # Display outdated dependencies for workspaces starting with `pkg-`
 bun outdated --filter 'pkg-*'
 
@@ -51,21 +52,21 @@ bun outdated --filter 'pkg-*'
 bun outdated --filter './'
 ```
 
-See [`bun install`](/docs/pm/cli/install) and [`bun outdated`](/docs/pm/cli/outdated).
+See [`bun install`](/pm/cli/install) and [`bun outdated`](/pm/cli/outdated).
 
-***
+---
 
 ## Running scripts with `--filter`
 
 Use the `--filter` flag to execute scripts in multiple packages at once:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun --filter <pattern> <script>
 ```
 
 Say you have a monorepo with two packages: `packages/api` and `packages/frontend`, both with a `dev` script that starts a local development server. Normally, you would open two terminal tabs, `cd` into each package directory, and run `bun dev`:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 cd packages/api
 bun dev
 
@@ -76,7 +77,7 @@ bun dev
 
 Using `--filter`, you can run the `dev` script in both packages at once:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun --filter '*' dev
 ```
 
@@ -86,10 +87,10 @@ Both scripts run in parallel, and a terminal UI shows their respective outputs:
 
 ### Running scripts in workspaces
 
-Filters respect your [workspace configuration](/docs/pm/workspaces): if your `package.json` specifies which packages are part of the workspace,
+Filters respect your [workspace configuration](/pm/workspaces): if your `package.json` specifies which packages are part of the workspace,
 `--filter` only matches those packages. In a workspace, `--filter` can also run scripts in packages located anywhere in the workspace:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 # Packages
 # src/foo
 # src/bar
@@ -102,7 +103,7 @@ bun run --filter foo myscript
 
 Combine `--filter` or `--workspaces` with `--parallel` or `--sequential` to run scripts across workspace packages with Foreman-style prefixed output:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 # Run "build" in all matching packages concurrently
 bun run --parallel --filter '*' build
 

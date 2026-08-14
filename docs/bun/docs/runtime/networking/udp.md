@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/runtime/networking/udp.md
+Downloaded: 2026-08-14T20:31:00.548Z
+-->
 
 # UDP
 
@@ -10,14 +11,14 @@
 
 To create a new (bound) UDP socket:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const socket = await Bun.udpSocket({});
 console.log(socket.port); // assigned by the operating system
 ```
 
 Specify a port:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const socket = await Bun.udpSocket({
   port: 41234, // [!code ++]
 });
@@ -29,7 +30,7 @@ console.log(socket.port); // 41234
 
 Specify the data to send, the destination port, and the destination address.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 socket.send("Hello, world!", 41234, "127.0.0.1");
 ```
 
@@ -40,7 +41,7 @@ resolution, as it is intended for low-latency operations.
 
 When creating your socket, add a `data` callback to handle incoming packets:
 
-```ts server.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts server.ts icon="/icons/typescript.svg"
 const server = await Bun.udpSocket({
   socket: {
     data(socket, buf, port, addr) {
@@ -60,7 +61,7 @@ UDP has no concept of a connection, but many UDP exchanges (especially as a clie
 In that case you can connect the socket to that peer, which sets the destination address for every packet you send
 and restricts incoming packets to that peer.
 
-```ts server.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts server.ts icon="/icons/typescript.svg"
 const server = await Bun.udpSocket({
   socket: {
     data(socket, buf, port, addr) {
@@ -89,7 +90,7 @@ To send a large volume of packets without the overhead of a system call for each
 For an unconnected socket, `sendMany` takes an array as its only argument. Each set of three array elements describes a packet:
 the data to send, the target port, and the target address.
 
-```ts server.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts server.ts icon="/icons/typescript.svg"
 const socket = await Bun.udpSocket({});
 
 // sends 'Hello' to 127.0.0.1:41234, and 'foo' to 1.1.1.1:53 in a single operation
@@ -98,7 +99,7 @@ socket.sendMany(["Hello", 41234, "127.0.0.1", "foo", 53, "1.1.1.1"]);
 
 With a connected socket, `sendMany` takes an array where each element is the data to send to the peer.
 
-```ts server.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts server.ts icon="/icons/typescript.svg"
 const socket = await Bun.udpSocket({
   connect: {
     port: 41234,
@@ -117,10 +118,10 @@ as destinations and does not perform DNS resolution.
 A packet you send may not fit into the operating system's packet buffer. You can detect that this
 has happened when:
 
-* `send` returns `false`
-* `sendMany` returns a number smaller than the number of packets you specified. In this case, Bun calls the `drain` socket handler once the socket becomes writable again:
+- `send` returns `false`
+- `sendMany` returns a number smaller than the number of packets you specified. In this case, Bun calls the `drain` socket handler once the socket becomes writable again:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const socket = await Bun.udpSocket({
   socket: {
     drain(socket) {
@@ -134,7 +135,7 @@ const socket = await Bun.udpSocket({
 
 UDP sockets support setting various socket options:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const socket = await Bun.udpSocket({});
 
 // Enable broadcasting to send packets to a broadcast address
@@ -148,7 +149,7 @@ socket.setTTL(64);
 
 Bun supports multicast operations for UDP sockets. Use `addMembership` and `dropMembership` to join and leave multicast groups:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const socket = await Bun.udpSocket({});
 
 // Join a multicast group
@@ -163,7 +164,7 @@ socket.dropMembership("224.0.0.1");
 
 Additional multicast options:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 // Set TTL for multicast packets (number of network hops)
 socket.setMulticastTTL(2);
 
@@ -176,7 +177,7 @@ socket.setMulticastInterface("192.168.1.100");
 
 For source-specific multicast (SSM), use `addSourceSpecificMembership` and `dropSourceSpecificMembership`:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 socket.addSourceSpecificMembership("10.0.0.1", "232.0.0.1");
 socket.dropSourceSpecificMembership("10.0.0.1", "232.0.0.1");
 ```

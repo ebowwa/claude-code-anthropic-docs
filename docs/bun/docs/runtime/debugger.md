@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/runtime/debugger.md
+Downloaded: 2026-08-14T20:31:00.544Z
+-->
 
 # Debugging
 
@@ -10,7 +11,7 @@ Bun speaks the [WebKit Inspector Protocol](https://github.com/oven-sh/bun/blob/m
 
 ## Debugging JavaScript and TypeScript
 
-```typescript icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" title="server.ts" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```typescript icon="/icons/typescript.svg" title="server.ts"
 Bun.serve({
   fetch(req) {
     console.log(req.url);
@@ -23,11 +24,11 @@ Bun.serve({
 
 To enable debugging when running code with Bun, use the `--inspect` flag. This starts a WebSocket server on an available port for introspecting the running Bun process.
 
-```sh icon="terminal" title="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh icon="terminal" title="terminal"
 bun --inspect server.ts
 ```
 
-```txt id="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt id="terminal"
 --------------------- Bun Inspector ---------------------
 Listening:
   ws://localhost:6499/0tqxs9exrgrm
@@ -48,13 +49,13 @@ The `--inspect-wait` flag behaves identically to `--inspect`, except the code do
 
 Regardless of which flag you use, you can specify a port number, URL prefix, or both.
 
-```sh icon="terminal" title="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh icon="terminal" title="terminal"
 bun --inspect=4000 server.ts
 bun --inspect=localhost:4000 server.ts
 bun --inspect=localhost:4000/prefix server.ts
 ```
 
-***
+---
 
 ## Debuggers
 
@@ -105,10 +106,10 @@ The controls in the upper left of the Sources pane drive the program's execution
 
 What each button does:
 
-* *Continue script execution* — run until the next breakpoint or exception.
-* *Step over* — advance to the next line.
-* *Step into* — if the current statement contains a function call, enter the called function.
-* *Step out* — if the current statement is a function call, finish executing it, then return to the location where it was called.
+- _Continue script execution_ — run until the next breakpoint or exception.
+- _Step over_ — advance to the next line.
+- _Step into_ — if the current statement contains a function call, enter the called function.
+- _Step out_ — if the current statement is a function call, finish executing it, then return to the location where it was called.
 
 <Frame>
   ![Bun debugger execution
@@ -117,9 +118,9 @@ What each button does:
 
 ### Visual Studio Code Debugger
 
-Visual Studio Code support for debugging Bun scripts is experimental. To use it, install the [Bun VSCode extension](/docs/guides/runtime/vscode-debugger).
+Visual Studio Code support for debugging Bun scripts is experimental. To use it, install the [Bun VSCode extension](/guides/runtime/vscode-debugger).
 
-***
+---
 
 ## Debugging Network Requests
 
@@ -135,7 +136,7 @@ Set the `BUN_CONFIG_VERBOSE_FETCH` environment variable to log network requests 
 
 Set `BUN_CONFIG_VERBOSE_FETCH` to `curl` to print each `fetch()` and `node:http` request as a single-line `curl` command you can copy-paste into your terminal to replicate the request.
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 process.env.BUN_CONFIG_VERBOSE_FETCH = "curl";
 
 await fetch("https://example.com", {
@@ -147,7 +148,7 @@ await fetch("https://example.com", {
 });
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 [fetch] $ curl --http1.1 "https://example.com/" -X POST -H "content-type: application/json" -H "Connection: keep-alive" -H "User-Agent: Bun/1.3.3" -H "Accept: */*" -H "Host: example.com" -H "Accept-Encoding: gzip, deflate, br" --compressed -H "Content-Length: 13" --data-raw "{\"foo\":\"bar\"}"
 [fetch] > HTTP/1.1 POST https://example.com/
 [fetch] > content-type: application/json
@@ -174,7 +175,7 @@ The lines with `[fetch] >` are the request from your local code, and the lines w
 
 To print without the `curl` command, set `BUN_CONFIG_VERBOSE_FETCH` to `true`.
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 process.env.BUN_CONFIG_VERBOSE_FETCH = "true";
 
 await fetch("https://example.com", {
@@ -186,7 +187,7 @@ await fetch("https://example.com", {
 });
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 [fetch] > HTTP/1.1 POST https://example.com/
 [fetch] > content-type: application/json
 [fetch] > Connection: keep-alive
@@ -208,7 +209,7 @@ await fetch("https://example.com", {
 [fetch] < Content-Length: 1256
 ```
 
-***
+---
 
 ## Stacktraces & sourcemaps
 
@@ -220,7 +221,7 @@ Bun loads sourcemaps both at runtime when transpiling files on-demand, and when 
 
 Bun prints a small source-code preview when an unhandled exception or rejection occurs. To produce the same output yourself, call `Bun.inspect(error)`:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 // Create an error
 const err = new Error("Something went wrong");
 console.log(Bun.inspect(err, { colors: true }));
@@ -228,7 +229,7 @@ console.log(Bun.inspect(err, { colors: true }));
 
 The output is a syntax-highlighted preview of the source code where the error occurred, along with the error message and stack trace.
 
-```ts icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts icon="file-code"
 1 | // Create an error
 2 | const err = new Error("Something went wrong");
                 ^
@@ -248,7 +249,7 @@ Bun implements the [V8 Stack Trace API](https://v8.dev/docs/stack-trace-api), a 
 
 Define a global `Error.prepareStackTrace` function to customize the stack trace output. It receives the error object and an array of `CallSite` objects, and its return value becomes `error.stack`.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 Error.prepareStackTrace = (err, stack) => {
   return stack.map(callSite => {
     return callSite.getFileName();
@@ -293,7 +294,7 @@ This helps when callbacks or asynchronous code make it hard to tell where an err
 
 In the following example, `err.stack` points to the code calling `fn()`, even though the error was thrown at `myInner`.
 
-```ts index.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts index.ts icon="/icons/typescript.svg"
 const fn = () => {
   function myInner() {
     throw err;
@@ -314,7 +315,7 @@ const fn = () => {
 fn();
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 Error: here!
     at myInner (file.js:4:15)
     at fn (file.js:8:5)

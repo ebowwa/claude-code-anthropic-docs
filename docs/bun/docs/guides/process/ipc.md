@@ -1,17 +1,18 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/process/ipc.md
+Downloaded: 2026-08-14T20:31:00.582Z
+-->
 
 # Spawn a child process and communicate using IPC
 
-Use [`Bun.spawn()`](/docs/runtime/child-process) to spawn a child process. When spawning a second `bun` process, you can open a direct inter-process communication (IPC) channel between the two processes.
+Use [`Bun.spawn()`](/runtime/child-process) to spawn a child process. When spawning a second `bun` process, you can open a direct inter-process communication (IPC) channel between the two processes.
 
 <Note>
   To communicate with a Node.js process, set `serialization: "json"` in `Bun.spawn`. Use `process.execPath` to get a
   path to the currently running `bun` executable.
 </Note>
 
-```ts parent.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts parent.ts icon="/icons/typescript.svg"
 const child = Bun.spawn(["bun", "child.ts"], {
   ipc(message) {
     /**
@@ -21,11 +22,11 @@ const child = Bun.spawn(["bun", "child.ts"], {
 });
 ```
 
-***
+---
 
 The parent process sends messages to the subprocess with the `.send()` method on the returned `Subprocess` instance. The `ipc` handler also receives the subprocess as its second argument.
 
-```ts parent.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts parent.ts icon="/icons/typescript.svg"
 const childProc = Bun.spawn(["bun", "child.ts"], {
   ipc(message, childProc) {
     /**
@@ -38,11 +39,11 @@ const childProc = Bun.spawn(["bun", "child.ts"], {
 childProc.send("I am your father"); // The parent can send messages to the child as well
 ```
 
-***
+---
 
 The child process sends messages to its parent with `process.send()` and receives messages with `process.on("message")`. This is the same API used for `child_process.fork()` in Node.js.
 
-```ts child.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts child.ts icon="/icons/typescript.svg"
 process.send("Hello from child as string");
 process.send({ message: "Hello from child as object" });
 
@@ -52,11 +53,11 @@ process.on("message", message => {
 });
 ```
 
-***
+---
 
 By default, messages are serialized with the JSC `serialize` API, which supports everything [`structuredClone` supports](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), including strings, typed arrays, and objects. This does not support transferring ownership of objects.
 
-```ts child.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts child.ts icon="/icons/typescript.svg"
 // send a string
 process.send("Hello from child as string");
 
@@ -64,6 +65,6 @@ process.send("Hello from child as string");
 process.send({ message: "Hello from child as object" });
 ```
 
-***
+---
 
-See [Child processes](/docs/runtime/child-process).
+See [Child processes](/runtime/child-process).

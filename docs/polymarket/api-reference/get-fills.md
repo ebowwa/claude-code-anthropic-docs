@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-fills.md
-Downloaded: 2026-08-13T20:42:10.568Z
+Downloaded: 2026-08-14T20:31:01.251Z
 -->
 
 > ## Documentation Index
@@ -18,7 +18,6 @@ default) or oldest-first (`asc`). To page through more than 100 fills, pass
 `sort` consistent across pages).
 
 
-<Badge color="gray" size="md">Request Weight: **10**</Badge>
 
 
 ## OpenAPI

@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/test/code-coverage.md
+Downloaded: 2026-08-14T20:31:00.567Z
+-->
 
 # Code coverage
 
@@ -12,7 +13,7 @@ Bun's test runner has built-in code coverage reporting. Use it to see how much o
 
 `bun:test` can report which lines of code your tests cover. Pass `--coverage` to print a coverage report to the console:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun test --coverage
 
 -------------|---------|---------|-------------------
@@ -38,7 +39,7 @@ All files    |   38.89 |   42.11 |
 
 To enable coverage reporting by default, add this to your `bunfig.toml`:
 
-```toml title="bunfig.toml" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml title="bunfig.toml"
 [test]
 # Always enable coverage
 coverage = true
@@ -46,7 +47,7 @@ coverage = true
 
 By default, coverage reports exclude test files and use sourcemaps. Both are configurable in `bunfig.toml`.
 
-```toml title="bunfig.toml" icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml title="bunfig.toml" icon="settings"
 [test]
 coverageSkipTestFiles = false  # default true
 ```
@@ -57,7 +58,7 @@ Set a coverage threshold in `bunfig.toml`. If your test suite does not meet or e
 
 ### Simple Threshold
 
-```toml title="bunfig.toml" icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml title="bunfig.toml" icon="settings"
 [test]
 # To require 90% line-level and function-level coverage
 coverageThreshold = 0.9
@@ -65,7 +66,7 @@ coverageThreshold = 0.9
 
 ### Detailed Thresholds
 
-```toml title="bunfig.toml" icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml title="bunfig.toml" icon="settings"
 [test]
 # To set different thresholds for lines and functions
 coverageThreshold = { lines = 0.9, functions = 0.9, statements = 0.9 }
@@ -79,7 +80,7 @@ By default, Bun prints coverage reports to the console.
 
 To save a report for CI or other tools, pass `--coverage-reporter=lcov` on the command line or set `coverageReporter` in `bunfig.toml`.
 
-```toml title="bunfig.toml" icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml title="bunfig.toml" icon="settings"
 [test]
 coverageReporter = ["text", "lcov"]  # default ["text"]
 coverageDir = "path/to/somewhere"    # default "coverage"
@@ -96,26 +97,26 @@ coverageDir = "path/to/somewhere"    # default "coverage"
 
 The lcov reporter writes an `lcov.info` file to the coverage directory.
 
-```toml title="bunfig.toml" icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml title="bunfig.toml" icon="settings"
 [test]
 coverageReporter = "lcov"
 ```
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 # Or via CLI
 bun test --coverage --coverage-reporter=lcov
 ```
 
 Tools and services that read the LCOV format include:
 
-* **Code editors**: VS Code extensions can show coverage inline
-* **CI/CD services**: GitHub Actions, GitLab CI, CircleCI
-* **Coverage services**: Codecov, Coveralls
-* **IDEs**: WebStorm, IntelliJ IDEA
+- **Code editors**: VS Code extensions can show coverage inline
+- **CI/CD services**: GitHub Actions, GitLab CI, CircleCI
+- **Coverage services**: Codecov, Coveralls
+- **IDEs**: WebStorm, IntelliJ IDEA
 
 #### Using LCOV with GitHub Actions
 
-```yaml title=".github/workflows/test.yml" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```yaml title=".github/workflows/test.yml" icon="file-code"
 name: Test with Coverage
 on: [push, pull_request]
 
@@ -139,7 +140,7 @@ jobs:
 
 Coverage reports exclude test files by default. To include them:
 
-```toml title="bunfig.toml" icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml title="bunfig.toml" icon="settings"
 [test]
 coverageSkipTestFiles = false  # default true
 ```
@@ -150,7 +151,7 @@ When `coverageSkipTestFiles` is `true` (the default), files matching test patter
 
 `coveragePathIgnorePatterns` excludes specific files or file patterns from coverage reports:
 
-```toml title="bunfig.toml" icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml title="bunfig.toml" icon="settings"
 [test]
 # Single pattern
 coveragePathIgnorePatterns = "**/*.spec.ts"
@@ -168,7 +169,7 @@ The option accepts glob patterns and works like Jest's `collectCoverageFrom` ign
 
 #### Common Use Cases
 
-```toml title="bunfig.toml" icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml title="bunfig.toml" icon="settings"
 [test]
 coveragePathIgnorePatterns = [
   # Exclude utility files
@@ -201,7 +202,7 @@ coveragePathIgnorePatterns = [
 
 Bun transpiles all files by default, generating an internal source map that maps lines of your original source code onto Bun's internal representation. To disable this, set `test.coverageIgnoreSourcemaps` to `true`; you rarely want this outside of advanced use cases.
 
-```toml title="bunfig.toml" icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml title="bunfig.toml" icon="settings"
 [test]
 coverageIgnoreSourcemaps = true  # default false
 ```
@@ -215,30 +216,30 @@ coverageIgnoreSourcemaps = true  # default false
 
 By default, coverage reports:
 
-* **Exclude** `node_modules` directories
-* **Exclude** files loaded with non-JS/TS loaders (for example `.css`, `.txt`) unless a custom JS loader is specified
-* **Exclude** test files themselves (can be included with `coverageSkipTestFiles = false`)
-* Can exclude additional files with `coveragePathIgnorePatterns`
+- **Exclude** `node_modules` directories
+- **Exclude** files loaded with non-JS/TS loaders (for example `.css`, `.txt`) unless a custom JS loader is specified
+- **Exclude** test files themselves (can be included with `coverageSkipTestFiles = false`)
+- Can exclude additional files with `coveragePathIgnorePatterns`
 
 ## Advanced Configuration
 
 ### Custom Coverage Directory
 
-```toml title="bunfig.toml" icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml title="bunfig.toml" icon="settings"
 [test]
 coverageDir = "coverage-reports"  # default "coverage"
 ```
 
 ### Multiple Reporters
 
-```toml title="bunfig.toml" icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml title="bunfig.toml" icon="settings"
 [test]
 coverageReporter = ["text", "lcov"]
 ```
 
 ### Coverage with Specific Test Patterns
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 # Run coverage only on specific test files
 bun test --coverage src/components/*.test.ts
 
@@ -250,7 +251,7 @@ bun test --coverage --test-name-pattern="API"
 
 ### GitHub Actions Example
 
-```yaml title=".github/workflows/coverage.yml" icon="file-code" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```yaml title=".github/workflows/coverage.yml" icon="file-code"
 name: Coverage Report
 on: [push, pull_request]
 
@@ -279,7 +280,7 @@ jobs:
 
 ### GitLab CI Example
 
-```yaml title=".gitlab-ci.yml" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```yaml title=".gitlab-ci.yml"
 test:coverage:
   stage: test
   script:
@@ -309,22 +310,22 @@ All files    |   85.71 |   90.48 |
 -------------|---------|---------|-------------------
 ```
 
-* **% Funcs**: Percentage of functions called during tests
-* **% Lines**: Percentage of executable lines run during tests
-* **Uncovered Line #s**: Line numbers that were never executed
+- **% Funcs**: Percentage of functions called during tests
+- **% Lines**: Percentage of executable lines run during tests
+- **Uncovered Line #s**: Line numbers that were never executed
 
 ### What to Aim For
 
-* **80%+ overall coverage**: Generally considered good
-* **90%+ critical paths**: Important business logic should be well-tested
-* **100% utility functions**: Pure functions and utilities are easy to test completely
-* **Lower coverage for UI components**: Often acceptable as they may require integration tests
+- **80%+ overall coverage**: Generally considered good
+- **90%+ critical paths**: Important business logic should be well-tested
+- **100% utility functions**: Pure functions and utilities are easy to test completely
+- **Lower coverage for UI components**: Often acceptable as they may require integration tests
 
 ## Best Practices
 
 ### Focus on Quality, Not Just Quantity
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 // Good: Test actual functionality
 test("calculateTax should handle different tax rates", () => {
   expect(calculateTax(100, 0.08)).toBe(8);
@@ -340,7 +341,7 @@ test("calculateTax exists", () => {
 
 ### Test Edge Cases
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 test("user input validation", () => {
   // Test normal case
   expect(validateEmail("user@example.com")).toBe(true);
@@ -354,7 +355,7 @@ test("user input validation", () => {
 
 ### Use Coverage to Find Missing Tests
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 # Run coverage to identify untested code
 bun test --coverage
 
@@ -366,11 +367,11 @@ bun test --coverage src/critical-module.ts
 
 Coverage is just one metric. Also consider:
 
-* **Code review quality**
-* **Integration test coverage**
-* **Error handling tests**
-* **Performance tests**
-* **Type safety**
+- **Code review quality**
+- **Integration test coverage**
+- **Error handling tests**
+- **Performance tests**
+- **Type safety**
 
 ## Troubleshooting
 
@@ -378,7 +379,7 @@ Coverage is just one metric. Also consider:
 
 If files aren't appearing in coverage reports, your tests might not import them. Coverage only tracks files that are loaded.
 
-```ts title="test.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="test.ts" icon="/icons/typescript.svg"
 // Make sure to import the modules you want to test
 import { myFunction } from "../src/my-module";
 
@@ -399,7 +400,7 @@ If you see coverage reports that don't match your expectations:
 
 For large projects, coverage collection can slow down tests:
 
-```toml title="bunfig.toml" icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml title="bunfig.toml" icon="settings"
 [test]
 # Exclude large directories you don't need coverage for
 coveragePathIgnorePatterns = [

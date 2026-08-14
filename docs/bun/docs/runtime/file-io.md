@@ -1,16 +1,19 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/runtime/file-io.md
+Downloaded: 2026-08-14T20:31:00.548Z
+-->
 
 # File I/O
 
 > Bun provides a set of optimized APIs for reading and writing files.
 
 <Note>
-  The `Bun.file` and `Bun.write` APIs documented on this page are heavily optimized and are the recommended way to work with files in Bun. For operations they don't cover, such as `mkdir` or `readdir`, use Bun's [nearly complete](/docs/runtime/nodejs-compat#node-fs) implementation of the [`node:fs`](https://nodejs.org/api/fs.html) module.
+
+The `Bun.file` and `Bun.write` APIs documented on this page are heavily optimized and are the recommended way to work with files in Bun. For operations they don't cover, such as `mkdir` or `readdir`, use Bun's [nearly complete](/runtime/nodejs-compat#node-fs) implementation of the [`node:fs`](https://nodejs.org/api/fs.html) module.
+
 </Note>
 
-***
+---
 
 ## Reading files (`Bun.file()`)
 
@@ -18,7 +21,7 @@
 
 Create a `BunFile` instance with the `Bun.file(path)` function. A `BunFile` represents a lazily-loaded file; initializing it does not read the file from disk.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const foo = Bun.file("foo.txt"); // relative to cwd
 foo.size; // number of bytes
 foo.type; // MIME type
@@ -26,7 +29,7 @@ foo.type; // MIME type
 
 The reference conforms to the [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) interface, so the contents can be read in various formats.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const foo = Bun.file("foo.txt");
 
 await foo.text(); // contents as a string
@@ -38,14 +41,14 @@ await foo.bytes(); // contents as Uint8Array
 
 You can also create file references from numerical [file descriptors](https://en.wikipedia.org/wiki/File_descriptor) or `file://` URLs.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 Bun.file(1234);
 Bun.file(new URL(import.meta.url)); // reference to the current file
 ```
 
 A `BunFile` can point to a location on disk where a file does not exist.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const notreal = Bun.file("notreal.txt");
 notreal.size; // 0
 notreal.type; // "text/plain;charset=utf-8"
@@ -54,14 +57,14 @@ const exists = await notreal.exists(); // false
 
 The default MIME type is `text/plain;charset=utf-8`. Override it by passing a second argument to `Bun.file`.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const notreal = Bun.file("notreal.json", { type: "application/json" });
 notreal.type; // => "application/json;charset=utf-8"
 ```
 
 For convenience, Bun exposes `stdin`, `stdout` and `stderr` as instances of `BunFile`.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 Bun.stdin; // readonly
 Bun.stdout;
 Bun.stderr;
@@ -71,11 +74,11 @@ Bun.stderr;
 
 Call `.delete()` to delete a file.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 await Bun.file("logs.json").delete();
 ```
 
-***
+---
 
 ## Writing files (`Bun.write()`)
 
@@ -85,45 +88,47 @@ The `Bun.write` function is a multi-tool for writing payloads of all kinds to di
 
 The first argument is the `destination`, which can be any of the following:
 
-* `string`: A path to a location on the file system. Use the `"path"` module to manipulate paths.
-* `URL`: A `file://` descriptor.
-* `BunFile`: A file reference.
+- `string`: A path to a location on the file system. Use the `"path"` module to manipulate paths.
+- `URL`: A `file://` descriptor.
+- `BunFile`: A file reference.
 
 The second argument is the data to write. It can be any of the following:
 
-* `string`
-* `Blob` (including `BunFile`)
-* `ArrayBuffer` or `SharedArrayBuffer`
-* `TypedArray` (`Uint8Array`, et. al.)
-* `Response`
+- `string`
+- `Blob` (including `BunFile`)
+- `ArrayBuffer` or `SharedArrayBuffer`
+- `TypedArray` (`Uint8Array`, et. al.)
+- `Response`
 
 Bun handles each combination with the fastest available system call on the current platform.
 
 <Accordion title="See syscalls">
-  | Output               | Input          | System call                   | Platform |
-  | -------------------- | -------------- | ----------------------------- | -------- |
-  | file                 | file           | copy\_file\_range             | Linux    |
-  | file                 | pipe           | sendfile                      | Linux    |
-  | pipe                 | pipe           | splice                        | Linux    |
-  | terminal             | file           | sendfile                      | Linux    |
-  | terminal             | terminal       | sendfile                      | Linux    |
-  | socket               | file or pipe   | sendfile (if http, not https) | Linux    |
-  | file (doesn't exist) | file (path)    | clonefile                     | macOS    |
-  | file (exists)        | file           | fcopyfile                     | macOS    |
-  | file                 | Blob or string | write                         | macOS    |
-  | file                 | Blob or string | write                         | Linux    |
+
+| Output               | Input          | System call                   | Platform |
+| -------------------- | -------------- | ----------------------------- | -------- |
+| file                 | file           | copy_file_range               | Linux    |
+| file                 | pipe           | sendfile                      | Linux    |
+| pipe                 | pipe           | splice                        | Linux    |
+| terminal             | file           | sendfile                      | Linux    |
+| terminal             | terminal       | sendfile                      | Linux    |
+| socket               | file or pipe   | sendfile (if http, not https) | Linux    |
+| file (doesn't exist) | file (path)    | clonefile                     | macOS    |
+| file (exists)        | file           | fcopyfile                     | macOS    |
+| file                 | Blob or string | write                         | macOS    |
+| file                 | Blob or string | write                         | Linux    |
+
 </Accordion>
 
 To write a string to disk:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const data = `It was the best of times, it was the worst of times.`;
 await Bun.write("output.txt", data);
 ```
 
 To copy a file to another location on disk:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const input = Bun.file("input.txt");
 const output = Bun.file("output.txt"); // doesn't exist yet!
 await Bun.write(output, input);
@@ -131,7 +136,7 @@ await Bun.write(output, input);
 
 To write a byte array to disk:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const encoder = new TextEncoder();
 const data = encoder.encode("datadatadata"); // Uint8Array
 await Bun.write("output.txt", data);
@@ -139,32 +144,32 @@ await Bun.write("output.txt", data);
 
 To write a file to `stdout`:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const input = Bun.file("input.txt");
 await Bun.write(Bun.stdout, input);
 ```
 
 To write the body of an HTTP response to disk:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const response = await fetch("https://bun.com");
 await Bun.write("index.html", response);
 ```
 
-***
+---
 
 ## Incremental writing with `FileSink`
 
 Bun provides a native incremental file writing API called `FileSink`. To retrieve a `FileSink` instance from a `BunFile`:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const file = Bun.file("output.txt");
 const writer = file.writer();
 ```
 
 To incrementally write to the file, call `.write()`.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const file = Bun.file("output.txt");
 const writer = file.writer();
 
@@ -174,33 +179,33 @@ writer.write("it was the worst of times\n");
 
 These chunks are buffered internally. To flush the buffer to disk, use `.flush()`. This returns the number of flushed bytes.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 writer.flush(); // write buffer to disk
 ```
 
-The buffer also auto-flushes when the `FileSink`'s *high water mark* is reached; that is, when its internal buffer is full. You can configure this value.
+The buffer also auto-flushes when the `FileSink`'s _high water mark_ is reached; that is, when its internal buffer is full. You can configure this value.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const file = Bun.file("output.txt");
 const writer = file.writer({ highWaterMark: 1024 * 1024 }); // 1MB
 ```
 
 To flush the buffer and close the file:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 writer.end();
 ```
 
 By default, the `bun` process stays alive until this `FileSink` is explicitly closed with `.end()`. To opt out of this behavior, "unref" the instance.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 writer.unref();
 
 // to "re-ref" it later
 writer.ref();
 ```
 
-***
+---
 
 ## Directories
 
@@ -210,7 +215,7 @@ Bun's implementation of `node:fs` is fast. Use `node:fs` for working with direct
 
 To read a directory in Bun, use `readdir` from `node:fs`.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import { readdir } from "node:fs/promises";
 
 // read all the files in the current directory
@@ -221,7 +226,7 @@ const files = await readdir(import.meta.dir);
 
 To recursively read a directory in Bun, use `readdir` with `recursive: true`.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import { readdir } from "node:fs/promises";
 
 // read all the files in the current directory, recursively
@@ -232,19 +237,19 @@ const files = await readdir("../", { recursive: true });
 
 To recursively create a directory, use `mkdir` in `node:fs`:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import { mkdir } from "node:fs/promises";
 
 await mkdir("path/to/dir", { recursive: true });
 ```
 
-***
+---
 
 ## Benchmarks
 
 The following is a 3-line implementation of the Linux `cat` command.
 
-```ts cat.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts cat.ts icon="/icons/typescript.svg"
 // Usage
 // bun ./cat.ts ./path-to-file
 
@@ -256,21 +261,19 @@ await Bun.write(Bun.stdout, Bun.file(path));
 
 To run the file:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun ./cat.ts ./path-to-file
 ```
 
 It runs 2x faster than GNU `cat` for large files on Linux.
 
-<Frame>
-  <img src="https://mintcdn.com/bun-1dd33a4e/PY1574V41bdK8wNs/images/cat.jpg?fit=max&auto=format&n=PY1574V41bdK8wNs&q=85&s=cc26ce0444c5a5953dd346ee52deb3aa" alt="Cat screenshot" width="1194" height="1143" data-path="images/cat.jpg" />
-</Frame>
+<Frame>![Cat screenshot](/images/cat.jpg)</Frame>
 
-***
+---
 
 ## Reference
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 interface Bun {
   stdin: BunFile;
   stdout: BunFile;

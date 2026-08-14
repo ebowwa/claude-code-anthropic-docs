@@ -1,11 +1,7 @@
 <!--
 Source: https://bun.com/docs/runtime/xml.md
-Downloaded: 2026-08-09T20:32:29.736Z
+Downloaded: 2026-08-14T20:31:00.553Z
 -->
-
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
 
 # XML
 
@@ -15,11 +11,11 @@ Downloaded: 2026-08-09T20:32:29.736Z
 
 In Bun, XML is a first-class citizen alongside JSON, TOML, YAML, and JSON5. You can:
 
-* Parse and stringify XML with `Bun.XML.parse` and `Bun.XML.stringify`
-* `import` & `require` XML files as modules at runtime (including hot reloading & watch mode support)
-* `import` & `require` XML files in frontend apps with Bun's bundler
+- Parse and stringify XML with `Bun.XML.parse` and `Bun.XML.stringify`
+- `import` & `require` XML files as modules at runtime (including hot reloading & watch mode support)
+- `import` & `require` XML files in frontend apps with Bun's bundler
 
-***
+---
 
 ## Runtime API
 
@@ -27,7 +23,7 @@ In Bun, XML is a first-class citizen alongside JSON, TOML, YAML, and JSON5. You 
 
 Parse an XML document into a plain JavaScript object.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import { XML } from "bun";
 
 const data = XML.parse(`
@@ -56,15 +52,15 @@ console.log(data);
 
 By default the result is a **compact object** keyed by element name — the shape most XML-to-object libraries use:
 
-* The result has one key, the root element's name.
-* An element with no attributes and no child elements becomes its text content, trimmed of surrounding whitespace (`""` when empty).
-* Any other element becomes an object with a `"@name"` key per attribute, one key per distinct child element name — an **array** when that name repeats, in document order — and `"#text"` for its trimmed character data, if any.
-* CDATA sections and entity references are already expanded into the text. Comments and processing instructions are dropped.
-* All values are strings. Nothing is coerced to numbers, booleans, or `null`.
+- The result has one key, the root element's name.
+- An element with no attributes and no child elements becomes its text content, trimmed of surrounding whitespace (`""` when empty).
+- Any other element becomes an object with a `"@name"` key per attribute, one key per distinct child element name — an **array** when that name repeats, in document order — and `"#text"` for its trimmed character data, if any.
+- CDATA sections and entity references are already expanded into the text. Comments and processing instructions are dropped.
+- All values are strings. Nothing is coerced to numbers, booleans, or `null`.
 
 The compact shape does not keep the relative order of differently named siblings or of text between child elements. When that matters — documents rather than data — pass `{ compact: false }` to get the root element as a **node tree** that keeps everything in document order:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const p = XML.parse(`<p class="lead">Hello <b>world</b>!</p>`, { compact: false });
 
 console.log(p);
@@ -87,7 +83,7 @@ Every element is `{ name, attributes, children }`; `children` holds child elemen
 
 A string is already-decoded text, so its `encoding` declaration is checked for syntax but otherwise ignored. Bytes are decoded per the XML rules: a byte-order mark or the `encoding` in `<?xml version="1.0" encoding="..."?>` selects **UTF-8** (the default), **UTF-16** (either byte order), or **ISO-8859-1**. Other encodings throw.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 XML.parse(await Bun.file("feed.xml").bytes());
 ```
 
@@ -95,7 +91,7 @@ XML.parse(await Bun.file("feed.xml").bytes());
 
 `Bun.XML.parse()` throws a `SyntaxError` when the document is not well-formed:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 try {
   XML.parse("<a><b></a>");
 } catch (error) {
@@ -107,7 +103,7 @@ try {
 
 Serialize either shape back to XML. The output has no XML declaration and is always well-formed: `&`, `<`, `>` (and, in attributes, quotes, tabs and newlines) are escaped, and element or attribute names that are not XML names throw.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import { XML } from "bun";
 
 XML.stringify({
@@ -134,7 +130,7 @@ A value with a string `name` and a `children` or `attributes` property is writte
 
 Pass a `space` argument (a number of spaces or an indent string, as with `JSON.stringify`) to indent element-only content. Elements that contain text are written inline so character data is unchanged:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 console.log(XML.stringify(data, null, 2));
 // <order id="A1" currency="USD">
 //   <customer>Ada</customer>
@@ -146,7 +142,7 @@ console.log(XML.stringify(data, null, 2));
 
 `XML.parse(XML.stringify(value))` gives back `value` for anything `XML.parse` produced, in either shape.
 
-***
+---
 
 ## Module Import
 
@@ -154,7 +150,7 @@ console.log(XML.stringify(data, null, 2));
 
 You can import XML files directly. Files are decoded like bytes passed to `XML.parse` (UTF-8, UTF-16, or ISO-8859-1 per the byte-order mark or declaration), and the module's value is the compact object described above:
 
-```xml config.xml theme={"theme":{"light":"github-light","dark":"dracula"}}
+```xml config.xml
 <?xml version="1.0" encoding="UTF-8"?>
 <config env="production">
   <database host="localhost" port="5432" name="myapp"/>
@@ -165,7 +161,7 @@ You can import XML files directly. Files are decoded like bytes passed to `XML.p
 
 #### Default Import
 
-```ts app.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts app.ts icon="/icons/typescript.svg"
 import doc from "./config.xml";
 
 console.log(doc.config["@env"]); // "production"
@@ -177,7 +173,7 @@ console.log(doc.config.feature.map(f => f["@name"])); // ["auth", "rateLimit"]
 
 The root element is also available as a named import:
 
-```ts app.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts app.ts icon="/icons/typescript.svg"
 import { config } from "./config.xml";
 
 console.log(config.database["@port"]); // "5432"
@@ -185,7 +181,7 @@ console.log(config.database["@port"]); // "5432"
 
 ### CommonJS
 
-```ts app.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts app.ts icon="/icons/typescript.svg"
 const { config } = require("./config.xml");
 console.log(config.database["@name"]); // "myapp"
 ```
@@ -194,17 +190,17 @@ console.log(config.database["@name"]); // "myapp"
 
 Use `with { type: "xml" }` to parse a file with another extension as XML:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import feed from "./export.rss" with { type: "xml" };
 ```
 
-***
+---
 
 ## Hot Reloading with XML
 
 When you run your application with `bun --hot`, Bun reloads XML files when they change:
 
-```ts server.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts server.ts icon="/icons/typescript.svg"
 import { config } from "./config.xml";
 
 Bun.serve({
@@ -215,48 +211,48 @@ Bun.serve({
 });
 ```
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun --hot server.ts
 ```
 
-***
+---
 
 ## Bundler Integration
 
 When you bundle with Bun, imported XML files are parsed at build time and inlined as JavaScript objects:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun build app.ts --outdir=dist
 ```
 
 Parsing at build time means:
 
-* Zero runtime XML parsing overhead in production
-* Smaller bundle sizes
-* Tree shaking of unused properties
+- Zero runtime XML parsing overhead in production
+- Smaller bundle sizes
+- Tree shaking of unused properties
 
 ### Dynamic Imports
 
 XML files can be dynamically imported:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const { default: doc } = await import("./config.xml");
 ```
 
-***
+---
 
 ## Conformance
 
 Bun's XML parser is written in Rust and implements [XML 1.0 (Fifth Edition)](https://www.w3.org/TR/2008/REC-xml-20081126/) as a **non-validating processor that does not read external entities**:
 
-* The whole document, including the internal DTD subset, must be well-formed — anything else throws a `SyntaxError`.
-* Internal entities declared in the document are expanded (with expansion limits, so "billion laughs" payloads fail instead of exhausting memory), attribute values are normalized, and attribute defaults declared in the internal subset are applied.
-* External DTDs and external entities are never fetched or read, so there is no XXE surface. In a document with no DTD, a reference to an undeclared entity is an error; when the DOCTYPE points at an external subset (or uses parameter entities) that could have declared it, the reference is kept as written (`&nbsp;` stays `&nbsp;`), unless the document says `standalone="yes"`.
-* Nothing is validated against the DTD, namespaces are not resolved (prefixed names are kept verbatim), and comments and processing instructions are skipped.
+- The whole document, including the internal DTD subset, must be well-formed — anything else throws a `SyntaxError`.
+- Internal entities declared in the document are expanded (with expansion limits, so "billion laughs" payloads fail instead of exhausting memory), attribute values are normalized, and attribute defaults declared in the internal subset are applied.
+- External DTDs and external entities are never fetched or read, so there is no XXE surface. In a document with no DTD, a reference to an undeclared entity is an error; when the DOCTYPE points at an external subset (or uses parameter entities) that could have declared it, the reference is kept as written (`&nbsp;` stays `&nbsp;`), unless the document says `standalone="yes"`.
+- Nothing is validated against the DTD, namespaces are not resolved (prefixed names are kept verbatim), and comments and processing instructions are skipped.
 
 It is run against the [W3C XML Conformance Test Suite](https://www.w3.org/XML/Test/): all 1,679 cases that have a required outcome for this class of processor pass — not-well-formed documents are rejected, well-formed ones are accepted and, where the suite gives one, their element tree matches its canonical output byte for byte. The [translated test suite](https://github.com/oven-sh/bun/blob/main/test/js/bun/xml/xml-test-suite.test.ts) lists every case, including the ones whose outcome legitimately depends on not reading external entities.
 
-***
+---
 
 ## Performance
 

@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/http/cluster.md
+Downloaded: 2026-08-14T20:31:00.578Z
+-->
 
 # Start a cluster of HTTP servers
 
@@ -8,7 +9,7 @@
 
 To run multiple HTTP servers concurrently, use the `reusePort` option in `Bun.serve()`. It shares one port across multiple processes, and incoming requests are load balanced across them.
 
-```ts server.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts server.ts icon="/icons/typescript.svg"
 import { serve } from "bun";
 
 const id = Math.random().toString(36).slice(2);
@@ -27,10 +28,10 @@ serve({
 });
 ```
 
-***
+---
 
 <Note>
-  **Linux only** — Windows and macOS ignore the `reusePort` option. This is an operating system limitation with
+  **Linux only** &mdash; Windows and macOS ignore the `reusePort` option. This is an operating system limitation with
   `SO_REUSEPORT`.
 </Note>
 
@@ -38,7 +39,7 @@ After saving the file, start your servers on the same port.
 
 `reusePort` uses the Linux `SO_REUSEPORT` and `SO_REUSEADDR` socket options to ensure fair load balancing across processes. [Learn more about `SO_REUSEPORT` and `SO_REUSEADDR`](https://lwn.net/Articles/542629/)
 
-```ts cluster.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts cluster.ts icon="/icons/typescript.svg"
 import { spawn } from "bun";
 
 const cpus = navigator.hardwareConcurrency; // Number of CPU cores
@@ -63,6 +64,6 @@ process.on("SIGINT", kill);
 process.on("exit", kill);
 ```
 
-***
+---
 
 Bun also implements the `node:cluster` module; `reusePort` is a faster but more limited alternative.

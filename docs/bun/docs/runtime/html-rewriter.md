@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/runtime/html-rewriter.md
+Downloaded: 2026-08-14T20:31:00.554Z
+-->
 
 # HTMLRewriter
 
@@ -8,13 +9,13 @@
 
 HTMLRewriter transforms HTML documents with CSS selectors. It works with `Response`, `string`, and `ArrayBuffer` inputs. Bun's implementation is based on Cloudflare's [lol-html](https://github.com/cloudflare/lol-html).
 
-***
+---
 
 ## Usage
 
 A common use case is rewriting URLs in HTML content:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 // Replace all images with a rickroll
 const rewriter = new HTMLRewriter().on("img", {
   element(img) {
@@ -49,7 +50,8 @@ console.log(result);
 
 The rewriter replaces every image with a thumbnail of Rick Astley and wraps each `<img>` in a link, producing a diff like this:
 
-```html theme={"theme":{"light":"github-light","dark":"dracula"}}
+{/* prettier-ignore */}
+```html
 <html>
   <body>
     <img src="/cat.jpg" /> <!-- [!code --] -->
@@ -74,7 +76,7 @@ Clicking any image now leads to [a very famous video](https://www.youtube.com/wa
 
 HTMLRewriter can transform HTML from several input types:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 // From Response
 rewriter.transform(new Response("<div>content</div>"));
 
@@ -97,7 +99,7 @@ The Cloudflare Workers implementation of HTMLRewriter only supports `Response` o
 
 The `on(selector, handlers)` method registers handlers for HTML elements that match a CSS selector. The handlers run for each matching element during parsing:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 rewriter.on("div.content", {
   // Handle elements
   element(element) {
@@ -119,7 +121,7 @@ Handlers can be asynchronous and return a Promise. The transformation pauses on
 that element until the Promise settles, so handlers still run one at a time, in
 document order:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 rewriter.on("div", {
   async element(element) {
     const fragment = await fetch("https://example.com/fragment").then(r => r.text());
@@ -134,7 +136,7 @@ rewrite outlives `transform()`, an error thrown by an async handler (or a
 Promise it returns that rejects) rejects the response body instead of throwing
 from `transform()`:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 try {
   const output = await rewriter.transform(new Response(html)).text();
 } catch (error) {
@@ -147,7 +149,7 @@ synchronously, so it cannot wait for a handler that needs the event loop to turn
 (a timer, I/O, a `fetch`). Such a handler makes `transform()` throw a
 `TypeError`, and the rewrite fails without running any further handlers:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 new HTMLRewriter()
   .on("div", {
     async element(element) {
@@ -169,7 +171,7 @@ handler might await real work.
 
 The `on()` method supports a wide range of CSS selectors:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 // Tag selectors
 rewriter.on("p", handler);
 
@@ -209,7 +211,7 @@ rewriter.on("*", handler);
 
 All element modification methods return the element instance, so calls can be chained:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 rewriter.on("div", {
   element(el) {
     // Attributes
@@ -264,7 +266,7 @@ rewriter.on("div", {
 
 Text chunks represent portions of text content and report their position in the text node:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 rewriter.on("p", {
   text(text) {
     // Content
@@ -288,7 +290,7 @@ rewriter.on("p", {
 
 Comments support similar methods to text nodes:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 rewriter.on("*", {
   comments(comment) {
     // Content
@@ -312,7 +314,7 @@ rewriter.on("*", {
 
 The `onDocument(handlers)` method registers handlers for events at the document level rather than within specific elements:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 rewriter.onDocument({
   // Handle doctype
   doctype(doctype) {
@@ -339,25 +341,25 @@ rewriter.onDocument({
 
 When transforming a Response:
 
-* The status code, headers, and other response properties are preserved
-* The body is transformed while maintaining streaming capabilities
-* Content-encoding (like gzip) is handled automatically
-* The original response body is marked as used after transformation
-* Headers are cloned to the new response
+- The status code, headers, and other response properties are preserved
+- The body is transformed while maintaining streaming capabilities
+- Content-encoding (like gzip) is handled automatically
+- The original response body is marked as used after transformation
+- Headers are cloned to the new response
 
 ## Error Handling
 
 Which channel an error takes is decided by the overload you called, never by
 timing. `transform()` itself throws for:
 
-* Invalid selector syntax in the `on()` method
-* Invalid input types (for example, passing a Symbol)
-* Body already used errors, and input bodies that have already failed or aborted
-* Anything a content handler raises on a `string` / `ArrayBuffer` input, since
+- Invalid selector syntax in the `on()` method
+- Invalid input types (for example, passing a Symbol)
+- Body already used errors, and input bodies that have already failed or aborted
+- Anything a content handler raises on a `string` / `ArrayBuffer` input, since
   those have to produce their result before `transform()` returns — including a
   handler that needs the event loop (see [Element Handlers](#element-handlers))
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 try {
   const result = rewriter.transform("<div></div>");
 } catch (error) {
@@ -368,12 +370,12 @@ try {
 For a `Response` input, `transform()` returns before the rewrite finishes, so
 everything the rewrite discovers surfaces on the output body instead:
 
-* An error thrown by a content handler, or a rejected Promise one returned
-* Malformed or truncated input
-* Stream errors reading the input body
-* Memory allocation failures
+- An error thrown by a content handler, or a rejected Promise one returned
+- Malformed or truncated input
+- Stream errors reading the input body
+- Memory allocation failures
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 try {
   const output = await rewriter.transform(new Response(html)).text();
 } catch (error) {
@@ -386,7 +388,7 @@ reaches neither channel: like any detached rejection, it goes to the
 process-global `unhandledRejection` path. Earlier versions of Bun could surface
 it from `transform()` itself.
 
-***
+---
 
 ## See also
 

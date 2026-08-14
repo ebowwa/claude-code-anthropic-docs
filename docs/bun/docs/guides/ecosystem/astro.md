@@ -1,16 +1,17 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/ecosystem/astro.md
+Downloaded: 2026-08-14T20:31:00.573Z
+-->
 
 # Build an app with Astro and Bun
 
 Initialize a fresh Astro app with `bun create astro`. The `create-astro` package detects when you are using `bunx` and installs dependencies with `bun`.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun create astro
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 ╭─────╮  Houston:
 │ ◠ ◡ ◠  We're glad to have you on board.
 ╰─────╯
@@ -52,24 +53,24 @@ bun create astro
 ╰─────╯
 ```
 
-***
+---
 
 Start the dev server with `bunx`.
 
 By default, Bun runs the dev server with Node.js. To use the Bun runtime instead, pass the `--bun` flag.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bunx --bun astro dev
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
   🚀  astro  v3.1.4 started in 200ms
 
   ┃ Local    http://localhost:4321/
   ┃ Network  use --host to expose
 ```
 
-***
+---
 
 Open [http://localhost:4321](http://localhost:4321) in your browser to see the result. Astro hot-reloads the app as you edit your source files.
 
@@ -77,6 +78,6 @@ Open [http://localhost:4321](http://localhost:4321) in your browser to see the r
   <img src="https://i.imgur.com/Dswiu6w.png" caption="An Astro v3 starter app running on Bun" />
 </Frame>
 
-***
+---
 
 See the [Astro docs](https://docs.astro.build/en/getting-started/).

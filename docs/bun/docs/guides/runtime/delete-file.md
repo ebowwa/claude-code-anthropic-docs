@@ -1,12 +1,13 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/runtime/delete-file.md
+Downloaded: 2026-08-14T20:31:00.593Z
+-->
 
 # Delete files
 
 To delete a file, use `Bun.file(path).delete()`.
 
-```ts delete-file.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts delete-file.ts icon="/icons/typescript.svg"
 // Delete a file
 const file = Bun.file("path/to/file.txt");
 await file.delete();
@@ -16,6 +17,6 @@ const exists = await file.exists();
 // => false
 ```
 
-***
+---
 
-See [File I/O](/docs/runtime/file-io) for more filesystem operations.
+See [File I/O](/runtime/file-io) for more filesystem operations.

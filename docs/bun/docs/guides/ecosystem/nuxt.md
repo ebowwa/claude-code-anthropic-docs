@@ -1,16 +1,17 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/ecosystem/nuxt.md
+Downloaded: 2026-08-14T20:31:00.575Z
+-->
 
 # Build an app with Nuxt and Bun
 
 Bun supports [Nuxt](https://nuxt.com) with no extra configuration. Initialize a Nuxt app with the official `nuxi` CLI.
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bunx nuxi init my-nuxt-app
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 ✔ Which package manager would you like to use?
 bun
 ◐ Installing dependencies...
@@ -25,7 +26,7 @@ bun install v1.3.3 (16b4bf34)
  › Start development server with bun run dev
 ```
 
-***
+---
 
 To start the dev server, run `bun --bun run dev` from the project root. This executes the `nuxt dev` command defined in the `"dev"` script in `package.json`.
 
@@ -33,12 +34,12 @@ To start the dev server, run `bun --bun run dev` from the project root. This exe
   The `nuxt` CLI uses Node.js by default; passing the `--bun` flag forces the dev server to use the Bun runtime instead.
 </Note>
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 cd my-nuxt-app
 bun --bun run dev
 ```
 
-```txt theme={"theme":{"light":"github-light","dark":"dracula"}}
+```txt
 nuxt dev
 Nuxi 3.6.5
 Nuxt 3.6.5 with Nitro 2.5.2
@@ -51,7 +52,7 @@ Nuxt 3.6.5 with Nitro 2.5.2
 ✔ Nitro built in 244 ms
 ```
 
-***
+---
 
 Once the dev server starts, open [http://localhost:3000](http://localhost:3000) to see the app. It renders Nuxt's built-in `NuxtWelcome` template component.
 
@@ -62,11 +63,11 @@ To start developing your app, replace `<NuxtWelcome />` in `app.vue` with your o
   localhost](https://github.com/oven-sh/bun/assets/3084745/2c683ecc-3298-4bb0-b8c0-cf4cfaea1daa)
 </Frame>
 
-***
+---
 
 For production builds, the default preset is compatible with Bun, but the [Bun preset](https://nitro.build/deploy/runtimes/bun) generates better optimized builds.
 
-```ts nuxt.config.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts nuxt.config.ts icon="/icons/typescript.svg"
 export default defineNuxtConfig({
   nitro: {
     preset: "bun", // [!code ++]
@@ -76,7 +77,7 @@ export default defineNuxtConfig({
 
 Alternatively, set the preset with an environment variable:
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 NITRO_PRESET=bun bun run build
 ```
 
@@ -87,10 +88,10 @@ NITRO_PRESET=bun bun run build
 
 After building, start the server:
 
-```sh terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh terminal icon="terminal"
 bun run ./.output/server/index.mjs
 ```
 
-***
+---
 
 Refer to the [Nuxt website](https://nuxt.com/docs) for complete documentation.

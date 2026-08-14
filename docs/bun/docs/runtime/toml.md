@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/runtime/toml.md
+Downloaded: 2026-08-14T20:31:00.553Z
+-->
 
 # TOML
 
@@ -8,11 +9,11 @@
 
 In Bun, TOML is a first-class citizen alongside JSON, JSON5, and YAML. You can:
 
-* Parse TOML strings with `Bun.TOML.parse`
-* `import` & `require` TOML files as modules at runtime (including hot reloading & watch mode support)
-* `import` & `require` TOML files in frontend apps with Bun's bundler
+- Parse TOML strings with `Bun.TOML.parse`
+- `import` & `require` TOML files as modules at runtime (including hot reloading & watch mode support)
+- `import` & `require` TOML files in frontend apps with Bun's bundler
 
-***
+---
 
 ## Runtime API
 
@@ -20,7 +21,7 @@ In Bun, TOML is a first-class citizen alongside JSON, JSON5, and YAML. You can:
 
 Parse a TOML string into a JavaScript object.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import { TOML } from "bun";
 const text = `
 name = "my-app"
@@ -50,18 +51,18 @@ console.log(data);
 
 Bun's TOML parser implements the full [TOML v1.1.0 specification](https://github.com/toml-lang/toml/releases/tag/1.1.0) and passes the complete official [toml-test](https://github.com/toml-lang/toml-test) conformance suite.
 
-* **Strings**: basic (`"..."`) and literal (`'...'`), including multi-line, with all escapes (`\uHHHH`, `\UHHHHHHHH`, and TOML 1.1's `\xHH` and `\e`)
-* **Integers**: decimal, hex (`0x`), octal (`0o`), and binary (`0b`). Integers that cannot be represented losslessly as a JavaScript number — outside ±(2^53 - 1) — throw
-* **Floats**: including `inf` and `nan`
-* **Booleans**: `true` and `false`
-* **Date/times**: offset date-time, local date-time, local date, and local time, returned as strings of their source text
-* **Arrays**: including mixed types and nested arrays
-* **Tables**: standard (`[table]`) and inline (`{ key = "value" }`), including TOML 1.1 multi-line inline tables
-* **Array of tables**: `[[array]]`
-* **Dotted keys**: `a.b.c = "value"`
-* **Comments**: using `#`
+- **Strings**: basic (`"..."`) and literal (`'...'`), including multi-line, with all escapes (`\uHHHH`, `\UHHHHHHHH`, and TOML 1.1's `\xHH` and `\e`)
+- **Integers**: decimal, hex (`0x`), octal (`0o`), and binary (`0b`). Integers that cannot be represented losslessly as a JavaScript number — outside ±(2^53 - 1) — throw
+- **Floats**: including `inf` and `nan`
+- **Booleans**: `true` and `false`
+- **Date/times**: offset date-time, local date-time, local date, and local time, returned as strings of their source text
+- **Arrays**: including mixed types and nested arrays
+- **Tables**: standard (`[table]`) and inline (`{ key = "value" }`), including TOML 1.1 multi-line inline tables
+- **Array of tables**: `[[array]]`
+- **Dotted keys**: `a.b.c = "value"`
+- **Comments**: using `#`
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const data = Bun.TOML.parse(`
 # Application config
 title = "My App"
@@ -88,7 +89,7 @@ role = "backend"
 
 `Bun.TOML.parse()` throws a `SyntaxError` if the TOML is invalid:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 try {
   Bun.TOML.parse("invalid = = =");
 } catch (error) {
@@ -102,7 +103,7 @@ try {
 Serialize a JavaScript object to a TOML document. Scalar keys come first,
 followed by `[table]` and `[[array-of-tables]]` sections:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 Bun.TOML.stringify({
   name: "app",
   server: { host: "localhost", port: 8080 },
@@ -127,7 +128,7 @@ values become TOML offset date-times. Because TOML cannot represent them,
 function, and symbol properties are skipped (inside arrays they throw,
 since TOML arrays cannot have holes).
 
-***
+---
 
 ## Module Import
 
@@ -135,7 +136,7 @@ since TOML arrays cannot have holes).
 
 Import TOML files directly as ES modules. Bun parses the TOML and exposes it as both default and named exports:
 
-```toml config.toml theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml config.toml
 [database]
 host = "localhost"
 port = 5432
@@ -153,7 +154,7 @@ analytics = false
 
 #### Default Import
 
-```ts app.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts app.ts icon="/icons/typescript.svg"
 import config from "./config.toml";
 
 console.log(config.database.host); // "localhost"
@@ -164,7 +165,7 @@ console.log(config.redis.port); // 6379
 
 You can destructure top-level TOML tables as named imports:
 
-```ts app.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts app.ts icon="/icons/typescript.svg"
 import { database, redis, features } from "./config.toml";
 
 console.log(database.host); // "localhost"
@@ -174,7 +175,7 @@ console.log(features.auth); // true
 
 Or combine both:
 
-```ts app.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts app.ts icon="/icons/typescript.svg"
 import config, { database, features } from "./config.toml";
 
 // Use the full config object
@@ -190,7 +191,7 @@ if (features.rateLimit) {
 
 Use an import attribute to load any file as TOML:
 
-```ts app.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts app.ts icon="/icons/typescript.svg"
 import myConfig from "./my.config" with { type: "toml" };
 ```
 
@@ -198,7 +199,7 @@ import myConfig from "./my.config" with { type: "toml" };
 
 You can also `require` TOML files in CommonJS:
 
-```ts app.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts app.ts icon="/icons/typescript.svg"
 const config = require("./config.toml");
 console.log(config.database.name); // "myapp"
 
@@ -207,13 +208,13 @@ const { database, redis } = require("./config.toml");
 console.log(database.port); // 5432
 ```
 
-***
+---
 
 ## Hot Reloading with TOML
 
 When you run your application with `bun --hot`, Bun detects changes to TOML files and reloads them without restarting:
 
-```toml config.toml theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml config.toml
 [server]
 port = 3000
 host = "localhost"
@@ -223,7 +224,7 @@ debug = true
 verbose = false
 ```
 
-```ts server.ts icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts server.ts icon="/icons/typescript.svg"
 import { server, features } from "./config.toml";
 
 console.log(`Starting server on ${server.host}:${server.port}`);
@@ -242,30 +243,30 @@ Bun.serve({
 
 Run with hot reloading:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun --hot server.ts
 ```
 
-***
+---
 
 ## Bundler Integration
 
 When you bundle with Bun, the bundler parses imported TOML at build time and includes it as a JavaScript module:
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun build app.ts --outdir=dist
 ```
 
 This means:
 
-* Zero runtime TOML parsing overhead in production
-* Smaller bundle sizes
-* Tree shaking of unused properties (named imports)
+- Zero runtime TOML parsing overhead in production
+- Smaller bundle sizes
+- Tree shaking of unused properties (named imports)
 
 ### Dynamic Imports
 
 You can also dynamically import TOML files:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const config = await import("./config.toml");
 ```

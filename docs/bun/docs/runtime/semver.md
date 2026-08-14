@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/runtime/semver.md
+Downloaded: 2026-08-14T20:31:00.554Z
+-->
 
 # Semver
 
@@ -20,7 +21,7 @@ Returns `true` if `version` satisfies `range`, otherwise `false`.
 
 Example:
 
-```typescript theme={"theme":{"light":"github-light","dark":"dracula"}}
+```typescript
 import { semver } from "bun";
 
 semver.satisfies("1.0.0", "^1.0.0"); // true
@@ -45,7 +46,7 @@ Returns `0` if `versionA` and `versionB` are equal, `1` if `versionA` is greater
 
 Example:
 
-```typescript theme={"theme":{"light":"github-light","dark":"dracula"}}
+```typescript
 import { semver } from "bun";
 
 semver.order("1.0.0", "1.0.0"); // 0

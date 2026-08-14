@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/bundler/macros.md
+Downloaded: 2026-08-14T20:31:00.564Z
+-->
 
 # Macros
 
@@ -10,7 +11,7 @@ Macros are JavaScript functions that run at bundle-time. Their return values are
 
 As a toy example, consider this function that returns a random number.
 
-```ts title="random.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="random.ts" icon="/icons/typescript.svg"
 export function random() {
   return Math.random();
 }
@@ -18,7 +19,7 @@ export function random() {
 
 This is a regular function in a regular file, but you can use it as a macro:
 
-```tsx title="cli.tsx" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```tsx title="cli.tsx" icon="/icons/typescript.svg"
 import { random } from "./random.ts" with { type: "macro" };
 
 console.log(`Your random number is ${random()}`);
@@ -31,11 +32,11 @@ console.log(`Your random number is ${random()}`);
 
 Bundle the file with `bun build`. The bundled file is printed to stdout.
 
-```bash terminal icon="terminal" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash terminal icon="terminal"
 bun build ./cli.tsx
 ```
 
-```js theme={"theme":{"light":"github-light","dark":"dracula"}}
+```js
 console.log(`Your random number is ${0.6805550949689833}`);
 ```
 
@@ -51,8 +52,8 @@ If you find yourself running a lot of code at bundle-time though, consider runni
 
 Macros are import statements annotated with either:
 
-* `with { type: 'macro' }` — an import attribute, a Stage 3 ECMAScript proposal
-* `assert { type: 'macro' }` — an import assertion, an earlier incarnation of import attributes that has now been abandoned (but is already supported by a number of browsers and runtimes)
+- `with { type: 'macro' }` — an import attribute, a Stage 3 ECMAScript proposal
+- `assert { type: 'macro' }` — an import assertion, an earlier incarnation of import attributes that has now been abandoned (but is already supported by a number of browsers and runtimes)
 
 ## Security considerations
 
@@ -80,7 +81,7 @@ node_modules/evil/index.js:3:1 50
 
 Your application code can still import macros from `node_modules` and invoke them.
 
-```ts title="cli.tsx" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="cli.tsx" icon="/icons/typescript.svg"
 import { macro } from "some-package" with { type: "macro" };
 
 macro();
@@ -90,7 +91,7 @@ macro();
 
 When shipping a library containing a macro to npm or another package registry, use the `"macro"` export condition to provide a version of your package exclusively for the macro environment.
 
-```json title="package.json" icon="file-json" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```json title="package.json" icon="file-json"
 {
   "name": "my-package",
   "exports": {
@@ -104,7 +105,7 @@ When shipping a library containing a macro to npm or another package registry, u
 
 With this configuration, users can consume your package at runtime or at bundle-time using the same import specifier:
 
-```ts title="index.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="index.ts" icon="/icons/typescript.svg"
 import pkg from "my-package"; // runtime import
 import { macro } from "my-package" with { type: "macro" }; // macro import
 ```
@@ -123,7 +124,7 @@ Bun's bundler is multi-threaded, so macros execute in parallel in multiple spawn
 
 The bundler performs dead code elimination after running and inlining macros. Given the following macro:
 
-```ts title="returnFalse.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="returnFalse.ts" icon="/icons/typescript.svg"
 export function returnFalse() {
   return false;
 }
@@ -131,7 +132,7 @@ export function returnFalse() {
 
 ...bundling the following file produces an empty bundle, provided that the minify syntax option is enabled.
 
-```ts title="index.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="index.ts" icon="/icons/typescript.svg"
 import { returnFalse } from "./returnFalse.ts" with { type: "macro" };
 
 if (returnFalse()) {
@@ -143,7 +144,7 @@ if (returnFalse()) {
 
 Bun's transpiler must be able to serialize the result of the macro to inline it into the AST. All JSON-compatible data structures are supported:
 
-```ts title="macro.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="macro.ts" icon="/icons/typescript.svg"
 export function getObject() {
   return {
     foo: "bar",
@@ -155,7 +156,7 @@ export function getObject() {
 
 Macros can be async, or return Promise instances. Bun's transpiler awaits the Promise and inlines the result.
 
-```ts title="macro.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="macro.ts" icon="/icons/typescript.svg"
 export async function getText() {
   return "async value";
 }
@@ -163,12 +164,12 @@ export async function getText() {
 
 The transpiler implements special logic for serializing common data formats like `Response` and `Blob`.
 
-* **Response**: Bun reads the `Content-Type` and serializes accordingly; for example, a Response with type `application/json` is parsed into an object and `text/plain` is inlined as a string. Responses with an unrecognized or undefined type are base64-encoded.
-* **Blob**: As with Response, the serialization depends on the `type` property.
+- **Response**: Bun reads the `Content-Type` and serializes accordingly; for example, a Response with type `application/json` is parsed into an object and `text/plain` is inlined as a string. Responses with an unrecognized or undefined type are base64-encoded.
+- **Blob**: As with Response, the serialization depends on the `type` property.
 
 The result of `fetch` is `Promise<Response>`, so it can be directly returned.
 
-```ts title="macro.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="macro.ts" icon="/icons/typescript.svg"
 export function getObject() {
   return fetch("https://bun.com");
 }
@@ -176,7 +177,7 @@ export function getObject() {
 
 Functions and instances of most classes (except those listed earlier) are not serializable.
 
-```ts title="macro.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="macro.ts" icon="/icons/typescript.svg"
 export function getText(url: string) {
   // this doesn't work!
   return () => {};
@@ -187,7 +188,7 @@ export function getText(url: string) {
 
 Macros can accept inputs, but only in limited cases. The value must be statically known. For example, the following is not allowed:
 
-```ts title="index.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="index.ts" icon="/icons/typescript.svg"
 import { getText } from "./getText.ts" with { type: "macro" };
 
 export function howLong() {
@@ -201,7 +202,7 @@ export function howLong() {
 
 However, if the value of `foo` is known at bundle-time (say, if it's a constant or the result of another macro), then it's allowed:
 
-```ts title="index.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="index.ts" icon="/icons/typescript.svg"
 import { getText } from "./getText.ts" with { type: "macro" };
 import { getFoo } from "./getFoo.ts" with { type: "macro" };
 
@@ -215,7 +216,7 @@ export function howLong() {
 
 This outputs:
 
-```js theme={"theme":{"light":"github-light","dark":"dracula"}}
+```js
 function howLong() {
   console.log("The page is", 1322, "characters long");
 }
@@ -226,7 +227,7 @@ export { howLong };
 
 ### Embed latest git commit hash
 
-```ts title="getGitCommitHash.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="getGitCommitHash.ts" icon="/icons/typescript.svg"
 export function getGitCommitHash() {
   const { stdout } = Bun.spawnSync({
     cmd: ["git", "rev-parse", "HEAD"],
@@ -240,15 +241,17 @@ export function getGitCommitHash() {
 When you build it, the `getGitCommitHash` call is replaced with the result of calling the function:
 
 <CodeGroup>
-  ```ts input theme={"theme":{"light":"github-light","dark":"dracula"}}
-  import { getGitCommitHash } from "./getGitCommitHash.ts" with { type: "macro" };
 
-  console.log(`The current Git commit hash is ${getGitCommitHash()}`);
-  ```
+```ts input
+import { getGitCommitHash } from "./getGitCommitHash.ts" with { type: "macro" };
 
-  ```ts output theme={"theme":{"light":"github-light","dark":"dracula"}}
-  console.log(`The current Git commit hash is 3ee3259104e4507cf62c160f0ff5357ec4c7a7f8`);
-  ```
+console.log(`The current Git commit hash is ${getGitCommitHash()}`);
+```
+
+```ts output
+console.log(`The current Git commit hash is 3ee3259104e4507cf62c160f0ff5357ec4c7a7f8`);
+```
+
 </CodeGroup>
 
 <Info>
@@ -260,7 +263,7 @@ When you build it, the `getGitCommitHash` call is replaced with the result of ca
 
 This example makes an outgoing HTTP request with `fetch()`, parses the HTML response with `HTMLRewriter`, and returns an object containing the title and meta tags, all at bundle-time.
 
-```ts title="meta.ts" icon="https://mintcdn.com/bun-1dd33a4e/JUhaF6Mf68z_zHyy/icons/typescript.svg?fit=max&auto=format&n=JUhaF6Mf68z_zHyy&q=85&s=7ac549adaea8d5487d8fbd58cc3ea35b" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts title="meta.ts" icon="/icons/typescript.svg"
 export async function extractMetaTags(url: string) {
   const response = await fetch(url);
   const meta = {
@@ -289,38 +292,40 @@ export async function extractMetaTags(url: string) {
 The `extractMetaTags` function is erased at bundle-time and replaced with the result of the function call: the fetch request happens at bundle-time, and the result is embedded in the bundle. The branch throwing the error is also eliminated since it's unreachable.
 
 <CodeGroup>
-  ```jsx input theme={"theme":{"light":"github-light","dark":"dracula"}}
-  import { extractMetaTags } from "./meta.ts" with { type: "macro" };
 
-  export const Head = () => {
-    const headTags = extractMetaTags("https://example.com");
+```jsx input
+import { extractMetaTags } from "./meta.ts" with { type: "macro" };
 
-    if (headTags.title !== "Example Domain") {
-      throw new Error("Expected title to be 'Example Domain'");
-    }
+export const Head = () => {
+  const headTags = extractMetaTags("https://example.com");
 
-    return (
-      <head>
-        <title>{headTags.title}</title>
-        <meta name="viewport" content={headTags.viewport} />
-      </head>
-    );
+  if (headTags.title !== "Example Domain") {
+    throw new Error("Expected title to be 'Example Domain'");
+  }
+
+  return (
+    <head>
+      <title>{headTags.title}</title>
+      <meta name="viewport" content={headTags.viewport} />
+    </head>
+  );
+};
+```
+
+```jsx output
+export const Head = () => {
+  const headTags = {
+    title: "Example Domain",
+    viewport: "width=device-width, initial-scale=1",
   };
-  ```
 
-  ```jsx output theme={"theme":{"light":"github-light","dark":"dracula"}}
-  export const Head = () => {
-    const headTags = {
-      title: "Example Domain",
-      viewport: "width=device-width, initial-scale=1",
-    };
+  return (
+    <head>
+      <title>{headTags.title}</title>
+      <meta name="viewport" content={headTags.viewport} />
+    </head>
+  );
+};
+```
 
-    return (
-      <head>
-        <title>{headTags.title}</title>
-        <meta name="viewport" content={headTags.viewport} />
-      </head>
-    );
-  };
-  ```
 </CodeGroup>

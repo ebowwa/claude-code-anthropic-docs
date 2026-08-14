@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-instrument-config.md
-Downloaded: 2026-08-07T00:52:23.800Z
+Downloaded: 2026-08-14T20:31:01.253Z
 -->
 
 > ## Documentation Index
@@ -11,7 +11,6 @@ Downloaded: 2026-08-07T00:52:23.800Z
 
 > Get per-instrument configuration (leverage and margin mode) for the authenticated account.
 
-<Badge color="gray" size="md">Request Weight: **2**</Badge>
 
 
 ## OpenAPI

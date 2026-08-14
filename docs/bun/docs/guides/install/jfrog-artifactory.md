@@ -1,6 +1,7 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/install/jfrog-artifactory.md
+Downloaded: 2026-08-14T20:31:00.585Z
+-->
 
 # Using bun install with Artifactory
 
@@ -8,20 +9,20 @@
 
 To use it with `bun install`, add a `bunfig.toml` file to your project with the following contents:
 
-***
+---
 
 ### Configure with bunfig.toml
 
 Replace `MY_SUBDOMAIN` with your JFrog Artifactory subdomain, such as `jarred1234`, and `MY_TOKEN` with your JFrog Artifactory token.
 
-```toml bunfig.toml icon="settings" theme={"theme":{"light":"github-light","dark":"dracula"}}
+```toml bunfig.toml icon="settings"
 [install.registry]
 url = "https://MY_SUBDOMAIN.jfrog.io/artifactory/api/npm/npm/_auth=MY_TOKEN"
 # You can use an environment variable here
 # url = "$NPM_CONFIG_REGISTRY"
 ```
 
-***
+---
 
 ### Configure with `$NPM_CONFIG_REGISTRY`
 

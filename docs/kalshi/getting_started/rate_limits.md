@@ -1,8 +1,3 @@
-<!--
-Source: https://docs.kalshi.com/getting_started/rate_limits.md
-Downloaded: 2026-08-07T00:52:22.697Z
--->
-
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.

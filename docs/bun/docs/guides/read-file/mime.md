@@ -1,12 +1,13 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/read-file/mime.md
+Downloaded: 2026-08-14T20:31:00.590Z
+-->
 
 # Get the MIME type of a file
 
 The `Bun.file()` function accepts a path and returns a `BunFile` instance. The `BunFile` class extends `Blob`, so use the `.type` property to read the MIME type.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const file = Bun.file("./package.json");
 file.type; // application/json;charset=utf-8
 
@@ -17,6 +18,6 @@ const file = Bun.file("./image.png");
 file.type; // image/png
 ```
 
-***
+---
 
-See [File I/O](/docs/runtime/file-io) for more on working with `BunFile`.
+See [File I/O](/runtime/file-io) for more on working with `BunFile`.

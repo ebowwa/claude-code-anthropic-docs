@@ -1,11 +1,7 @@
 <!--
 Source: https://bun.com/docs/runtime/file-types.md
-Downloaded: 2026-08-07T00:52:34.804Z
+Downloaded: 2026-08-14T20:31:00.545Z
 -->
-
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
 
 # File Types
 
@@ -15,17 +11,17 @@ The Bun bundler implements a set of default loaders. As a rule of thumb, the bun
 
 `.js` `.cjs` `.mjs` `.mts` `.cts` `.ts` `.tsx` `.jsx` `.css` `.json` `.jsonc` `.json5` `.toml` `.yaml` `.yml` `.xml` `.txt` `.wasm` `.node` `.html` `.sh`
 
-Bun uses the file extension to pick the built-in *loader* that parses the file. Every loader has a name, such as `js`, `tsx`, or `json`. These names are used when building [plugins](/docs/bundler/plugins) that extend Bun with custom loaders.
+Bun uses the file extension to pick the built-in _loader_ that parses the file. Every loader has a name, such as `js`, `tsx`, or `json`. These names are used when building [plugins](/bundler/plugins) that extend Bun with custom loaders.
 
 To specify a loader explicitly, use the `type` import attribute.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import my_toml from "./my_file" with { type: "toml" };
 // or with dynamic imports
 const { default: my_toml } = await import("./my_file", { with: { type: "toml" } });
 ```
 
-***
+---
 
 ## Built-in loaders
 
@@ -57,14 +53,14 @@ Strips out all TypeScript syntax, then behaves identically to the `js` loader. B
 
 JSON files can be directly imported.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import pkg from "./package.json";
 pkg.name; // => "my-package"
 ```
 
 During bundling, the parsed JSON is inlined into the bundle as a JavaScript object.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 var pkg = {
   name: "my-package",
   // ... other fields
@@ -75,21 +71,23 @@ pkg.name;
 If a `.json` file is passed as an entrypoint to the bundler, it is converted to a `.js` module that `export default`s the parsed object.
 
 <CodeGroup>
-  ```json Input theme={"theme":{"light":"github-light","dark":"dracula"}}
-  {
-    "name": "John Doe",
-    "age": 35,
-    "email": "johndoe@example.com"
-  }
-  ```
 
-  ```ts Output theme={"theme":{"light":"github-light","dark":"dracula"}}
-  export default {
-    name: "John Doe",
-    age: 35,
-    email: "johndoe@example.com",
-  };
-  ```
+```json Input
+{
+  "name": "John Doe",
+  "age": 35,
+  "email": "johndoe@example.com"
+}
+```
+
+```ts Output
+export default {
+  name: "John Doe",
+  age: 35,
+  email: "johndoe@example.com",
+};
+```
+
 </CodeGroup>
 
 ### `jsonc`
@@ -98,14 +96,14 @@ If a `.json` file is passed as an entrypoint to the bundler, it is converted to 
 
 JSONC (JSON with Comments) files can be directly imported. Bun parses them, stripping out comments and trailing commas.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import config from "./config.jsonc";
 console.log(config);
 ```
 
 During bundling, the parsed JSONC is inlined into the bundle as a JavaScript object, identical to the `json` loader.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 var config = {
   option: "value",
 };
@@ -121,7 +119,7 @@ var config = {
 
 TOML files can be directly imported. Bun parses them with its fast native TOML parser.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import config from "./bunfig.toml";
 config.logLevel; // => "debug"
 
@@ -131,7 +129,7 @@ config.logLevel; // => "debug"
 
 During bundling, the parsed TOML is inlined into the bundle as a JavaScript object.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 var config = {
   logLevel: "debug",
   // ...other fields
@@ -142,19 +140,21 @@ config.logLevel;
 If a `.toml` file is passed as an entrypoint, it is converted to a `.js` module that `export default`s the parsed object.
 
 <CodeGroup>
-  ```toml Input theme={"theme":{"light":"github-light","dark":"dracula"}}
-  name = "John Doe"
-  age = 35
-  email = "johndoe@example.com"
-  ```
 
-  ```ts Output theme={"theme":{"light":"github-light","dark":"dracula"}}
-  export default {
-    name: "John Doe",
-    age: 35,
-    email: "johndoe@example.com",
-  };
-  ```
+```toml Input
+name = "John Doe"
+age = 35
+email = "johndoe@example.com"
+```
+
+```ts Output
+export default {
+  name: "John Doe",
+  age: 35,
+  email: "johndoe@example.com",
+};
+```
+
 </CodeGroup>
 
 ### `yaml`
@@ -163,7 +163,7 @@ If a `.toml` file is passed as an entrypoint, it is converted to a `.js` module 
 
 YAML files can be directly imported. Bun parses them with its fast native YAML parser.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import config from "./config.yaml";
 console.log(config);
 
@@ -173,7 +173,7 @@ import data from "./data.txt" with { type: "yaml" };
 
 During bundling, the parsed YAML is inlined into the bundle as a JavaScript object.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 var config = {
   name: "my-app",
   version: "1.0.0",
@@ -184,19 +184,21 @@ var config = {
 If a `.yaml` or `.yml` file is passed as an entrypoint, it is converted to a `.js` module that `export default`s the parsed object.
 
 <CodeGroup>
-  ```yaml Input theme={"theme":{"light":"github-light","dark":"dracula"}}
-  name: John Doe
-  age: 35
-  email: johndoe@example.com
-  ```
 
-  ```ts Output theme={"theme":{"light":"github-light","dark":"dracula"}}
-  export default {
-    name: "John Doe",
-    age: 35,
-    email: "johndoe@example.com",
-  };
-  ```
+```yaml Input
+name: John Doe
+age: 35
+email: johndoe@example.com
+```
+
+```ts Output
+export default {
+  name: "John Doe",
+  age: 35,
+  email: "johndoe@example.com",
+};
+```
+
 </CodeGroup>
 
 ### `json5`
@@ -205,7 +207,7 @@ If a `.yaml` or `.yml` file is passed as an entrypoint, it is converted to a `.j
 
 JSON5 files can be directly imported. Bun parses them with its fast native JSON5 parser. JSON5 is a superset of JSON that adds comments, trailing commas, unquoted keys, single-quoted strings, and more.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import config from "./config.json5";
 console.log(config);
 
@@ -215,7 +217,7 @@ import data from "./data.txt" with { type: "json5" };
 
 During bundling, the parsed JSON5 is inlined into the bundle as a JavaScript object.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 var config = {
   name: "my-app",
   version: "1.0.0",
@@ -226,31 +228,33 @@ var config = {
 If a `.json5` file is passed as an entrypoint, it is converted to a `.js` module that `export default`s the parsed object.
 
 <CodeGroup>
-  ```json5 Input theme={"theme":{"light":"github-light","dark":"dracula"}}
-  {
-    // Configuration
-    name: "John Doe",
-    age: 35,
-    email: "johndoe@example.com",
-  }
-  ```
 
-  ```ts Output theme={"theme":{"light":"github-light","dark":"dracula"}}
-  export default {
-    name: "John Doe",
-    age: 35,
-    email: "johndoe@example.com",
-  };
-  ```
+```json5 Input
+{
+  // Configuration
+  name: "John Doe",
+  age: 35,
+  email: "johndoe@example.com",
+}
+```
+
+```ts Output
+export default {
+  name: "John Doe",
+  age: 35,
+  email: "johndoe@example.com",
+};
+```
+
 </CodeGroup>
 
 ### `xml`
 
 **XML loader**. Default for `.xml`.
 
-XML files can be directly imported. Bun parses them with its native XML 1.0 parser into the compact object shape of [`Bun.XML.parse`](/docs/runtime/xml): one key for the root element, `"@name"` keys for attributes, arrays for repeated child elements, `"#text"` for text next to attributes or children, and every value a string.
+XML files can be directly imported. Bun parses them with its native XML 1.0 parser into the compact object shape of [`Bun.XML.parse`](/runtime/xml): one key for the root element, `"@name"` keys for attributes, arrays for repeated child elements, `"#text"` for text next to attributes or children, and every value a string.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import doc from "./config.xml";
 console.log(doc.config["@version"]);
 
@@ -260,7 +264,7 @@ import feed from "./export.rss" with { type: "xml" };
 
 During bundling, the parsed XML is inlined into the bundle as a JavaScript object.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 var doc = {
   config: {
     "@version": "2",
@@ -272,25 +276,27 @@ var doc = {
 If a `.xml` file is passed as an entrypoint, it is converted to a `.js` module that `export default`s the parsed object.
 
 <CodeGroup>
-  ```xml Input theme={"theme":{"light":"github-light","dark":"dracula"}}
-  <user id="1">
-    <name>John Doe</name>
-    <email>johndoe@example.com</email>
-    <role>admin</role>
-    <role>editor</role>
-  </user>
-  ```
 
-  ```ts Output theme={"theme":{"light":"github-light","dark":"dracula"}}
-  export default {
-    user: {
-      "@id": "1",
-      name: "John Doe",
-      email: "johndoe@example.com",
-      role: ["admin", "editor"],
-    },
-  };
-  ```
+```xml Input
+<user id="1">
+  <name>John Doe</name>
+  <email>johndoe@example.com</email>
+  <role>admin</role>
+  <role>editor</role>
+</user>
+```
+
+```ts Output
+export default {
+  user: {
+    "@id": "1",
+    name: "John Doe",
+    email: "johndoe@example.com",
+    role: ["admin", "editor"],
+  },
+};
+```
+
 </CodeGroup>
 
 ### `text`
@@ -299,7 +305,7 @@ If a `.xml` file is passed as an entrypoint, it is converted to a `.js` module t
 
 Text files can be directly imported. The file is read and returned as a string.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import contents from "./file.txt";
 console.log(contents); // => "Hello, world!"
 
@@ -310,7 +316,7 @@ import html from "./index.html" with { type: "text" };
 
 When referenced during a build, the contents are inlined into the bundle as a string.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 var contents = `Hello, world!`;
 console.log(contents);
 ```
@@ -318,13 +324,15 @@ console.log(contents);
 If a `.txt` file is passed as an entrypoint, it is converted to a `.js` module that `export default`s the file contents.
 
 <CodeGroup>
-  ```txt Input theme={"theme":{"light":"github-light","dark":"dracula"}}
-  Hello, world!
-  ```
 
-  ```ts Output theme={"theme":{"light":"github-light","dark":"dracula"}}
-  export default "Hello, world!";
-  ```
+```txt Input
+Hello, world!
+```
+
+```ts Output
+export default "Hello, world!";
+```
+
 </CodeGroup>
 
 ### `napi`
@@ -333,7 +341,7 @@ If a `.txt` file is passed as an entrypoint, it is converted to a `.js` module t
 
 In the runtime, native addons can be directly imported.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import addon from "./addon.node";
 console.log(addon);
 ```
@@ -344,9 +352,9 @@ In the bundler, `.node` files are handled using the [`file`](#file) loader.
 
 **SQLite loader**. `with { "type": "sqlite" }` import attribute
 
-In the runtime and bundler, SQLite databases can be directly imported. The database is loaded with [`bun:sqlite`](/docs/runtime/sqlite).
+In the runtime and bundler, SQLite databases can be directly imported. The database is loaded with [`bun:sqlite`](/runtime/sqlite).
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import db from "./my.db" with { type: "sqlite" };
 ```
 
@@ -356,12 +364,12 @@ By default, the database is external to the bundle: the on-disk database file is
 
 You can change this behavior with the `"embed"` attribute:
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 // embed the database into the bundle
 import db from "./my.db" with { type: "sqlite", embed: "true" };
 ```
 
-When using a [standalone executable](/docs/bundler/executables), the database is embedded into the single-file executable.
+When using a [standalone executable](/bundler/executables), the database is embedded into the single-file executable.
 
 Otherwise, the database to embed is copied into the `outdir` with a hashed filename.
 
@@ -369,81 +377,87 @@ Otherwise, the database to embed is copied into the `outdir` with a hashed filen
 
 The `html` loader processes HTML files and bundles any referenced assets. It:
 
-* Bundles and hashes referenced JavaScript files (`<script src="...">`)
-* Bundles and hashes referenced CSS files (`<link rel="stylesheet" href="...">`)
-* Hashes referenced images (`<img src="...">`)
-* Preserves external URLs (by default, anything starting with `http://` or `https://`)
+- Bundles and hashes referenced JavaScript files (`<script src="...">`)
+- Bundles and hashes referenced CSS files (`<link rel="stylesheet" href="...">`)
+- Hashes referenced images (`<img src="...">`)
+- Preserves external URLs (by default, anything starting with `http://` or `https://`)
 
 For example, given this HTML file:
 
 <CodeGroup>
-  ```html src/index.html theme={"theme":{"light":"github-light","dark":"dracula"}}
-  <!DOCTYPE html>
-  <html>
-    <body>
-      <img src="./image.jpg" alt="Local image" />
-      <img src="https://example.com/image.jpg" alt="External image" />
-      <script type="module" src="./script.js"></script>
-    </body>
-  </html>
-  ```
+
+```html src/index.html
+<!DOCTYPE html>
+<html>
+  <body>
+    <img src="./image.jpg" alt="Local image" />
+    <img src="https://example.com/image.jpg" alt="External image" />
+    <script type="module" src="./script.js"></script>
+  </body>
+</html>
+```
+
 </CodeGroup>
 
 Bun outputs a new HTML file with the bundled assets:
 
 <CodeGroup>
-  ```html dist/output.html theme={"theme":{"light":"github-light","dark":"dracula"}}
-  <!DOCTYPE html>
-  <html>
-    <body>
-      <img src="./image-HASHED.jpg" alt="Local image" />
-      <img src="https://example.com/image.jpg" alt="External image" />
-      <script type="module" src="./output-ALSO-HASHED.js"></script>
-    </body>
-  </html>
-  ```
+
+```html dist/output.html
+<!DOCTYPE html>
+<html>
+  <body>
+    <img src="./image-HASHED.jpg" alt="Local image" />
+    <img src="https://example.com/image.jpg" alt="External image" />
+    <script type="module" src="./output-ALSO-HASHED.js"></script>
+  </body>
+</html>
+```
+
 </CodeGroup>
 
 The loader uses [`lol-html`](https://github.com/cloudflare/lol-html) to extract script and link tags as entrypoints, and other assets as external.
 
 The list of selectors is:
 
-* `audio[src]`
-* `img[src]`
-* `img[srcset]`
-* `link[as='font'][href], link[type^='font/'][href]`
-* `link[as='image'][href]`
-* `link[as='style'][href]`
-* `link[as='video'][href], link[as='audio'][href]`
-* `link[as='worker'][href]`
-* `link[rel='icon'][href], link[rel='apple-touch-icon'][href]`
-* `link[rel='manifest'][href]`
-* `link[rel='stylesheet'][href]`
-* `script[src]`
-* `source[src]`
-* `source[srcset]`
-* `video[poster]`
-* `video[src]`
+- `audio[src]`
+- `img[src]`
+- `img[srcset]`
+- `link[as='font'][href], link[type^='font/'][href]`
+- `link[as='image'][href]`
+- `link[as='style'][href]`
+- `link[as='video'][href], link[as='audio'][href]`
+- `link[as='worker'][href]`
+- `link[rel='icon'][href], link[rel='apple-touch-icon'][href]`
+- `link[rel='manifest'][href]`
+- `link[rel='stylesheet'][href]`
+- `script[src]`
+- `source[src]`
+- `source[srcset]`
+- `video[poster]`
+- `video[src]`
 
 <Note>
-  **HTML Loader Behavior in Different Contexts**
 
-  The `html` loader behaves differently depending on how it's used:
+**HTML Loader Behavior in Different Contexts**
 
-  1. **Static Build:** When you run `bun build ./index.html`, Bun produces a static site with all assets bundled and hashed.
+The `html` loader behaves differently depending on how it's used:
 
-  2. **Runtime:** When you run `bun run server.ts` (where `server.ts` imports an HTML file), Bun bundles assets on-the-fly during development, enabling features like hot module replacement.
+1. **Static Build:** When you run `bun build ./index.html`, Bun produces a static site with all assets bundled and hashed.
 
-  3. **Full-stack Build:** When you run `bun build --target=bun server.ts` (where `server.ts` imports an HTML file), the import resolves to a manifest object that `Bun.serve` uses to efficiently serve pre-bundled assets in production.
+2. **Runtime:** When you run `bun run server.ts` (where `server.ts` imports an HTML file), Bun bundles assets on-the-fly during development, enabling features like hot module replacement.
+
+3. **Full-stack Build:** When you run `bun build --target=bun server.ts` (where `server.ts` imports an HTML file), the import resolves to a manifest object that `Bun.serve` uses to efficiently serve pre-bundled assets in production.
+
 </Note>
 
 ### `css`
 
 **CSS loader**. Default for `.css`.
 
-CSS files can be directly imported. This is primarily useful for [full-stack applications](/docs/bundler/html-static) where CSS is bundled alongside HTML.
+CSS files can be directly imported. This is primarily useful for [full-stack applications](/bundler/html-static) where CSS is bundled alongside HTML.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 import "./styles.css";
 ```
 
@@ -453,9 +467,9 @@ The import returns no value; it's only used for its side effects.
 
 **Bun Shell loader**. Default for `.sh` files
 
-This loader parses [Bun Shell](/docs/runtime/shell) scripts. It's only supported when starting Bun itself, so it's not available in the bundler or in the runtime.
+This loader parses [Bun Shell](/runtime/shell) scripts. It's only supported when starting Bun itself, so it's not available in the bundler or in the runtime.
 
-```sh theme={"theme":{"light":"github-light","dark":"dracula"}}
+```sh
 bun run ./script.sh
 ```
 
@@ -463,23 +477,23 @@ bun run ./script.sh
 
 **File loader**. Default for all unrecognized file types.
 
-The file loader resolves the import as a *path/URL* to the imported file. It's commonly used for referencing media or font assets.
+The file loader resolves the import as a _path/URL_ to the imported file. It's commonly used for referencing media or font assets.
 
-```ts logo.ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts logo.ts
 import logo from "./logo.svg";
 console.log(logo);
 ```
 
-*In the runtime*, Bun checks that the `logo.svg` file exists and resolves the import to its absolute path on disk.
+_In the runtime_, Bun checks that the `logo.svg` file exists and resolves the import to its absolute path on disk.
 
-```bash theme={"theme":{"light":"github-light","dark":"dracula"}}
+```bash
 bun run logo.ts
 /path/to/project/logo.svg
 ```
 
-*In the bundler*, the file is copied into `outdir` as-is, and the import resolves to a relative path pointing to the copied file.
+_In the bundler_, the file is copied into `outdir` as-is, and the import resolves to a relative path pointing to the copied file.
 
-```ts Output theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts Output
 var logo = "./logo.svg";
 console.log(logo);
 ```
@@ -493,25 +507,26 @@ If `publicPath` is set, the import uses its value as a prefix to construct an ab
 | `"https://cdn.example.com/"` | `https://cdn.example.com/logo.svg` |
 
 <Note>
-  The location and file name of the copied file is determined by the value of [`naming.asset`](/docs/bundler#naming).
+  The location and file name of the copied file is determined by the value of [`naming.asset`](/bundler#naming).
 </Note>
 
 <Accordion title="Fixing TypeScript import errors">
-  If you're using TypeScript, you may get an error like this:
+If you're using TypeScript, you may get an error like this:
 
-  ```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
-  // TypeScript error
-  // Cannot find module './logo.svg' or its corresponding type declarations.
-  ```
+```ts
+// TypeScript error
+// Cannot find module './logo.svg' or its corresponding type declarations.
+```
 
-  To fix this, create a `*.d.ts` file anywhere in your project (any name works) with the following contents:
+To fix this, create a `*.d.ts` file anywhere in your project (any name works) with the following contents:
 
-  ```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
-  declare module "*.svg" {
-    const content: string;
-    export default content;
-  }
-  ```
+```ts
+declare module "*.svg" {
+  const content: string;
+  export default content;
+}
+```
 
-  This tells TypeScript that any default imports from `.svg` should be treated as a string.
+This tells TypeScript that any default imports from `.svg` should be treated as a string.
+
 </Accordion>

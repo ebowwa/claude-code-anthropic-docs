@@ -1,21 +1,22 @@
-> ## Documentation Index
-> Fetch the complete documentation index at: https://bun.com/docs/llms.txt
-> Use this file to discover all available pages before exploring further.
+<!--
+Source: https://bun.com/docs/guides/binary/arraybuffer-to-typedarray.md
+Downloaded: 2026-08-14T20:31:00.594Z
+-->
 
 # Convert an ArrayBuffer to a Uint8Array
 
-A `Uint8Array` is a *typed array*, a view over the data in an underlying `ArrayBuffer`.
+A `Uint8Array` is a _typed array_, a view over the data in an underlying `ArrayBuffer`.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const buffer = new ArrayBuffer(64);
 const arr = new Uint8Array(buffer);
 ```
 
-***
+---
 
 Create instances of other typed arrays the same way.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const buffer = new ArrayBuffer(64);
 
 const arr1 = new Uint8Array(buffer);
@@ -27,15 +28,15 @@ const arr6 = new BigInt64Array(buffer);
 const arr7 = new BigUint64Array(buffer);
 ```
 
-***
+---
 
 To create a typed array that only views a portion of the underlying buffer, pass the offset and length to the constructor.
 
-```ts theme={"theme":{"light":"github-light","dark":"dracula"}}
+```ts
 const buffer = new ArrayBuffer(64);
 const arr = new Uint8Array(buffer, 0, 16); // view first 16 bytes
 ```
 
-***
+---
 
-See [Utils](/docs/runtime/utils).
+See [Utils](/runtime/utils).
