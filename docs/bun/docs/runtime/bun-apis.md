@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/bun-apis.md
-Downloaded: 2026-08-14T20:31:00.555Z
+Downloaded: 2026-08-15T20:21:45.847Z
 -->
 
 # Bun APIs
@@ -28,7 +28,7 @@ Use the links in the table to jump to the associated documentation.
 | Bundler                          | [`Bun.build`](/bundler)                                                                                                                                                                                                                                                                                                |
 | File I/O                         | [`Bun.file`](/runtime/file-io#reading-files-bun-file), [`Bun.write`](/runtime/file-io#writing-files-bun-write), `Bun.stdin`, `Bun.stdout`, `Bun.stderr`                                                                                                                                                                |
 | Child Processes                  | [`Bun.spawn`](/runtime/child-process#spawn-a-process-bun-spawn), [`Bun.spawnSync`](/runtime/child-process#blocking-api-bun-spawnsync)                                                                                                                                                                                  |
-| TCP Sockets                      | [`Bun.listen`](/runtime/networking/tcp#start-a-server-bun-listen), [`Bun.connect`](/runtime/networking/tcp#start-a-server-bun-listen)                                                                                                                                                                                  |
+| TCP Sockets                      | [`Bun.listen`](/runtime/networking/tcp#start-a-server-bun-listen), [`Bun.connect`](/runtime/networking/tcp#create-a-connection-bun-connect)                                                                                                                                                                            |
 | UDP Sockets                      | [`Bun.udpSocket`](/runtime/networking/udp)                                                                                                                                                                                                                                                                             |
 | WebSockets                       | `new WebSocket()` (client), [`Bun.serve`](/runtime/http/websockets) (server)                                                                                                                                                                                                                                           |
 | Transpiler                       | [`Bun.Transpiler`](/runtime/transpiler)                                                                                                                                                                                                                                                                                |

@@ -1,13 +1,13 @@
 <!--
 Source: https://bun.com/docs/guides/ecosystem/pm2.md
-Downloaded: 2026-08-14T20:31:00.575Z
+Downloaded: 2026-08-15T20:21:45.865Z
 -->
 
 # Run Bun as a daemon with PM2
 
 [PM2](https://pm2.keymetrics.io/) is a process manager that runs your applications as daemons (background processes).
 
-It offers process monitoring, automatic restarts, and scaling, and keeps your application running when you deploy it to a cloud-hosted virtual private server (VPS).
+PM2 offers process monitoring, automatic restarts, and scaling. It keeps your application running when you deploy it to a cloud-hosted virtual private server (VPS).
 
 ---
 
@@ -25,9 +25,9 @@ pm2 start --interpreter ~/.bun/bin/bun index.ts
 
 ### With a configuration file
 
-Alternatively, create a file named `pm2.config.js` in your project directory and add the following content.
+Alternatively, create a file named `pm2.config.cjs` in your project directory and add the following content.
 
-```js pm2.config.js icon="file-code"
+```js pm2.config.cjs icon="file-code"
 module.exports = {
   name: "app", // Name of your application
   script: "index.ts", // Entry point of your application
@@ -43,7 +43,7 @@ module.exports = {
 After saving the file, start your application with PM2.
 
 ```bash terminal icon="terminal"
-pm2 start pm2.config.js
+pm2 start pm2.config.cjs
 ```
 
 ---

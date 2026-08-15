@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/pm/security-scanner-api.md
-Downloaded: 2026-08-14T20:31:00.562Z
+Downloaded: 2026-08-15T20:21:45.853Z
 -->
 
 # Security Scanner API
@@ -22,7 +22,7 @@ With a scanner configured, Bun:
 
 - Scans all packages before installation
 - Displays security warnings and advisories
-- Cancels installation if fatal advisories are found
+- Cancels installation if the scanner finds fatal advisories
 
 ---
 
@@ -57,8 +57,8 @@ bun add -d @oven/bun-security-scanner
 
 <Note>
   `@oven/bun-security-scanner` is an example package name, not a real package. Replace it with the scanner you want to
-  use, and consult that scanner's documentation for the exact package name and installation instructions. Most scanners
-  are installed with `bun add`.
+  use, and consult that scanner's documentation for the exact package name and installation instructions. You install
+  most scanners with `bun add`.
 </Note>
 
 ### Configuring the Scanner
@@ -92,5 +92,5 @@ For a complete example with tests and CI setup, see the official template:
 ## Related
 
 - [Configuration (bunfig.toml)](/runtime/bunfig#install-security-scanner)
-- [Package Manager](/installation)
+- [Package Manager](/pm/cli/install)
 - [Security Scanner Template](https://github.com/oven-sh/security-scanner-template)

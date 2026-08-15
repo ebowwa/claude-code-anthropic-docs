@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/yaml.md
-Downloaded: 2026-08-14T20:31:00.553Z
+Downloaded: 2026-08-15T20:21:45.845Z
 -->
 
 # YAML
@@ -17,7 +17,7 @@ In Bun, YAML is a first-class citizen alongside JSON and TOML. You can:
 
 ## Conformance
 
-Bun's YAML parser, written in Rust, passes over 90% of the official YAML test suite and covers the vast majority of real-world use cases. We're working toward 100% conformance.
+Bun's YAML parser, written in Rust, passes the official YAML test suite and covers the vast majority of real-world use cases.
 
 ---
 
@@ -74,11 +74,11 @@ console.log(docs);
 
 #### Supported YAML Features
 
-Bun's YAML parser supports the full YAML 1.2 specification, including:
+Bun's YAML parser supports the YAML 1.2 specification, including:
 
 - **Scalars**: strings, numbers, booleans, null values
 - **Collections**: sequences (arrays) and mappings (objects)
-- **Anchors and Aliases**: reusable nodes with `&` and `*`. Aliased collections share identity, and an alias may refer to a collection that contains it, so `Bun.YAML.parse` can return cyclic objects (YAML imported as a module cannot be cyclic).
+- **Anchors and Aliases**: reusable nodes with `&` and `*`. Aliased collections share identity. An alias may refer to a collection that contains it, so `Bun.YAML.parse` can return cyclic objects. YAML imported as a module cannot be cyclic.
 - **Tags**: type hints like `!!str`, `!!int`, `!!float`, `!!bool`, `!!null`
 - **Multi-line strings**: literal (`|`) and folded (`>`) scalars
 - **Comments**: using `#`

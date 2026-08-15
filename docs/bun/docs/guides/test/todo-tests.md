@@ -1,13 +1,13 @@
 <!--
 Source: https://bun.com/docs/guides/test/todo-tests.md
-Downloaded: 2026-08-14T20:31:00.588Z
+Downloaded: 2026-08-15T20:21:45.874Z
 -->
 
 # Mark a test as a "todo" with the Bun test runner
 
 To remind yourself to write a test later, use the `test.todo` function. An implementation isn't required.
 
-```ts test.ts icon="/icons/typescript.svg"
+```ts test.test.ts icon="/icons/typescript.svg"
 import { test, expect } from "bun:test";
 
 // write this later
@@ -24,15 +24,12 @@ bun test
 
 ```txt
 test.test.ts:
-✓ add [0.03ms]
-✓ multiply [0.02ms]
 ✎ unimplemented feature
 
- 2 pass
+ 0 pass
  1 todo
  0 fail
- 2 expect() calls
-Ran 3 tests across 1 file. [74.00ms]
+Ran 1 test across 1 file. [74.00ms]
 ```
 
 ---
@@ -56,7 +53,7 @@ bun test --todo
 ```
 
 ```txt
-my.test.ts:
+test.test.ts:
 ✗ unimplemented feature
   ^ this test is marked as todo but passes. Remove `.todo` if tested behavior now works
 

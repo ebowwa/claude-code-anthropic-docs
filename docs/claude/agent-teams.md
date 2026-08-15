@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/agent-teams.md
-Downloaded: 2026-08-14T20:31:08.317Z
+Downloaded: 2026-08-15T20:21:56.887Z
 -->
 
 > ## Documentation Index
@@ -44,13 +44,13 @@ Both agent teams and [subagents](/docs/en/sub-agents) let you parallelize work, 
   <img src="https://mintcdn.com/claude-code/nsvRFSDNfpSU5nT7/images/subagents-vs-agent-teams-dark.png?fit=max&auto=format&n=nsvRFSDNfpSU5nT7&q=85&s=d573a037540f2ada6a9ae7d8285b46fd" className="hidden dark:block" alt="Diagram comparing subagent and agent team architectures. Subagents are spawned by the main agent, do work, and report results back. Agent teams coordinate through a shared task list, with teammates communicating directly with each other." width="4245" height="1615" data-path="images/subagents-vs-agent-teams-dark.png" />
 </Frame>
 
-|                   | Subagents                                        | Agent teams                                         |
-| :---------------- | :----------------------------------------------- | :-------------------------------------------------- |
-| **Context**       | Own context window; results return to the caller | Own context window; fully independent               |
-| **Communication** | Report results back to the main agent only       | Teammates message each other directly               |
-| **Coordination**  | Main agent manages all work                      | Shared task list with self-coordination             |
-| **Best for**      | Focused tasks where only the result matters      | Complex work requiring discussion and collaboration |
-| **Token cost**    | Lower: results summarized back to main context   | Higher: each teammate is a separate Claude instance |
+|                   | Subagents                                        | Agent teams                                                                                                                                   |
+| :---------------- | :----------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Context**       | Own context window; results return to the caller | Own context window; fully independent                                                                                                         |
+| **Communication** | Report results back to the main agent only       | Teammates message each other directly                                                                                                         |
+| **Coordination**  | Main agent manages all work                      | Self-coordination through messages, plus a shared task list for [agents that have the Task tools](/docs/en/tools-reference#task-tool-availability) |
+| **Best for**      | Focused tasks where only the result matters      | Complex work requiring discussion and collaboration                                                                                           |
+| **Token cost**    | Lower: results summarized back to main context   | Higher: each teammate is a separate Claude instance                                                                                           |
 
 Use subagents when you need quick, focused workers that report back. Use agent teams when teammates need to share findings, challenge each other, and coordinate on their own.
 
@@ -66,7 +66,7 @@ Agent teams are disabled by default. Enable them by setting the `CLAUDE_CODE_EXP
 }
 ```
 
-Enabling agent teams also changes ordinary delegation. Claude may [name a subagent](/docs/en/sub-agents#subagent-names) on its own, and while agent teams are enabled, a subagent that Claude names launches as a teammate, so teams can form even when you didn't ask for one. For the exact conditions, see [How Claude starts agent teams](#how-claude-starts-agent-teams); to turn the behavior off, see [Claude spawns teammates instead of subagents](#claude-spawns-teammates-instead-of-subagents).
+Enabling agent teams also changes ordinary delegation. Claude may [name a subagent](/docs/en/sub-agents#subagent-names) on its own, and while agent teams are enabled, a subagent that Claude names launches as a teammate, so teams can form even when you didn't ask for one. For more, see [How Claude starts agent teams](#how-claude-starts-agent-teams); to turn the behavior off, see [Claude spawns teammates instead of subagents](#claude-spawns-teammates-instead-of-subagents).
 
 Spawning teammates also requires an interactive session. In [non-interactive mode](/docs/en/headless) with the `-p` flag, including Agent SDK sessions, Claude doesn't spawn teammates, and a subagent that Claude names runs as an ordinary [subagent](/docs/en/sub-agents) even with agent teams enabled.
 
@@ -82,7 +82,7 @@ their codebase. Spawn three teammates to explore this from different angles:
 one on UX, one on technical architecture, one playing devil's advocate.
 ```
 
-From there, Claude populates a [shared task list](/docs/en/interactive-mode#task-list), spawns teammates for each perspective, has them explore the problem, and synthesizes findings when finished.
+From there, Claude populates a [shared task list](/docs/en/interactive-mode#task-list) in a [session that has the Task tools](/docs/en/tools-reference#task-tool-availability), spawns teammates for each perspective, has them explore the problem, and synthesizes findings when finished.
 
 Claude may sometimes use [subagents](/docs/en/sub-agents) instead of creating a team. Subagents appear in the same agent panel as teammates, so the panel alone doesn't confirm a team formed. If Claude spawned subagents instead, ask again and explicitly request an agent team.
 
@@ -184,6 +184,8 @@ A teammate's model and fast mode are fixed when it spawns, so `/model` and `/fas
 
 The shared task list coordinates work across the team. The lead creates tasks and teammates work through them. Tasks have three states: pending, in progress, and completed. Tasks can also depend on other tasks: a pending task with unresolved dependencies cannot be claimed until those dependencies are completed.
 
+Agents [without the Task tools](/docs/en/tools-reference#task-tool-availability) coordinate through messages instead of the shared task list.
+
 The lead can assign tasks explicitly, or teammates can self-claim:
 
 * **Lead assigns**: tell the lead which task to give to which teammate
@@ -217,13 +219,9 @@ This section covers the architecture and mechanics behind agent teams. If you wa
 
 ### How Claude starts agent teams
 
-An agent team forms when the first teammate is spawned, with the main session acting as the lead. Claude spawns a teammate the same way it spawns a [subagent](/docs/en/sub-agents), by calling the [Agent tool](/docs/en/tools-reference), adding a `name` parameter to the call. Claude Code doesn't ask you to confirm before the teammate starts. Claude adds a `name` in situations such as:
+To start a team, ask Claude for teammates. Claude launches a teammate when it calls the [Agent tool](/docs/en/tools-reference) with a [`name`](/docs/en/sub-agents#subagent-names) while agent teams are enabled, and Claude Code doesn't ask you to confirm. Claude also names ordinary subagents on its own so it can message them later, and while agent teams are enabled, a named subagent launches as a teammate, so teams can form even when you didn't ask for one.
 
-* **You request teammates**: give Claude a task that benefits from parallel work and explicitly ask for teammates. Claude spawns them based on your instructions.
-* **Claude proposes teammates**: if Claude determines your task would benefit from parallel work, it may suggest a team and spawn teammates.
-* **Claude names a subagent**: Claude may name a subagent on its own so it can [message it later](/docs/en/sub-agents#resume-subagents), whether or not agent teams are enabled. In an interactive session with agent teams enabled, the subagent launches as a teammate unless the call also spawns a [fork](/docs/en/sub-agents#fork-the-current-conversation) or uses [`isolation`](/docs/en/worktrees), so a team can form during ordinary delegation you never framed as team work.
-
-If teams form where you expect ordinary subagents, see [Claude spawns teammates instead of subagents](#claude-spawns-teammates-instead-of-subagents).
+If you want subagents instead, [turn agent teams off](#claude-spawns-teammates-instead-of-subagents).
 
 ### Architecture
 
@@ -267,7 +265,7 @@ To use a subagent definition, mention it by name when asking Claude to spawn the
 Spawn a teammate using the security-reviewer agent type to audit the auth module.
 ```
 
-The teammate honors that definition's `tools` allowlist and `model`, and the definition's body is appended to the teammate's system prompt as additional instructions rather than replacing it. Team coordination tools such as `SendMessage` and the task management tools are always available to a teammate even when `tools` restricts other tools.
+The teammate honors that definition's `tools` allowlist and `model`, and the definition's body is appended to the teammate's system prompt as additional instructions rather than replacing it. For an in-process teammate, Claude Code adds `SendMessage` to that allowlist. In a [session that has the Task tools](/docs/en/tools-reference#task-tool-availability), Claude Code adds `TaskCreate`, `TaskGet`, `TaskList`, and `TaskUpdate` to it too.
 
 <Note>
   The `skills` and `mcpServers` frontmatter fields in a subagent definition are not applied when that definition runs as a teammate. Teammates load skills and MCP servers from your project and user settings, the same as a regular session.
@@ -296,7 +294,7 @@ Each teammate has its own context window. When spawned, a teammate loads the sam
 
 * **Automatic message delivery**: when teammates send messages, they're delivered automatically to recipients. The lead doesn't need to poll for updates.
 * **Idle notifications**: when a teammate finishes and stops, it automatically notifies the lead. The notification doesn't carry the teammate's output; a teammate shares results by messaging the lead or updating the shared task list. As of v2.1.198, a teammate whose turn ends on an API error notifies the lead that it failed and includes the error text, instead of appearing to finish normally.
-* **Shared task list**: all agents can see task status and claim available work.
+* **Shared task list**: [agents that have the Task tools](/docs/en/tools-reference#task-tool-availability) can see task status and claim available work.
 * **Teammate messaging**: send a message to one specific teammate by name. To reach everyone, send one message per recipient.
 
 The lead assigns every teammate a name when it spawns them, and any teammate can message any other by that name. To get predictable names you can reference in later prompts, tell the lead what to call each teammate in your spawn instruction.

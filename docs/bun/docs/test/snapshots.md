@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/test/snapshots.md
-Downloaded: 2026-08-14T20:31:00.567Z
+Downloaded: 2026-08-15T20:21:45.857Z
 -->
 
 # Snapshots
@@ -11,7 +11,7 @@ Snapshot testing saves the output of a value and compares it against future test
 
 ## Basic Snapshots
 
-Snapshot tests are written using the `.toMatchSnapshot()` matcher:
+Write snapshot tests with the `.toMatchSnapshot()` matcher:
 
 ```ts title="test.ts" icon="/icons/typescript.svg"
 import { test, expect } from "bun:test";
@@ -52,11 +52,11 @@ Regenerate snapshots with:
 bun test --update-snapshots
 ```
 
-Do this when you've intentionally changed the output or added new snapshot tests.
+Do this when you've intentionally changed the output. In CI environments, Bun does not write new snapshots unless you pass this flag.
 
 ## Inline Snapshots
 
-For smaller values, use `.toMatchInlineSnapshot()`. Inline snapshots are stored directly in your test file:
+For smaller values, use `.toMatchInlineSnapshot()`. Bun stores inline snapshots directly in your test file:
 
 ```ts title="test.ts" icon="/icons/typescript.svg"
 import { test, expect } from "bun:test";
@@ -362,16 +362,16 @@ tests/
 
 ### Snapshot Failures
 
-When snapshots fail, you'll see a diff:
+When snapshots fail, Bun shows a diff:
 
 ```diff title="diff" icon="file-code"
-- Expected
-+ Received
-
-  Object {
+  {
 -   "name": "John",
 +   "name": "Jane",
   }
+
+- Expected  - 1
++ Received  + 1
 ```
 
 Common causes:

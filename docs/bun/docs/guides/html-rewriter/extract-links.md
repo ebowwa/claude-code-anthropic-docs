@@ -1,13 +1,13 @@
 <!--
 Source: https://bun.com/docs/guides/html-rewriter/extract-links.md
-Downloaded: 2026-08-14T20:31:00.593Z
+Downloaded: 2026-08-15T20:21:45.878Z
 -->
 
 # Extract links from a webpage using HTMLRewriter
 
 ## Extract links from a webpage
 
-Bun's [HTMLRewriter](/runtime/html-rewriter) API extracts links from HTML. Chain CSS selectors to match the elements, text, and attributes you want to process, then pass `.transform` a `Response`, `ArrayBuffer`, or `string`.
+Bun's [HTMLRewriter](/runtime/html-rewriter) API extracts links from HTML. Chain CSS selectors to match the elements, text, and attributes you want to process. Then pass `.transform` a `Response`, `ArrayBuffer`, or `string`.
 
 ```ts extract-links.ts icon="/icons/typescript.svg"
 async function extractLinks(url: string) {

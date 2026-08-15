@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/util/sleep.md
-Downloaded: 2026-08-14T20:31:00.572Z
+Downloaded: 2026-08-15T20:21:45.862Z
 -->
 
 # Sleep for a fixed number of milliseconds
@@ -14,7 +14,7 @@ await Bun.sleep(1000);
 
 ---
 
-Internally, it is equivalent to the following [`setTimeout`](https://developer.mozilla.org/en-US/docs/Web/API/WindowOrWorkerGlobalScope/setTimeout) snippet.
+Internally, `Bun.sleep()` is equivalent to the following [`setTimeout`](https://developer.mozilla.org/en-US/docs/Web/API/Window/setTimeout) snippet.
 
 ```ts
 await new Promise(resolve => setTimeout(resolve, ms));

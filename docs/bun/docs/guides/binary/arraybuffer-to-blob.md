@@ -1,11 +1,11 @@
 <!--
 Source: https://bun.com/docs/guides/binary/arraybuffer-to-blob.md
-Downloaded: 2026-08-14T20:31:00.594Z
+Downloaded: 2026-08-15T20:21:45.878Z
 -->
 
 # Convert an ArrayBuffer to a Blob
 
-A [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) can be constructed from an array of "chunks", where each chunk is a string, binary data structure, or another `Blob`.
+You can construct a [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) from an array of "chunks", where each chunk is a string, binary data structure, or another `Blob`.
 
 ```ts
 const buf = new ArrayBuffer(64);

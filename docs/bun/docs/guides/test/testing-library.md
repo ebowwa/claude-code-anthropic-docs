@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/test/testing-library.md
-Downloaded: 2026-08-14T20:31:00.588Z
+Downloaded: 2026-08-15T20:21:45.874Z
 -->
 
 # Using Testing Library with Bun
@@ -52,7 +52,7 @@ afterEach(() => {
 
 ---
 
-Next, add these preload scripts to your `bunfig.toml`. You can also put everything in a single `preload.ts` script.
+Next, add these preload scripts to your `bunfig.toml`. If you combine them into a single preload script, load the `@testing-library/*` packages with `await import()` after `GlobalRegistrator.register()`. Bun evaluates a static `import` before `register()` runs, and `screen` queries then throw.
 
 ```toml bunfig.toml icon="settings"
 [test]
@@ -68,8 +68,8 @@ import { TestingLibraryMatchers } from "@testing-library/jest-dom/matchers";
 import { Matchers, AsymmetricMatchers } from "bun:test";
 
 declare module "bun:test" {
-  interface Matchers<T> extends TestingLibraryMatchers<typeof expect.stringContaining, T> {}
-  interface AsymmetricMatchers extends TestingLibraryMatchers {}
+  interface Matchers<T> extends TestingLibraryMatchers<typeof expect.stringContaining, void> {}
+  interface AsymmetricMatchers extends TestingLibraryMatchers<any, any> {}
 }
 ```
 
@@ -83,7 +83,7 @@ import { screen, render } from "@testing-library/react";
 import { MyComponent } from "./myComponent";
 
 test("Can use Testing Library", () => {
-  render(MyComponent);
+  render(<MyComponent />);
   const myComponent = screen.getByTestId("my-component");
   expect(myComponent).toBeInTheDocument();
 });

@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/ecosystem/docker.md
-Downloaded: 2026-08-14T20:31:00.574Z
+Downloaded: 2026-08-15T20:21:45.863Z
 -->
 
 # Containerize a Bun application with Docker
@@ -58,7 +58,7 @@ ENTRYPOINT [ "bun", "run", "index.ts" ]
 
 ---
 
-Next, add a `.dockerignore` file. It uses the same syntax as `.gitignore` and lists the files and directories to exclude from every stage of the Docker build. For example:
+Next, add a `.dockerignore` file. It uses a syntax similar to `.gitignore` and lists the files and directories to exclude from every stage of the Docker build. For example:
 
 ```txt .dockerignore icon="docker"
 node_modules
@@ -122,7 +122,7 @@ docker run -d -p 3000:3000 bun-hello-world
 
 ---
 
-The container is now running in the background. Visit [localhost:3000](http://localhost:3000). You should see a `Hello, World!` message.
+The container is now running in the background. Visit [localhost:3000](http://localhost:3000). You should see your application's response.
 
 ---
 

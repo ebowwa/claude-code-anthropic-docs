@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/ecosystem/ssr-react.md
-Downloaded: 2026-08-14T20:31:00.577Z
+Downloaded: 2026-08-15T20:21:45.866Z
 -->
 
 # Server-side render (SSR) a React component
@@ -47,4 +47,4 @@ Bun.serve({
 
 ---
 
-React `19` and later include an [SSR optimization](https://github.com/facebook/react/pull/25597) that takes advantage of Bun's "direct" `ReadableStream` implementation. If you run into an error like `export named 'renderToReadableStream' not found`, install version `19` of `react` and `react-dom`, or import from `react-dom/server.browser` instead of `react-dom/server`. See [facebook/react#28941](https://github.com/facebook/react/issues/28941) for details.
+React `19` and later include an [SSR optimization](https://github.com/react/react/pull/25597) that takes advantage of Bun's "direct" `ReadableStream` implementation. If you run into an error like `export named 'renderToReadableStream' not found`, install version `19` of `react` and `react-dom`, or import from `react-dom/server.browser` instead of `react-dom/server`. See [react/react#28941](https://github.com/react/react/issues/28941) for details.

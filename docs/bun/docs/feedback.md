@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/feedback.md
-Downloaded: 2026-08-14T20:31:00.599Z
+Downloaded: 2026-08-15T20:21:45.882Z
 -->
 
 # Feedback
@@ -33,7 +33,7 @@ Here's how to open a helpful issue for a bug, a performance problem, or a featur
     	If the issue persists after upgrading, continue to the next step.
     </Step>
     <Step title="Review Existing Issues">
-    	Check whether the issue has already been reported before opening a new one. It saves time for everyone and helps us focus on fixing things.
+    	Check whether the issue has already been reported before opening a new one. Checking first saves time for everyone and helps us focus on fixing things.
 
     	- 🔍 [**Search existing issues**](https://github.com/oven-sh/bun/issues)
     	- 💬 [**Check discussions**](https://github.com/oven-sh/bun/discussions)
@@ -62,17 +62,3 @@ Here's how to open a helpful issue for a bug, a performance problem, or a featur
 </Steps>
 
 The Bun team will review the issue and get back to you as soon as possible.
-
----
-
-## Use `bun feedback`
-
-`bun feedback` sends feedback, bug reports, and feature requests directly to the Bun team.
-
-```bash terminal icon="terminal"
-bun feedback "Love the new release!"
-bun feedback report.txt details.log
-echo "please document X" | bun feedback --email you@example.com
-```
-
-Pass feedback as text arguments, file paths, or piped input.

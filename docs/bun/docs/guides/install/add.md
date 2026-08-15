@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/install/add.md
-Downloaded: 2026-08-14T20:31:00.583Z
+Downloaded: 2026-08-15T20:21:45.870Z
 -->
 
 # Add a dependency
@@ -18,7 +18,7 @@ This adds the package to `dependencies` in `package.json`. By default, Bun uses 
 ```json package.json icon="file-json"
 {
   "dependencies": {
-    "zod": "^3.0.0" // [!code ++]
+    "zod": "^4.0.0" // [!code ++]
   }
 }
 ```

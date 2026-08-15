@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/cookies.md
-Downloaded: 2026-08-14T20:31:00.548Z
+Downloaded: 2026-08-15T20:21:45.840Z
 -->
 
 # Cookies
@@ -92,7 +92,7 @@ if (cookies.has("session")) {
 }
 ```
 
-#### `set(name: string, value: string): void`
+#### `set(name: string, value: string, options?: CookieInit): void`
 
 #### `set(options: CookieInit): void`
 
@@ -121,7 +121,9 @@ cookies.set(cookie);
 
 #### `delete(options: CookieStoreDeleteOptions): void`
 
-Removes a cookie from the map. When applied to a Response, this adds a cookie with an empty string value and an expiry date in the past. The browser only deletes the cookie if the domain and path match the ones it was created with.
+#### `delete(name: string, options: Omit<CookieStoreDeleteOptions, "name">): void`
+
+Removes a cookie from the map. When applied to a Response, the deletion adds a cookie with an empty string value and an expiry date in the past. The browser only deletes the cookie if the domain and path match the ones it was created with.
 
 ```ts title="delete-cookie.ts" icon="/icons/typescript.svg"
 // Delete by name using default domain and path.
@@ -147,7 +149,7 @@ const json = cookies.toJSON();
 
 Returns an array of values for Set-Cookie headers that apply all cookie changes.
 
-Use this with HTTP servers other than `Bun.serve()`. In `Bun.serve()`, you don't need to call it: any changes made to the `req.cookies` map are automatically applied to the response headers.
+Use this with HTTP servers other than `Bun.serve()`. In `Bun.serve()`, you don't need to call it: Bun automatically applies any changes you make to the `req.cookies` map to the response headers.
 
 ```js title="node-server.js" icon="file-code"
 import { createServer } from "node:http";
@@ -321,9 +323,9 @@ const cookie = new Bun.Cookie("session", "abc123", {
 });
 
 console.log(cookie.serialize());
-// => "session=abc123; Domain=example.com; Path=/admin; Expires=Sun, 19 Mar 2025 15:03:26 GMT; Secure; HttpOnly; SameSite=Strict"
+// => "session=abc123; Domain=example.com; Path=/admin; Expires=Wed, 19 Mar 2025 15:03:26 GMT; Secure; HttpOnly; SameSite=Strict"
 console.log(cookie.toString());
-// => "session=abc123; Domain=example.com; Path=/admin; Expires=Sun, 19 Mar 2025 15:03:26 GMT; Secure; HttpOnly; SameSite=Strict"
+// => "session=abc123; Domain=example.com; Path=/admin; Expires=Wed, 19 Mar 2025 15:03:26 GMT; Secure; HttpOnly; SameSite=Strict"
 ```
 
 #### `toJSON(): CookieInit`
@@ -417,7 +419,7 @@ class Cookie {
 
   readonly name: string;
   value: string;
-  domain?: string;
+  domain: string | null;
   path: string;
   expires?: Date;
   secure: boolean;

@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/util/escape-html.md
-Downloaded: 2026-08-14T20:31:00.571Z
+Downloaded: 2026-08-15T20:21:45.862Z
 -->
 
 # Escape an HTML string
@@ -13,7 +13,7 @@ Downloaded: 2026-08-14T20:31:00.571Z
 - `<` becomes `"&lt;"`
 - `>` becomes `"&gt;"`
 
-This function is optimized for large input. Non-string values are converted to a string before escaping.
+This function is optimized for large input. It converts non-string values to a string before escaping them.
 
 ```ts
 Bun.escapeHTML("<script>alert('Hello World!')</script>");

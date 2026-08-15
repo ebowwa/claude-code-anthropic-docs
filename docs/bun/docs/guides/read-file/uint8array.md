@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/read-file/uint8array.md
-Downloaded: 2026-08-14T20:31:00.590Z
+Downloaded: 2026-08-15T20:21:45.876Z
 -->
 
 # Read a file to a Uint8Array
@@ -15,7 +15,7 @@ const file = Bun.file(path);
 
 const byteArray = await file.bytes();
 
-byteArray[0]; // first byteArray
+byteArray[0]; // first byte
 byteArray.length; // length of byteArray
 ```
 

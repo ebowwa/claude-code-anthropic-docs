@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/file-system-router.md
-Downloaded: 2026-08-14T20:31:00.546Z
+Downloaded: 2026-08-15T20:21:45.838Z
 -->
 
 # File System Router
@@ -45,7 +45,7 @@ router.match("/");
 }
 ```
 
-Query parameters are parsed and returned in the `query` property.
+The router parses query parameters and returns them in the `query` property.
 
 ```ts
 router.match("/settings?foo=bar");
@@ -81,7 +81,7 @@ router.match("/blog/my-cool-post");
 }
 ```
 
-The `.match()` method also accepts `Request` and `Response` objects; their `url` property is used to resolve the route.
+The `.match()` method also accepts `Request` and `Response` objects; the router uses their `url` property to resolve the route.
 
 ```ts
 router.match(new Request("https://example.com/blog/my-cool-post"));

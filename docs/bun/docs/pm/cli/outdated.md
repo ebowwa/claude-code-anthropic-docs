@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/pm/cli/outdated.md
-Downloaded: 2026-08-14T20:31:00.559Z
+Downloaded: 2026-08-15T20:21:45.851Z
 -->
 
 # bun outdated
@@ -150,7 +150,7 @@ bun outdated -r
 ├────────────────────┼─────────┼─────────┼─────────┼────────────────────────────────┤
 │ axios              │ 0.21.0  │ 0.21.0  │ 1.12.2  │ catalog (@test/app)            │
 ├────────────────────┼─────────┼─────────┼─────────┼────────────────────────────────┤
-│ lodash             │ 4.17.15 │ 4.17.15 │ 4.17.21 │ catalog (@test/app, @test/app) │
+│ lodash             │ 4.17.15 │ 4.17.15 │ 4.17.21 │ catalog (@test/app)            │
 ├────────────────────┼─────────┼─────────┼─────────┼────────────────────────────────┤
 │ react              │ 17.0.0  │ 17.0.0  │ 19.1.1  │ catalog (@test/app)            │
 ├────────────────────┼─────────┼─────────┼─────────┼────────────────────────────────┤
@@ -198,6 +198,10 @@ bun outdated <filter>
 
 <ParamField path="-F, --filter" type="string">
   Display outdated dependencies for each matching workspace
+</ParamField>
+
+<ParamField path="-r, --recursive" type="boolean">
+  Check outdated packages in all workspaces
 </ParamField>
 
 ### Output & Logging
@@ -293,7 +297,7 @@ bun outdated <filter>
 ### Execution Behavior
 
 <ParamField path="--dry-run" type="boolean">
-  Don't install anything
+  Perform a dry run without making changes
 </ParamField>
 
 <ParamField path="-f, --force" type="boolean">
@@ -305,12 +309,12 @@ bun outdated <filter>
 </ParamField>
 
 <ParamField path="--ignore-scripts" type="boolean">
-  Skip lifecycle scripts in the project's <code>package.json</code> (dependency scripts are never run)
+  Skip lifecycle scripts for all packages, including the project's <code>package.json</code> and trusted dependencies
 </ParamField>
 
-<ParamField path="--backend" type="string" default="clonefile">
-  Platform-specific optimizations for installing dependencies. Possible values: <code>clonefile</code> (default),{" "}
-  <code>hardlink</code>, <code>symlink</code>, <code>copyfile</code>
+<ParamField path="--backend" type="string">
+  Platform-specific optimizations for installing dependencies. Possible values: <code>clonefile</code> (default on
+  macOS), <code>hardlink</code> (default on Linux and Windows), <code>symlink</code>, <code>copyfile</code>
 </ParamField>
 
 <ParamField path="--concurrent-scripts" type="number">

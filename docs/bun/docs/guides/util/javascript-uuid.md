@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/util/javascript-uuid.md
-Downloaded: 2026-08-14T20:31:00.571Z
+Downloaded: 2026-08-15T20:21:45.861Z
 -->
 
 # Generate a UUID
@@ -14,7 +14,7 @@ crypto.randomUUID();
 
 ---
 
-Bun also provides `Bun.randomUUIDv7()`, which generates a [UUID v7](https://www.ietf.org/archive/id/draft-peabody-dispatch-new-uuid-format-01.html).
+Bun also provides `Bun.randomUUIDv7()`, which generates a [UUID v7](https://www.rfc-editor.org/rfc/rfc9562.html#name-uuid-version-7).
 
 ```ts
 Bun.randomUUIDv7();

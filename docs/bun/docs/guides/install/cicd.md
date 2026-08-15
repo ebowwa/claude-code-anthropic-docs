@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/install/cicd.md
-Downloaded: 2026-08-14T20:31:00.586Z
+Downloaded: 2026-08-15T20:21:45.872Z
 -->
 
 # Install dependencies with Bun in GitHub Actions
@@ -8,18 +8,18 @@ Downloaded: 2026-08-14T20:31:00.586Z
 Use the official [`setup-bun`](https://github.com/oven-sh/setup-bun) GitHub Action to install `bun` in your GitHub Actions runner.
 
 ```yaml workflow.yml icon="file-code"
-title: my-workflow
+name: my-workflow
 jobs:
   my-job:
-    title: my-job
+    name: my-job
     runs-on: ubuntu-latest
     steps:
       # ...
       - uses: actions/checkout@v4
-      - uses: oven-sh/setup-bun@v2 // [!code ++]
+      - uses: oven-sh/setup-bun@v2 # [!code ++]
 
       # run any `bun` or `bunx` command
-      - run: bun install // [!code ++]
+      - run: bun install # [!code ++]
 ```
 
 ---
@@ -27,15 +27,15 @@ jobs:
 To specify a version of Bun to install:
 
 ```yaml workflow.yml icon="file-code"
-title: my-workflow
+name: my-workflow
 jobs:
   my-job:
-    title: my-job
+    name: my-job
     runs-on: ubuntu-latest
     steps:
       # ...
       - uses: oven-sh/setup-bun@v2
-         with: # [!code ++]
+        with: # [!code ++]
           bun-version: "latest" # or "canary" # [!code ++]
 ```
 

@@ -1,20 +1,28 @@
 <!--
 Source: https://bun.com/docs/guides/write-file/stream.md
-Downloaded: 2026-08-14T20:31:00.592Z
+Downloaded: 2026-08-15T20:21:45.877Z
 -->
 
 # Write a ReadableStream to a file
 
-To write a `ReadableStream` to disk, create a `Response` from the stream and pass it to [`Bun.write()`](/runtime/file-io#writing-files-bun-write).
+To write a `ReadableStream` to disk, call `.writer()` on a `BunFile` to get a [`FileSink`](/runtime/file-io#incremental-writing-with-filesink). The stream is an async iterable, so write each of its chunks to the `FileSink` with `for await`. Then call `.end()` to flush the buffer and close the file.
 
 ```ts
 const stream: ReadableStream = ...;
 const path = "./file.txt";
-const response = new Response(stream);
+const writer = Bun.file(path).writer();
 
-await Bun.write(path, response);
+for await (const chunk of stream) {
+  writer.write(chunk);
+}
+
+await writer.end();
 ```
 
 ---
 
-See [`Bun.write()`](/runtime/file-io#writing-files-bun-write).
+`.writer()` creates the file if it doesn't exist, but does not truncate an existing file. If the file may already exist, delete it first.
+
+---
+
+See [`FileSink`](/runtime/file-io#incremental-writing-with-filesink).

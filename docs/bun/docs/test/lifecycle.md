@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/test/lifecycle.md
-Downloaded: 2026-08-14T20:31:00.566Z
+Downloaded: 2026-08-15T20:21:45.857Z
 -->
 
 # Lifecycle hooks
@@ -41,7 +41,7 @@ test("example test", () => {
 
 ## Per-Scope Setup and Teardown
 
-Perform per-scope setup and teardown logic with `beforeAll` and `afterAll`. The scope is determined by where the hook is defined.
+Perform per-scope setup and teardown logic with `beforeAll` and `afterAll`. Where you define the hook determines its scope.
 
 ### Scoped to a Describe Block
 
@@ -97,7 +97,7 @@ describe("test group", () => {
 
 ### `onTestFinished`
 
-Use `onTestFinished` to run a callback after a single test completes. It runs after all `afterEach` hooks.
+Use `onTestFinished` to run a callback after a single test completes. The callback runs after all `afterEach` hooks.
 
 ```ts title="test.ts" icon="/icons/typescript.svg"
 import { test, onTestFinished } from "bun:test";
@@ -212,7 +212,7 @@ beforeEach(() => {
 
 afterEach(() => {
   // Clear all mocks after each test
-  mock.restore();
+  mock.clearAllMocks();
 });
 ```
 
@@ -221,7 +221,7 @@ afterEach(() => {
 All lifecycle hooks support async functions:
 
 ```ts title="test.ts" icon="/icons/typescript.svg"
-import { beforeAll, afterAll, test } from "bun:test";
+import { beforeAll, afterAll, test, expect } from "bun:test";
 
 beforeAll(async () => {
   // Async setup
@@ -243,7 +243,7 @@ test("async test", async () => {
 
 ## Nested Hooks
 
-Hooks can be nested. They run in the following order:
+You can nest hooks. They run in the following order:
 
 ```ts title="test.ts" icon="/icons/typescript.svg"
 import { describe, beforeAll, beforeEach, afterEach, afterAll, test } from "bun:test";
@@ -287,7 +287,7 @@ describe("outer describe", () => {
 
 ## Error Handling
 
-If a `beforeAll` hook throws, every test in its scope is skipped:
+If a `beforeAll` hook throws, the test runner skips every test in the hook's scope:
 
 ```ts title="test.ts" icon="/icons/typescript.svg"
 import { beforeAll, test } from "bun:test";

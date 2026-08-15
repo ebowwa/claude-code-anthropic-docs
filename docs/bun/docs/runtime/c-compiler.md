@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/c-compiler.md
-Downloaded: 2026-08-14T20:31:00.552Z
+Downloaded: 2026-08-15T20:21:45.844Z
 -->
 
 # C Compiler
@@ -70,7 +70,7 @@ What is the answer to the universe? 42
 | u8         | `uint8_t`      | `uint8_t`                   |
 | u16        | `uint16_t`     | `uint16_t`                  |
 | u32        | `uint32_t`     | `uint32_t`                  |
-| u64        | `uint64_t`     | `uint64_t`                  |
+| u64        | `uint64_t`     | `uint64_t`, `usize`         |
 | u64_fast   | `uint64_t`     |                             |
 | f32        | `float`        | `float`                     |
 | f64        | `double`       | `double`                    |
@@ -182,7 +182,7 @@ cc({
 
 #### `flags: string | string[]`
 
-`flags` is an optional array of strings passed to the TinyCC compiler.
+`flags` is an optional string or array of strings passed to the TinyCC compiler.
 
 ```ts
 type Flags = string | string[];

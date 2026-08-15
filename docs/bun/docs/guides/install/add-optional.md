@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/install/add-optional.md
-Downloaded: 2026-08-14T20:31:00.583Z
+Downloaded: 2026-08-15T20:21:45.870Z
 -->
 
 # Add an optional dependency
@@ -18,7 +18,7 @@ This adds the package to `optionalDependencies` in `package.json`.
 ```json package.json icon="file-json"
 {
   "optionalDependencies": {
-    "zod": "^3.0.0" // [!code ++]
+    "zod": "^4.0.0" // [!code ++]
   }
 }
 ```

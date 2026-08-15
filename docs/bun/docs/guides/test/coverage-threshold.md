@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/test/coverage-threshold.md
-Downloaded: 2026-08-14T20:31:00.587Z
+Downloaded: 2026-08-15T20:21:45.873Z
 -->
 
 # Set a code coverage threshold with the Bun test runner
@@ -19,7 +19,7 @@ test.test.ts:
 -------------|---------|---------|-------------------
 File         | % Funcs | % Lines | Uncovered Line #s
 -------------|---------|---------|-------------------
-All files    |   66.67 |   77.78 |
+All files    |   50.00 |   66.67 |
  math.ts     |   50.00 |   66.67 |
  random.ts   |   50.00 |   66.67 |
 -------------|---------|---------|-------------------
@@ -31,7 +31,7 @@ All files    |   66.67 |   77.78 |
 
 ---
 
-To set a minimum coverage threshold, add the following to your `bunfig.toml`. A threshold of `0.9` requires that tests cover 90% of your codebase.
+To set a minimum coverage threshold, add the following to your `bunfig.toml`. A threshold of `0.9` requires that tests cover 90% of the lines and 90% of the functions of every file in the coverage report. Bun checks the threshold against each file, not against the `All files` average.
 
 ```toml bunfig.toml icon="settings"
 [test]

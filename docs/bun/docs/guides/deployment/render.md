@@ -1,13 +1,13 @@
 <!--
 Source: https://bun.com/docs/guides/deployment/render.md
-Downloaded: 2026-08-14T20:31:00.568Z
+Downloaded: 2026-08-15T20:21:45.858Z
 -->
 
 # Deploy a Bun application on Render
 
 [Render](https://render.com/) is a cloud platform for building, deploying, and scaling apps.
 
-It provides auto deploys from GitHub, a global CDN, private networks, automatic HTTPS setup, and managed PostgreSQL and Redis.
+It provides auto deploys from GitHub, a global CDN, private networks, automatic HTTPS setup, and managed PostgreSQL and Redis-compatible Key Value stores.
 
 Render supports Bun natively. You can deploy Bun apps as web services, background workers, cron jobs, and more.
 

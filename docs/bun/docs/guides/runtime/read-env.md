@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/runtime/read-env.md
-Downloaded: 2026-08-14T20:31:00.583Z
+Downloaded: 2026-08-15T20:21:45.870Z
 -->
 
 # Read environment variables
@@ -28,7 +28,7 @@ bun --print process.env
 ```
 
 ```txt
-{
+ProcessEnv {
   BAZ: "stuff",
   FOOBAR: "aaaaaa",
   <lots more lines>

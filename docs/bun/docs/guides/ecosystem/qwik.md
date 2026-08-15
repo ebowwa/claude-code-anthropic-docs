@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/ecosystem/qwik.md
-Downloaded: 2026-08-14T20:31:00.576Z
+Downloaded: 2026-08-15T20:21:45.865Z
 -->
 
 # Build an app with Qwik and Bun
@@ -13,7 +13,7 @@ The `create-qwik` package detects when you are using `bunx` and installs depende
 bun create qwik
 ```
 
-```txts
+```txt
       ............
     .::: :--------:.
    .::::  .:-------:.
@@ -28,7 +28,7 @@ bun create qwik
              ...::::
 
 
-┌  Let's create a  Qwik App  ✨ (v1.2.10)
+┌  Let's create a  Qwik App  ✨ (v1.20.0)
 │
 ◇  Where would you like to create your new project? (Use '.' or './' for current directory)
 │  ./my-app
@@ -36,7 +36,7 @@ bun create qwik
 ●  Creating new project in  /path/to/my-app  ... 🐇
 │
 ◇  Select a starter
-│  Basic App
+│  Playground App (Qwik City + Qwik)
 │
 ◇  Would you like to install bun dependencies?
 │  Yes
@@ -95,13 +95,13 @@ bun run dev
 ```
 
 ```txt
-$ vite--mode ssr
+$ vite --mode ssr
 
-VITE v4.4.7  ready in 1190 ms
+VITE v7.3.1   ssr   ready in 433 ms
 
 ➜  Local:   http://localhost:5173/
 ➜  Network: use --host to expose
-➜  press h to show help
+➜  press h + enter to show help
 ```
 
 ---

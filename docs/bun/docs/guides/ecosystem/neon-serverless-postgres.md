@@ -1,11 +1,11 @@
 <!--
 Source: https://bun.com/docs/guides/ecosystem/neon-serverless-postgres.md
-Downloaded: 2026-08-14T20:31:00.575Z
+Downloaded: 2026-08-15T20:21:45.864Z
 -->
 
 # Use Neon's Serverless Postgres with Bun
 
-[Neon](https://neon.tech/) is a fully managed serverless Postgres. Neon separates compute and storage to offer features such as autoscaling, branching, and bottomless storage.
+[Neon](https://neon.com/) is a fully managed serverless Postgres. Neon separates compute and storage to offer features such as autoscaling, branching, and bottomless storage.
 
 ---
 
@@ -20,10 +20,10 @@ bun add @neondatabase/serverless
 
 ---
 
-Create a `.env.local` file and add your [Neon Postgres connection string](https://neon.tech/docs/connect/connect-from-any-app) to it.
+Create a `.env.local` file and add your [Neon Postgres connection string](https://neon.com/docs/connect/connect-from-any-app) to it.
 
 ```ini .env.local icon="settings"
-DATABASE_URL=postgresql://usertitle:password@ep-adj-noun-guid.us-east-1.aws.neon.tech/neondb?sslmode=require
+DATABASE_URL=postgresql://username:password@ep-adj-noun-guid.us-east-1.aws.neon.tech/neondb?sslmode=require
 ```
 
 ---
@@ -35,7 +35,7 @@ import { neon } from "@neondatabase/serverless";
 
 // Bun automatically loads the DATABASE_URL from .env.local
 // Refer to: https://bun.com/docs/runtime/environment-variables for more information
-const sql = neon(process.env.DATABASE_URL);
+const sql = neon(process.env.DATABASE_URL!);
 
 const rows = await sql`SELECT version()`;
 
@@ -58,4 +58,4 @@ PostgreSQL 16.2 on x86_64-pc-linux-gnu, compiled by gcc (Debian 10.2.1-6) 10.2.1
 
 This example used the Neon serverless driver's SQL-over-HTTP functionality. Neon's serverless driver also exposes `Client` and `Pool` constructors to enable sessions, interactive transactions, and node-postgres compatibility.
 
-Refer to [Neon's documentation](https://neon.tech/docs/serverless/serverless-driver) for a complete overview of the serverless driver.
+Refer to [Neon's documentation](https://neon.com/docs/serverless/serverless-driver) for a complete overview of the serverless driver.

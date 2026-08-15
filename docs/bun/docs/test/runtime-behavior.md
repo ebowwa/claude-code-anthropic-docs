@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/test/runtime-behavior.md
-Downloaded: 2026-08-14T20:31:00.566Z
+Downloaded: 2026-08-15T20:21:45.857Z
 -->
 
 # Runtime behavior
@@ -96,7 +96,7 @@ test("test without timeout", async () => {
 This helps catch errors in asynchronous code that might otherwise go unnoticed:
 
 ```ts title="test.ts" icon="/icons/typescript.svg"
-import { test } from "bun:test";
+import { test, expect } from "bun:test";
 
 test("test 1", () => {
   // This test passes
@@ -119,10 +119,10 @@ test("test 2", () => {
 
 ### Promise Rejections
 
-Unhandled promise rejections are also caught:
+The test runner also catches unhandled promise rejections:
 
 ```ts title="test.ts" icon="/icons/typescript.svg"
-import { test } from "bun:test";
+import { test, expect } from "bun:test";
 
 test("passing test", () => {
   expect(1).toBe(1);
@@ -295,7 +295,7 @@ The test runner runs all tests in a single process by default. This provides:
 
 - **Faster startup** - No need to spawn multiple processes
 - **Shared memory** - Efficient resource usage
-- **Simple debugging** - All tests in one process
+- **Simpler debugging** - All tests in one process
 
 However, this means:
 
@@ -319,7 +319,7 @@ bun test src/integration/
 Since tests run in the same process, ensure proper cleanup:
 
 ```ts title="test.ts" icon="/icons/typescript.svg"
-import { afterEach } from "bun:test";
+import { afterEach, jest } from "bun:test";
 
 afterEach(() => {
   // Clean up global state

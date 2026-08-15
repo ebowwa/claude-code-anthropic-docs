@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/http/websockets.md
-Downloaded: 2026-08-14T20:31:00.547Z
+Downloaded: 2026-08-15T20:21:45.839Z
 -->
 
 # WebSockets
@@ -13,7 +13,7 @@ Downloaded: 2026-08-14T20:31:00.547Z
 
 **⚡️ 7x more throughput**
 
-Bun's WebSockets are fast. For a [simple chatroom](https://github.com/oven-sh/bun/tree/main/bench/websocket-server/README.md) on Linux x64, Bun can handle 7x more requests per second than Node.js + [`"ws"`](https://github.com/websockets/ws).
+Bun's WebSockets are fast. For a [simple chatroom](https://github.com/oven-sh/bun/tree/main/bench/websocket-server/README.md) on Linux x64, Bun can handle 7x more messages per second than Node.js + [`"ws"`](https://github.com/websockets/ws).
 
 | **Messages sent per second** | **Runtime**                    | **Clients** |
 | ---------------------------- | ------------------------------ | ----------- |
@@ -28,7 +28,7 @@ Internally Bun's WebSocket implementation is built on [uWebSockets](https://gith
 
 ## Start a WebSocket server
 
-The following server, built with `Bun.serve`, [upgrades](https://developer.mozilla.org/en-US/docs/Web/HTTP/Protocol_upgrade_mechanism) every incoming request to a WebSocket connection in the `fetch` handler. The socket handlers are declared in the `websocket` parameter.
+The following server, built with `Bun.serve`, [upgrades](https://developer.mozilla.org/en-US/docs/Web/HTTP/Protocol_upgrade_mechanism) every incoming request to a WebSocket connection in the `fetch` handler. You declare the socket handlers in the `websocket` parameter.
 
 ```ts server.ts icon="/icons/typescript.svg"
 Bun.serve({
@@ -59,9 +59,9 @@ Bun.serve({
 
 <Accordion title="An API designed for speed">
 
-In Bun, handlers are declared once per server, instead of per socket.
+In Bun, you declare handlers once per server, instead of per socket.
 
-You pass a single `WebSocketHandler` object to `Bun.serve()` with methods for `open`, `message`, `close`, `drain`, and `error`. This is different from the client-side `WebSocket` class, which extends `EventTarget` (`onmessage`, `onopen`, `onclose`).
+You pass a single `WebSocketHandler` object to `Bun.serve()` with methods for `open`, `message`, `close`, `drain`, and `error`. This design differs from the client-side `WebSocket` class, which extends `EventTarget` (`onmessage`, `onopen`, `onclose`).
 
 Clients tend to have few socket connections open, so an event-based API makes sense there.
 
@@ -172,7 +172,7 @@ Bun.serve({
 ```
 
 <Info>
-Previously, you could specify the type of `ws.data` with a type parameter on `Bun.serve`, like `Bun.serve<MyData>({...})`. This pattern was removed due to [a limitation in TypeScript](https://github.com/microsoft/TypeScript/issues/26242) in favor of the `data` property.
+Previously, you could specify the type of `ws.data` with a type parameter on `Bun.serve`, like `Bun.serve<MyData>({...})`. Bun removed this pattern in favor of the `data` property because of [a limitation in TypeScript](https://github.com/microsoft/TypeScript/issues/26242).
 </Info>
 
 To connect to this server from the browser, create a new `WebSocket`.
@@ -188,13 +188,13 @@ socket.addEventListener("message", event => {
 <Info>
 **Identifying users**
 
-Cookies set on the page are sent with the WebSocket upgrade request and available on `req.headers` in the `fetch` handler. Parse them to identify the connecting user and set `data` accordingly.
+The browser sends cookies set on the page along with the WebSocket upgrade request. They are available on `req.headers` in the `fetch` handler. Parse them to identify the connecting user and set `data` accordingly.
 
 </Info>
 
 ### Pub/Sub
 
-Bun's `ServerWebSocket` includes a native publish-subscribe API for topic-based broadcasting. Individual sockets can `.subscribe()` to a topic (specified with a string identifier) and `.publish()` messages to all other subscribers to that topic (excluding itself). This topic-based broadcast API is similar to [MQTT](https://en.wikipedia.org/wiki/MQTT) and [Redis Pub/Sub](https://redis.io/topics/pubsub).
+Bun's `ServerWebSocket` includes a native publish-subscribe API for topic-based broadcasting. You specify a topic with a string identifier. An individual socket can `.subscribe()` to a topic and `.publish()` messages to all other subscribers to that topic (excluding itself). This topic-based broadcast API is similar to [MQTT](https://en.wikipedia.org/wiki/MQTT) and [Redis Pub/Sub](https://redis.io/topics/pubsub).
 
 ```ts server.ts icon="/icons/typescript.svg"
 const server = Bun.serve({
@@ -236,7 +236,7 @@ const server = Bun.serve({
 console.log(`Listening on ${server.hostname}:${server.port}`);
 ```
 
-Calling `.publish(data)` sends the message to all subscribers of a topic _except_ the socket that called `.publish()`. To send a message to all subscribers of a topic, use the `.publish()` method on the `Server` instance.
+Calling `.publish(topic, data)` sends the message to all subscribers of a topic _except_ the socket that called `.publish()`. To send a message to all subscribers of a topic, use the `.publish()` method on the `Server` instance.
 
 ```ts
 const server = Bun.serve({
@@ -314,7 +314,7 @@ const socket = new WebSocket("ws://localhost:3000");
 const socket2 = new WebSocket("ws://localhost:3000", ["soap", "wamp"]);
 ```
 
-In browsers, cookies set on the page are sent with the WebSocket upgrade request. This is a standard feature of the `WebSocket` API.
+Browsers send cookies set on the page along with the WebSocket upgrade request. This is a standard feature of the `WebSocket` API.
 
 In Bun, you can also set custom headers directly in the constructor. This is a Bun-specific extension of the `WebSocket` standard. _It does not work in browsers._
 

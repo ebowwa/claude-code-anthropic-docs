@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/pm/lifecycle.md
-Downloaded: 2026-08-14T20:31:00.561Z
+Downloaded: 2026-08-15T20:21:45.853Z
 -->
 
 # Lifecycle scripts
@@ -67,7 +67,7 @@ Defining `trustedDependencies` in `package.json` **replaces** the default list r
 | `trustedDependencies: ["pkg-a", ...]` | **Only** the listed packages. The default list is ignored. |
 | `trustedDependencies: []`             | **No** packages, including none from the default list.     |
 
-Set `trustedDependencies: []` when you want to opt out of the default allow list entirely without passing `--ignore-scripts` on every install. If you define `trustedDependencies` with an explicit list, include any packages from the [default list](https://github.com/oven-sh/bun/blob/main/src/install/default-trusted-dependencies.txt) whose lifecycle scripts you still need (for example, `sharp` or `esbuild`) — they are no longer trusted implicitly.
+Set `trustedDependencies: []` when you want to opt out of the default allow list entirely without passing `--ignore-scripts` on every install. If you define `trustedDependencies` with an explicit list, include any packages from the [default list](https://github.com/oven-sh/bun/blob/main/src/install/default-trusted-dependencies.txt) whose lifecycle scripts you still need (for example, `sharp` or `esbuild`). Bun no longer trusts those packages implicitly.
 
 ---
 

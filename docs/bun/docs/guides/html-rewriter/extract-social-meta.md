@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/html-rewriter/extract-social-meta.md
-Downloaded: 2026-08-14T20:31:00.593Z
+Downloaded: 2026-08-15T20:21:45.878Z
 -->
 
 # Extract social share images and Open Graph tags
@@ -15,7 +15,7 @@ interface SocialMetadata {
   description?: string;
   image?: string;
   url?: string;
-  siteName?: string;
+  site_name?: string;
   type?: string;
 }
 
@@ -43,7 +43,7 @@ async function extractSocialMetadata(url: string): Promise<SocialMetadata> {
         const content = el.getAttribute("content");
         if (name && content) {
           const key = name.replace("twitter:", "") as keyof SocialMetadata;
-          // Only use Twitter Card data if we don't have OG data
+          // Only use Twitter Card data if nothing has set this key yet (OG tags always overwrite it)
           if (!metadata[key]) {
             metadata[key] = content;
           }
@@ -90,8 +90,8 @@ const metadata = await extractSocialMetadata("https://bun.com");
 console.log(metadata);
 // {
 //   title: "Bun — A fast all-in-one JavaScript runtime",
-//   description: "Bundle, transpile, install and run JavaScript & TypeScript projects — all in Bun. Bun is a fast all-in-one JavaScript runtime & toolkit designed for speed, complete with a bundler, test runner, and Node.js-compatible package manager.",
-//   image: "https://bun.com/share.jpg",
+//   description: "Bundle, install, and run JavaScript &amp; TypeScript — all in Bun. Bun is a fast JavaScript runtime &amp; toolkit with a bundler, test runner, and npm-compatible package manager built in.",
+//   image: "https://bun.com/share_v4.png",
 //   type: "website",
 //   ...
 // }

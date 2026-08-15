@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/console.md
-Downloaded: 2026-08-14T20:31:00.552Z
+Downloaded: 2026-08-15T20:21:45.844Z
 -->
 
 # Console
@@ -20,7 +20,7 @@ You can configure how deeply `console.log()` prints nested objects:
 
 - **CLI flag**: Use `--console-depth <number>` to set the depth for a single run
 - **Configuration**: Set `console.depth` in your `bunfig.toml` to persist it across runs
-- **Default**: Objects are inspected to a depth of `2` levels
+- **Default**: Bun inspects objects to a depth of `2` levels
 
 ```js
 const nested = { a: { b: { c: { d: "deep" } } } };

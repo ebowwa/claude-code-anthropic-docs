@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/secrets.md
-Downloaded: 2026-08-14T20:31:00.552Z
+Downloaded: 2026-08-15T20:21:45.844Z
 -->
 
 # Secrets
@@ -107,8 +107,8 @@ await secrets.set({
 
 **Notes:**
 
-- If a credential already exists for the given service/name combination, it is replaced
-- The stored value is encrypted by the operating system
+- If a credential already exists for the given service/name combination, Bun replaces it
+- The operating system encrypts the stored value
 
 ### `Bun.secrets.delete(options)`
 
@@ -157,12 +157,12 @@ await Bun.secrets.set({
 
 // Retrieve for API calls
 const token = await Bun.secrets.get({
-  service: "gh-cli",
-  name: "github.com",
+  service: "my-app.com",
+  name: "github-token",
 });
 
 if (token) {
-  const response = await fetch("https://api.github.com/name", {
+  const response = await fetch("https://api.github.com/user", {
     headers: {
       Authorization: `token ${token}`,
     },
@@ -245,7 +245,7 @@ await Bun.secrets.set({
 
 ### macOS (Keychain)
 
-- Credentials are stored in the user's login keychain
+- Bun stores credentials in the user's login keychain
 - The keychain may prompt for access permission on first use
 - Credentials persist across system restarts
 - Accessible by the user who stored them
@@ -253,20 +253,20 @@ await Bun.secrets.set({
 ### Linux (libsecret)
 
 - Requires a secret service daemon such as GNOME Keyring or KWallet
-- Credentials are stored in the default collection
+- Bun stores credentials in the default collection
 - May prompt for unlock if the keyring is locked
 - The secret service must be running
 
 ### Windows (Credential Manager)
 
-- Credentials are stored in Windows Credential Manager
+- Bun stores credentials in Windows Credential Manager
 - Visible in Control Panel → Credential Manager → Windows Credentials
 - Persisted with the `CRED_PERSIST_ENTERPRISE` flag, so they're scoped per user
 - Encrypted using Windows Data Protection API
 
 ## Security Considerations
 
-1. **Encryption**: Credentials are encrypted by the operating system's credential manager
+1. **Encryption**: The operating system's credential manager encrypts credentials
 2. **Access Control**: Only the user who stored the credential can retrieve it
 3. **No Plain Text**: Passwords are never stored in plain text
 4. **Memory Safety**: Bun zeros out password memory after use
@@ -289,7 +289,7 @@ await Bun.secrets.set({
 Unlike environment variables, `Bun.secrets`:
 
 - ✅ Encrypts credentials at rest (thanks to the operating system)
-- ✅ Avoids exposing secrets in process memory dumps (memory is zeroed after it's no longer needed)
+- ✅ Avoids exposing secrets in process memory dumps (Bun zeros the memory after it's no longer needed)
 - ✅ Survives application restarts
 - ✅ Can be updated without restarting the application
 - ✅ Provides user-level access control

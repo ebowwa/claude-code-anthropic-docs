@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/pm/cli/add.md
-Downloaded: 2026-08-14T20:31:00.558Z
+Downloaded: 2026-08-15T20:21:45.849Z
 -->
 
 # bun add
@@ -20,6 +20,8 @@ bun add zod@3.20.0
 bun add zod@^3.0.0
 bun add zod@latest
 ```
+
+Bun writes the package to `dependencies` unless you pass `--dev`, `--optional`, or `--peer`. If `package.json` already lists it in another group, Bun updates that entry in place.
 
 ## `--dev`
 
@@ -47,6 +49,8 @@ To add a package as a peer dependency (`"peerDependencies"`):
 ```bash terminal icon="terminal"
 bun add --peer @types/bun
 ```
+
+Bun installs peer dependencies by default, so no additional `devDependencies` entry is needed.
 
 ## `--exact`
 
@@ -78,6 +82,62 @@ To view a complete list of options for this command:
 ```bash terminal icon="terminal"
 bun add --help
 ```
+
+## `--catalog`
+
+In a workspace, `--catalog` writes the version to the root `package.json` [catalog](/pm/catalogs) and adds `"catalog:"` to the current package. `--catalog=<name>` uses a named catalog (`workspaces.catalogs.<name>`) and writes `"catalog:<name>"`.
+
+```bash terminal icon="terminal"
+bun add react --catalog
+bun add vitest --catalog=testing
+```
+
+```json package.json icon="file-json"
+// root package.json
+{
+  "workspaces": {
+    "packages": ["packages/*"],
+    "catalog": {
+      "react": "^18.2.0" // [!code ++]
+    }
+  }
+}
+```
+
+```json packages/app/package.json icon="file-json"
+{
+  "dependencies": {
+    "react": "catalog:" // [!code ++]
+  }
+}
+```
+
+- If the catalog already has an entry, Bun reuses it and writes only `"catalog:"` to the current package. Pass an explicit version (`bun add react@19 --catalog`) to replace the entry — this affects every package that references it.
+- If you omit the version and the current `package.json` already has a range (`"react": "^18.2.0"`), Bun catalogs that range.
+- A package that already references `"catalog:<name>"` keeps using that catalog.
+- Attach the name with `=`: `--catalog=testing`, not `--catalog testing`.
+- Bun catalogs tarball and git specifiers under the package's real name. It rejects relative paths and workspace packages.
+
+Even without the flag, `bun add react` (no version) writes `"catalog:"` if the default catalog already lists `react`. Pass a version to write a concrete range instead.
+
+## `--filter`
+
+<Note>**Alias** — `-F`</Note>
+
+In a monorepo, add the package to the matching workspace(s) instead of the current directory's package. See [filtering](/pm/filter) for the pattern syntax. Repeat the flag to combine patterns; `!pattern` excludes.
+
+```bash terminal icon="terminal"
+bun add zod --filter api
+bun add -d typescript --filter './packages/*'
+bun add ./vendor/logger --filter '*'
+bun remove zod --filter '*' --filter '!api'
+```
+
+- `*` matches every workspace package but not the root. To include the root, name it: `--filter '*' --filter '<root-name>'`.
+- If no workspace matches, Bun writes nothing and the command fails.
+- Bun resolves local paths from the current directory and rewrites them relative to each selected package.
+- Bun updates `bun.lock` for the whole repo but links only the selected workspaces into `node_modules`, as with `bun install --filter`.
+- Cannot be combined with `--global`.
 
 ## `--global`
 
@@ -215,6 +275,15 @@ bun add <package> <@version>
   Only add dependencies to <code>package.json</code> if they are not already present
 </ParamField>
 
+<ParamField path="--catalog" type="string">
+  Add the resolved version to the root <code>package.json</code> catalog and depend on it as <code>catalog:</code>;{" "}
+  <code>--catalog=NAME</code> targets <code>catalogs.NAME</code>
+</ParamField>
+
+<ParamField path="--filter" type="string">
+  Add the package(s) to the matching workspaces instead of the current package. Alias: <code>-F</code>
+</ParamField>
+
 ### Project Files & Lockfiles
 
 <ParamField path="--yarn" type="boolean">
@@ -248,7 +317,7 @@ bun add <package> <@version>
 ### Installation Control
 
 <ParamField path="--dry-run" type="boolean">
-  Don't install anything
+  Perform a dry run without making changes
 </ParamField>
 
 <ParamField path="--force" type="boolean">
@@ -260,7 +329,7 @@ bun add <package> <@version>
 </ParamField>
 
 <ParamField path="--ignore-scripts" type="boolean">
-  Skip lifecycle scripts in the project's <code>package.json</code> (dependency scripts are never run)
+  Skip lifecycle scripts for all packages, including the project's <code>package.json</code> and trusted dependencies
 </ParamField>
 
 <ParamField path="--analyze" type="boolean">
@@ -289,9 +358,9 @@ bun add <package> <@version>
 
 ### Performance &amp; Resource
 
-<ParamField path="--backend" type="string" default="clonefile">
-  Platform-specific optimizations for installing dependencies. One of <code>clonefile</code>, <code>hardlink</code>,{" "}
-  <code>symlink</code>, or <code>copyfile</code>
+<ParamField path="--backend" type="string">
+  Platform-specific optimizations for installing dependencies. Possible values: <code>clonefile</code> (default on
+  macOS), <code>hardlink</code> (default on Linux and Windows), <code>symlink</code>, <code>copyfile</code>
 </ParamField>
 
 <ParamField path="--concurrent-scripts" type="number">

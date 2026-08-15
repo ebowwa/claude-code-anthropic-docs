@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/runtime/web-debugger.md
-Downloaded: 2026-08-14T20:31:00.569Z
+Downloaded: 2026-08-15T20:21:45.860Z
 -->
 
 # Debugging Bun with the web debugger
@@ -20,9 +20,9 @@ Bun.serve({
 
 Run the file with the `--inspect` flag.
 
-This starts a WebSocket server on an available port. Debugging tools connect to this server to introspect the running Bun process.
+This starts a WebSocket server on port `6499` (pass `--inspect=<port>` to use a different port). Debugging tools connect to this server to introspect the running Bun process.
 
-Bun hosts a web-based debugger at [debug.bun.sh](https://debug.bun.sh). It is a modified version of WebKit's [Web Inspector Interface](https://webkit.org/web-inspector/web-inspector-interface/), which will look familiar to Safari users.
+Bun hosts a web-based debugger at [debug.bun.sh](https://debug.bun.sh). It is a modified version of WebKit's [Web Inspector Interface](https://webkit.org/web-inspector/web-inspector-interface/), which looks familiar to Safari users.
 
 ```sh terminal icon="terminal"
 bun --inspect server.ts
@@ -31,9 +31,9 @@ bun --inspect server.ts
 ```txt
 --------------------- Bun Inspector ---------------------
 Listening:
-  ws://localhost:6499/0tqxs9exrgrm
+  ws://localhost:6499/204e4940-4a8b-4ebc-8fee-1c66926bbc21
 Inspect in browser:
-  https://debug.bun.sh/#localhost:6499/0tqxs9exrgrm
+  https://debug.bun.sh/#localhost:6499/204e4940-4a8b-4ebc-8fee-1c66926bbc21
 --------------------- Bun Inspector ---------------------
 ```
 

@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/redis.md
-Downloaded: 2026-08-14T20:31:00.550Z
+Downloaded: 2026-08-15T20:21:45.842Z
 -->
 
 # Redis
@@ -195,7 +195,7 @@ Create a publisher in `publisher.ts`:
 ```typescript publisher.ts icon="/icons/typescript.svg"
 import { RedisClient } from "bun";
 
-const writer = new RedisClient("redis://localhost:6739");
+const writer = new RedisClient("redis://localhost:6379");
 await writer.connect();
 
 writer.publish("general", "Hello everyone!");
@@ -208,7 +208,7 @@ In another file, create the subscriber in `subscriber.ts`:
 ```typescript subscriber.ts icon="/icons/typescript.svg"
 import { RedisClient } from "bun";
 
-const listener = new RedisClient("redis://localhost:6739");
+const listener = new RedisClient("redis://localhost:6379");
 await listener.connect();
 
 await listener.subscribe("general", (message, channel) => {
@@ -230,8 +230,9 @@ bun run publisher.ts
 
 <Note>
 Subscribing takes over the `RedisClient` connection: a client with
-subscriptions can only call `RedisClient.prototype.subscribe()`. To send other
-commands to Redis, create a separate connection with `.duplicate()`:
+subscriptions can only call the subscription methods (`subscribe()`,
+`psubscribe()`, `unsubscribe()`, `punsubscribe()`), `pubsub()`, and `ping()`. To
+send other commands to Redis, create a separate connection with `.duplicate()`:
 
 ```ts redis.ts icon="/icons/typescript.svg"
 import { RedisClient } from "bun";
@@ -417,11 +418,11 @@ const client = new RedisClient("redis://localhost:6379", {
 When a connection is lost, the client automatically attempts to reconnect with exponential backoff:
 
 1. The client starts with a small delay (50ms) and doubles it with each attempt
-2. Reconnection delay is capped at 2000ms (2 seconds)
+2. The client caps the reconnection delay at 2000ms (2 seconds)
 3. The client attempts to reconnect up to `maxRetries` times (default: 20)
-4. Commands executed during disconnection are:
-   - Queued if `enableOfflineQueue` is true (default)
-   - Rejected immediately if `enableOfflineQueue` is false
+4. While disconnected, the client:
+   - Queues commands if `enableOfflineQueue` is true (default)
+   - Rejects commands immediately if `enableOfflineQueue` is false
 
 ---
 
@@ -565,13 +566,13 @@ async function getSession(sessionId) {
 
 ## Implementation Notes
 
-Bun's Redis client is implemented in Rust and uses the Redis Serialization Protocol (RESP3). It reconnects automatically with exponential backoff and pipelines commands, so multiple commands can be sent without waiting for replies to previous ones.
+Bun's Redis client is implemented in Rust and uses the Redis Serialization Protocol (RESP3). It reconnects automatically with exponential backoff. It also pipelines commands, so it can send multiple commands without waiting for replies to previous ones.
 
 ## Limitations and Future Plans
 
 Limitations we plan to address in future versions:
 
-- Transactions (MULTI/EXEC) must be done through raw commands
+- Transactions (MULTI/EXEC) require raw commands
 
 Unsupported features:
 

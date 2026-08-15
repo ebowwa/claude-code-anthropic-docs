@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/test/update-snapshots.md
-Downloaded: 2026-08-14T20:31:00.587Z
+Downloaded: 2026-08-15T20:21:45.873Z
 -->
 
 # Update snapshots in `bun test`
@@ -42,7 +42,7 @@ test/snap.test.ts:
  0 fail
  snapshots: +1 added # the snapshot was regenerated
  1 expect() calls
-Ran 1 tests across 1 files. [102.00ms]
+Ran 1 test across 1 file. [102.00ms]
 ```
 
 ---

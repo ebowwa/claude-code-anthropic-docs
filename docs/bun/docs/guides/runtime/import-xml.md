@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/runtime/import-xml.md
-Downloaded: 2026-08-14T20:31:00.589Z
+Downloaded: 2026-08-15T20:21:45.875Z
 -->
 
 # Import an XML file
@@ -19,7 +19,7 @@ Bun natively supports `.xml` imports.
 
 ---
 
-Import the file like any other source file. The module is the parsed document: one key for the root element, `"@name"` keys for attributes, arrays for repeated elements, and every value a string.
+Import the file like any other source file. The module is the parsed document: one key for the root element, `"@name"` keys for attributes, and arrays for repeated elements. Every value is a string.
 
 ```ts config.ts icon="/icons/typescript.svg"
 import doc from "./config.xml";

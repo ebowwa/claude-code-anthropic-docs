@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/channels.md
-Downloaded: 2026-08-14T20:31:08.320Z
+Downloaded: 2026-08-15T20:21:56.889Z
 -->
 
 > ## Documentation Index
@@ -272,7 +272,7 @@ To try the fakechat demo, you'll need:
     what's in my working directory?
     ```
 
-    The message arrives in your Claude Code session. The terminal shows it as an inbound channel line like `← fakechat · web: what's in my working directory?`, while the model receives it as a `<channel source="plugin:fakechat:fakechat">` event, using the plugin's scoped server name. Claude reads it, does the work, and calls fakechat's `reply` tool. The first reply triggers a permission prompt in your terminal; approve it, and the answer shows up in the chat UI.
+    The message arrives in your Claude Code session. The terminal shows it as an inbound channel line like `← fakechat · web: what's in my working directory?`, while the model receives it as a `<channel source="plugin:fakechat:fakechat">` event, using the plugin's scoped server name. Claude reads it, does the work, and calls fakechat's `reply` tool. If Claude Code asks for permission for the first reply, approve it. The answer shows up in the chat UI.
   </Step>
 </Steps>
 

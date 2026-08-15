@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/changelog/index.md
-Downloaded: 2026-08-14T20:31:01.998Z
+Downloaded: 2026-08-15T20:21:46.263Z
 -->
 
 > ## Documentation Index
@@ -32,6 +32,27 @@ description: "Crypto, Tennis, and Baseball moving to dedicated exchange instance
   Upcoming exchange sharding: Crypto, Tennis, and Baseball will be provisioned
   on dedicated exchange instances. Please see
   [Exchange Sharding](/getting_started/exchange_sharding) for changes to trading.
+</Update>
+
+<Update
+  label="August 22, 2026"
+  tags={["REST", "WebSocket", "FIX", "Predictions"]}
+  rss={{
+title: "Combo RFQ fee assignment for briefly resting orders",
+description: "Maker fees will be enabled Wednesday night; post-only mode will be disabled and the combo RFQ quoter fee swap enabled Friday night."
+}}
+>
+  **Rollout timing:**
+
+  * Maker fees will be enabled at 11:59 PM on Wednesday, August 19.
+  * Post-only mode will be disabled and the quoter fee swap will be enabled at
+    11:59 PM on Friday, August 21.
+
+  For combo trades, if a quoter executes against an order that has rested on
+  the book for less than five seconds, both parties' fees will be adjusted: the
+  quoter will pay the maker fee, and the resting counterparty will pay the
+  taker fee. See the [Kalshi Fee Schedule](https://kalshi.com/docs/kalshi-fee-schedule.pdf)
+  for details.
 </Update>
 
 <Update

@@ -1,13 +1,13 @@
 <!--
 Source: https://bun.com/docs/guides/ecosystem/vite.md
-Downloaded: 2026-08-14T20:31:00.577Z
+Downloaded: 2026-08-15T20:21:45.867Z
 -->
 
 # Build a frontend using Vite and Bun
 
 <Note>
   You can use Vite with Bun, but many projects get faster builds & drop hundreds of dependencies by switching to [HTML
-  imports](/bundler/html-static).
+  imports](/bundler/fullstack).
 </Note>
 
 ---
@@ -19,9 +19,19 @@ bun create vite my-app
 ```
 
 ```txt
-✔ Select a framework: › React
-✔ Select a variant: › TypeScript + SWC
-Scaffolding project in /path/to/my-app...
+◇  Select a framework:
+│  React
+│
+◇  Select a variant:
+│  TypeScript
+│
+◇  Which linter to use?
+│  Oxlint
+│
+◇  Install with bun and start now?
+│  No
+│
+◇  Scaffolding project in /path/to/my-app...
 ```
 
 ---
@@ -37,7 +47,7 @@ bun install
 
 Start the development server with the `vite` CLI using `bunx`.
 
-The `--bun` flag tells Bun to run Vite's CLI using `bun` instead of `node`; by default Bun respects Vite's `#!/usr/bin/env node` [shebang line](<https://en.wikipedia.org/wiki/Shebang_(Unix)>).
+The `--bun` flag tells Bun to run Vite's CLI using `bun` instead of `node`. By default, Bun respects Vite's `#!/usr/bin/env node` [shebang line](<https://en.wikipedia.org/wiki/Shebang_(Unix)>).
 
 ```bash terminal icon="terminal"
 bunx --bun vite
@@ -51,8 +61,9 @@ To simplify this command, update the `"dev"` script in `package.json` to the fol
   "scripts": {
     "dev": "vite", // [!code --]
     "dev": "bunx --bun vite", // [!code ++]
-    "build": "vite build",
-    "serve": "vite preview"
+    "build": "tsc -b && vite build",
+    "lint": "oxlint",
+    "preview": "vite preview"
   },
   // ...
 ```

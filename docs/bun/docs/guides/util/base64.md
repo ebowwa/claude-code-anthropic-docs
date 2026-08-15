@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/util/base64.md
-Downloaded: 2026-08-14T20:31:00.571Z
+Downloaded: 2026-08-15T20:21:45.861Z
 -->
 
 # Encode and decode base64 data
@@ -25,7 +25,7 @@ const decoded = Uint8Array.fromBase64(encoded);
 const text = new TextDecoder().decode(decoded); // => "hello world"
 ```
 
-Node.js `Buffer` extends `Uint8Array`, so buffers can be encoded with `toBase64()` and passed to APIs that accept `Uint8Array`. `Buffer` also provides Node.js-compatible base64 decoding with `Buffer.from(encoded, "base64")`.
+Node.js `Buffer` extends `Uint8Array`, so you can encode buffers with `toBase64()` and pass them to APIs that accept `Uint8Array`. `Buffer` also provides Node.js-compatible base64 decoding with `Buffer.from(encoded, "base64")`.
 
 ```ts
 const encoded = Buffer.from("hello world").toBase64();

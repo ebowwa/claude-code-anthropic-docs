@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/runtime/vscode-debugger.md
-Downloaded: 2026-08-14T20:31:00.569Z
+Downloaded: 2026-08-15T20:21:45.860Z
 -->
 
 # Debugging Bun with the VS Code extension
@@ -33,7 +33,7 @@ Once installed, two Bun-specific commands appear in the Command Palette. To open
 
 ---
 
-The `Bun: Run File` command executes your code and prints the output to the Debug Console in VS Code. Breakpoints are ignored; this is similar to executing the file with `bun <file>` from the command line.
+The `Bun: Run File` command executes your code and prints the output to the Debug Console in VS Code. The command ignores breakpoints; this is similar to executing the file with `bun <file>` from the command line.
 
 <Frame>![VS Code extension](https://github.com/oven-sh/bun/assets/3084745/1b2c7fd9-fbb9-486a-84d0-eb7ec135ded3)</Frame>
 

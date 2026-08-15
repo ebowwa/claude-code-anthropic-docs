@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/ecosystem/mongoose.md
-Downloaded: 2026-08-14T20:31:00.575Z
+Downloaded: 2026-08-15T20:21:45.864Z
 -->
 
 # Read and write data to MongoDB using Mongoose and Bun
@@ -34,7 +34,7 @@ import * as mongoose from "mongoose";
 
 const animalSchema = new mongoose.Schema(
   {
-    title: { type: String, required: true },
+    name: { type: String, required: true },
     sound: { type: String, required: true },
   },
   {
@@ -63,14 +63,14 @@ await mongoose.connect("mongodb://127.0.0.1:27017/mongoose-app");
 
 // create new Animal
 const cow = new Animal({
-  title: "Cow",
+  name: "Cow",
   sound: "Moo",
 });
 await cow.save(); // saves to the database
 
 // read all Animals
 const animals = await Animal.find();
-animals[0].speak(); // logs "Moo!"
+animals[0]!.speak(); // logs "Moo!"
 
 // disconnect
 await mongoose.disconnect();

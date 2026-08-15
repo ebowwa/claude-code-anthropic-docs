@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/test/mocks.md
-Downloaded: 2026-08-14T20:31:00.567Z
+Downloaded: 2026-08-15T20:21:45.857Z
 -->
 
 # Mocks
@@ -169,7 +169,7 @@ test("async mock functions", async () => {
 
 ## Spies with spyOn()
 
-Use `spyOn()` to track calls to a function without replacing it with a mock. Spies can be passed to `.toHaveBeenCalled()` and `.toHaveBeenCalledTimes()`.
+Use `spyOn()` to track calls to a function without replacing it with a mock. You can pass spies to `.toHaveBeenCalled()` and `.toHaveBeenCalledTimes()`.
 
 ```ts title="test.ts" icon="/icons/typescript.svg"
 import { test, expect, spyOn } from "bun:test";
@@ -193,7 +193,7 @@ test("spyon", () => {
 ### Advanced Spy Usage
 
 ```ts title="test.ts" icon="/icons/typescript.svg"
-import { test, expect, spyOn, afterEach } from "bun:test";
+import { test, expect, spyOn, afterEach, jest } from "bun:test";
 
 class UserService {
   async getUser(id: string) {
@@ -326,7 +326,7 @@ preload = ["./my-preload"]
 
 #### When to Use Preload
 
-Mocking a module that's already been imported updates the module cache, so anything that imports it gets the mocked version. The original module has already been evaluated, though, so its side effects have already happened.
+Mocking a module that's already been imported updates the module cache, so anything that imports it gets the mocked version. Bun has already evaluated the original module, though, so its side effects have already happened.
 
 To prevent the original module from being evaluated at all, use `--preload` to load your mocks before your tests run.
 
@@ -414,7 +414,7 @@ test("clearing all mocks", () => {
 
 ### Reset All Mocks
 
-`jest.resetAllMocks()` (and its `vi.resetAllMocks()` alias) calls `mockFn.mockReset()` on every mock: on top of what `clearAllMocks()` does, it drops the implementations set by `mockImplementation()`, `mockReturnValue()` and friends. It does not restore the original implementation of a spy:
+`jest.resetAllMocks()` (and its `vi.resetAllMocks()` alias) calls `mockFn.mockReset()` on every mock. On top of what `clearAllMocks()` does, it drops the implementations set by `mockImplementation()`, `mockReturnValue()` and friends. It does not restore the original implementation of a spy:
 
 ```ts title="test.ts" icon="/icons/typescript.svg"
 import { expect, jest, test } from "bun:test";
@@ -508,7 +508,7 @@ Module mocks interact with both ESM and CommonJS module caches.
 
 ### Lazy Evaluation
 
-The mock factory callback is only evaluated when the module is imported or required.
+Bun evaluates the mock factory callback only when the module is imported or required.
 
 ### Path Resolution
 
@@ -578,7 +578,7 @@ test("conditional API usage", async () => {
 ### Mock Cleanup Patterns
 
 ```ts title="test.ts" icon="/icons/typescript.svg"
-import { afterEach, beforeEach } from "bun:test";
+import { afterEach, beforeEach, mock } from "bun:test";
 
 beforeEach(() => {
   // Set up common mocks
@@ -590,7 +590,7 @@ beforeEach(() => {
 });
 
 afterEach(() => {
-  // Clean up all mocks
+  // Restore spies and clear call history; neither call resets the mock.module() override
   mock.restore();
   mock.clearAllMocks();
 });

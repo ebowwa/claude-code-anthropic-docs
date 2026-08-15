@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/claude-security.md
-Downloaded: 2026-08-14T20:31:08.315Z
+Downloaded: 2026-08-15T20:21:56.884Z
 -->
 
 > ## Documentation Index
@@ -81,7 +81,7 @@ The plugin adds one command, `/claude-security`, which opens a menu of its three
   </Step>
 </Steps>
 
-You don't have to start from the menu: ask for a job directly, as arguments to the command, such as `/claude-security scan my branch`, or in plain language, such as "scan commit abc1234". The plugin works best in [auto mode](/docs/en/permission-modes), which lets the scan's agents proceed without a permission prompt at each step; the plugin reminds you how to enable it when a job starts.
+You don't have to start from the menu: ask for a job directly, as arguments to the command, such as `/claude-security scan my branch`, or in plain language, such as "scan commit abc1234". The plugin works best in [auto mode](/docs/en/permission-modes), which lets the scan's agents proceed without a permission prompt at each step.
 
 ### Scan only your changes
 

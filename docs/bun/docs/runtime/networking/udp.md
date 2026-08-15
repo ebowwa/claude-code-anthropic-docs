@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/networking/udp.md
-Downloaded: 2026-08-14T20:31:00.548Z
+Downloaded: 2026-08-15T20:21:45.840Z
 -->
 
 # UDP
@@ -119,7 +119,9 @@ A packet you send may not fit into the operating system's packet buffer. You can
 has happened when:
 
 - `send` returns `false`
-- `sendMany` returns a number smaller than the number of packets you specified. In this case, Bun calls the `drain` socket handler once the socket becomes writable again:
+- `sendMany` returns a number smaller than the number of packets you specified
+
+In either case, Bun calls the `drain` socket handler once the socket becomes writable again:
 
 ```ts
 const socket = await Bun.udpSocket({

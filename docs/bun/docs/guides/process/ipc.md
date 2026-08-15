@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/process/ipc.md
-Downloaded: 2026-08-14T20:31:00.582Z
+Downloaded: 2026-08-15T20:21:45.869Z
 -->
 
 # Spawn a child process and communicate using IPC
@@ -55,7 +55,7 @@ process.on("message", message => {
 
 ---
 
-By default, messages are serialized with the JSC `serialize` API, which supports everything [`structuredClone` supports](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), including strings, typed arrays, and objects. This does not support transferring ownership of objects.
+By default, Bun serializes messages with the JSC `serialize` API. This API supports everything [`structuredClone` supports](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm), including strings, typed arrays, and objects. The API does not support transferring ownership of objects.
 
 ```ts child.ts icon="/icons/typescript.svg"
 // send a string

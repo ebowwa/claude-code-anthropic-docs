@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/workers.md
-Downloaded: 2026-08-14T20:31:00.550Z
+Downloaded: 2026-08-15T20:21:45.842Z
 -->
 
 # Workers
@@ -51,7 +51,7 @@ declare var self: Worker;
 
 You can use `import` and `export` syntax in your worker code. Unlike in browsers, you don't need to pass `{type: "module"}` to use ES modules.
 
-If the worker's script fails to resolve, an `"error"` event is emitted on the `Worker` object.
+If the worker's script fails to resolve, Bun emits an `"error"` event on the `Worker` object.
 
 ```js
 const worker = new Worker("/not-found.js");
@@ -60,7 +60,7 @@ worker.addEventListener("error", event => {
 });
 ```
 
-The specifier passed to `Worker` is resolved relative to the project root (like typing `bun ./path/to/file.js`).
+Bun resolves the specifier passed to `Worker` relative to the project root (like typing `bun ./path/to/file.js`).
 
 ### `preload` - load modules before the worker starts
 
@@ -102,7 +102,7 @@ const worker = new Worker(url);
 
 ### `"open"`
 
-The `"open"` event is emitted when a worker is created and ready to receive messages. (This event does not exist in browsers.)
+Bun emits the `"open"` event when a worker is created and ready to receive messages. (This event does not exist in browsers.)
 
 ```ts index.ts icon="/icons/typescript.svg"
 const worker = new Worker(new URL("worker.ts", import.meta.url).href);
@@ -116,7 +116,7 @@ Bun enqueues messages until the worker is ready, so you don't need to wait for t
 
 ## Messages with `postMessage`
 
-To send messages, use [`worker.postMessage`](https://developer.mozilla.org/en-US/docs/Web/API/Worker/postMessage) and [`self.postMessage`](https://developer.mozilla.org/en-US/docs/Web/API/Window/postMessage). Messages are serialized with the [HTML Structured Clone Algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm).
+To send messages, use [`worker.postMessage`](https://developer.mozilla.org/en-US/docs/Web/API/Worker/postMessage) and [`self.postMessage`](https://developer.mozilla.org/en-US/docs/Web/API/DedicatedWorkerGlobalScope/postMessage). Bun serializes messages with the [HTML Structured Clone Algorithm](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm).
 
 ### Performance optimizations
 
@@ -212,11 +212,11 @@ Calling `worker.terminate()` makes the worker exit as soon as possible.
 
 ### `process.exit()`
 
-A worker can terminate itself with `process.exit()`. This does not terminate the main process. Like in Node.js, `process.on('beforeExit', callback)` and `process.on('exit', callback)` are emitted on the worker thread (and not on the main thread), and the exit code is passed to the `"close"` event.
+A worker can terminate itself with `process.exit()`. This does not terminate the main process. Like in Node.js, `process.on('beforeExit', callback)` and `process.on('exit', callback)` are emitted on the worker thread, not on the main thread. Bun passes the exit code to the `"close"` event.
 
 ### `"close"`
 
-The `"close"` event is emitted when a worker has been marked as terminated; the worker itself can take some time to fully exit. The `CloseEvent` contains the exit code passed to `process.exit()`, or 0 if it closed for another reason.
+Bun emits the `"close"` event when a worker has been marked as terminated. The worker itself can take some time to fully exit. The `CloseEvent` contains the exit code passed to `process.exit()`, or 0 if it closed for another reason.
 
 ```ts index.ts icon="/icons/typescript.svg"
 const worker = new Worker(new URL("worker.ts", import.meta.url).href);
@@ -254,7 +254,7 @@ worker.unref();
 worker.ref();
 ```
 
-Alternatively, you can also pass an `options` object to `Worker`:
+Alternatively, you can also pass `ref: false` in the `options` object to `Worker`, which is equivalent to calling `worker.unref()`:
 
 ```ts index.ts icon="/icons/typescript.svg"
 const worker = new Worker(new URL("worker.ts", import.meta.url).href, {

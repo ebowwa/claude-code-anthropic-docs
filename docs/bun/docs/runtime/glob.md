@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/glob.md
-Downloaded: 2026-08-14T20:31:00.554Z
+Downloaded: 2026-08-15T20:21:45.846Z
 -->
 
 # Glob
@@ -124,7 +124,7 @@ glob.match("baz.ts"); // => true
 glob.match("bat.ts"); // => false
 ```
 
-You can use character ranges (for example `[0-9]`, `[a-z]`) and the negation operators `^` or `!` to match anything _except_ the characters in the brackets (for example `[^ab]`, `[!a-z]`).
+You can use character ranges (for example `[0-9]`, `[a-z]`). The negation operators `^` or `!` match anything _except_ the characters in the brackets (for example `[^ab]`, `[!a-z]`).
 
 ```ts
 const glob = new Glob("ba[a-z][0-9][^4-9].ts");
@@ -145,7 +145,7 @@ glob.match("c.ts"); // => true
 glob.match("d.ts"); // => false
 ```
 
-These patterns can be nested up to 10 levels deep and contain any of the earlier wildcards.
+You can nest these patterns up to 10 levels deep, and they can contain any of the earlier wildcards.
 
 ### `!` - Negates the result at the start of a pattern
 
@@ -165,7 +165,7 @@ glob.match("index.ts"); // => false
 
 ## Node.js `fs.glob()` compatibility
 
-Bun also implements Node.js's `fs.glob()` functions with additional features:
+Bun also implements Node.js's `fs.glob()` functions:
 
 ```ts
 import { glob, globSync, promises } from "node:fs";

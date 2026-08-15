@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/pm/cli/patch.md
-Downloaded: 2026-08-14T20:31:00.560Z
+Downloaded: 2026-08-15T20:21:45.852Z
 -->
 
 # bun patch
@@ -14,11 +14,11 @@ Sometimes you need a small change to a package in `node_modules/` to fix a bug o
 Features:
 
 - Generates `.patch` files that Bun applies to dependencies in `node_modules` on install
-- `.patch` files can be committed to your repository and reused across installs, projects, and machines
+- You can commit `.patch` files to your repository and reuse them across installs, projects, and machines
 - `"patchedDependencies"` in `package.json` keeps track of patched packages
 - Patches packages in `node_modules/` while preserving the integrity of Bun's [Global Cache](/pm/global-cache)
 - Test your changes locally before committing them with `bun patch --commit <pkg>`
-- To preserve disk space and keep `bun install` fast, patched packages are committed to the Global Cache and shared across projects where possible
+- To preserve disk space and keep `bun install` fast, Bun commits patched packages to the Global Cache and shares them across projects where possible
 
 #### Step 1. Prepare the package for patching
 
@@ -36,7 +36,7 @@ bun patch node_modules/react
 ```
 
 <Note>
-Don't skip `bun patch <pkg>`. It ensures the package folder in `node_modules/` contains a fresh copy of the package with no symlinks or hardlinks to Bun's cache.
+Always run `bun patch <pkg>` first. It ensures the package folder in `node_modules/` contains a fresh copy of the package with no symlinks or hardlinks to Bun's cache.
 
 If you skip it, you might end up editing the package globally in the cache.
 
@@ -44,7 +44,7 @@ If you skip it, you might end up editing the package globally in the cache.
 
 #### Step 2. Test your changes locally
 
-`bun patch <pkg>` makes it safe to edit `<pkg>` in `node_modules/` directly, while preserving the integrity of Bun's [Global Cache](/pm/global-cache). It works by re-creating an unlinked clone of the package in `node_modules/` and diffing it against the original package in the Global Cache.
+`bun patch <pkg>` makes it safe to edit `<pkg>` in `node_modules/` directly, while preserving the integrity of Bun's [Global Cache](/pm/global-cache). It works by re-creating an unlinked clone of the package in `node_modules/`. `bun patch --commit <pkg>` then diffs that clone against the original package in the Global Cache.
 
 #### Step 3. Commit your changes
 
@@ -91,7 +91,7 @@ bun patch <package>@<version>
 </ParamField>
 
 <ParamField path="--ignore-scripts" type="boolean">
-  Skip lifecycle scripts in the project's <code>package.json</code> (dependency scripts are never run)
+  Skip lifecycle scripts for all packages, including the project's <code>package.json</code> and trusted dependencies
 </ParamField>
 
 <ParamField path="--trust" type="boolean">
@@ -134,17 +134,21 @@ bun patch <package>@<version>
 
 ### Installation Control
 
-<ParamField path="--backend" type="string" default="clonefile">
-  Platform-specific optimizations for installing dependencies. Possible values: <code>clonefile</code> (default),{" "}
-  <code>hardlink</code>, <code>symlink</code>, <code>copyfile</code>
+<ParamField path="--backend" type="string">
+  Platform-specific optimizations for installing dependencies. Possible values: <code>clonefile</code> (default on
+  macOS), <code>hardlink</code> (default on Linux and Windows), <code>symlink</code>, <code>copyfile</code>
 </ParamField>
 
 <ParamField path="--linker" type="string">
   Linker strategy (one of <code>isolated</code> or <code>hoisted</code>)
 </ParamField>
 
+<ParamField path="--minimum-release-age" type="number">
+  Only install packages published at least N seconds ago (security feature)
+</ParamField>
+
 <ParamField path="--dry-run" type="boolean">
-  Don't install anything
+  Perform a dry run without making changes
 </ParamField>
 
 <ParamField path="--force" type="boolean">
@@ -197,7 +201,7 @@ bun patch <package>@<version>
 </ParamField>
 
 <ParamField path="--quiet" type="boolean">
-  Only show tarball name when packing
+  Disable the progress bar
 </ParamField>
 
 <ParamField path="--verbose" type="boolean">

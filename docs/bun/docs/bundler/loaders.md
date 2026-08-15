@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/bundler/loaders.md
-Downloaded: 2026-08-14T20:31:00.564Z
+Downloaded: 2026-08-15T20:21:45.855Z
 -->
 
 # Loaders
@@ -11,7 +11,7 @@ The Bun bundler has a set of built-in loaders.
 
 > As a rule of thumb: **the bundler and the runtime both support the same set of file types by default.**
 
-`.js` `.cjs` `.mjs` `.mts` `.cts` `.ts` `.tsx` `.jsx` `.css` `.json` `.jsonc` `.toml` `.yaml` `.yml` `.txt` `.wasm` `.node` `.html` `.sh`
+`.js` `.cjs` `.mjs` `.mts` `.cts` `.ts` `.tsx` `.jsx` `.css` `.json` `.jsonc` `.json5` `.toml` `.yaml` `.yml` `.xml` `.txt` `.text` `.md` `.markdown` `.wasm` `.node` `.html` `.sh`
 
 Bun uses the file extension to choose which built-in loader parses the file. Every loader has a name, such as `js`, `tsx`, or `json`. Plugins that extend Bun with custom loaders refer to these names.
 
@@ -37,7 +37,7 @@ Parses the code and applies a set of default transforms like dead-code eliminati
 
 **JavaScript + JSX loader.** Default for `.js` and `.jsx`.
 
-Same as the `js` loader, but JSX syntax is supported. By default, JSX is down-converted to plain JavaScript; the exact output depends on the `jsx*` compiler options in your `tsconfig.json`. See the [TypeScript documentation on JSX](https://www.typescriptlang.org/tsconfig#jsx).
+Same as the `js` loader, but JSX syntax is supported. By default, Bun down-converts JSX to plain JavaScript. The exact output depends on the `jsx*` compiler options in your `tsconfig.json`. See the [TypeScript documentation on JSX](https://www.typescriptlang.org/tsconfig#jsx).
 
 ---
 
@@ -68,7 +68,7 @@ import pkg from "./package.json";
 pkg.name; // => "my-package"
 ```
 
-During bundling, the parsed JSON is inlined into the bundle as a JavaScript object.
+During bundling, Bun inlines the parsed JSON into the bundle as a JavaScript object.
 
 ```js
 const pkg = {
@@ -79,7 +79,7 @@ const pkg = {
 pkg.name;
 ```
 
-If a `.json` file is passed as an entrypoint to the bundler, it is converted to a `.js` module that `export default`s the parsed object.
+If you pass a `.json` file as an entrypoint to the bundler, Bun converts it to a `.js` module that `export default`s the parsed object.
 
 <CodeGroup>
 
@@ -114,7 +114,7 @@ import config from "./config.jsonc";
 console.log(config);
 ```
 
-During bundling, the parsed JSONC is inlined into the bundle as a JavaScript object, identical to the `json` loader.
+During bundling, Bun inlines the parsed JSONC into the bundle as a JavaScript object, identical to the `json` loader.
 
 ```js
 var config = {
@@ -142,7 +142,7 @@ config.logLevel; // => "debug"
 // import myCustomTOML from './my.config' with {type: "toml"};
 ```
 
-During bundling, the parsed TOML is inlined into the bundle as a JavaScript object.
+During bundling, Bun inlines the parsed TOML into the bundle as a JavaScript object.
 
 ```js
 var config = {
@@ -152,7 +152,7 @@ var config = {
 config.logLevel;
 ```
 
-If a `.toml` file is passed as an entrypoint, it is converted to a `.js` module that `export default`s the parsed object.
+If you pass a `.toml` file as an entrypoint, Bun converts it to a `.js` module that `export default`s the parsed object.
 
 <CodeGroup>
 
@@ -188,7 +188,7 @@ console.log(config);
 import data from "./data.txt" with { type: "yaml" };
 ```
 
-During bundling, the parsed YAML is inlined into the bundle as a JavaScript object.
+During bundling, Bun inlines the parsed YAML into the bundle as a JavaScript object.
 
 ```js
 var config = {
@@ -198,7 +198,7 @@ var config = {
 };
 ```
 
-If a `.yaml` or `.yml` file is passed as an entrypoint, it is converted to a `.js` module that `export default`s the parsed object.
+If you pass a `.yaml` or `.yml` file as an entrypoint, Bun converts it to a `.js` module that `export default`s the parsed object.
 
 <CodeGroup>
 
@@ -224,7 +224,13 @@ export default {
 
 **XML loader.** Default for `.xml`.
 
-XML files can be directly imported. Bun parses them with its native XML 1.0 parser into the compact object shape of [`Bun.XML.parse`](/runtime/xml): one key for the root element, `"@name"` keys for attributes, arrays for repeated child elements, `"#text"` for text next to attributes or children, and every value a string.
+XML files can be directly imported. Bun parses them with its native XML 1.0 parser into the compact object shape of [`Bun.XML.parse`](/runtime/xml):
+
+- One key for the root element
+- `"@name"` keys for attributes
+- Arrays for repeated child elements
+- `"#text"` for text next to attributes or children
+- Every value is a string
 
 ```ts
 import doc from "./config.xml";
@@ -234,7 +240,7 @@ console.log(doc.config["@version"]);
 import feed from "./export.rss" with { type: "xml" };
 ```
 
-During bundling, the parsed XML is inlined into the bundle as a JavaScript object.
+During bundling, Bun inlines the parsed XML into the bundle as a JavaScript object.
 
 ```ts
 var doc = {
@@ -245,7 +251,7 @@ var doc = {
 };
 ```
 
-If a `.xml` file is passed as an entrypoint, it is converted to a `.js` module that `export default`s the parsed object.
+If you pass a `.xml` file as an entrypoint, Bun converts it to a `.js` module that `export default`s the parsed object.
 
 <CodeGroup>
 
@@ -275,9 +281,9 @@ export default {
 
 ### `text`
 
-**Text loader.** Default for `.txt`.
+**Text loader.** Default for `.txt` and `.text`.
 
-Text files can be directly imported. The file is read and returned as a string.
+Text files can be directly imported. Bun reads the file and returns it as a string.
 
 ```js
 import contents from "./file.txt";
@@ -288,14 +294,14 @@ console.log(contents); // => "Hello, world!"
 import html from "./index.html" with { type: "text" };
 ```
 
-When referenced during a build, the contents are inlined into the bundle as a string.
+When the file is referenced during a build, Bun inlines the contents into the bundle as a string.
 
 ```js
 var contents = `Hello, world!`;
 console.log(contents);
 ```
 
-If a `.txt` file is passed as an entrypoint, it is converted to a `.js` module that `export default`s the file contents.
+If you pass a `.txt` file as an entrypoint, Bun converts it to a `.js` module that `export default`s the file contents.
 
 <CodeGroup>
 
@@ -322,7 +328,7 @@ import addon from "./addon.node";
 console.log(addon);
 ```
 
-<Note>In the bundler, `.node` files are handled with the `file` loader.</Note>
+<Note>In the bundler, Bun handles `.node` files with the `file` loader.</Note>
 
 ---
 
@@ -338,7 +344,7 @@ import db from "./my.db" with { type: "sqlite" };
 
 <Warning>The `sqlite` loader is only supported when the target is `bun`.</Warning>
 
-By default, the database file on disk is not bundled into the final output; it stays external to the bundle, so you can use a database loaded elsewhere.
+By default, Bun does not bundle the database file on disk into the final output. The database file stays external to the bundle, so you can use a database loaded elsewhere.
 
 You can change this behavior with the `"embed"` attribute:
 
@@ -348,7 +354,7 @@ import db from "./my.db" with { type: "sqlite", embed: "true" };
 ```
 
 <Info>
-When using a standalone executable, the database is embedded into the single-file executable.
+With a standalone executable, Bun embeds the database into the single-file executable.
 
 Otherwise, the database to embed is copied into the `outdir` with a hashed filename.
 
@@ -441,7 +447,7 @@ CSS files can be directly imported. The bundler parses and bundles them, handlin
 import "./styles.css";
 ```
 
-During bundling, all imported CSS files are bundled together into a single `.css` file in the output directory.
+During bundling, Bun combines all imported CSS files into a single `.css` file in the output directory.
 
 ```css
 .my-class {
@@ -482,7 +488,7 @@ bun run logo.ts
 # Output: /path/to/project/logo.svg
 ```
 
-In the bundler, the file is copied into `outdir` as-is, and the import resolves to a relative path pointing to the copied file.
+In the bundler, Bun copies the file into `outdir` as-is, and the import resolves to a relative path pointing to the copied file.
 
 ```js
 // Output
@@ -498,4 +504,4 @@ If `publicPath` is set, the import uses its value as a prefix to construct an ab
 | `"/assets/"`                 | `/assets/logo.svg`                 |
 | `"https://cdn.example.com/"` | `https://cdn.example.com/logo.svg` |
 
-<Note>The location and file name of the copied file are determined by the value of `naming.asset`.</Note>
+<Note>The value of `naming.asset` determines the location and file name of the copied file.</Note>

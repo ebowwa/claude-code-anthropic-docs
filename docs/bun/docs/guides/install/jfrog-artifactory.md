@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/install/jfrog-artifactory.md
-Downloaded: 2026-08-14T20:31:00.585Z
+Downloaded: 2026-08-15T20:21:45.872Z
 -->
 
 # Using bun install with Artifactory
@@ -13,11 +13,13 @@ To use it with `bun install`, add a `bunfig.toml` file to your project with the 
 
 ### Configure with bunfig.toml
 
-Replace `MY_SUBDOMAIN` with your JFrog Artifactory subdomain, such as `jarred1234`, and `MY_TOKEN` with your JFrog Artifactory token.
+Replace `MY_SUBDOMAIN` with your JFrog Artifactory subdomain, such as `jarred1234`. Replace `MY_TOKEN` with your base64-encoded `username:password`. Bun sends this value as-is in a `Basic` `Authorization` header. To authenticate with a JFrog access token instead, use `_authToken=` in place of `_auth=`. Bun sends that value as a `Bearer` token.
 
 ```toml bunfig.toml icon="settings"
 [install.registry]
 url = "https://MY_SUBDOMAIN.jfrog.io/artifactory/api/npm/npm/_auth=MY_TOKEN"
+# To authenticate with an access token instead
+# url = "https://MY_SUBDOMAIN.jfrog.io/artifactory/api/npm/npm/_authToken=MY_TOKEN"
 # You can use an environment variable here
 # url = "$NPM_CONFIG_REGISTRY"
 ```

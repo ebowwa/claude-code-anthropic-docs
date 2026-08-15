@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/installation.md
-Downloaded: 2026-08-14T20:31:00.543Z
+Downloaded: 2026-08-15T20:21:45.835Z
 -->
 
 # Installation
@@ -25,7 +25,7 @@ Bun ships as a single, dependency-free executable. Install it with the install s
 
     </CodeGroup>
     <Note>
-      **Linux users:** The `unzip` package is required to install Bun (`sudo apt install unzip`). Kernel version 5.6 or higher is recommended; Bun runs on kernels as old as 3.10 (RHEL 7) with graceful degradation of newer syscalls. Use `uname -r` to check your kernel version.
+      **Linux users:** You need the `unzip` package to install Bun (`sudo apt install unzip`). We recommend kernel version 5.6 or higher. Bun runs on kernels as old as 3.10 (RHEL 7) with graceful degradation of newer syscalls. Use `uname -r` to check your kernel version.
       </Note>
 
   </Tab>
@@ -120,7 +120,7 @@ bun --revision
         </Step>
         
         <Step title="Add the Bun directory to PATH">
-          Add this line to your configuration file:
+          Add these lines to your configuration file:
           ```bash terminal icon="terminal"
           export BUN_INSTALL="$HOME/.bun"
           export PATH="$BUN_INSTALL/bin:$PATH"

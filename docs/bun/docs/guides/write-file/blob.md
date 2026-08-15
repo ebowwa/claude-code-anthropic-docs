@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/write-file/blob.md
-Downloaded: 2026-08-14T20:31:00.591Z
+Downloaded: 2026-08-15T20:21:45.877Z
 -->
 
 # Write a Blob to a file
@@ -9,7 +9,8 @@ Use [`Bun.write()`](/runtime/file-io#writing-files-bun-write) to write a `Blob` 
 
 ```ts
 const path = "/path/to/file.txt";
-await Bun.write(path, "Lorem ipsum");
+const data = new Blob(["Lorem ipsum"]);
+await Bun.write(path, data);
 ```
 
 ---

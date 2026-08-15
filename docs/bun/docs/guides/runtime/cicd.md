@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/runtime/cicd.md
-Downloaded: 2026-08-14T20:31:00.570Z
+Downloaded: 2026-08-15T20:21:45.860Z
 -->
 
 # Install and run Bun in GitHub Actions
@@ -38,7 +38,7 @@ jobs:
       # ...
       - uses: oven-sh/setup-bun@v2
         with: # [!code ++]
-          bun-version: 1.3.3 # or "latest", "canary", <sha> # [!code ++]
+          bun-version: 1.3.3 # or "latest", "canary", "1.3.x" # [!code ++]
 ```
 
 ---

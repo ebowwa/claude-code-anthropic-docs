@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/repl.md
-Downloaded: 2026-08-14T20:31:00.544Z
+Downloaded: 2026-08-15T20:21:45.837Z
 -->
 
 # REPL
@@ -31,8 +31,8 @@ undefined
 
 - **TypeScript & JSX** — Write TypeScript and JSX directly. Bun transpiles everything on the fly.
 - **Top-level `await`** — Await promises directly at the prompt without wrapping in an async function.
-- **Syntax highlighting** — Input is highlighted as you type.
-- **Persistent history** — History is saved to `~/.bun_repl_history` and persists across sessions.
+- **Syntax highlighting** — The REPL highlights input as you type.
+- **Persistent history** — The REPL saves history to `~/.bun_repl_history`. History persists across sessions.
 - **Tab completion** — Press `Tab` to complete property names and REPL commands.
 - **Multi-line input** — Unclosed brackets, braces, and parentheses automatically continue on the next line.
 - **Node.js globals** — `require`, `module`, `__dirname`, and `__filename` are available, resolved relative to your current working directory.
@@ -78,7 +78,7 @@ undefined
 
 ## Importing modules
 
-Just like Bun's runtime, the REPL accepts both `require` and `import`: mix ES modules and CommonJS freely at the prompt. Module resolution uses the same rules as `bun run`, so you can import from `node_modules`, relative paths, or `node:` builtins.
+Like Bun's runtime, the REPL accepts both `require` and `import`: mix ES modules and CommonJS freely at the prompt. Module resolution uses the same rules as `bun run`, so you can import from `node_modules`, relative paths, or `node:` builtins.
 
 ```txt
 > import { z } from "zod"
@@ -89,7 +89,7 @@ undefined
 '/tmp/file.txt'
 ```
 
-Declarations persist for the rest of the session, and `const`/`let` can be redeclared across evaluations (unlike in regular scripts), so you can re-run `import` and `require` statements while iterating.
+Declarations persist for the rest of the session. Unlike in regular scripts, you can redeclare `const`/`let` across evaluations, so you can re-run `import` and `require` statements while iterating.
 
 ---
 
@@ -152,7 +152,7 @@ The REPL supports Emacs-style line editing.
 
 ## History
 
-REPL history is automatically saved to `~/.bun_repl_history` (up to 1000 entries) and loaded at the start of each session. Use `Up`/`Down` to navigate.
+The REPL automatically saves history to `~/.bun_repl_history` (up to 1000 entries) and loads it at the start of each session. Use `Up`/`Down` to navigate.
 
 To export your history to a different file, use `.save`:
 
@@ -177,4 +177,4 @@ bun repl -p "{ a: 1, b: 2 }"
 # { a: 1, b: 2 }
 ```
 
-Both flags use the same transforms as the interactive REPL, so a bare object literal like `{ a: 1 }` is treated as an object expression instead of a block statement. The process exits after the event loop drains (pending timers and I/O complete first). On error, the process exits with code `1`.
+Both flags use the same transforms as the interactive REPL, so Bun treats a bare object literal like `{ a: 1 }` as an object expression instead of a block statement. The process exits after the event loop drains (pending timers and I/O complete first). On error, the process exits with code `1`.

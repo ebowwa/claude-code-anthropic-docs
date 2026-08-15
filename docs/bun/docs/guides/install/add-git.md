@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/install/add-git.md
-Downloaded: 2026-08-14T20:31:00.584Z
+Downloaded: 2026-08-15T20:21:45.871Z
 -->
 
 # Add a Git dependency
@@ -25,13 +25,13 @@ This adds the following line to your `package.json`:
 
 ---
 
-Bun supports a number of protocols for specifying Git dependencies.
+Bun supports several protocols for specifying Git dependencies.
 
 ```sh terminal icon="terminal"
 bun add git+https://github.com/lodash/lodash.git
 bun add git+ssh://github.com/lodash/lodash.git#4.17.21
 bun add git@github.com:lodash/lodash.git
-bun add github:colinhacks/zod
+bun add github:lodash/lodash#4.17.21
 ```
 
 When possible, Bun downloads GitHub dependencies as HTTP tarballs, which is faster.

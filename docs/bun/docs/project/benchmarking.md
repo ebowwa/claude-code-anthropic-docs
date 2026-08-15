@@ -1,13 +1,13 @@
 <!--
 Source: https://bun.com/docs/project/benchmarking.md
-Downloaded: 2026-08-14T20:31:00.556Z
+Downloaded: 2026-08-15T20:21:45.848Z
 -->
 
 # Benchmarking
 
 > How to benchmark Bun
 
-Bun is designed for speed. Hot paths are extensively profiled and benchmarked. The source code for all of Bun's public benchmarks is in the [`/bench`](https://github.com/oven-sh/bun/tree/main/bench) directory of the Bun repo.
+Bun is designed for speed. We profile and benchmark hot paths extensively. The source code for all of Bun's public benchmarks is in the [`/bench`](https://github.com/oven-sh/bun/tree/main/bench) directory of the Bun repo.
 
 ## Measuring time
 
@@ -273,11 +273,11 @@ bun --heap-prof script.js
 
 `--heap-prof` writes a full V8-format heap snapshot on exit, using Node.js's
 diagnostic filename format
-(`Heap.<yyyymmdd>.<hhmmss>.<pid>.<tid>.<seq>.heapprofile`). The content is the
-same as `v8.writeHeapSnapshot()` / `Bun.generateHeapSnapshot("v8")`: load it in
-Chrome DevTools via Memory tab → Load (pick "All Files" or rename to
-`.heapsnapshot` — the extension follows Node's `--heap-prof` filename contract,
-which the harness and tooling key on).
+(`Heap.<yyyymmdd>.<hhmmss>.<pid>.<tid>.<seq>.heapprofile`). The extension
+follows Node's `--heap-prof` filename contract. The content is the same as
+`v8.writeHeapSnapshot()` /
+`Bun.generateHeapSnapshot("v8")`. Load it in Chrome DevTools via
+Memory tab → Load. Pick "All Files", or rename the file to `.heapsnapshot`.
 
 ### Markdown output
 
@@ -287,7 +287,7 @@ Use `--heap-prof-md` to generate a markdown heap profile for CLI analysis:
 bun --heap-prof-md script.js
 ```
 
-<Note>If both `--heap-prof` and `--heap-prof-md` are specified, the markdown format is used.</Note>
+<Note>If you specify both `--heap-prof` and `--heap-prof-md`, Bun uses the markdown format.</Note>
 
 ### Options
 

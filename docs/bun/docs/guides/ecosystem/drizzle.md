@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/ecosystem/drizzle.md
-Downloaded: 2026-08-14T20:31:00.574Z
+Downloaded: 2026-08-15T20:21:45.863Z
 -->
 
 # Use Drizzle ORM with Bun
@@ -26,7 +26,7 @@ import { drizzle } from "drizzle-orm/bun-sqlite";
 import { Database } from "bun:sqlite";
 
 const sqlite = new Database("sqlite.db");
-export const db = drizzle(sqlite);
+export const db = drizzle({ client: sqlite });
 ```
 
 ---
@@ -38,7 +38,7 @@ import { db } from "./db";
 import { sql } from "drizzle-orm";
 
 const query = sql`select "hello world" as text`;
-const result = db.get<{ text: string }>(query);
+const result = db.all<{ text: string }>(query);
 console.log(result);
 ```
 
@@ -51,9 +51,11 @@ bun run index.ts
 ```
 
 ```txt
-{
-  text: "hello world"
-}
+[
+  {
+    text: "hello world",
+  }
+]
 ```
 
 ---
@@ -101,7 +103,7 @@ import { drizzle } from "drizzle-orm/bun-sqlite";
 import { Database } from "bun:sqlite";
 
 const sqlite = new Database("sqlite.db");
-const db = drizzle(sqlite);
+const db = drizzle({ client: sqlite });
 migrate(db, { migrationsFolder: "./drizzle" });
 ```
 
@@ -176,15 +178,15 @@ bun run index.ts
   {
     id: 1,
     title: "The Matrix",
-    releaseYear: 1999
+    releaseYear: 1999,
   }, {
     id: 2,
     title: "The Matrix Reloaded",
-    releaseYear: 2003
+    releaseYear: 2003,
   }, {
     id: 3,
     title: "The Matrix Revolutions",
-    releaseYear: 2003
+    releaseYear: 2003,
   }
 ]
 ```

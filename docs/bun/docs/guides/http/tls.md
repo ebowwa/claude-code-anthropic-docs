@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/http/tls.md
-Downloaded: 2026-08-14T20:31:00.579Z
+Downloaded: 2026-08-15T20:21:45.867Z
 -->
 
 # Configure TLS on an HTTP server
@@ -19,7 +19,7 @@ const server = Bun.serve({
 
 ---
 
-By default, Bun trusts the Mozilla-curated list of well-known root CAs. To override this list, pass an array of certificates as `ca`.
+By default, Bun trusts the Mozilla-curated list of well-known root CAs. To override this list, pass an array of certificates as `ca`. On a server, Bun uses this list to verify _client_ certificates, so also set `requestCert: true`.
 
 ```ts server.ts icon="/icons/typescript.svg"
 const server = Bun.serve({
@@ -28,6 +28,7 @@ const server = Bun.serve({
     cert: Bun.file("cert.pem"),
     key: Bun.file("key.pem"),
     ca: [Bun.file("ca1.pem"), Bun.file("ca2.pem")],
+    requestCert: true,
   },
 });
 ```

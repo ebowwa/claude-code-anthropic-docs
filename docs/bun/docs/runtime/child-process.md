@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/child-process.md
-Downloaded: 2026-08-14T20:31:00.551Z
+Downloaded: 2026-08-15T20:21:45.842Z
 -->
 
 # Spawn
@@ -99,7 +99,7 @@ console.log(output); // "Hello from ReadableStream!"
 
 ## Output streams
 
-Read the subprocess's output from the `stdout` and `stderr` properties. By default these are instances of `ReadableStream`.
+Read the subprocess's output from the `stdout` and `stderr` properties. By default `stdout` is an instance of `ReadableStream`; `stderr` is inherited from the parent process, so `proc.stderr` is `undefined` unless you pass `stderr: "pipe"`.
 
 ```ts
 const proc = Bun.spawn(["bun", "--version"]);
@@ -174,7 +174,7 @@ console.log(`CPU time (system): ${usage.cpuTime.system} µs`);
 
 ## Resource limits with cgroups (Linux)
 
-On Linux, pass `cgroup` to start the subprocess inside a [control group](https://docs.kernel.org/admin-guide/cgroup-v2.html). The child joins the cgroup before it begins executing, so limits configured on it — memory, pids, CPU — apply from the first instruction and to every process the child spawns in turn. When a memory limit is exceeded the kernel OOM-kills a process _inside_ the cgroup instead of reclaiming memory from the parent.
+On Linux, pass `cgroup` to start the subprocess inside a [control group](https://docs.kernel.org/admin-guide/cgroup-v2.html). The child joins the cgroup before it begins executing, so limits configured on the cgroup (memory, pids, CPU) apply from the first instruction. They also apply to every process the child spawns in turn. When a memory limit is exceeded the kernel OOM-kills a process _inside_ the cgroup instead of reclaiming memory from the parent.
 
 A cgroup is a directory under `/sys/fs/cgroup`; create and configure it with ordinary file operations, then pass its path (or an open directory file descriptor):
 
@@ -191,7 +191,7 @@ const proc = Bun.spawn({
 });
 ```
 
-The same directory can be passed to any number of spawns; the limit applies to their combined usage. Both cgroup v1 and v2 hierarchies are supported. Creating cgroups typically requires root or a delegated subtree. On other platforms the option is ignored; on Linux, the spawn fails if the cgroup cannot be joined.
+You can pass the same directory to any number of spawns; the limit applies to their combined usage. Bun supports both cgroup v1 and v2 hierarchies. Creating cgroups typically requires root or a delegated subtree. Bun ignores the option on other platforms; on Linux, the spawn fails if the child cannot join the cgroup.
 
 ## Using AbortSignal
 
@@ -235,7 +235,7 @@ const proc = Bun.spawn({
 });
 ```
 
-The `killSignal` option also controls which signal is sent when an AbortSignal is aborted.
+The `killSignal` option also controls which signal Bun sends when an AbortSignal is aborted.
 
 ## Using maxBuffer
 
@@ -250,9 +250,10 @@ const result = Bun.spawnSync({
 // process exits
 ```
 
-Bun stops reading as soon as the limit is passed, so the returned output can
-exceed `maxBuffer` only by the single read that passed it, never by whatever
-the process manages to write before the kill lands. This matches Node.js.
+Bun stops reading as soon as the limit is passed. The returned output can
+therefore exceed `maxBuffer` only by the single read that passed it, never by
+whatever the process manages to write before the kill lands. This matches
+Node.js.
 
 ## Inter-process communication (IPC)
 
@@ -283,7 +284,7 @@ const childProc = Bun.spawn(["bun", "child.ts"], {
 childProc.send("I am your father"); // The parent can send messages to the child as well
 ```
 
-The child process sends messages to its parent with `process.send()` and receives them with `process.on("message")`. This is the same API used for `child_process.fork()` in Node.js.
+The child process sends messages to its parent with `process.send()` and receives them with `process.on("message")`. Node.js uses the same API for `child_process.fork()`.
 
 ```ts child.ts
 process.send("Hello from child as string");
@@ -305,8 +306,8 @@ process.send({ message: "Hello from child as object" });
 
 The `serialization` option controls the underlying communication format between the two processes:
 
-- `advanced`: (default) Messages are serialized using the JSC `serialize` API, which supports cloning [everything `structuredClone` supports](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm). This does not support transferring ownership of objects.
-- `json`: Messages are serialized using `JSON.stringify` and `JSON.parse`, which does not support as many object types as `advanced` does.
+- `advanced`: (default) Bun serializes messages using the JSC `serialize` API, which supports cloning [everything `structuredClone` supports](https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm). This does not support transferring ownership of objects.
+- `json`: Bun serializes messages using `JSON.stringify` and `JSON.parse`, which does not support as many object types as `advanced` does.
 
 To disconnect the IPC channel from the parent process, call:
 
@@ -370,7 +371,7 @@ await proc.exited;
 proc.terminal.close();
 ```
 
-When the `terminal` option is provided:
+When you pass the `terminal` option:
 
 - The subprocess sees `process.stdout.isTTY` as `true`
 - `stdin`, `stdout`, and `stderr` are all connected to the terminal
@@ -436,21 +437,21 @@ await proc2.exited;
 
 When passing an existing `Terminal` object:
 
-- The terminal can be reused across multiple spawns
+- You can reuse the terminal across multiple spawns
 - You control when to close the terminal
 - The `exit` callback fires when you call `terminal.close()`, not when each subprocess exits
 - Use `proc.exited` to detect individual subprocess exits
 
 ### Platform differences
 
-`Bun.Terminal` uses `openpty()` on Linux and macOS, and ConPTY (`CreatePseudoConsole`) on Windows. The core behavior — child sees a TTY, `write()` reaches the child's stdin, child output reaches the `data` callback, `resize()` updates the child's view — is the same on every platform. A few details differ:
+`Bun.Terminal` uses `openpty()` on Linux and macOS, and ConPTY (`CreatePseudoConsole`) on Windows. The core behavior is the same on every platform: the child sees a TTY, `write()` reaches the child's stdin, child output reaches the `data` callback, and `resize()` updates the child's view. A few details differ:
 
 - **No termios on Windows.** `inputFlags`, `outputFlags`, `localFlags`, and `controlFlags` always read as `0` and setting them is a no-op. `setRawMode()` records the flag but has no effect on the child; the child controls its own console mode.
-- **No echo without a child process on Windows.** On POSIX, the kernel line discipline echoes `write()` input back to the `data` callback even with no process attached. ConPTY has no line discipline; input is buffered for the next reader. If you need echo, spawn a process that echoes.
-- **ConPTY re-encodes output.** ConPTY renders the child's output to a virtual screen and emits whatever VT sequences describe the result, so the `data` callback receives semantically equivalent — but not byte-identical — escape sequences. Colors and text are preserved; cursor-positioning and reset sequences may be reordered or coalesced. ConPTY also emits a short VT init sequence (`\x1b[?9001h\x1b[?1004h…`) before any child output.
+- **No echo without a child process on Windows.** On POSIX, the kernel line discipline echoes `write()` input back to the `data` callback even with no process attached. ConPTY has no line discipline; it buffers input for the next reader. If you need echo, spawn a process that echoes.
+- **ConPTY re-encodes output.** ConPTY renders the child's output to a virtual screen and emits whatever VT sequences describe the result. The `data` callback therefore receives semantically equivalent, but not byte-identical, escape sequences. ConPTY preserves colors and text; it may reorder or coalesce cursor-positioning and reset sequences. ConPTY also emits a short VT init sequence (`\x1b[?9001h\x1b[?1004h…`) before any child output.
 - **Input `\r` is not translated to `\n` on Windows.** POSIX `ICRNL` maps carriage return to newline on input; ConPTY passes `\r` through unchanged.
-- **`process.on('SIGWINCH')` in the child does not fire under ConPTY** unless the child is reading stdin in raw mode. `process.stdout.columns`/`rows` do update after `resize()`. This is a libuv limitation that affects any libuv-based child (Node.js included).
-- On Windows before 11 24H2 (build 26100), `terminal.close()` may not terminate a still-running child promptly because [`ClosePseudoConsole`](https://learn.microsoft.com/en-us/windows/console/closepseudoconsole) blocks until conhost has flushed its output through the pipe on those versions. Kill the attached process first if you need to tear down with a running child.
+- **`process.on('SIGWINCH')` in the child does not fire under ConPTY** unless the child is reading stdin in raw mode. `process.stdout.columns`/`rows` do update after `resize()`. The missing signal is a libuv limitation that affects any libuv-based child (Node.js included).
+- On Windows before 11 24H2 (build 26100), `terminal.close()` may not terminate a still-running child promptly. The delay comes from [`ClosePseudoConsole`](https://learn.microsoft.com/en-us/windows/console/closepseudoconsole), which blocks on those versions until conhost has flushed its output through the pipe. Kill the attached process first if you need to tear down with a running child.
 
 ---
 
@@ -458,7 +459,7 @@ When passing an existing `Terminal` object:
 
 `Bun.spawnSync` is the blocking equivalent of `Bun.spawn`. It supports the same inputs and parameters and returns a `SyncSubprocess` object, which differs from `Subprocess` in a few ways.
 
-1. It contains a `success` property that indicates whether the process exited with a zero exit code.
+1. The returned object contains a `success` property that indicates whether the process exited with a zero exit code.
 2. The `stdout` and `stderr` properties are instances of `Buffer` instead of `ReadableStream`.
 3. There is no `stdin` property. Use `Bun.spawn` to incrementally write to the subprocess's input stream.
 
@@ -545,7 +546,8 @@ namespace SpawnOptions {
     timeout?: number;
     killSignal?: string | number;
     maxBuffer?: number;
-    terminal?: TerminalOptions; // PTY (POSIX) / ConPTY (Windows) support
+    cgroup?: string | number; // Linux only; cgroup directory path or open directory fd
+    terminal?: TerminalOptions | Terminal; // PTY (POSIX) / ConPTY (Windows) support
   }
 
   type Readable =
@@ -617,6 +619,10 @@ interface TerminalOptions {
 
 interface Terminal extends AsyncDisposable {
   readonly closed: boolean;
+  inputFlags: number; // termios c_iflag
+  outputFlags: number; // termios c_oflag
+  localFlags: number; // termios c_lflag
+  controlFlags: number; // termios c_cflag
   write(data: string | BufferSource): number;
   resize(cols: number, rows: number): void;
   setRawMode(enabled: boolean): void;

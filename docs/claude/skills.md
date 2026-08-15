@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/skills.md
-Downloaded: 2026-08-14T20:31:08.319Z
+Downloaded: 2026-08-15T20:21:56.888Z
 -->
 
 > ## Documentation Index
@@ -667,7 +667,7 @@ With the default `bash` shell, append `|| true` to any other command you expect 
 
 Injected commands never prompt for permission. When a command's permission check returns anything other than allow, Claude Code aborts the invocation. This includes a rule that would normally ask you. The abort shows `Shell command permission check failed for pattern "..."`.
 
-To keep a command from aborting at the default permission prompt, pre-approve it with [`allowed-tools`](#pre-approve-tools-for-a-skill). A matching ask or deny rule still aborts the invocation regardless of `allowed-tools`. See [Manage permissions](/docs/en/permissions#manage-permissions).
+To keep an unmatched command from aborting here, pre-approve it with [`allowed-tools`](#pre-approve-tools-for-a-skill). A matching ask or deny rule still aborts the invocation regardless of `allowed-tools`. See [Manage permissions](/docs/en/permissions#manage-permissions).
 
 ### Run skills in a subagent
 

@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/test/reporters.md
-Downloaded: 2026-08-14T20:31:00.568Z
+Downloaded: 2026-08-15T20:21:45.858Z
 -->
 
 # Test Reporters
@@ -25,7 +25,7 @@ test/package-json-lint.test.ts:
  4 pass
  0 fail
  4 expect() calls
-Ran 4 tests in 1.44ms
+Ran 4 tests across 1 file. [1.44ms]
 ```
 
 When a terminal doesn't support colors, the output avoids non-ASCII characters:
@@ -40,7 +40,7 @@ test/package-json-lint.test.ts:
  4 pass
  0 fail
  4 expect() calls
-Ran 4 tests across 1 files. [0.66ms]
+Ran 4 tests across 1 file. [0.66ms]
 ```
 
 ### Dots Reporter
@@ -54,7 +54,7 @@ bun test --reporter=dots
 
 ### JUnit XML Reporter
 
-For CI/CD environments, Bun can generate JUnit XML reports, a widely-adopted test result format that many CI/CD systems can parse, including GitLab and Jenkins.
+For CI/CD environments, Bun can generate JUnit XML reports. JUnit XML is a widely-adopted test result format that many CI/CD systems can parse, including GitLab and Jenkins.
 
 #### Using the JUnit Reporter
 

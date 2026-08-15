@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/auto-install.md
-Downloaded: 2026-08-14T20:31:00.546Z
+Downloaded: 2026-08-15T20:21:45.838Z
 -->
 
 # Auto-install
@@ -9,7 +9,7 @@ Downloaded: 2026-08-14T20:31:00.546Z
 
 If Bun finds no `node_modules` directory in the working directory or higher, it abandons Node.js-style module resolution in favor of the **Bun module resolution algorithm**.
 
-Under Bun-style module resolution, Bun auto-installs every imported package on the fly into a [global module cache](/pm/global-cache) during execution (the same cache used by [`bun install`](/pm/cli/install)).
+Under Bun-style module resolution, Bun auto-installs every imported package on the fly into a [global module cache](/pm/global-cache) during execution. [`bun install`](/pm/cli/install) uses the same cache.
 
 ```ts index.ts icon="/icons/typescript.svg"
 import { foo } from "foo"; // install `latest` version
@@ -43,7 +43,7 @@ Once Bun determines a version or version range, it:
 
 ## Installation
 
-Bun installs and caches packages into `<cache>/<pkg>@<version>`, so multiple versions of the same package can be cached at once. It also creates a symlink under `<cache>/<pkg>/<version>` to speed up looking up all cached versions of a package.
+Bun installs and caches packages into `<cache>/<pkg>@<version>`, so Bun can cache multiple versions of the same package at once. It also creates a symlink under `<cache>/<pkg>/<version>` to speed up looking up all cached versions of a package.
 
 ---
 
@@ -85,7 +85,7 @@ import { z } from "zod@^3.20.0"; // semver range
 
     </Accordion>
 
-    <Accordion title="How is this different from Yarn Plug'N'Play does?">
+    <Accordion title="How is this different from what Yarn Plug'N'Play does?">
     With Yarn, you must run `yarn install` before you run a script. By contrast, Bun resolves dependencies on the fly when you run a file; there's no need to run any `install` command ahead of time.
 
     Yarn Plug'N'Play also uses zip files to store dependencies. This makes dependency loading [slower at runtime](https://twitter.com/jarredsumner/status/1458207919636287490), as random access reads on zip files tend to be slower than the equivalent disk lookup.

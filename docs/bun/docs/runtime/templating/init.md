@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/templating/init.md
-Downloaded: 2026-08-14T20:31:00.544Z
+Downloaded: 2026-08-15T20:21:45.836Z
 -->
 
 # bun init
@@ -48,8 +48,8 @@ It creates:
 
 AI Agent rules (disable with `$BUN_AGENT_RULE_DISABLED=1`):
 
-- a `CLAUDE.md` file when Claude CLI is detected (disable with `CLAUDE_CODE_AGENT_RULE_DISABLED` env var)
-- a `.cursor/rules/*.mdc` file when Cursor is detected, which tells [Cursor AI](https://cursor.sh) to use Bun instead of Node.js and npm
+- a `CLAUDE.md` file when `bun init` detects Claude CLI (disable with `CLAUDE_CODE_AGENT_RULE_DISABLED` env var)
+- a `.cursor/rules/*.mdc` file when `bun init` detects Cursor (disable with `CURSOR_AGENT_RULE_DISABLED` env var); the file tells [Cursor AI](https://cursor.sh) to use Bun instead of Node.js and npm
 
 Pass `-y` or `--yes` to accept the defaults without prompting.
 
@@ -91,7 +91,9 @@ bun init <folder?>
   </ul>{" "}
   Examples:{" "}
   <pre>
-    <code>bun init --react bun init --react=tailwind bun init --react=shadcn</code>
+    <code>
+      bun init --react{"\n"}bun init --react=tailwind{"\n"}bun init --react=shadcn
+    </code>
   </pre>{" "}
 </ParamField>
 

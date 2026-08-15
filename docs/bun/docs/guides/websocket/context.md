@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/websocket/context.md
-Downloaded: 2026-08-14T20:31:00.580Z
+Downloaded: 2026-08-15T20:21:45.868Z
 -->
 
 # Set per-socket contextual data on a WebSocket
@@ -30,7 +30,7 @@ Bun.serve({
     async message(ws, message) {
       // the contextual data is available as the `data` property
       // on the WebSocket instance
-      console.log(`Received ${message} from ${ws.data.socketId}}`);
+      console.log(`Received ${message} from ${ws.data.socketId}`);
     },
   },
 });

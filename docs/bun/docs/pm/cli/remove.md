@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/pm/cli/remove.md
-Downloaded: 2026-08-14T20:31:00.558Z
+Downloaded: 2026-08-15T20:21:45.849Z
 -->
 
 # bun remove
@@ -9,8 +9,23 @@ Downloaded: 2026-08-14T20:31:00.558Z
 
 ## Basic Usage
 
+<Note>**Alias** — `bun rm`, `bun uninstall`, `bun r`</Note>
+
 ```bash terminal icon="terminal"
 bun remove ts-node
+```
+
+Bun removes the package from every dependency group in `package.json` that lists it and updates `bun.lock`. Once nothing else depends on the package, Bun deletes it from `node_modules`.
+
+## `--filter`
+
+<Note>**Alias** — `-F`</Note>
+
+In a monorepo, remove the package from the matching workspace(s) instead of the current directory's package, using the same patterns as [`bun add --filter`](/pm/cli/add#--filter). Use `--filter '*'` to remove it from every workspace package. Workspaces that don't list the package are left untouched.
+
+```bash terminal icon="terminal"
+bun remove zod --filter api
+bun remove zod --filter '*'
 ```
 
 ---
@@ -45,6 +60,10 @@ bun remove <package>
 
 <ParamField path="--trust" type="boolean">
   Add to <code>trustedDependencies</code> in the project's <code>package.json</code> and install the package(s)
+</ParamField>
+
+<ParamField path="--filter" type="string">
+  Remove the package(s) from the matching workspaces instead of the current package. Alias: <code>-F</code>
 </ParamField>
 
 ### Lockfile Behavior
@@ -92,7 +111,7 @@ bun remove <package>
 ### Execution Control & Validation
 
 <ParamField path="--dry-run" type="boolean">
-  Don't install anything
+  Perform a dry run without making changes
 </ParamField>
 
 <ParamField path="--force" type="boolean">
@@ -134,7 +153,7 @@ bun remove <package>
 ### Script Execution
 
 <ParamField path="--ignore-scripts" type="boolean">
-  Skip lifecycle scripts in the project's <code>package.json</code> (dependency scripts are never run)
+  Skip lifecycle scripts for all packages, including the project's <code>package.json</code> and trusted dependencies
 </ParamField>
 
 <ParamField path="--concurrent-scripts" type="number">
@@ -153,9 +172,9 @@ bun remove <package>
 
 ### Advanced & Performance
 
-<ParamField path="--backend" type="string" default="clonefile">
-  Platform-specific optimizations for installing dependencies. Possible values: <code>clonefile</code> (default),{" "}
-  <code>hardlink</code>, <code>symlink</code>, <code>copyfile</code>
+<ParamField path="--backend" type="string">
+  Platform-specific optimizations for installing dependencies. Possible values: <code>clonefile</code> (default on
+  macOS), <code>hardlink</code> (default on Linux and Windows), <code>symlink</code>, <code>copyfile</code>
 </ParamField>
 
 <ParamField path="--network-concurrency" type="number" default="48">

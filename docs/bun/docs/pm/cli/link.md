@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/pm/cli/link.md
-Downloaded: 2026-08-14T20:31:00.560Z
+Downloaded: 2026-08-15T20:21:45.852Z
 -->
 
 # bun link
@@ -26,7 +26,7 @@ Or add it in dependencies in your package.json file:
   "cool-pkg": "link:cool-pkg"
 ```
 
-This package can now be "linked" into other projects using `bun link cool-pkg`, which creates a symlink in the target project's `node_modules` directory pointing to the local directory.
+You can now "link" this package into other projects using `bun link cool-pkg`. This command creates a symlink in the target project's `node_modules` directory pointing to the local directory.
 
 ```bash terminal icon="terminal"
 cd /path/to/my-app
@@ -105,7 +105,7 @@ bun link <packages>
   Don't update <code>package.json</code> or save a lockfile
 </ParamField>
 
-<ParamField path="--save" type="boolean" default="true">
+<ParamField path="--save" type="boolean">
   Save to <code>package.json</code>
 </ParamField>
 
@@ -123,7 +123,7 @@ bun link <packages>
   Skip verifying integrity of newly downloaded packages
 </ParamField>
 
-<ParamField path="--backend" type="string" default="clonefile">
+<ParamField path="--backend" type="string">
   Platform-specific optimizations for installing dependencies. One of <code>clonefile</code>, <code>hardlink</code>,{" "}
   <code>symlink</code>, or <code>copyfile</code>
 </ParamField>
@@ -133,11 +133,11 @@ bun link <packages>
 </ParamField>
 
 <ParamField path="--dry-run" type="boolean">
-  Don't install anything
+  Perform a dry run without making changes
 </ParamField>
 
 <ParamField path="--ignore-scripts" type="boolean">
-  Skip lifecycle scripts in the project's <code>package.json</code> (dependency scripts are never run)
+  Skip lifecycle scripts for all packages, including the project's <code>package.json</code> and trusted dependencies
 </ParamField>
 
 ### Network &amp; Registry
@@ -182,7 +182,7 @@ bun link <packages>
 </ParamField>
 
 <ParamField path="--quiet" type="boolean">
-  Only show tarball name when packing
+  Disable the progress bar
 </ParamField>
 
 <ParamField path="--verbose" type="boolean">

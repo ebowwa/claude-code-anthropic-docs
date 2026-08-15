@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/test/snapshot.md
-Downloaded: 2026-08-14T20:31:00.587Z
+Downloaded: 2026-08-15T20:21:45.873Z
 -->
 
 # Use snapshot testing in `bun test`
@@ -31,7 +31,7 @@ test/snap.test.ts:
  0 fail
  snapshots: +1 added
  1 expect() calls
-Ran 1 tests across 1 files. [82.00ms]
+Ran 1 test across 1 file. [82.00ms]
 ```
 
 ---
@@ -47,7 +47,7 @@ test
 
 ---
 
-The `snap.test.ts.snap` file is a JavaScript file that exports a serialized version of the value passed into `expect()`. The `{foo: "bar"}` object has been serialized to JSON.
+The `snap.test.ts.snap` file is a JavaScript file that exports a serialized version of the value passed into `expect()`. Bun pretty-prints the `{foo: "bar"}` object in Jest's snapshot format, which is not strict JSON (note the trailing comma).
 
 ```js snap.test.ts.snap icon="file-code"
 // Bun Snapshot v1, https://bun.sh/docs/test/snapshots
@@ -75,7 +75,7 @@ test/snap.test.ts:
  1 pass
  0 fail
  1 snapshots, 1 expect() calls
-Ran 1 tests across 1 files. [101.00ms]
+Ran 1 test across 1 file. [101.00ms]
 ```
 
 ---
@@ -95,7 +95,7 @@ test/snap.test.ts:
  0 fail
  snapshots: +1 added  # the snapshot was regenerated
  1 expect() calls
-Ran 1 tests across 1 files. [102.00ms]
+Ran 1 test across 1 file. [102.00ms]
 ```
 
 ---

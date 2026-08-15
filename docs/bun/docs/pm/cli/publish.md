@@ -1,13 +1,13 @@
 <!--
 Source: https://bun.com/docs/pm/cli/publish.md
-Downloaded: 2026-08-14T20:31:00.559Z
+Downloaded: 2026-08-15T20:21:45.850Z
 -->
 
 # bun publish
 
 > Use `bun publish` to publish a package to the npm registry
 
-`bun publish` packs your package into a tarball, strips catalog and workspace protocols from the `package.json` (resolving versions if necessary), and publishes to the registry specified in your configuration files. Both `bunfig.toml` and `.npmrc` files are supported.
+`bun publish` packs your package into a tarball and strips catalog and workspace protocols from the `package.json`, resolving versions if necessary. It then publishes to the registry specified in your configuration files. Both `bunfig.toml` and `.npmrc` files are supported.
 
 ```sh terminal icon="terminal"
 ## Publishing the package from the current working directory
@@ -43,8 +43,8 @@ bun publish ./package.tgz
 ```
 
 <Note>
-  `bun publish` does not run lifecycle scripts (`prepublishOnly/prepack/prepare/postpack/publish/postpublish`) if a
-  tarball path is provided. Scripts run only when `bun publish` packs the package itself.
+  `bun publish` does not run lifecycle scripts (`prepublishOnly/prepack/prepare/postpack/publish/postpublish`) if you
+  provide a tarball path. Scripts run only when `bun publish` packs the package itself.
 </Note>
 
 ### `--access`
@@ -55,7 +55,7 @@ bun publish ./package.tgz
 bun publish --access public
 ```
 
-`--access` can also be set in the `publishConfig` field of your `package.json`.
+You can also set `--access` in the `publishConfig` field of your `package.json`.
 
 ```json package.json icon="file-json"
 {
@@ -73,7 +73,7 @@ Set the tag of the package version being published. By default, the tag is `late
 bun publish --tag alpha
 ```
 
-`--tag` can also be set in the `publishConfig` field of your `package.json`.
+You can also set `--tag` in the `publishConfig` field of your `package.json`.
 
 ```json package.json icon="file-json"
 {
@@ -145,7 +145,7 @@ bun publish dist
 bun publish --access public
 ```
 
-`--access` can also be set in the `publishConfig` field of your `package.json`.
+You can also set `--access` in the `publishConfig` field of your `package.json`.
 
 ```json package.json icon="file-json"
 {
@@ -164,7 +164,7 @@ Set the tag of the package version being published. By default, the tag is `late
 bun publish --tag alpha
 ```
 
-`--tag` can also be set in the `publishConfig` field of your `package.json`.
+You can also set `--tag` in the `publishConfig` field of your `package.json`.
 
 ```json package.json icon="file-json"
 {
@@ -183,6 +183,10 @@ Simulate the publish process without publishing the package, to verify its conte
 bun publish --dry-run
 ```
 
+</ParamField>
+
+<ParamField path="--tolerate-republish" type="boolean">
+  `bun publish` exits with code 0 instead of 1 when the version being published already exists in the registry.
 </ParamField>
 
 <ParamField path="--gzip-level" type="string" default="9">
@@ -224,7 +228,7 @@ bun publish --otp 123456
 #### Custom Registry
 
 <ParamField path="--registry" type="string">
-  Specify registry URL, overriding .npmrc and bunfig.toml
+  Specify registry URL, overriding .npmrc, bunfig.toml and environment variables
 </ParamField>
 
 ```bash
@@ -252,7 +256,7 @@ bun publish --cafile ./ca-cert.pem
 
 </CodeGroup>
 
-### Publishing Options
+### General Options
 
 #### Dependency Management
 
@@ -300,7 +304,8 @@ bun publish --cafile ./ca-cert.pem
 #### Performance
 
 <ParamField path="--backend" type="string">
-  Platform optimizations: `clonefile` (default), `hardlink`, `symlink`, or `copyfile`
+  Platform optimizations: `clonefile` (default on macOS), `hardlink` (default on Linux and Windows), `symlink`, or
+  `copyfile`
 </ParamField>
 
 <ParamField path="--network-concurrency" type="number" default="48">

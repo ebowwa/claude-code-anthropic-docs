@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/pm/bunx.md
-Downloaded: 2026-08-14T20:31:00.558Z
+Downloaded: 2026-08-15T20:21:45.850Z
 -->
 
 # bunx
@@ -46,7 +46,7 @@ Run these executables with `bunx`:
 bunx my-cli
 ```
 
-As with `npx`, `bunx` checks for a locally installed package first, then falls back to auto-installing it from `npm`. Installed packages are stored in Bun's [global cache](/pm/global-cache) for future use.
+As with `npx`, `bunx` checks for a locally installed package first, then falls back to auto-installing it from `npm`. `bunx` stores installed packages in Bun's [global cache](/pm/global-cache) for future use.
 
 ## Arguments and flags
 
@@ -66,7 +66,7 @@ By default, Bun respects shebangs. If an executable is marked with `#!/usr/bin/e
 bunx --bun my-cli
 ```
 
-The `--bun` flag must occur _before_ the executable name. Flags that appear _after_ the name are passed through to the executable.
+The `--bun` flag must occur _before_ the executable name. `bunx` passes flags that appear _after_ the name through to the executable.
 
 ```bash terminal icon="terminal"
 bunx --bun my-cli # good

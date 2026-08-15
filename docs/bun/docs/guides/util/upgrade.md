@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/util/upgrade.md
-Downloaded: 2026-08-14T20:31:00.570Z
+Downloaded: 2026-08-15T20:21:45.861Z
 -->
 
 # Upgrade Bun to the latest version
@@ -11,7 +11,7 @@ Bun upgrades itself with the built-in `bun upgrade` command.
 bun upgrade
 ```
 
-`bun upgrade` downloads and installs the latest stable version of Bun, replacing the currently installed version.
+`bun upgrade` downloads and installs the latest stable version of Bun, replacing the currently installed version. If you're on a canary build, `bun upgrade` installs the latest canary build instead.
 
 <Note>To see the current version of Bun, run `bun --version`.</Note>
 
@@ -34,7 +34,7 @@ bun --revision
 
 ## Upgrade to canary builds
 
-Canary builds are released on every commit to the `main` branch. They're untested, but useful for trying new features or verifying bug fixes before a release.
+Canary builds are published automatically from the `main` branch once a commit's CI tests pass. They're useful for trying new features or verifying bug fixes before a release.
 
 ```bash terminal icon="terminal"
 bun upgrade --canary

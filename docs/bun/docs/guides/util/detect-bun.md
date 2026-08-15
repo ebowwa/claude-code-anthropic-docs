@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/util/detect-bun.md
-Downloaded: 2026-08-14T20:31:00.570Z
+Downloaded: 2026-08-15T20:21:45.861Z
 -->
 
 # Detect when code is executed with Bun
@@ -18,7 +18,9 @@ if (process.versions.bun) {
 Alternatively, check for the `Bun` global, the same way you'd check for `window` to detect a browser.
 
 <Note>
-  In TypeScript, this is a type error unless `@types/bun` is installed. Install it with `bun add -d @types/bun`.
+  In TypeScript, this check is a type error unless `@types/bun` is installed. Install it with `bun add -d @types/bun`.
+  If you're using TypeScript 6.0 or later, you also need `"types": ["bun"]` in your `compilerOptions`. See [TypeScript 6
+  and 7](/typescript-6) for details.
 </Note>
 
 ```ts

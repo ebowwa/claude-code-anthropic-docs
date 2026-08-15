@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/test/happy-dom.md
-Downloaded: 2026-08-14T20:31:00.588Z
+Downloaded: 2026-08-15T20:21:45.874Z
 -->
 
 # Write browser DOM tests with Bun and happy-dom
@@ -27,7 +27,7 @@ GlobalRegistrator.register();
 
 ---
 
-This file needs to run before any of your test files. That's a job for Bun's built-in [_preload_]() option. Create a `bunfig.toml` file in the root of your project (if it doesn't already exist) and add the following lines.
+This file needs to run before any of your test files. That's a job for Bun's built-in [_preload_](/runtime/bunfig#test-preload) option. Create a `bunfig.toml` file in the root of your project (if it doesn't already exist) and add the following lines.
 
 The `./happydom.ts` file should contain the registration code from the previous step.
 

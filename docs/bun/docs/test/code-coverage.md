@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/test/code-coverage.md
-Downloaded: 2026-08-14T20:31:00.567Z
+Downloaded: 2026-08-15T20:21:45.858Z
 -->
 
 # Code coverage
@@ -72,7 +72,7 @@ coverageThreshold = 0.9
 coverageThreshold = { lines = 0.9, functions = 0.9, statements = 0.9 }
 ```
 
-Setting any of these thresholds enables `fail_on_low_coverage`, causing the test run to fail if coverage is below the threshold.
+Setting any of these thresholds causes the test run to fail if coverage is below the threshold.
 
 ## Coverage Reporters
 
@@ -145,7 +145,7 @@ Coverage reports exclude test files by default. To include them:
 coverageSkipTestFiles = false  # default true
 ```
 
-When `coverageSkipTestFiles` is `true` (the default), files matching test patterns (for example `*.test.ts`, `*.spec.js`) are excluded from the coverage report.
+When `coverageSkipTestFiles` is `true` (the default), the coverage report excludes files matching test patterns (for example `*.test.ts`, `*.spec.js`).
 
 ### Ignore Specific Paths and Patterns
 
@@ -165,7 +165,7 @@ coveragePathIgnorePatterns = [
 ]
 ```
 
-The option accepts glob patterns and works like Jest's `collectCoverageFrom` ignore patterns. Files matching any of the patterns are excluded from coverage calculation and reporting in both text and LCOV output.
+The option accepts glob patterns and works like Jest's `collectCoverageFrom` ignore patterns. Bun excludes files matching any of the patterns from coverage calculation and reporting in both text and LCOV output.
 
 #### Common Use Cases
 
@@ -200,7 +200,7 @@ coveragePathIgnorePatterns = [
 
 ## Sourcemaps
 
-Bun transpiles all files by default, generating an internal source map that maps lines of your original source code onto Bun's internal representation. To disable this, set `test.coverageIgnoreSourcemaps` to `true`; you rarely want this outside of advanced use cases.
+Bun transpiles all files by default, generating an internal source map that maps lines of your original source code onto Bun's internal representation. To make coverage reports ignore this source map, set `test.coverageIgnoreSourcemaps` to `true`. You rarely want this outside of advanced use cases.
 
 ```toml title="bunfig.toml" icon="settings"
 [test]
@@ -217,8 +217,8 @@ coverageIgnoreSourcemaps = true  # default false
 By default, coverage reports:
 
 - **Exclude** `node_modules` directories
-- **Exclude** files loaded with non-JS/TS loaders (for example `.css`, `.txt`) unless a custom JS loader is specified
-- **Exclude** test files themselves (can be included with `coverageSkipTestFiles = false`)
+- **Exclude** files loaded with non-JS/TS loaders (for example `.css`, `.txt`) unless you specify a custom JS loader
+- **Exclude** test files themselves (include them with `coverageSkipTestFiles = false`)
 - Can exclude additional files with `coveragePathIgnorePatterns`
 
 ## Advanced Configuration
@@ -285,13 +285,11 @@ test:coverage:
   stage: test
   script:
     - bun install
-    - bun test --coverage --coverage-reporter=lcov
-  coverage: '/Lines\s*:\s*(\d+.\d+)%/'
+    - bun test --coverage --coverage-reporter=text --coverage-reporter=lcov
+  coverage: '/All files\s*\|\s*[\d.]+\s*\|\s*(\d+\.\d+)/'
   artifacts:
-    reports:
-      coverage_report:
-        coverage_format: cobertura
-        path: coverage/lcov.info
+    paths:
+      - coverage/lcov.info
 ```
 
 ## Interpreting Coverage Reports
@@ -318,7 +316,7 @@ All files    |   85.71 |   90.48 |
 
 - **80%+ overall coverage**: Generally considered good
 - **90%+ critical paths**: Important business logic should be well-tested
-- **100% utility functions**: Pure functions and utilities are easy to test completely
+- **100% utility functions**: Pure functions and utilities can be tested completely
 - **Lower coverage for UI components**: Often acceptable as they may require integration tests
 
 ## Best Practices
@@ -365,7 +363,7 @@ bun test --coverage src/critical-module.ts
 
 ### Combine with Other Quality Metrics
 
-Coverage is just one metric. Also consider:
+Coverage is only one metric. Also consider:
 
 - **Code review quality**
 - **Integration test coverage**
@@ -394,7 +392,7 @@ If you see coverage reports that don't match your expectations:
 
 1. Check if source maps are working correctly
 2. Verify file patterns in `coveragePathIgnorePatterns`
-3. Ensure test files are actually importing the code to test
+3. Ensure test files import the code to test
 
 ### Performance Issues with Large Codebases
 
@@ -404,7 +402,6 @@ For large projects, coverage collection can slow down tests:
 [test]
 # Exclude large directories you don't need coverage for
 coveragePathIgnorePatterns = [
-  "node_modules/**",
   "vendor/**",
   "generated/**"
 ]

@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/shell.md
-Downloaded: 2026-08-14T20:31:00.551Z
+Downloaded: 2026-08-15T20:21:45.842Z
 -->
 
 # Shell
@@ -24,20 +24,20 @@ await $`cat < ${response} | wc -c`; // 1256
 
 ## Features
 
-- **Cross-platform**: works on Windows, Linux & macOS. Instead of installing `rimraf` or `cross-env`, you can use Bun Shell. Common shell commands like `ls`, `cd`, and `rm` are implemented natively.
+- **Cross-platform**: works on Windows, Linux & macOS. Instead of installing `rimraf` or `cross-env`, you can use Bun Shell. It implements common shell commands like `ls`, `cd`, and `rm` natively.
 - **Familiar**: Bun Shell is a bash-like shell that supports redirection, pipes, and environment variables.
-- **Globs**: Glob patterns are supported natively, including `**`, `*`, and `{expansion}`.
+- **Globs**: Bun Shell supports glob patterns natively, including `**`, `*`, and `{expansion}`.
 - **Template literals**: Template literals execute shell commands and interpolate variables and expressions.
 - **Safety**: Bun Shell escapes all strings by default, preventing shell injection attacks.
 - **JavaScript interop**: Use `Response`, `ArrayBuffer`, `Blob`, `Bun.file(path)` and other JavaScript objects as stdin, stdout, and stderr.
-- **Shell scripting**: Bun Shell runs shell scripts (`.bun.sh` files).
+- **Shell scripting**: Bun Shell runs shell scripts (`.sh` files).
 - **Custom interpreter**: Bun Shell is a small programming language with its own lexer, parser, and interpreter, written in Rust.
 
 ---
 
 ## Getting started
 
-The simplest shell command is `echo`. To run it, use the `$` template literal tag:
+Start with `echo`. To run it, use the `$` template literal tag:
 
 ```js
 import { $ } from "bun";
@@ -261,21 +261,21 @@ import { $ } from "bun";
 await $`echo Hash of current commit: $(git rev-parse HEAD)`;
 ```
 
-The output is inserted as text, so you can use it to declare a shell variable:
+Bun Shell inserts the output as text, so you can use it to declare a shell variable:
 
 ```js
 import { $ } from "bun";
 
 await $`
   REV=$(git rev-parse HEAD)
-  docker built -t myapp:$REV
+  docker build -t myapp:$REV .
   echo Done building docker image "myapp:$REV"
 `;
 ```
 
 <Note>
 
-Because Bun internally uses the special [`raw`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#raw_strings) property on the input template literal, using the backtick syntax for command substitution won't work:
+Because Bun internally uses the special [`raw`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals#raw_strings) property on the input template literal, using the backtick syntax for command substitution doesn't work:
 
 ```ts icon="file-code"
 import { $ } from "bun";
@@ -321,7 +321,7 @@ const foo = "bar123";
 await $`FOO=${foo + "456"} bun -e 'console.log(process.env.FOO)'`; // bar123456\n
 ```
 
-Input is escaped by default, preventing shell injection attacks:
+Bun Shell escapes input by default, preventing shell injection attacks:
 
 ```js
 import { $ } from "bun";
@@ -367,8 +367,10 @@ $.env({ FOO: "bar" });
 // the globally-set $FOO
 await $`echo $FOO`; // bar
 
-// the locally-set $FOO
-await $`echo $FOO`.env(undefined); // ""
+$.env();
+
+// the default $FOO
+await $`echo $FOO`; // ""
 ```
 
 ### Changing the working directory
@@ -433,7 +435,7 @@ for await (let line of $`echo "Hello World!"`.lines()) {
 }
 ```
 
-You can also use `.lines()` on a completed command:
+You can also use `.lines()` on a piped command:
 
 ```js
 import { $ } from "bun";
@@ -481,10 +483,6 @@ For cross-platform compatibility, Bun Shell implements a set of builtin commands
 - `seq`
 - `dirname`
 - `basename`
-
-**Partially** implemented:
-
-- `mv`: move files and directories (missing cross-device support)
 
 **Not** implemented yet, but planned:
 
@@ -570,7 +568,7 @@ Bun Shell is a small programming language implemented in Rust, with a handwritte
 By design, Bun Shell _does not invoke a system shell_ like `/bin/sh`. It's a
 re-implementation of bash that runs in the same Bun process.
 
-When parsing command arguments, it treats all _interpolated variables_ as single, literal strings.
+When parsing command arguments, Bun Shell treats all _interpolated variables_ as single, literal strings.
 
 This protects against **command injection**:
 
@@ -583,12 +581,12 @@ const userInput = "my-file.txt; rm -rf /";
 await $`ls ${userInput}`;
 ```
 
-Here, `userInput` is treated as a single string, so `ls` tries to read the
+Here, Bun Shell treats `userInput` as a single string, so `ls` tries to read the
 contents of a single directory named `my-file.txt; rm -rf /`.
 
 ### Security considerations
 
-While command injection is prevented by default, you are still
+While Bun Shell prevents command injection by default, you are still
 responsible for security in certain scenarios.
 
 Similar to the `Bun.spawn` or `node:child_process.exec()` APIs, you can intentionally

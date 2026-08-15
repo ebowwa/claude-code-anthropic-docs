@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/install/workspaces.md
-Downloaded: 2026-08-14T20:31:00.584Z
+Downloaded: 2026-08-15T20:21:45.871Z
 -->
 
 # Configuring a monorepo using workspaces
@@ -51,7 +51,7 @@ To add dependencies between workspaces, use the `"workspace:*"` syntax. The foll
 
 ---
 
-Once added, run `bun install` from the project root to install dependencies for all workspaces.
+Once you add the dependency, run `bun install` from the project root to install dependencies for all workspaces.
 
 ```sh terminal icon="terminal"
 bun install
@@ -59,7 +59,7 @@ bun install
 
 ---
 
-To add npm dependencies to a particular workspace, `cd` to that directory and run `bun add` as you normally would. Bun detects that you are in a workspace and [hoists](/pm/isolated-installs) the dependency as needed.
+To add npm dependencies to a particular workspace, `cd` to that directory and run `bun add` as you normally would. Bun detects that you are in a workspace, adds the dependency to that workspace's `package.json`, and updates the root lockfile. New workspaces use [isolated installs](/pm/isolated-installs) by default, so Bun installs the package into the root `node_modules/.bun` store and symlinks it from the workspace's own `node_modules`. With `--linker hoisted`, Bun hoists the package into the root `node_modules` instead.
 
 ```sh terminal icon="terminal"
 cd packages/stuff-a

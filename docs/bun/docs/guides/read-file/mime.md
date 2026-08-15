@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/read-file/mime.md
-Downloaded: 2026-08-14T20:31:00.590Z
+Downloaded: 2026-08-15T20:21:45.876Z
 -->
 
 # Get the MIME type of a file
@@ -11,11 +11,11 @@ The `Bun.file()` function accepts a path and returns a `BunFile` instance. The `
 const file = Bun.file("./package.json");
 file.type; // application/json;charset=utf-8
 
-const file = Bun.file("./index.html");
-file.type; // text/html;charset=utf-8
+const html = Bun.file("./index.html");
+html.type; // text/html;charset=utf-8
 
-const file = Bun.file("./image.png");
-file.type; // image/png
+const image = Bun.file("./image.png");
+image.type; // image/png
 ```
 
 ---

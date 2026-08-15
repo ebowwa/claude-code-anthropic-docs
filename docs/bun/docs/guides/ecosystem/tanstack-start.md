@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/ecosystem/tanstack-start.md
-Downloaded: 2026-08-14T20:31:00.576Z
+Downloaded: 2026-08-15T20:21:45.866Z
 -->
 
 # Use TanStack Start with Bun
@@ -35,7 +35,7 @@ Downloaded: 2026-08-14T20:31:00.576Z
       "scripts": {
         "dev": "bun --bun vite dev", // [!code ++]
         "build": "bun --bun vite build", // [!code ++]
-        "serve": "bun --bun vite preview" // [!code ++]
+        "preview": "bun --bun vite preview" // [!code ++]
       }
     }
     ```
@@ -134,7 +134,7 @@ To host your TanStack Start app in production, use [Nitro](https://nitro.build/)
   </Tab>
   <Tab title="Custom Server">
     <Note>
-      This custom server is based on [TanStack's Bun template](https://github.com/TanStack/router/blob/main/examples/react/start-bun/server.ts). It gives you fine-grained control over static asset serving: small files are preloaded into memory and larger files are served on-demand, with configurable limits on what gets preloaded.
+      This custom server is based on [TanStack's Bun template](https://github.com/TanStack/router/blob/main/examples/react/start-bun/server.ts). It gives you fine-grained control over static asset serving: the server preloads small files into memory and serves larger files on-demand. You can configure the limits on what the server preloads.
     </Note>
 
     <Steps>

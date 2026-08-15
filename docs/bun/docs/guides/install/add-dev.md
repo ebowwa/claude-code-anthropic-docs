@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/install/add-dev.md
-Downloaded: 2026-08-14T20:31:00.583Z
+Downloaded: 2026-08-15T20:21:45.870Z
 -->
 
 # Add a development dependency
@@ -19,7 +19,7 @@ This adds the package to `devDependencies` in `package.json`.
 ```json
 {
   "devDependencies": {
-    "zod": "^3.0.0" // [!code ++]
+    "zod": "^4.0.0" // [!code ++]
   }
 }
 ```

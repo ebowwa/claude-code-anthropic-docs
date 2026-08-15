@@ -1,8 +1,3 @@
-<!--
-Source: https://docs.polymarket.com/perps/errors.md
-Downloaded: 2026-08-07T20:40:43.988Z
--->
-
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.

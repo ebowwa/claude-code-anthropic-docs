@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/streams/to-array.md
-Downloaded: 2026-08-14T20:31:00.598Z
+Downloaded: 2026-08-15T20:21:45.881Z
 -->
 
 # Convert a ReadableStream to an array of chunks
@@ -9,7 +9,7 @@ Downloaded: 2026-08-14T20:31:00.598Z
 
 ```ts
 const stream = new ReadableStream();
-const str = await Bun.readableStreamToArray(stream);
+const chunks = await Bun.readableStreamToArray(stream);
 ```
 
 ---

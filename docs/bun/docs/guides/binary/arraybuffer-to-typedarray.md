@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/binary/arraybuffer-to-typedarray.md
-Downloaded: 2026-08-14T20:31:00.594Z
+Downloaded: 2026-08-15T20:21:45.879Z
 -->
 
 # Convert an ArrayBuffer to a Uint8Array
@@ -39,4 +39,4 @@ const arr = new Uint8Array(buffer, 0, 16); // view first 16 bytes
 
 ---
 
-See [Utils](/runtime/utils).
+See [Binary Data](/runtime/binary-data#conversion).

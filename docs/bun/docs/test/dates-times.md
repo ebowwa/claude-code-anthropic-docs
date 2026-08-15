@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/test/dates-times.md
-Downloaded: 2026-08-14T20:31:00.567Z
+Downloaded: 2026-08-15T20:21:45.858Z
 -->
 
 # Dates and times
@@ -31,7 +31,7 @@ test("it is 2020", () => {
 });
 ```
 
-Jest's `useFakeTimers` and `useRealTimers` are also supported, so existing tests that use them keep working:
+`bun:test` also supports Jest's `useFakeTimers` and `useRealTimers`, so existing tests that use them keep working:
 
 ```ts title="test.ts" icon="/icons/typescript.svg"
 test("just like in jest", () => {
@@ -112,14 +112,14 @@ import { test, expect } from "bun:test";
 
 test("Welcome to California!", () => {
   process.env.TZ = "America/Los_Angeles";
-  expect(new Date().getTimezoneOffset()).toBe(420);
+  expect(new Date("2020-07-01T00:00:00.000Z").getTimezoneOffset()).toBe(420);
   expect(new Intl.DateTimeFormat().resolvedOptions().timeZone).toBe("America/Los_Angeles");
 });
 
 test("Welcome to New York!", () => {
   // Unlike in Jest, you can set the timezone multiple times at runtime and it will work.
   process.env.TZ = "America/New_York";
-  expect(new Date().getTimezoneOffset()).toBe(240);
+  expect(new Date("2020-07-01T00:00:00.000Z").getTimezoneOffset()).toBe(240);
   expect(new Intl.DateTimeFormat().resolvedOptions().timeZone).toBe("America/New_York");
 });
 ```

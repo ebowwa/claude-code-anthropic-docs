@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/http/proxy.md
-Downloaded: 2026-08-14T20:31:00.579Z
+Downloaded: 2026-08-15T20:21:45.867Z
 -->
 
 # Proxy HTTP requests using fetch()
@@ -36,7 +36,7 @@ await fetch("https://example.com", {
 });
 ```
 
-The `headers` property accepts a plain object or a `Headers` instance. These headers are sent directly to the proxy server in `CONNECT` requests (for HTTPS targets) or in the proxy request (for HTTP targets).
+The `headers` property accepts a plain object or a `Headers` instance. Bun sends these headers directly to the proxy server in `CONNECT` requests (for HTTPS targets) or in the proxy request (for HTTP targets).
 
 If you provide a `Proxy-Authorization` header, it overrides any credentials in the proxy URL.
 
@@ -44,8 +44,8 @@ If you provide a `Proxy-Authorization` header, it overrides any credentials in t
 
 ## Environment variables
 
-To use the same proxy for all requests, set the `$HTTP_PROXY` or `$HTTPS_PROXY` environment variable to the proxy URL.
+To use the same proxy for all requests, set the `$HTTP_PROXY` and `$HTTPS_PROXY` environment variables to the proxy URL. Bun uses `$HTTP_PROXY` only for requests to `http://` URLs and `$HTTPS_PROXY` only for requests to `https://` URLs, so set both to proxy every request.
 
 ```sh terminal icon="terminal"
-HTTPS_PROXY=https://username:password@proxy.example.com:8080 bun run index.ts
+HTTP_PROXY=https://username:password@proxy.example.com:8080 HTTPS_PROXY=https://username:password@proxy.example.com:8080 bun run index.ts
 ```

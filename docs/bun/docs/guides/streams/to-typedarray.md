@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/streams/to-typedarray.md
-Downloaded: 2026-08-14T20:31:00.598Z
+Downloaded: 2026-08-15T20:21:45.881Z
 -->
 
 # Convert a ReadableStream to a Uint8Array
@@ -13,12 +13,14 @@ const buf = await Bun.readableStreamToArrayBuffer(stream);
 const uint8 = new Uint8Array(buf);
 ```
 
-`Bun.readableStreamToBytes` converts to a `Uint8Array` directly.
+The stream's `bytes()` method converts to a `Uint8Array` directly.
 
 ```ts
 const stream = new ReadableStream();
-const uint8 = await Bun.readableStreamToBytes(stream);
+const uint8 = await stream.bytes();
 ```
+
+`Bun.readableStreamToBytes(stream)` does the same thing, but is deprecated in favor of `stream.bytes()`.
 
 ---
 

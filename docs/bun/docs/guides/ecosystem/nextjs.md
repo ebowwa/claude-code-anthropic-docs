@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/ecosystem/nextjs.md
-Downloaded: 2026-08-14T20:31:00.575Z
+Downloaded: 2026-08-15T20:21:45.864Z
 -->
 
 # Build an app with Next.js and Bun
@@ -39,7 +39,7 @@ Downloaded: 2026-08-14T20:31:00.575Z
       "scripts": {
         "dev": "bun --bun next dev", // [!code ++]
         "build": "bun --bun next build", // [!code ++]
-        "start": "bun --bun next start", // [!code ++]
+        "start": "bun --bun next start" // [!code ++]
       }
     }
     ```
@@ -84,7 +84,7 @@ Downloaded: 2026-08-14T20:31:00.575Z
     arrow="true"
     cta="Go to template"
   >
-    A simple App Router starter with Bun, Next.js, and Tailwind CSS.
+    A basic App Router starter with Bun, Next.js, and Tailwind CSS.
   </Card>
   <Card
     title="Todo App with Next.js + Bun"

@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/ecosystem/elysia.md
-Downloaded: 2026-08-14T20:31:00.574Z
+Downloaded: 2026-08-15T20:21:45.863Z
 -->
 
 # Build an HTTP server using Elysia and Bun
@@ -22,11 +22,11 @@ import { Elysia } from "elysia";
 
 const app = new Elysia().get("/", () => "Hello Elysia").listen(8080);
 
-console.log(`🦊 Elysia is running at on port ${app.server?.port}...`);
+console.log(`🦊 Elysia is running on port ${app.server?.port}...`);
 ```
 
 ---
 
-Elysia is a server framework with Express-like syntax, type inference, middleware, file uploads, and plugins for JWT authentication and tRPC. It's one of the [fastest Bun web frameworks](https://github.com/SaltyAom/bun-http-framework-benchmark).
+Elysia is a server framework with Express-like syntax, type inference, middleware, file uploads, and plugins for JWT authentication and OpenAPI documentation. It's one of the [fastest Bun web frameworks](https://github.com/SaltyAom/bun-http-framework-benchmark).
 
 See the Elysia [documentation](https://elysiajs.com/quick-start.html).

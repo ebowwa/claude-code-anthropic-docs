@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/markdown.md
-Downloaded: 2026-08-14T20:31:00.553Z
+Downloaded: 2026-08-15T20:21:45.845Z
 -->
 
 # Markdown
@@ -106,7 +106,7 @@ Bun.markdown.html("## Hello World", { headings: { ids: true } });
 
 ## `Bun.markdown.render()`
 
-Parse Markdown and render it using custom JavaScript callbacks. This gives you full control over the output format — you can generate HTML with custom classes, React elements, ANSI terminal output, or any other string format.
+Parse Markdown and render it using custom JavaScript callbacks. The callbacks give you full control over the output format. You can generate HTML with custom classes, ANSI terminal output, or any other string format.
 
 ```ts
 const result = Bun.markdown.render("# Hello **world**", {
@@ -124,7 +124,7 @@ Each callback receives:
 1. **`children`** — the accumulated content of the element as a string
 2. **`meta`** (optional) — an object with element-specific metadata
 
-Return a string to replace the element's rendering. Return `null` or `undefined` to omit the element from the output entirely. If no callback is registered for an element, its children pass through unchanged.
+Return a string to replace the element's rendering. Return `null` or `undefined` to omit the element from the output entirely. If an element has no callback, its children pass through unchanged.
 
 ### Block callbacks
 
@@ -337,7 +337,7 @@ const el = Bun.markdown.react(
 
 #### Available overrides
 
-Every HTML tag produced by the parser can be overridden:
+You can override every HTML tag the parser produces:
 
 | Option       | Props                        | Description                                                     |
 | ------------ | ---------------------------- | --------------------------------------------------------------- |

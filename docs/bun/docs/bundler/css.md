@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/bundler/css.md
-Downloaded: 2026-08-14T20:31:00.563Z
+Downloaded: 2026-08-15T20:21:45.854Z
 -->
 
 # CSS
@@ -26,11 +26,11 @@ Bun's CSS parser and bundler is a direct port of LightningCSS, with a bundling a
 
 By default, Bun's CSS bundler targets the following browsers:
 
-- ES2020
-- Edge 88+
+- Edge 80+
 - Firefox 78+
-- Chrome 87+
+- Chrome 80+
 - Safari 14+
+- Opera 67+
 
 ## Syntax Lowering
 
@@ -594,7 +594,11 @@ The converted selectors keep the specificity and behavior of the original.
 
 ### Math functions
 
-CSS includes standard math functions (`round()`, `mod()`, `rem()`, `abs()`, `sign()`), trigonometric functions (`sin()`, `cos()`, `tan()`, `asin()`, `acos()`, `atan()`, `atan2()`), and exponential functions (`pow()`, `sqrt()`, `exp()`, `log()`, `hypot()`).
+CSS includes the following math functions:
+
+- Standard math functions: `round()`, `mod()`, `rem()`, `abs()`, `sign()`
+- Trigonometric functions: `sin()`, `cos()`, `tan()`, `asin()`, `acos()`, `atan()`, `atan2()`
+- Exponential functions: `pow()`, `sqrt()`, `exp()`, `log()`, `hypot()`
 
 ```css title="styles.css" icon="file-code"
 .dynamic-sizing {
@@ -965,8 +969,12 @@ This is the same as writing:
 Two rules apply when using `composes`:
 
 <Info>
-  **Composition Rules:** - A `composes` property must come before any regular CSS properties or declarations - You can
-  only use `composes` on a simple selector with a single class name
+
+**Composition Rules:**
+
+- A `composes` property must come before any regular CSS properties or declarations
+- You can only use `composes` on a simple selector with a single class name
+
 </Info>
 
 ```css title="styles.module.css" icon="file-code"

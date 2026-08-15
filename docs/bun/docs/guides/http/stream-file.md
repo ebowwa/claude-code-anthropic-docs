@@ -1,11 +1,11 @@
 <!--
 Source: https://bun.com/docs/guides/http/stream-file.md
-Downloaded: 2026-08-14T20:31:00.579Z
+Downloaded: 2026-08-15T20:21:45.868Z
 -->
 
 # Stream a file as an HTTP Response
 
-[`Bun.file()`](/runtime/file-io#reading-files-bun-file) reads a file from disk and returns a `BunFile` instance, which you can pass directly to the `new Response` constructor.
+[`Bun.file()`](/runtime/file-io#reading-files-bun-file) accepts a path and returns a lazily-loaded `BunFile` instance, which you can pass directly to the `new Response` constructor.
 
 ```ts server.ts icon="/icons/typescript.svg"
 const path = "/path/to/file.txt";
@@ -15,7 +15,7 @@ const resp = new Response(file);
 
 ---
 
-Bun reads the `Content-Type` from the file and sets it on the `Response`.
+Bun determines the `Content-Type` from the file extension and sets it on the `Response`.
 
 ```ts server.ts icon="/icons/typescript.svg"
 new Response(Bun.file("./package.json")).headers.get("Content-Type");

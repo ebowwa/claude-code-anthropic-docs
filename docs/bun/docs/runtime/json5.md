@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/json5.md
-Downloaded: 2026-08-14T20:31:00.553Z
+Downloaded: 2026-08-15T20:21:45.845Z
 -->
 
 # JSON5
@@ -137,7 +137,7 @@ console.log(pretty);
 // }
 ```
 
-The `space` argument can be a number (number of spaces) or a string (used as the indent character):
+The `space` argument can be a number (number of spaces) or a string (used as the indent string for each level):
 
 ```ts
 // Tab indentation
@@ -254,7 +254,7 @@ bun --hot server.ts
 
 ## Bundler Integration
 
-When you bundle with Bun, imported JSON5 files are parsed at build time and included as JavaScript modules:
+When you bundle with Bun, the bundler parses imported JSON5 files at build time and includes them as JavaScript modules:
 
 ```bash terminal icon="terminal"
 bun build app.ts --outdir=dist
@@ -268,7 +268,7 @@ Parsing at build time means:
 
 ### Dynamic Imports
 
-JSON5 files can be dynamically imported:
+You can import JSON5 files dynamically:
 
 ```ts
 const { default: config } = await import("./config.json5");

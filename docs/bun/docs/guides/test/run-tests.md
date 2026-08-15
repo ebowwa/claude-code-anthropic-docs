@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/test/run-tests.md
-Downloaded: 2026-08-14T20:31:00.586Z
+Downloaded: 2026-08-15T20:21:45.872Z
 -->
 
 # Run your tests with the Bun test runner
@@ -12,10 +12,10 @@ Bun has a built-in [test runner](/test) with a Jest-like `expect` API.
 To use it, run `bun test` from your project directory. The test runner recursively searches for files matching the following patterns and runs the tests they contain.
 
 ```txt File Tree icon="folder-tree"
-*.test.{js|jsx|ts|tsx}
-*_test.{js|jsx|ts|tsx}
-*.spec.{js|jsx|ts|tsx}
-*_spec.{js|jsx|ts|tsx}
+*.test.{js|jsx|ts|tsx|mjs|cjs|mts|cts}
+*_test.{js|jsx|ts|tsx|mjs|cjs|mts|cts}
+*.spec.{js|jsx|ts|tsx|mjs|cjs|mts|cts}
+*_spec.{js|jsx|ts|tsx|mjs|cjs|mts|cts}
 ```
 
 ---
@@ -61,12 +61,12 @@ test3.test.js:
  2 pass
  0 fail
  2 expect() calls
-Ran 2 tests across 1 files. [15.00ms]
+Ran 2 tests across 1 file. [15.00ms]
 ```
 
 ---
 
-Every test has a name: the first argument to the `test` function. Tests can also be grouped into suites with `describe`.
+Every test has a name: the first argument to the `test` function. You can also group tests into suites with `describe`.
 
 ```ts
 import { test, expect, describe } from "bun:test";

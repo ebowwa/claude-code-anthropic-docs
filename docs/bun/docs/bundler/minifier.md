@@ -1,13 +1,13 @@
 <!--
 Source: https://bun.com/docs/bundler/minifier.md
-Downloaded: 2026-08-14T20:31:00.565Z
+Downloaded: 2026-08-15T20:21:45.856Z
 -->
 
 # Minifier
 
 > Reduce bundle sizes with Bun's JavaScript and TypeScript minifier
 
-Bun includes a fast JavaScript and TypeScript minifier that can reduce bundle sizes by 80% or more (depending on the codebase) and make output code run faster. The minifier performs dozens of optimizations including constant folding, dead code elimination, and syntax transformations. Unlike other minifiers, Bun's minifier makes `bun build` run faster since there's less code to print.
+Bun includes a fast JavaScript and TypeScript minifier. Depending on the codebase, it can reduce bundle sizes by 80% or more. It can also make output code run faster. The minifier performs dozens of optimizations including constant folding, dead code elimination, and syntax transformations. Unlike other minifiers, Bun's minifier makes `bun build` run faster since there's less code to print.
 
 ## CLI Usage
 
@@ -123,19 +123,17 @@ false
 Simplifies boolean expressions using logical rules.
 
 ```ts Input
-!!x
-x === true
-x && true
-x || false
+if (!!x) y;
+if (x && true) y;
+if (x || false) y;
 !true
 !false
 ```
 
 ```js Output
-x
-x
-x
-x
+if(x)y;
+if(x)y;
+if(x)y;
 !1
 !0
 ```
@@ -550,12 +548,12 @@ Simplifies unary operations.
 Removes unnecessary double negations.
 
 ```ts Input
-!!x
+if (!!x) y;
 !!!x
 ```
 
 ```js Output
-x
+if(x)y;
 !x
 ```
 
@@ -722,7 +720,7 @@ let x = 10;
 ```
 
 ```js Output
-function add(a,b){return a+b;}let x=10;
+function add(a,b){return a+b}let x=10;
 ```
 
 ### Semicolon optimization
@@ -1199,7 +1197,7 @@ await Bun.build({
 
 Using all three minification modes together:
 
-```ts input.ts (158 bytes)
+```ts input.ts (176 bytes)
 const myVariable = 42;
 
 const myFunction = () => {
@@ -1212,8 +1210,8 @@ const output = myFunction();
 ```
 
 ```js output.js
-// Output with --minify (49 bytes, 69% reduction)
-const a=42,b=()=>{const c=!0,d=void 0;return c?a:d},e=b();
+// Output with --minify (20 bytes, 89% reduction)
+var t=()=>42,e=t();
 ```
 
 ## When to Use Minification

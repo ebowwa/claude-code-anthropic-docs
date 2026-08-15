@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/networking/tcp.md
-Downloaded: 2026-08-14T20:31:00.548Z
+Downloaded: 2026-08-15T20:21:45.839Z
 -->
 
 # TCP
@@ -85,7 +85,7 @@ Bun.listen({
 });
 ```
 
-The `key` and `cert` fields expect the _contents_ of your TLS key and certificate. This can be a string, `BunFile`, `TypedArray`, or `Buffer`.
+The `key` and `cert` fields expect the _contents_ of your TLS key and certificate. This can be a string, `BunFile`, `TypedArray`, `Buffer`, or an array of these.
 
 ```ts server.ts icon="/icons/typescript.svg"
 Bun.listen({
@@ -155,7 +155,7 @@ const socket = await Bun.connect({
 
 ## Hot reloading
 
-Both TCP servers and sockets can be hot reloaded with new handlers.
+You can hot reload both TCP servers and sockets with new handlers.
 
 <CodeGroup>
 
@@ -238,6 +238,6 @@ queueMicrotask(() => {
 <Note>
 **Corking**
 
-Support for corking is planned, but in the meantime backpressure must be managed manually with the `drain` handler.
+Support for corking is planned. In the meantime, you must manage backpressure manually with the `drain` handler.
 
 </Note>

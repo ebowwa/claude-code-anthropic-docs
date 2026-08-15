@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/runtime/import-yaml.md
-Downloaded: 2026-08-14T20:31:00.589Z
+Downloaded: 2026-08-15T20:21:45.875Z
 -->
 
 # Import a YAML file
@@ -81,7 +81,7 @@ console.log(data.hobbies); // => ["reading", "coding"]
 To add TypeScript support for your YAML imports, create a declaration file with `.d.ts` appended to the YAML filename (for example, `config.yaml` → `config.yaml.d.ts`):
 
 ```ts config.yaml.d.ts icon="/icons/typescript.svg"
-const contents: {
+declare const contents: {
   database: {
     host: string;
     port: number;

@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/errors.md
-Downloaded: 2026-08-14T20:31:08.322Z
+Downloaded: 2026-08-15T20:21:56.891Z
 -->
 
 > ## Documentation Index
@@ -157,6 +157,7 @@ Match the message you see in your terminal to a section below.
 | `Ignoring N permissions.allow entries from ... this workspace has not been trusted`                                                                                                           | [Configuration warnings](#workspace-has-not-been-trusted)                                                                     |
 | `... is not matched by file permission checks`                                                                                                                                                | [Configuration warnings](#is-not-matched-by-file-permission-checks)                                                           |
 | `CLAUDE_CODE_DISABLE_1M_CONTEXT is set, but the 200K limit isn't enforced`                                                                                                                    | [Configuration warnings](#the-200k-limit-isnt-enforced)                                                                       |
+| `[claude-code:unrecognized_model]`                                                                                                                                                            | [Configuration warnings](#unrecognized-model-id-on-a-request)                                                                 |
 | Responses seem lower quality than usual                                                                                                                                                       | [Response quality](#responses-seem-lower-quality-than-usual)                                                                  |
 
 ## Automatic retries
@@ -1061,7 +1062,7 @@ Resuming with `claude --resume` or `claude --continue` reconnects to the [Remote
 * Start a new session with `claude --remote-control` to create a new Remote Control session
 * For other Remote Control startup messages, see [Troubleshoot Remote Control](/docs/en/remote-control#troubleshooting)
 
-When the server reports instead that the previous session no longer exists, Claude Code shows [`Remote Control could not resume the previous session under the current login`](/docs/en/remote-control#remote-control-could-not-resume-the-previous-session-under-the-current-login) rather than this message and doesn't create a replacement session. Earlier versions created a new Remote Control session instead of showing a message: before v2.1.200 on any reconnection failure, and through v2.1.226 when the server reported the session gone.
+If the server reports instead that the previous session is gone, you don't see this message. Claude Code starts a new session in its place or shows [`Previous session is unavailable — run /remote-control to start a new one`](/docs/en/remote-control#previous-session-is-unavailable), depending on [the conversation's reconnection record](/docs/en/remote-control#resume-outcomes). From v2.1.227 through v2.1.231, Claude Code showed a message that starts with `Remote Control could not resume the previous session under the current login` instead, and [earlier versions behaved differently again](/docs/en/remote-control#reconnect-history).
 
 <h3 id="couldnt-share-the-transcript">
   Couldn't share the transcript
@@ -1278,7 +1279,7 @@ Claude Code produces this error locally at the moment the switch is requested, b
 * Run `/model` with no argument to open the picker and choose from the models available to your account, then pass the alias or ID shown there
 * If you used an alias that a newer Claude Code version supports, run `claude update`. A full ID that starts with `claude-` passes this check even when the model is newer than your Claude Code version, so upgrading isn't needed for those.
 * A model saved before v2.1.200 isn't repaired by this check. If a stale value keeps coming back, remove it from the locations listed under [There's an issue with the selected model](#theres-an-issue-with-the-selected-model).
-* The check runs only on the Anthropic API. On any other provider or gateway, including a custom `ANTHROPIC_BASE_URL`, the provider defines the model names, so Claude Code accepts any string and passes it through.
+* The check runs only on the Anthropic API. On any other provider or gateway, including a custom `ANTHROPIC_BASE_URL`, the provider defines the model names, so Claude Code accepts any string and passes it through. Claude Code can still write the [unrecognized-model diagnostic line](#unrecognized-model-id-on-a-request) at request time, on every provider.
 
 ### Claude Opus is not available with the Claude Pro plan
 
@@ -1596,7 +1597,7 @@ The quoted command varies between runs: the review starts several `git` commands
 
 Claude Code shows the same error for any skill that [injects dynamic context](/docs/en/skills#when-an-injected-command-fails). A failed injected command aborts that skill's invocation. Two sibling strings fire before the command runs at all:
 
-* `Shell command permission check failed for pattern "..."`: the command's permission check returned something other than allow. Injected commands never prompt, so the invocation aborts without asking you. Pre-approve commands that would otherwise hit the default permission prompt with [`allowed-tools`](/docs/en/skills#pre-approve-tools-for-a-skill). A matching ask or deny rule still aborts the invocation regardless of `allowed-tools`
+* `Shell command permission check failed for pattern "..."`: the command's permission check returned something other than allow. Injected commands never prompt, so the invocation aborts without asking you. Pre-approve commands that no rule matches with [`allowed-tools`](/docs/en/skills#pre-approve-tools-for-a-skill). A matching ask or deny rule still aborts the invocation regardless of `allowed-tools`
 * ``Skill <name> requires bash (`shell: bash` in frontmatter) but Git Bash was not found``: the skill's frontmatter demands bash on a machine without it. Install Git for Windows or change the frontmatter to `shell: powershell`. See [How injected commands run](/docs/en/skills#how-injected-commands-run)
 
 **What to do:**
@@ -1809,7 +1810,7 @@ Agent 'code-reviewer' would be spawned with zero tools — refusing. Its tools l
 
 * Correct each entry the error names against the [tools available to subagents](/docs/en/sub-agents#available-tools)
 * Remove entries for tools the session doesn't have, such as MCP tools from a server that isn't connected
-* For a tool that [background subagents drop](/docs/en/sub-agents#available-tools), such as `LSP` or `TaskCreate`, remove the entry. To keep the tool, [turn fork mode off](/docs/en/sub-agents#turn-fork-mode-on-or-off) and ask Claude to run the subagent in the foreground
+* For a tool that [background subagents drop](/docs/en/sub-agents#available-tools), such as `LSP`, remove the entry. To keep the tool, [turn fork mode off](/docs/en/sub-agents#turn-fork-mode-on-or-off) and ask Claude to run the subagent in the foreground
 * Delete the `tools` field instead of listing tools to give the subagent every [tool available to subagents](/docs/en/sub-agents#available-tools)
 * For a `tools` list that contains only `Agent`, raise the [depth limit](/docs/en/sub-agents#let-subagents-spawn-their-own-subagents) or give the agent at least one other tool: Claude Code withholds `Agent` at that limit, so a list with nothing else in it resolves to no tools
 
@@ -2134,7 +2135,7 @@ Inside tmux, Claude Code detects a marker that arrived through the tmux server's
 
 ## Configuration warnings
 
-Claude Code writes these messages to stderr at startup rather than showing an error in the conversation, except where an entry notes that it writes the message to the debug log instead. They report configuration it read but didn't apply.
+Claude Code writes these messages to stderr rather than showing an error in the conversation, except where an entry notes that it writes the message to the debug log instead. It writes most of them at startup, reporting configuration it read but didn't apply, and writes the [unrecognized-model diagnostic line](#unrecognized-model-id-on-a-request) at request time.
 
 ### Workspace has not been trusted
 
@@ -2190,6 +2191,50 @@ Claude Code enforces the 200K limit on its own for every model it recognizes as 
 * If you want the session to use the model's full window instead, unset `CLAUDE_CODE_DISABLE_1M_CONTEXT`; the warning reports only that the 200K limit isn't enforced
 
 In a [background session](/docs/en/agent-view) or with `--output-format json` or `stream-json`, Claude Code writes the warning to the debug log instead of stderr.
+
+<h3 id="unrecognized-model-id-on-a-request">
+  Unrecognized model ID on a request
+</h3>
+
+Claude Code sent a request for a model ID that your Claude Code version doesn't recognize, and found no [`modelOverrides`](/docs/en/model-config#override-model-ids-per-version) entry that maps that ID to a model it does recognize. Claude Code still sends the request with the ID as you configured it, and doesn't exit or switch models.
+
+```text theme={null}
+[claude-code:unrecognized_model] {"model":"my-proxy-model","query_source":"sdk"}
+```
+
+In a script or harness that reads stderr, match on the `[claude-code:unrecognized_model]` prefix. After the prefix and one space, Claude Code writes a one-line JSON object. Claude Code can add fields to it in a later version, so ignore any field you don't expect. It writes at least these two:
+
+* `model`: the model string as you configured it
+* `query_source`: the request path that used the model. Claude Code reports `sdk` for a `-p` run and a value that starts with `agent:` for a subagent.
+
+Claude Code writes the line to one of two places, depending on how you run it:
+
+* In [non-interactive mode](/docs/en/headless) with `-p`, Claude Code writes it to stderr under every `--output-format`, so you can parse stdout without filtering the line out
+* In an interactive session or a [background session](/docs/en/agent-view), Claude Code writes it to the debug log instead; run with `--debug` to capture it at `~/.claude/debug/<session-id>.txt`
+
+Claude Code writes the line once per model string per process. It writes a separate line for each further unrecognized ID, such as one that a [subagent](/docs/en/sub-agents#choose-a-model) or [background functionality](/docs/en/costs#background-token-usage) uses.
+
+Claude Code doesn't write the line for provider IDs it resolves to a model it recognizes, such as Amazon Bedrock `us.anthropic.claude-...` IDs, Google Cloud's Agent Platform IDs with an `@` version suffix, and Microsoft Foundry deployment names that contain a Claude model ID. Claude Code checks the model behind an Amazon Bedrock [application inference profile ARN](/docs/en/amazon-bedrock#map-each-model-version-to-an-inference-profile) rather than the ARN itself. It writes no line for an ARN it can't resolve, such as a mistyped one.
+
+**What to do:**
+
+* If you set the ID on purpose, such as an [LLM gateway](/docs/en/llm-gateway) alias, add a [`modelOverrides`](/docs/en/model-config#override-model-ids-per-version) entry to your [settings file](/docs/en/settings#settings-files) with the ID as its value. Use an Anthropic model ID as the key, not a family alias such as `opus`. For `my-proxy-model` from the example line, add this entry:
+
+  ```json theme={null}
+  {
+    "modelOverrides": {
+      "claude-opus-4-6": "my-proxy-model"
+    }
+  }
+  ```
+
+  Claude Code then treats `my-proxy-model` as `claude-opus-4-6` and stops writing the line.
+
+* If the ID names a model newer than your Claude Code version, run `claude update`
+
+* If the ID is a typo, fix it where you set it: the `--model` flag, the `ANTHROPIC_MODEL` or `ANTHROPIC_DEFAULT_*_MODEL` environment variables, or the `model` setting. If `query_source` starts with `agent:`, fix it where you set the [subagent's model](/docs/en/sub-agents#choose-a-model) instead.
+
+Before v2.1.233, Claude Code wrote no line when it sent a request for a model ID it didn't recognize.
 
 ## Responses seem lower quality than usual
 
