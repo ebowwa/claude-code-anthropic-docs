@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/glob.md
-Downloaded: 2026-08-15T20:21:45.846Z
+Downloaded: 2026-08-16T20:22:01.465Z
 -->
 
 # Glob
@@ -171,12 +171,14 @@ Bun also implements Node.js's `fs.glob()` functions:
 import { glob, globSync, promises } from "node:fs";
 
 // Array of patterns
-const files = await promises.glob(["**/*.ts", "**/*.js"]);
+const files = await Array.fromAsync(promises.glob(["**/*.ts", "**/*.js"]));
 
 // Exclude patterns
-const filtered = await promises.glob("**/*", {
-  exclude: ["node_modules/**", "*.test.*"],
-});
+const filtered = await Array.fromAsync(
+  promises.glob("**/*", {
+    exclude: ["node_modules/**", "**/*.test.*"],
+  }),
+);
 ```
 
 All three functions (`fs.glob()`, `fs.globSync()`, `fs.promises.glob()`) support:

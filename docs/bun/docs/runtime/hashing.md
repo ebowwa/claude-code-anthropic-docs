@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/hashing.md
-Downloaded: 2026-08-15T20:21:45.846Z
+Downloaded: 2026-08-16T20:22:01.465Z
 -->
 
 # Hashing
@@ -241,7 +241,7 @@ For strings, an optional second parameter specifies the encoding (default `'utf-
 
 ```ts
 hasher.update("hello world"); // defaults to utf8
-hasher.update("hello world", "hex");
+hasher.update("68656c6c6f", "hex");
 hasher.update("hello world", "base64");
 hasher.update("hello world", "latin1");
 ```

@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/test/snapshots.md
-Downloaded: 2026-08-15T20:21:45.857Z
+Downloaded: 2026-08-16T20:22:01.474Z
 -->
 
 # Snapshots
@@ -74,10 +74,10 @@ import { test, expect } from "bun:test";
 
 test("inline snapshot", () => {
   expect({ hello: "world" }).toMatchInlineSnapshot(`
-{
-  "hello": "world",
-}
-`);
+    {
+      "hello": "world",
+    }
+  `);
 });
 ```
 

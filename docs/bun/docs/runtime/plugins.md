@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/plugins.md
-Downloaded: 2026-08-15T20:21:45.838Z
+Downloaded: 2026-08-16T20:22:01.459Z
 -->
 
 # Plugins
@@ -109,16 +109,18 @@ onStart(callback: () => void | Promise<void>): void;
 Registers a callback that runs when the bundler starts a new bundle.
 
 ```ts index.ts icon="/icons/typescript.svg"
-import { plugin } from "bun";
-
-plugin({
-  name: "onStart example",
-
-  setup(build) {
-    build.onStart(() => {
-      console.log("Bundle started!");
-    });
-  },
+await Bun.build({
+  entrypoints: ["./app.ts"],
+  plugins: [
+    {
+      name: "onStart example",
+      setup(build) {
+        build.onStart(() => {
+          console.log("Bundle started!");
+        });
+      },
+    },
+  ],
 });
 ```
 
@@ -231,7 +233,10 @@ import type { BunPlugin } from "bun";
 const envPlugin: BunPlugin = {
   name: "env plugin",
   setup(build) {
-    build.onLoad({ filter: /env/, namespace: "file" }, args => {
+    build.onResolve({ filter: /^env$/ }, args => {
+      return { path: args.path, namespace: "env" };
+    });
+    build.onLoad({ filter: /env/, namespace: "env" }, args => {
       return {
         contents: `export default ${JSON.stringify(process.env)}`,
         loader: "js",

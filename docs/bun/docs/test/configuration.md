@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/test/configuration.md
-Downloaded: 2026-08-15T20:21:45.856Z
+Downloaded: 2026-08-16T20:22:01.473Z
 -->
 
 # Test configuration
@@ -291,14 +291,14 @@ Specify the coverage threshold as a single number or as an object with per-metri
 
 ```toml title="bunfig.toml" icon="settings"
 [test]
-# Simple threshold - applies to lines, functions, and statements
+# Simple threshold - applies to lines and functions
 coverageThreshold = 0.8
 
 # Detailed thresholds
-coverageThreshold = { lines = 0.9, functions = 0.8, statements = 0.85 }
+coverageThreshold = { lines = 0.9, functions = 0.8 }
 ```
 
-Setting any of these causes the test run to fail if coverage is below the threshold.
+Setting a threshold makes `bun test` exit with code 1 when coverage is enabled and any file's line or function coverage is below it. Bun accepts the `statements` key but does not currently enforce it. Outside `--parallel`, the check only runs when the `text` reporter is enabled (the default); a run with only the `lcov` reporter currently exits 0 regardless of the threshold.
 
 #### Threshold Examples
 
@@ -310,8 +310,7 @@ coverageThreshold = 0.9
 # Different requirements for different metrics
 coverageThreshold = {
   lines = 0.85,      # 85% line coverage
-  functions = 0.90,  # 90% function coverage
-  statements = 0.80  # 80% statement coverage
+  functions = 0.90   # 90% function coverage
 }
 ```
 
@@ -435,7 +434,7 @@ smol = true
 coverage = true
 coverageReporter = ["text", "lcov"]
 coverageDir = "./coverage"
-coverageThreshold = { lines = 0.85, functions = 0.90, statements = 0.80 }
+coverageThreshold = { lines = 0.85, functions = 0.90 }
 coverageSkipTestFiles = true
 coveragePathIgnorePatterns = [
   "**/*.spec.ts",

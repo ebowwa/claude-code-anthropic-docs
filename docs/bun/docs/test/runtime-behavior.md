@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/test/runtime-behavior.md
-Downloaded: 2026-08-15T20:21:45.857Z
+Downloaded: 2026-08-16T20:22:01.473Z
 -->
 
 # Runtime behavior
@@ -91,7 +91,7 @@ test("test without timeout", async () => {
 
 ### Unhandled Errors
 
-`bun test` tracks unhandled promise rejections and errors that occur between tests. If any occur, the final exit code is non-zero, even if all tests pass.
+`bun test` tracks unhandled promise rejections and errors that occur between tests. If any occur, `bun test` exits with a non-zero code even when no test failed. In both examples below the error happens while the file is being loaded, so the file's tests are not run at all.
 
 This helps catch errors in asynchronous code that might otherwise go unnoticed:
 
@@ -99,22 +99,20 @@ This helps catch errors in asynchronous code that might otherwise go unnoticed:
 import { test, expect } from "bun:test";
 
 test("test 1", () => {
-  // This test passes
   expect(true).toBe(true);
 });
 
 // This error happens outside any test
-setTimeout(() => {
+queueMicrotask(() => {
   throw new Error("Unhandled error");
-}, 0);
+});
 
 test("test 2", () => {
-  // This test also passes
   expect(true).toBe(true);
 });
 
-// The test run will still fail with a non-zero exit code
-// because of the unhandled error
+// bun test reports this as "Unhandled error between tests", does not run
+// this file's tests (0 pass, 1 error), and exits with code 1
 ```
 
 ### Promise Rejections
@@ -124,11 +122,12 @@ The test runner also catches unhandled promise rejections:
 ```ts title="test.ts" icon="/icons/typescript.svg"
 import { test, expect } from "bun:test";
 
-test("passing test", () => {
+test("test 1", () => {
   expect(1).toBe(1);
 });
 
-// This will cause the test run to fail
+// bun test reports this as "Unhandled error between tests", does not run
+// this file's tests, and exits with code 1
 Promise.reject(new Error("Unhandled rejection"));
 ```
 

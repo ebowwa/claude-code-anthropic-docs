@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/communications/accept-quote.md
-Downloaded: 2026-08-14T20:31:01.984Z
+Downloaded: 2026-08-16T20:22:00.182Z
 -->
 
 > ## Documentation Index
@@ -11,6 +11,9 @@ Downloaded: 2026-08-14T20:31:01.984Z
 
 > DEPRECATED: Use PUT /communications/rfqs/{rfq_id}/quotes/{quote_id}/accept instead. Endpoint for accepting a quote. This will require the quoter to confirm.
 
+<Warning>
+  This endpoint is deprecated. Use `PUT /communications/rfqs/{rfq_id}/quotes/{quote_id}/accept` instead.
+</Warning>
 
 
 ## OpenAPI

@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/pm/cli/publish.md
-Downloaded: 2026-08-15T20:21:45.850Z
+Downloaded: 2026-08-16T20:22:01.468Z
 -->
 
 # bun publish
@@ -228,7 +228,8 @@ bun publish --otp 123456
 #### Custom Registry
 
 <ParamField path="--registry" type="string">
-  Specify registry URL, overriding .npmrc, bunfig.toml and environment variables
+  Use a specific registry by default, overriding .npmrc, bunfig.toml and environment variables. A registry configured
+  for the package's scope (`@scope:registry=` in .npmrc or `[install.scopes]` in bunfig.toml) still takes precedence.
 </ParamField>
 
 ```bash

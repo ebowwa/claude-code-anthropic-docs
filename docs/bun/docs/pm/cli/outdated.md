@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/pm/cli/outdated.md
-Downloaded: 2026-08-15T20:21:45.851Z
+Downloaded: 2026-08-16T20:22:01.468Z
 -->
 
 # bun outdated
@@ -297,7 +297,7 @@ bun outdated <filter>
 ### Execution Behavior
 
 <ParamField path="--dry-run" type="boolean">
-  Perform a dry run without making changes
+  Has no effect. <code>bun outdated</code> is read-only
 </ParamField>
 
 <ParamField path="-f, --force" type="boolean">

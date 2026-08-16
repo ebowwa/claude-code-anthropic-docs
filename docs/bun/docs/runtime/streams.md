@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/streams.md
-Downloaded: 2026-08-15T20:21:45.840Z
+Downloaded: 2026-08-16T20:22:01.460Z
 -->
 
 # Streams
@@ -72,7 +72,7 @@ const stream = new ReadableStream({
 });
 ```
 
-When using a direct `ReadableStream`, the destination handles all chunk queueing. The consumer of the stream receives exactly what is passed to `controller.write()`, without any encoding or modification.
+When using a direct `ReadableStream`, the destination handles all chunk queueing. The destination receives the bytes you pass to `controller.write()`. When the stream is read from JavaScript, Bun buffers the writes and delivers them as `Uint8Array` chunks (strings are UTF-8 encoded).
 
 ### Handling backpressure
 

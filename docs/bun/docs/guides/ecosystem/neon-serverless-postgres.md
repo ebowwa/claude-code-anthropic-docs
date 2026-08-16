@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/ecosystem/neon-serverless-postgres.md
-Downloaded: 2026-08-15T20:21:45.864Z
+Downloaded: 2026-08-16T20:22:01.479Z
 -->
 
 # Use Neon's Serverless Postgres with Bun
@@ -39,7 +39,7 @@ const sql = neon(process.env.DATABASE_URL!);
 
 const rows = await sql`SELECT version()`;
 
-console.log(rows[0].version);
+console.log(rows[0]?.version);
 ```
 
 ---

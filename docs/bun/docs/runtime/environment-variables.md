@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/environment-variables.md
-Downloaded: 2026-08-15T20:21:45.842Z
+Downloaded: 2026-08-16T20:22:01.462Z
 -->
 
 # Environment Variables
@@ -15,7 +15,7 @@ Bun reads the following files automatically (listed in order of increasing prece
 
 - `.env`
 - `.env.production`, `.env.development`, `.env.test` (depending on the value of `NODE_ENV`)
-- `.env.local`
+- `.env.local` (not loaded when `NODE_ENV=test`)
 - `.env.production.local`, `.env.development.local`, `.env.test.local` (depending on the value of `NODE_ENV`)
 
 ```ini .env icon="settings"

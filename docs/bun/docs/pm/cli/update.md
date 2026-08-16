@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/pm/cli/update.md
-Downloaded: 2026-08-15T20:21:45.849Z
+Downloaded: 2026-08-16T20:22:01.468Z
 -->
 
 # bun update
@@ -338,7 +338,8 @@ bun up
 </ParamField>
 
 <ParamField path="--dry-run" type="boolean">
-  Perform a dry run without making changes
+  Resolve updates but don't install packages, update <code>package.json</code>, or save a lockfile (the project's own
+  lifecycle scripts still run)
 </ParamField>
 
 <ParamField path="--cwd" type="string">

@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/bundler/fullstack.md
-Downloaded: 2026-08-15T20:21:45.854Z
+Downloaded: 2026-08-16T20:22:01.471Z
 -->
 
 # Fullstack dev server
@@ -33,7 +33,7 @@ const server = serve({
       },
       async POST(req) {
         const { name, email } = await req.json();
-        const [user] = await sql`INSERT INTO users (name, email) VALUES (${name}, ${email})`;
+        const [user] = await sql`INSERT INTO users (name, email) VALUES (${name}, ${email}) RETURNING *`;
         return Response.json(user);
       },
     },

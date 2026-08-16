@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/account/upgrade-account-api-usage-level.md
-Downloaded: 2026-08-14T20:31:01.985Z
+Downloaded: 2026-08-16T20:22:00.183Z
 -->
 
 > ## Documentation Index
@@ -11,6 +11,9 @@ Downloaded: 2026-08-14T20:31:01.985Z
 
 > Grants a permanent Advanced API usage-level grant. Currently only the Predictions exchange instance is supported. Criteria: at least 1 of the user's last 100 Predictions orders was created via API. Use Get Account API Limits to inspect the resulting usage tier and grants.
 
+<Note>
+  **Rate limit:** 30 tokens per request. See `GET /trade-api/v2/account/endpoint_costs` for current non-default endpoint costs.
+</Note>
 
 
 ## OpenAPI

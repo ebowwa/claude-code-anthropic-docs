@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/margin-rest/orders/amend-order.md
-Downloaded: 2026-08-14T20:31:01.994Z
+Downloaded: 2026-08-16T20:22:00.192Z
 -->
 
 > ## Documentation Index
@@ -11,6 +11,9 @@ Downloaded: 2026-08-14T20:31:01.994Z
 
 > Endpoint for amending the price and/or max number of fillable contracts in an existing margin order.
 
+<Note>
+  Amending a resting order preserves queue position only when the amendment decreases size. All other amendments — like increasing size or changing price forfeit queue position and place the order at the back of the queue.
+</Note>
 
 
 ## OpenAPI

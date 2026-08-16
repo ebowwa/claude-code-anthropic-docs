@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/orders/batch-create-orders-v2.md
-Downloaded: 2026-08-14T20:31:01.978Z
+Downloaded: 2026-08-16T20:22:00.174Z
 -->
 
 > ## Documentation Index
@@ -11,6 +11,9 @@ Downloaded: 2026-08-14T20:31:01.978Z
 
 > Endpoint for submitting a batch of event-market orders using the V2 request/response shape. The maximum batch size scales with your tier's write budget — see [Rate Limits and Tiers](/getting_started/rate_limits).
 
+<Note>
+  **Rate limit:** 10 tokens per order in the batch — billed per item, so total cost for a batch of N orders is N × 10. See `GET /trade-api/v2/account/endpoint_costs` for current non-default endpoint costs.
+</Note>
 
 
 ## OpenAPI

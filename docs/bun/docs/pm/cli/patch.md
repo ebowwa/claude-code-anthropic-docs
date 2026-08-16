@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/pm/cli/patch.md
-Downloaded: 2026-08-15T20:21:45.852Z
+Downloaded: 2026-08-16T20:22:01.469Z
 -->
 
 # bun patch
@@ -148,7 +148,8 @@ bun patch <package>@<version>
 </ParamField>
 
 <ParamField path="--dry-run" type="boolean">
-  Perform a dry run without making changes
+  Don't install packages, update <code>package.json</code>, or save a lockfile. The package is still copied into{" "}
+  <code>node_modules</code> for patching, and <code>--commit</code> still writes the patch file
 </ParamField>
 
 <ParamField path="--force" type="boolean">

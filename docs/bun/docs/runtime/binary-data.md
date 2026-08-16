@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/binary-data.md
-Downloaded: 2026-08-15T20:21:45.840Z
+Downloaded: 2026-08-16T20:22:01.461Z
 -->
 
 # Binary Data
@@ -502,8 +502,7 @@ Array.from(arr);
 #### To `Blob`
 
 ```ts
-// only if arr is a view of its entire backing ArrayBuffer
-new Blob([arr.buffer], { type: "text/plain" });
+new Blob([arr], { type: "text/plain" });
 ```
 
 #### To `ReadableStream`
@@ -740,7 +739,7 @@ blob.stream();
 ```ts
 stream; // ReadableStream
 
-const buffer = new Response(stream).arrayBuffer();
+const buffer = await new Response(stream).arrayBuffer();
 ```
 
 But this approach is verbose and adds unnecessary overhead. Bun implements optimized convenience functions for converting a `ReadableStream` to various binary formats.

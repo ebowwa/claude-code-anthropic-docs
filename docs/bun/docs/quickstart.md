@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/quickstart.md
-Downloaded: 2026-08-14T20:31:00.543Z
+Downloaded: 2026-08-16T20:22:01.456Z
 -->
 
 # Quickstart
@@ -235,7 +235,7 @@ Bun can also execute `"scripts"` from your `package.json`. Add the following scr
     "@types/bun": "latest"
   },
   "peerDependencies": {
-    "typescript": "^6"
+    "typescript": "^7"
   }
 }
 ```

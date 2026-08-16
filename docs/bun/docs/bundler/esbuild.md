@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/bundler/esbuild.md
-Downloaded: 2026-08-15T20:21:45.856Z
+Downloaded: 2026-08-16T20:22:01.472Z
 -->
 
 # esbuild
@@ -52,7 +52,7 @@ In Bun's CLI, boolean flags like `--minify` take no argument. Flags that take on
 | `--packages`           | `--packages`               | No differences                                                                                                                                                                                                                                                                                                                     |
 | `--platform`           | `--target`                 | Renamed to `--target` for consistency with tsconfig. Does not support `neutral`.                                                                                                                                                                                                                                                   |
 | `--serve`              | n/a                        | Not applicable                                                                                                                                                                                                                                                                                                                     |
-| `--sourcemap`          | `--sourcemap`              | No differences                                                                                                                                                                                                                                                                                                                     |
+| `--sourcemap`          | `--sourcemap`              | Supports `linked` (the default when no value is given), `external`, `inline`, and `none`. Does not support esbuild's `both`.                                                                                                                                                                                                       |
 | `--splitting`          | `--splitting`              | No differences                                                                                                                                                                                                                                                                                                                     |
 | `--target`             | n/a                        | Not supported. Bun's bundler performs no syntactic down-leveling.                                                                                                                                                                                                                                                                  |
 | `--watch`              | `--watch`                  | No differences                                                                                                                                                                                                                                                                                                                     |

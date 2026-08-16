@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/file-types.md
-Downloaded: 2026-08-15T20:21:45.837Z
+Downloaded: 2026-08-16T20:22:01.458Z
 -->
 
 # File Types
@@ -341,6 +341,22 @@ export default "Hello, world!";
 
 </CodeGroup>
 
+### `md`
+
+**Markdown loader**. Default for `.md` and `.markdown`.
+
+Markdown files can be directly imported. Bun renders the file to HTML and returns the HTML as a string.
+
+```ts
+import html from "./README.md";
+console.log(html); // => "<h1>Title</h1>\n"
+
+// via import attribute (`markdown` is an alias of `md`):
+import notes from "./notes.txt" with { type: "md" };
+```
+
+During bundling, Bun inlines the rendered HTML into the bundle as a string.
+
 ### `napi`
 
 **Native addon loader**. Default for `.node`.
@@ -461,7 +477,7 @@ The `html` loader behaves differently depending on how it's used:
 
 **CSS loader**. Default for `.css`.
 
-CSS files can be directly imported. This is primarily useful for [full-stack applications](/bundler/fullstack) where CSS is bundled alongside HTML.
+CSS files can be directly imported. This is primarily useful when [bundling HTML](/bundler/html-static#importing-css-in-javascript), where CSS is bundled alongside HTML.
 
 ```ts
 import "./styles.css";

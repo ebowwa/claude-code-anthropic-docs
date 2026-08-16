@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/redis.md
-Downloaded: 2026-08-15T20:21:45.842Z
+Downloaded: 2026-08-16T20:22:01.462Z
 -->
 
 # Redis
@@ -198,7 +198,7 @@ import { RedisClient } from "bun";
 const writer = new RedisClient("redis://localhost:6379");
 await writer.connect();
 
-writer.publish("general", "Hello everyone!");
+await writer.publish("general", "Hello everyone!");
 
 writer.close();
 ```

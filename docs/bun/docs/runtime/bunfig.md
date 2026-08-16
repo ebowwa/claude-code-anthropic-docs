@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/bunfig.md
-Downloaded: 2026-08-15T20:21:45.837Z
+Downloaded: 2026-08-16T20:22:01.458Z
 -->
 
 # bunfig.toml
@@ -20,7 +20,7 @@ To configure Bun's package manager globally, you can also create a `.bunfig.toml
 - `$HOME/.bunfig.toml`
 - `$XDG_CONFIG_HOME/.bunfig.toml`
 
-Only package manager commands (`bun install`, `bun add`, `bun remove`, `bun update`, `bun pm`, `bunx`, and so on) read the global file. If Bun finds both a global and a local `bunfig`, it shallow-merges them, with local overriding global. CLI flags override `bunfig` settings where applicable.
+Only package manager commands (`bun install`, `bun add`, `bun remove`, `bun update`, `bun pm`, `bunx`, and so on) read the global file. If Bun finds both a global and a local `bunfig`, it loads both; keys set in the local file override the same keys in the global file. CLI flags override `bunfig` settings where applicable.
 
 ## Runtime
 
@@ -234,11 +234,11 @@ The coverage threshold. By default, no threshold is set. If your test suite does
 coverageThreshold = 0.9
 ```
 
-You can set separate thresholds for line, function, and statement coverage.
+You can set separate thresholds for line and function coverage. Bun accepts a `statements` key but does not currently enforce it.
 
 ```toml title="bunfig.toml" icon="settings"
 [test]
-coverageThreshold = { lines = 0.7, functions = 0.8, statements = 0.9 }
+coverageThreshold = { lines = 0.7, functions = 0.8 }
 ```
 
 ### `test.coverageSkipTestFiles`

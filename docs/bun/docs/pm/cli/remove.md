@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/pm/cli/remove.md
-Downloaded: 2026-08-15T20:21:45.849Z
+Downloaded: 2026-08-16T20:22:01.467Z
 -->
 
 # bun remove
@@ -111,7 +111,8 @@ bun remove <package>
 ### Execution Control & Validation
 
 <ParamField path="--dry-run" type="boolean">
-  Perform a dry run without making changes
+  Resolve the change but don't remove packages, update <code>package.json</code>, or save a lockfile (the project's own
+  lifecycle scripts still run)
 </ParamField>
 
 <ParamField path="--force" type="boolean">

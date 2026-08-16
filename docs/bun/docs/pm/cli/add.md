@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/pm/cli/add.md
-Downloaded: 2026-08-15T20:21:45.849Z
+Downloaded: 2026-08-16T20:22:01.467Z
 -->
 
 # bun add
@@ -317,7 +317,8 @@ bun add <package> <@version>
 ### Installation Control
 
 <ParamField path="--dry-run" type="boolean">
-  Perform a dry run without making changes
+  Resolve the packages but don't install them, update <code>package.json</code>, or save a lockfile (the project's own
+  lifecycle scripts still run)
 </ParamField>
 
 <ParamField path="--force" type="boolean">

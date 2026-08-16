@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/pm/cli/install.md
-Downloaded: 2026-08-15T20:21:45.849Z
+Downloaded: 2026-08-16T20:22:01.467Z
 -->
 
 # bun install
@@ -490,7 +490,7 @@ rm -rf node_modules
 bun install --backend copyfile
 ```
 
-**`symlink`** is typically only used for `file:` dependencies internally. To prevent infinite loops, it skips symlinking the `node_modules` folder.
+**`symlink`** is typically only used for `file:` dependencies internally (for example `file:../foo` and transitive `file:` dependencies). `link:` dependencies do not use this backend; Bun installs them as a single symlink to the linked directory.
 
 If you install with `--backend=symlink`, Node.js won't resolve node_modules of dependencies unless each dependency has its own node_modules folder or you pass `--preserve-symlinks` to `node` or `bun`. See [Node.js documentation on `--preserve-symlinks`](https://nodejs.org/api/cli.html#--preserve-symlinks).
 
@@ -695,7 +695,8 @@ bun install <name>@<version>
 ### Installation Process Control
 
 <ParamField path="--dry-run" type="boolean">
-  Perform a dry run without making changes
+  Resolve dependencies but don't install packages, update package.json, or save a lockfile (the project's own lifecycle
+  scripts still run)
 </ParamField>
 
 <ParamField path="--force" type="boolean">

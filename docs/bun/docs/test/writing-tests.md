@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/test/writing-tests.md
-Downloaded: 2026-08-15T20:21:45.856Z
+Downloaded: 2026-08-16T20:22:01.473Z
 -->
 
 # Writing tests
@@ -150,7 +150,7 @@ test.todo("fix this", () => {
 });
 ```
 
-To run todo tests and find any that pass, use `bun test --todo`.
+To run todo tests and find any that pass, use `bun test --todo`. Once `myTestFunction()` works, Bun reports the test above as a failure.
 
 ```bash terminal icon="terminal"
 bun test --todo

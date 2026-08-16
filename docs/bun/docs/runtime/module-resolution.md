@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/module-resolution.md
-Downloaded: 2026-08-15T20:21:45.837Z
+Downloaded: 2026-08-16T20:22:01.458Z
 -->
 
 # Module Resolution
@@ -269,7 +269,7 @@ Multiple paths use the platform's delimiter (`:` on Unix, `;` on Windows):
 
 ```bash
 NODE_PATH=./packages:./lib bun run src/index.js  # Unix/macOS
-NODE_PATH=./packages;./lib bun run src/index.js  # Windows
+NODE_PATH="./packages;./lib" bun run src/index.js  # Windows
 ```
 
 ### Custom conditions

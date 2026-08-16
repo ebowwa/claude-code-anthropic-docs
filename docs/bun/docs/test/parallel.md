@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/test/parallel.md
-Downloaded: 2026-08-15T20:21:45.857Z
+Downloaded: 2026-08-16T20:22:01.473Z
 -->
 
 # Parallel & isolated test runs
@@ -63,7 +63,7 @@ Flags that affect how tests execute (`--timeout`, `--preload`, `--define`, `--co
 
 The coordinator merges coverage, JUnit XML and snapshot writes, so `--parallel --coverage --reporter=junit --reporter-outfile=junit.xml` produces one report.
 
-If a worker crashes (a test calls `process.exit`), the coordinator reports the file that worker was running as failed, and a replacement worker picks up the remaining files. A crash from a fatal signal aborts the whole run, so later passing files can't mask it.
+If a worker crashes (a test calls `process.exit`), the coordinator reports the file that worker was running as failed, and a replacement worker picks up the remaining files. A crash from a fatal signal aborts the whole run, so later passing files can't mask it. With a single effective worker (`--parallel=1`, or a suite with one test file), `bun test` runs the files in the main process, so `process.exit` ends the run with that exit code.
 
 ### When `--parallel` helps, and when it doesn't
 

@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/pm/isolated-installs.md
-Downloaded: 2026-08-15T20:21:45.853Z
+Downloaded: 2026-08-16T20:22:01.470Z
 -->
 
 # Isolated installs
@@ -218,7 +218,7 @@ rm -rf node_modules pnpm-lock.yaml
 bun install --linker isolated
 ```
 
-The main difference is that Bun keeps its store inside the project's `node_modules/.bun/` by default, while pnpm uses a global store with symlinks. With [`install.globalStore`](#global-virtual-store) enabled, Bun uses a global store as well.
+The layouts are close: Bun hardlinks (clones on macOS) packages from its [global cache](/pm/global-cache) into a per-project store, `node_modules/.bun/`, and symlinks top-level `node_modules` entries into it. With [`install.globalStore`](#global-virtual-store) enabled, those store entries become symlinks into a global virtual store instead.
 
 ## When to use isolated installs
 

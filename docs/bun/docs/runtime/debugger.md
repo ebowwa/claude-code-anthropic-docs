@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/debugger.md
-Downloaded: 2026-08-15T20:21:45.837Z
+Downloaded: 2026-08-16T20:22:01.457Z
 -->
 
 # Debugging
@@ -232,9 +232,9 @@ The output is a syntax-highlighted preview of the source code where the error oc
 ```ts icon="file-code"
 1 | // Create an error
 2 | const err = new Error("Something went wrong");
-                ^
+                    ^
 error: Something went wrong
-      at file.js:2:13
+      at /path/to/file.js:2:17
 ```
 
 ### V8 Stack Traces

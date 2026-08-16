@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/pm/cli/link.md
-Downloaded: 2026-08-15T20:21:45.852Z
+Downloaded: 2026-08-16T20:22:01.469Z
 -->
 
 # bun link
@@ -102,7 +102,7 @@ bun link <packages>
 </ParamField>
 
 <ParamField path="--no-save" type="boolean">
-  Don't update <code>package.json</code> or save a lockfile
+  Has no effect. <code>bun link</code> updates <code>package.json</code> and the lockfile only with <code>--save</code>
 </ParamField>
 
 <ParamField path="--save" type="boolean">
@@ -133,7 +133,8 @@ bun link <packages>
 </ParamField>
 
 <ParamField path="--dry-run" type="boolean">
-  Perform a dry run without making changes
+  With <code>bun link &lt;package&gt;</code>, resolve but don't install packages, update <code>package.json</code>, or
+  save a lockfile. Has no effect on bare <code>bun link</code>, which still registers the current package
 </ParamField>
 
 <ParamField path="--ignore-scripts" type="boolean">

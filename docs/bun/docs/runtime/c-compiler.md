@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/c-compiler.md
-Downloaded: 2026-08-15T20:21:45.844Z
+Downloaded: 2026-08-16T20:22:01.463Z
 -->
 
 # C Compiler
@@ -55,17 +55,18 @@ What is the answer to the universe? 42
 
 ### Primitive types
 
-`cc` supports the same `FFIType` values as [`dlopen`](/runtime/ffi).
+`cc` supports the same `FFIType` values as [`dlopen`](/runtime/ffi), except `buffer_length`. Only `cc` supports `napi_env` and `napi_value`.
 
 | `FFIType`  | C Type         | Aliases                     |
 | ---------- | -------------- | --------------------------- |
+| buffer     | `char*`        |                             |
 | cstring    | `char*`        |                             |
 | function   | `(void*)(*)()` | `fn`, `callback`            |
 | ptr        | `void*`        | `pointer`, `void*`, `char*` |
 | i8         | `int8_t`       | `int8_t`                    |
 | i16        | `int16_t`      | `int16_t`                   |
 | i32        | `int32_t`      | `int32_t`, `int`            |
-| i64        | `int64_t`      | `int64_t`                   |
+| i64        | `int64_t`      | `int64_t`, `isize`          |
 | i64_fast   | `int64_t`      |                             |
 | u8         | `uint8_t`      | `uint8_t`                   |
 | u16        | `uint16_t`     | `uint16_t`                  |
@@ -136,12 +137,12 @@ napi_value hello(napi_env env) {
 
 ### `cc` Reference
 
-#### `library: string[]`
+#### `library: string | string[]`
 
-Use the `library` array to specify the libraries to link with the C code.
+Use `library` to specify the libraries to link with the C code.
 
 ```ts
-type Library = string[];
+type Library = string | string[];
 
 cc({
   source: "hello.c",

@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/bundler/minifier.md
-Downloaded: 2026-08-15T20:21:45.856Z
+Downloaded: 2026-08-16T20:22:01.472Z
 -->
 
 # Minifier
@@ -689,15 +689,15 @@ function calculateSum(firstNumber, secondNumber) {
 ```
 
 ```js Output
-function a(b,c){const d=b+c;return d}
+function n(t,u){const c=t+u;return c}
 ```
 
 **Naming strategy:**
 
-- Most frequently used identifiers get the shortest names (a, b, c...)
-- Single letters: a-z (26 names)
-- Double letters: aa-zz (676 names)
-- Triple letters and beyond as needed
+- Most frequently used identifiers get the shortest names; Bun orders the alphabet by how often each character appears in the source, so the first names are usually letters like t, e and n rather than a, b, c
+- Single characters: a-z, A-Z and `_` (53 names; `$` alone is reserved)
+- Two characters: the second character can also be a digit (up to 3,456 names)
+- Three characters and beyond as needed
 
 **Preserved identifiers:**
 

@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/llm-gateway-protocol.md
-Downloaded: 2026-08-14T20:31:08.326Z
+Downloaded: 2026-08-16T20:22:14.446Z
 -->
 
 > ## Documentation Index
@@ -106,8 +106,6 @@ The strip is positional, so it only works when the gateway forwards the `system`
 * Forward the `system` array exactly as received, keeping the block first: prepending another system block, reordering the array, or converting it to a single string defeats the strip, and the block then reaches the model and the prompt cache key.
 * Keep the block in its own array entry: the endpoint treats a merged block that starts with the attribution header as attribution in its entirety and drops everything merged into it, including the rest of the system prompt.
 * If your gateway must reshape system content, set [`CLAUDE_CODE_ATTRIBUTION_HEADER=0`](/docs/en/env-vars) so Claude Code omits the block. Anthropic and the cloud providers' Claude endpoints read the block for attribution, so omit it at the client rather than stripping or moving it in the gateway.
-
-Requests that reach the endpoint unmodified are unaffected.
 
 The variable exists for gateway and third-party caching compatibility, not as a privacy control: on a direct connection the full request already goes to the Anthropic API either way. When both of these hold, Claude Code keeps the block on [auto mode](/docs/en/permission-modes#eliminate-prompts-with-auto-mode) classifier requests even when you set the variable to `0`:
 

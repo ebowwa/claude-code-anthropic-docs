@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/claude-apps-gateway.md
-Downloaded: 2026-08-13T20:42:22.034Z
+Downloaded: 2026-08-16T20:22:14.444Z
 -->
 
 > ## Documentation Index
@@ -77,8 +77,6 @@ Have these in place before you start:
 | HTTPS                                   | The gateway must be reachable over `https://` from developer laptops and from any browser used for sign-in; the gateway serves the device-verification page on the same listener. Either provide a TLS cert via `listen.tls` or run behind a TLS-terminating ingress, and set `listen.public_url` to the external origin in both cases. A plain `http://` origin is accepted only when the gateway host is loopback: `localhost`, `127.0.0.1`, or `::1`.                                                                                                                                                                                                                                    |
 | Private-network address                 | At `/login`, Claude Code requires the gateway's hostname or IP address to resolve only to private addresses: RFC 1918, link-local, CGNAT `100.64.0.0/10`, IPv6 ULA `fc00::/7`, or loopback. For a gateway you host, any public address is rejected; see the [threat model](/docs/en/claude-apps-gateway-deploy#threat-model-summary) in the deployment guide. The check runs on each resolved IP, so if any address the name resolves to is public, `/login` rejects the URL. If developer machines route HTTPS through a corporate proxy, sign-in also requires the proxy host to resolve to private addresses; if it doesn't, add the gateway host to `NO_PROXY` so the CLI connects directly. |
 | Linux runtime                           | The gateway server runs only on the native Linux binary. macOS works for local development. Windows isn't supported as a server platform.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-
-The gateway server requires the native `claude` binary; download a pinned release as described in [Install Claude Code](/docs/en/setup). The server uses runtime features that aren't available when Claude Code runs under Node. If you see `requires the native binary` at boot, switch to one of the standalone install methods.
 
 ### Steps
 
@@ -399,8 +397,6 @@ Usage telemetry carries the developer's identity, token counts, model, and laten
 The table covers which Claude Code features work when developers connect through the gateway, and what the gateway server itself supports. Where something isn't supported, the Notes column gives the alternative.
 
 The gateway delivers the [`anthropic-beta`](https://platform.claude.com/docs/en/api/beta-headers) values the CLI sends to every upstream, so operators don't maintain a beta allowlist. For Amazon Bedrock, which ignores the header, the gateway moves the values into the request body's `anthropic_beta` field; the other upstreams receive the header as sent.
-
-The CLI's gateway-session beta set omits first-party-only betas and the extended-cache-ttl beta, which is why those rows below show as not available.
 
 | Feature                                                                                                                    | Status                | Notes                                                                                                                                                                                                                                                                                                                                                                                                                            |
 | -------------------------------------------------------------------------------------------------------------------------- | --------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

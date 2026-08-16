@@ -1,8 +1,3 @@
-<!--
-Source: https://code.claude.com/docs/en/agent-sdk/examples.md
-Downloaded: 2026-08-08T20:29:47.885Z
--->
-
 > ## Documentation Index
 > Fetch the complete documentation index at: https://code.claude.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.
