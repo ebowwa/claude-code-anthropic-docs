@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/portfolio/get-balance.md
-Downloaded: 2026-08-14T20:31:01.980Z
+Downloaded: 2026-08-17T20:26:37.800Z
 -->
 
 > ## Documentation Index
@@ -9,7 +9,7 @@ Downloaded: 2026-08-14T20:31:01.980Z
 
 # Get Balance
 
-> Endpoint for getting the balance and portfolio value of a member. `portfolio_value` is always scoped to the requested `exchange_index` (defaulting to 0). When `subaccount` is omitted, `balance` is the primary account's aggregate available balance; pass `subaccount` explicitly (0 for primary, 1-63 for subaccounts) to read that subaccount's balance on the requested exchange index instead. This endpoint also accepts API keys with the 'read::portfolio_balance' scope.
+> Returns the balance and portfolio value for a member. Both values include all exchange indexes unless `exchange_index` is provided. Pass `subaccount` to use a subaccount instead of the primary account. This endpoint also accepts API keys with the 'read::portfolio_balance' scope.
 
 
 
@@ -71,12 +71,9 @@ paths:
         - portfolio
       summary: Get Balance
       description: >-
-        Endpoint for getting the balance and portfolio value of a member.
-        `portfolio_value` is always scoped to the requested `exchange_index`
-        (defaulting to 0). When `subaccount` is omitted, `balance` is the
-        primary account's aggregate available balance; pass `subaccount`
-        explicitly (0 for primary, 1-63 for subaccounts) to read that
-        subaccount's balance on the requested exchange index instead. This
+        Returns the balance and portfolio value for a member. Both values
+        include all exchange indexes unless `exchange_index` is provided. Pass
+        `subaccount` to use a subaccount instead of the primary account. This
         endpoint also accepts API keys with the 'read::portfolio_balance' scope.
       operationId: GetBalance
       parameters:
@@ -85,10 +82,9 @@ paths:
           in: query
           schema:
             $ref: '#/components/schemas/ExchangeIndex'
-          x-go-type-skip-optional-pointer: true
           description: >-
-            Exchange index to scope the returned portfolio value to, and the
-            balance when `subaccount` is provided. Defaults to 0.
+            Exchange index used to scope the balance and portfolio value. If
+            omitted, both include all exchange indexes.
       responses:
         '200':
           description: Balance retrieved successfully
@@ -115,7 +111,7 @@ components:
   schemas:
     ExchangeIndex:
       type: integer
-      description: Identifier for an exchange shard. Defaults to 0 if unspecified.
+      description: Identifier for an exchange shard.
       example: 0
     GetBalanceResponse:
       type: object
@@ -129,20 +125,22 @@ components:
           type: integer
           format: int64
           description: >-
-            Member's available balance in cents. This represents the amount
-            available for trading.
+            Member's available balance in cents for the requested account and
+            exchange index. It includes all exchange indexes when
+            `exchange_index` is omitted.
         balance_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: >-
-            Member's available balance as a fixed-point dollar string. This
-            represents the amount available for trading.
+            Member's available balance as a fixed-point dollar string for the
+            requested account and exchange index. It includes all exchange
+            indexes when `exchange_index` is omitted.
         portfolio_value:
           type: integer
           format: int64
           description: >-
-            Member's portfolio value in cents. This is the current value of the
-            positions held by the requested subaccount on the requested exchange
-            index.
+            Member's portfolio value in cents for the requested account and
+            exchange index. It includes all exchange indexes when
+            `exchange_index` is omitted.
         updated_ts:
           type: integer
           format: int64

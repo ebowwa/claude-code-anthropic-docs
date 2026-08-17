@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/multivariate/get-multivariate-event-collections.md
-Downloaded: 2026-08-12T20:44:24.191Z
+Downloaded: 2026-08-17T20:26:37.806Z
 -->
 
 > ## Documentation Index
@@ -254,7 +254,7 @@ components:
           description: Additional details about the error, if available
     ExchangeIndex:
       type: integer
-      description: Identifier for an exchange shard. Defaults to 0 if unspecified.
+      description: Identifier for an exchange shard.
       example: 0
     AssociatedEvent:
       type: object

@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/margin-rest/fcm/get-fcm-subtrader-risk-controls.md
-Downloaded: 2026-08-14T20:31:01.992Z
+Downloaded: 2026-08-17T20:26:37.811Z
 -->
 
 > ## Documentation Index
@@ -53,6 +53,8 @@ tags:
     description: Funding rates and payment history
   - name: fees
     description: Margin fee schedule
+  - name: exit-triggers
+    description: Stop-loss, take-profit, and trailing-stop triggers on margin positions
 paths:
   /margin/fcm/subtraders/risk_controls:
     get:

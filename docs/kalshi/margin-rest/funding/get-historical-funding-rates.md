@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/margin-rest/funding/get-historical-funding-rates.md
-Downloaded: 2026-08-14T20:31:01.995Z
+Downloaded: 2026-08-17T20:26:37.815Z
 -->
 
 > ## Documentation Index
@@ -50,6 +50,8 @@ tags:
     description: Funding rates and payment history
   - name: fees
     description: Margin fee schedule
+  - name: exit-triggers
+    description: Stop-loss, take-profit, and trailing-stop triggers on margin positions
 paths:
   /margin/funding_rates/historical:
     get:

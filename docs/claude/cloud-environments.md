@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/cloud-environments.md
-Downloaded: 2026-08-13T20:42:22.039Z
+Downloaded: 2026-08-17T20:26:45.830Z
 -->
 
 > ## Documentation Index
@@ -107,8 +107,6 @@ In [Claude Tag](https://claude.com/docs/claude-tag/overview) channels, Claude wo
 
 * Set a shared environment as the organization's [default environment](#the-default-environment) at [claude.ai/admin-settings/claude-code](https://claude.ai/admin-settings/claude-code).
 * [Pin one to a channel](https://claude.com/docs/claude-tag/admins/troubleshooting#channel-sessions-use-the-wrong-environment-or-can%E2%80%99t-find-one) in the Claude Tag admin settings.
-
-Shared environments add to members' selectors rather than replacing them.
 
 ## Network access
 
@@ -404,8 +402,6 @@ SessionStart hooks behave the same in the cloud as locally, with these caveats:
 * **Requires network access**: install commands need to reach package registries. If your environment uses **None** network access, these hooks fail. The [default allowlist](#default-allowed-domains) under **Trusted** covers npm, PyPI, RubyGems, and crates.io.
 * **Proxy compatibility**: in Anthropic-hosted environments, all outbound traffic passes through a [security proxy](#security-proxy), and some package managers don't work correctly with it; Bun is a known example. In a [self-hosted environment](/docs/en/self-hosted-environments-deploy#default-deny-egress), outbound traffic goes through your own network boundary instead.
 * **Adds startup latency**: hooks run each time a session starts or resumes, unlike setup scripts which benefit from [environment caching](#environment-caching). Keep install scripts fast by checking whether dependencies are already present before reinstalling.
-
-To persist environment variables for subsequent Bash commands, write to the file at `$CLAUDE_ENV_FILE`. See [SessionStart hooks](/docs/en/hooks#sessionstart) for details.
 
 To customize the base image, use a setup script to install what you need on top of the [provided image](#installed-tools), or run your own image as a container alongside Claude with `docker compose`. Replacing the base image entirely isn't supported yet.
 

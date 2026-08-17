@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.kalshi.com/margin-rest/fees/get-fee-tiers.md
+Downloaded: 2026-08-17T20:26:37.815Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -45,6 +50,8 @@ tags:
     description: Funding rates and payment history
   - name: fees
     description: Margin fee schedule
+  - name: exit-triggers
+    description: Stop-loss, take-profit, and trailing-stop triggers on margin positions
 paths:
   /margin/fee_tiers:
     get:

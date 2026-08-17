@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/portfolio/get-total-resting-order-value.md
-Downloaded: 2026-08-14T20:31:01.981Z
+Downloaded: 2026-08-17T20:26:37.801Z
 -->
 
 > ## Documentation Index
@@ -130,7 +130,7 @@ components:
           description: Additional details about the error, if available
     ExchangeIndex:
       type: integer
-      description: Identifier for an exchange shard. Defaults to 0 if unspecified.
+      description: Identifier for an exchange shard.
       example: 0
     FixedPointDollars:
       type: string

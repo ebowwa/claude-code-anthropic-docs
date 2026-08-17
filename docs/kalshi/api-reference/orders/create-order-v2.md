@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/orders/create-order-v2.md
-Downloaded: 2026-08-14T20:31:01.978Z
+Downloaded: 2026-08-17T20:26:37.798Z
 -->
 
 > ## Documentation Index
@@ -303,7 +303,7 @@ components:
         matching.
     ExchangeIndex:
       type: integer
-      description: Identifier for an exchange shard. Defaults to 0 if unspecified.
+      description: Identifier for an exchange shard.
       example: 0
     ErrorResponse:
       type: object

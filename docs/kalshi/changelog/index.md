@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/changelog/index.md
-Downloaded: 2026-08-15T20:21:46.263Z
+Downloaded: 2026-08-17T20:26:37.821Z
 -->
 
 > ## Documentation Index
@@ -20,6 +20,32 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="August 27, 2026"
+  tags={["REST", "WebSocket", "FIX", "Predictions"]}
+  rss={{
+title: "Tapered sub-cent pricing on multivariate (combo) markets",
+description: "Combo markets move from uniform $0.001 ticks to center_deci_edge_centi_cent, with $0.0001 ticks below $0.01 and above $0.99."
+}}
+>
+  Multivariate (combo) markets are moving from `deci_cent` (a uniform \$0.001
+  tick) to `center_deci_edge_centi_cent`: \$0.0001 (0.01¢) ticks below \$0.01
+  and above \$0.99, with \$0.001 (0.1¢) ticks in between. Other markets are
+  unchanged.
+
+  No API fields or message formats change. Prices below \$0.01 and above
+  \$0.99 use all four decimal places of the existing `*_dollars` fields — read
+  prices from those fields (integer-cent fields cannot represent sub-cent
+  prices) and snap order and RFQ quote prices to the `step` of the band
+  containing the price in the market's `price_ranges` array rather than keying
+  off the structure name.
+
+  Existing combo markets migrate in place with resting orders preserved. After
+  this release every combo market is on `center_deci_edge_centi_cent`. See
+  [Fixed-Point Representation](/getting_started/fixed_point_migration) for the
+  full structure reference.
+</Update>
 
 <Update
   label="August 24, 2026"
@@ -78,6 +104,93 @@ description: "Orders, positions, and fills can be filtered by exchange_index."
 >
   `GET /portfolio/orders`, `GET /portfolio/positions`, and `GET /portfolio/fills` now accept an optional `exchange_index` filter.
   Omitting it returns results from all exchange indexes.
+</Update>
+
+<Update
+  label="August 20, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "RFQs and combo-market creation for sub-account-restricted API keys",
+description: "Restricted keys can run the full REST RFQ lifecycle scoped to their sub-account"
+}}
+>
+  Sub-account-restricted API keys can now use the
+  [communications endpoints](/api-reference/communications) and create combo
+  markets, scoped to the key's locked sub-account: omitting `subaccount` acts
+  on the locked sub-account, any other sub-account is rejected, and a
+  different sub-account's RFQs and quotes cannot be read in detail or acted
+  on. Scoping matches rows created through the API; web-created RFQs are not
+  addressable per sub-account. The `write::trade` scope is now sufficient for
+  `POST /multivariate_event_collections/{collection_ticker}` (parent `write`
+  keys are unaffected). On FIX, restricted sessions still support the maker
+  quote lifecycle only; block-trade endpoints also remain unavailable to
+  restricted keys.
+</Update>
+
+<Update
+  label="August 20, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Optional balance reads by exchange_index",
+description: "GetBalance returns totals by default and scopes balance and portfolio_value when exchange_index is provided."
+}}
+>
+  `GET /trade-api/v2/portfolio/balance` returns `balance` and `portfolio_value`
+  across all exchange indexes by default. Pass `exchange_index` to scope both
+  values to one exchange index.
+</Update>
+
+<Update
+  label="August 16, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "API key location attestation expiry",
+description: "Get API Keys now returns api_key_region_expiration_ts."
+}}
+>
+  `GET /trade-api/v2/api_keys` now returns `api_key_region_expiration_ts`, the
+  unix timestamp (seconds) when your location attestation for API key requests
+  expires. Once this date has passed, API keys are not valid for trading
+  Sports, Elections, and Entertainment markets. The field is absent when the
+  account has never attested.
+</Update>
+
+<Update
+  label="August 20, 2026"
+  tags={["REST", "Margin"]}
+  rss={{
+title: "Exit triggers on margin positions",
+description: "New REST endpoints to set, read, and cancel stop-loss, take-profit, and trailing-stop triggers on margin positions."
+}}
+>
+  Stop-loss, take-profit, and trailing-stop triggers on margin positions are now available
+  over REST:
+
+  * `PUT`, `GET`, and `DELETE` on `/trade-api/v2/margin/isolated/positions/{ticker}/exit_trigger`
+  * `PUT`, `GET`, and `DELETE` on `/trade-api/v2/margin/cross/positions/{ticker}/exit_trigger`
+  * `PUT` and `DELETE` on `/trade-api/v2/margin/cross/positions/{ticker}/exit_trigger/{trigger_id}`
+
+  A position holds at most one live `trailing` stop. Non-isolated positions may hold up to 20
+  live `bracket` (stop-loss / take-profit) triggers at once, so long as their counts fit the
+  position. Isolated positions hold one. `kind` selects the family: on `GET` and `DELETE`,
+  omitting it covers both, while a `PUT` without one writes a `bracket`. Orders fired by a
+  trigger are reduce-only.
+
+  Order-anchored triggers return to `pending_on_entry` after closing their current quantity,
+  because the anchor order can still add fills — so `status` is not monotonic, and only a
+  `filled` trigger with no `anchor_order_id` is done. A `count` or `anchor_order_id` create
+  appends a trigger, so it requires `client_trigger_id` and replaying one returns the trigger
+  the first request made; the key belongs to the position it created on, and reusing it for
+  another position returns `409` rather than that position's trigger.
+
+  Non-isolated positions take a `subaccount`, and additionally support partial triggers via
+  `count`, triggers tied to an order via `anchor_order_id`, and the `{trigger_id}` routes for
+  managing one of several triggers on the same position. Isolated positions hold a single
+  trigger per kind and always close in full. A supplied `count` must be a whole number of
+  contracts.
+
+  If an anchor order cannot currently be validated, its trigger request returns `409` with
+  error code `anchor_order_unavailable` before writing a trigger. Retrying that response is safe.
 </Update>
 
 <Update
@@ -183,30 +296,6 @@ description: "The deprecated multivariate lookup REST endpoint and multivariate 
 
   * `PUT /trade-api/v2/multivariate_event_collections/{collection_ticker}/lookup` no longer exists. This endpoint predated RFQs and had been marked deprecated; use `POST /trade-api/v2/multivariate_event_collections/{collection_ticker}` to create or resolve a combo market, or the communications (RFQ) APIs for quoting workflows.
   * The `multivariate` WebSocket channel (message type `multivariate_lookup`) no longer exists. Subscriptions to it now return an unknown-channel error. For multivariate market state changes, use the `multivariate_market_lifecycle` channel.
-</Update>
-
-<Update
-  label="August 17, 2026"
-  tags={["REST", "WebSocket", "FIX", "Predictions"]}
-  rss={{
-title: "Centicent pricing on multivariate (combo) markets",
-description: "Combo markets are moving from $0.001 to $0.0001 ticks via a new price_level_structure."
-}}
->
-  Multivariate (combo) markets are moving from `deci_cent` (\$0.001 ticks) to
-  a new `price_level_structure`, `center_centi_edge_centi_cent`: a uniform
-  \$0.0001 (0.01¢) tick across the full range. Other markets are unchanged.
-
-  No API fields or message formats change. Prices on these markets use all
-  four decimal places of the existing `*_dollars` fields — read prices from
-  those fields (integer-cent fields cannot represent sub-cent prices) and
-  snap order and RFQ quote prices to the `step` in the market's
-  `price_ranges` array rather than keying off the structure name.
-
-  Existing combo markets migrate in place with resting orders preserved, each
-  emitting the existing `price_level_structure_updated` event with its new
-  `price_ranges`. See [Fixed-Point Representation](/getting_started/fixed_point_migration)
-  for the full structure reference.
 </Update>
 
 <Update

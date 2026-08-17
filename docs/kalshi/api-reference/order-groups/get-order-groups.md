@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/order-groups/get-order-groups.md
-Downloaded: 2026-08-12T20:44:24.182Z
+Downloaded: 2026-08-17T20:26:37.799Z
 -->
 
 > ## Documentation Index
@@ -158,7 +158,7 @@ components:
       example: '10.00'
     ExchangeIndex:
       type: integer
-      description: Identifier for an exchange shard. Defaults to 0 if unspecified.
+      description: Identifier for an exchange shard.
       example: 0
   responses:
     BadRequestError:

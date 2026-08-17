@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/order-groups/update-order-group-limit.md
-Downloaded: 2026-08-12T20:44:24.183Z
+Downloaded: 2026-08-17T20:26:37.800Z
 -->
 
 > ## Documentation Index
@@ -151,7 +151,7 @@ components:
       description: An empty response body
     ExchangeIndex:
       type: integer
-      description: Identifier for an exchange shard. Defaults to 0 if unspecified.
+      description: Identifier for an exchange shard.
       example: 0
     FixedPointCount:
       type: string

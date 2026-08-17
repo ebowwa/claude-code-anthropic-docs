@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/exchange/get-exchange-status.md
-Downloaded: 2026-08-12T20:44:24.178Z
+Downloaded: 2026-08-17T20:26:37.794Z
 -->
 
 > ## Documentation Index
@@ -168,7 +168,7 @@ components:
             exchange index. False when transfers are temporarily blocked.
     ExchangeIndex:
       type: integer
-      description: Identifier for an exchange shard. Defaults to 0 if unspecified.
+      description: Identifier for an exchange shard.
       example: 0
 
 ````

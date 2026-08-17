@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/margin-rest/orders/amend-order.md
-Downloaded: 2026-08-16T20:22:00.192Z
+Downloaded: 2026-08-17T20:26:37.813Z
 -->
 
 > ## Documentation Index
@@ -53,6 +53,8 @@ tags:
     description: Funding rates and payment history
   - name: fees
     description: Margin fee schedule
+  - name: exit-triggers
+    description: Stop-loss, take-profit, and trailing-stop triggers on margin positions
 paths:
   /margin/orders/{order_id}/amend:
     post:

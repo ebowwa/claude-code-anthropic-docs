@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/historical/get-historical-orders.md
-Downloaded: 2026-08-14T20:31:01.989Z
+Downloaded: 2026-08-17T20:26:37.806Z
 -->
 
 > ## Documentation Index
@@ -365,7 +365,7 @@ components:
         matching.
     ExchangeIndex:
       type: integer
-      description: Identifier for an exchange shard. Defaults to 0 if unspecified.
+      description: Identifier for an exchange shard.
       example: 0
   responses:
     BadRequestError:

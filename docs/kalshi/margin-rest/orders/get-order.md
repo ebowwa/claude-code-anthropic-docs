@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/margin-rest/orders/get-order.md
-Downloaded: 2026-08-14T20:31:01.993Z
+Downloaded: 2026-08-17T20:26:37.813Z
 -->
 
 > ## Documentation Index
@@ -50,6 +50,8 @@ tags:
     description: Funding rates and payment history
   - name: fees
     description: Margin fee schedule
+  - name: exit-triggers
+    description: Stop-loss, take-profit, and trailing-stop triggers on margin positions
 paths:
   /margin/orders/{order_id}:
     get:
