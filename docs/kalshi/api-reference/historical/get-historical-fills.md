@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/historical/get-historical-fills.md
-Downloaded: 2026-08-14T20:31:01.988Z
+Downloaded: 2026-08-18T20:23:40.027Z
 -->
 
 > ## Documentation Index
@@ -151,6 +151,7 @@ components:
       type: object
       required:
         - fill_id
+        - exchange_index
         - trade_id
         - order_id
         - ticker
@@ -166,6 +167,8 @@ components:
         fill_id:
           type: string
           description: Unique identifier for this fill
+        exchange_index:
+          $ref: '#/components/schemas/ExchangeIndex'
         trade_id:
           type: string
           description: Unique identifier for this fill (legacy field name, same as fill_id)
@@ -279,6 +282,10 @@ components:
         details:
           type: string
           description: Additional details about the error, if available
+    ExchangeIndex:
+      type: integer
+      description: Identifier for an exchange shard.
+      example: 0
     BookSide:
       type: string
       enum:

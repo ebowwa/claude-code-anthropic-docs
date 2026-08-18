@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/changelog/index.md
-Downloaded: 2026-08-17T20:26:37.821Z
+Downloaded: 2026-08-18T20:23:40.038Z
 -->
 
 > ## Documentation Index
@@ -20,6 +20,28 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="August 20, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Kalshi Weather Index endpoint",
+description: "GET /trade-api/v2/live_data/weather/{city} serves the minute-resolution city temperature index, with an optional per-station breakdown."
+}}
+>
+  New endpoint: `GET /trade-api/v2/live_data/weather/{city}` serves the
+  Kalshi-computed city temperature index — the canonical minute-resolution
+  series behind hourly temperature markets (`miami` first). Values are
+  Fahrenheit rounded to 0.01; minutes where the index quorum failed are
+  omitted, so gaps are real gaps. Window via `from`/`to` (unix ms) or
+  `last_sec`, defaulting to the trailing 24 hours. With `detailed=true`,
+  each point carries every member station's reported reading and
+  quality-control disposition before incorporation into the index, and
+  trailing minutes still inside the receipt deadline are additionally
+  served as `incomplete` points: no index value (`v` is absent, not `0`),
+  with the raw, not-yet-quality-controlled station readings recorded so
+  far (station code `pending`).
+</Update>
 
 <Update
   label="August 27, 2026"
@@ -85,6 +107,38 @@ description: "Maker fees will be enabled Wednesday night; post-only mode will be
   label="August 20, 2026"
   tags={["REST", "Predictions"]}
   rss={{
+title: "Cross-shard subaccount transfers",
+description: "Intra Exchange Instance Transfer now supports subaccounts."
+}}
+>
+  `POST /trade-api/v2/portfolio/intra_exchange_instance_transfer` accepts
+  optional `source_subaccount` and `destination_subaccount` fields for
+  transfers between prediction exchange indexes.
+
+  Cross-exchange-index subaccount transfers run in up to three non-atomic
+  steps. If a later step fails, completed steps are not undone,
+  so funds may remain in the primary account on the source or destination
+  exchange index.
+</Update>
+
+<Update
+  label="August 20, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Target balance allocation endpoints",
+description: "Target balance allocation endpoints"
+}}
+>
+  New endpoints available for managing a target balance allocation across exchange shards.
+
+  * `POST /trade-api/v2/portfolio/target_balance_allocation`
+  * `GET /trade-api/v2/portfolio/target_balance_allocation`
+</Update>
+
+<Update
+  label="August 20, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
 title: "Resting order value breakdown by exchange index",
 description: "Get Total Resting Order Value now returns a per-exchange-index breakdown."
 }}
@@ -92,6 +146,17 @@ description: "Get Total Resting Order Value now returns a per-exchange-index bre
   `GET /trade-api/v2/portfolio/summary/total_resting_order_value` now returns
   `resting_order_value_breakdown`, with a fixed-point dollar `balance` for each
   exchange index.
+</Update>
+
+<Update
+  label="August 20, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Exchange index on portfolio records",
+description: "Exchange index provided on fill, settlement, and market position responses."
+}}
+>
+  Exchange index provided on fill, settlement, and market position responses.
 </Update>
 
 <Update

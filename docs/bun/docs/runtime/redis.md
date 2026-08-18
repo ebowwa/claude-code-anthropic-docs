@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/redis.md
-Downloaded: 2026-08-16T20:22:01.462Z
+Downloaded: 2026-08-18T20:23:42.635Z
 -->
 
 # Redis
@@ -386,7 +386,10 @@ const client = new RedisClient("redis://localhost:6379", {
   // Connection timeout in milliseconds (default: 10000)
   connectionTimeout: 5000,
 
-  // Idle timeout in milliseconds (default: 0 = no timeout)
+  // Idle timeout in milliseconds (default: 0 = no timeout). Bun counts it
+  // from the last data the server sent. Sending does not reset it. When it
+  // fires, Bun closes the connection and runs onclose. Bun does not reconnect
+  // on its own, even with autoReconnect: true. Call connect() to reconnect.
   idleTimeout: 30000,
 
   // Whether to automatically reconnect on disconnection (default: true)

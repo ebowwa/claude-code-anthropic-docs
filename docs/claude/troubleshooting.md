@@ -1,3 +1,8 @@
+<!--
+Source: https://code.claude.com/docs/en/troubleshooting.md
+Downloaded: 2026-08-18T20:23:49.705Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://code.claude.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -14,6 +19,7 @@ This page covers performance, stability, and search problems once Claude Code is
 | Update or install download fails with `The connection dropped while downloading the update` or `aborted`                                             | [Error reference](/docs/en/errors#the-connection-dropped-while-downloading-the-update)        |
 | Login loops, OAuth errors, `403 Forbidden`, "organization disabled", Amazon Bedrock, Google Cloud's Agent Platform, or Microsoft Foundry credentials | [Troubleshoot installation and login](/docs/en/troubleshoot-install#login-and-authentication) |
 | Settings not applying, hooks not firing, MCP servers not loading                                                                                     | [Debug your configuration](/docs/en/debug-your-config)                                        |
+| Session started in auto mode, or Claude edits files and runs commands without asking                                                                 | [Which mode a session starts in](/docs/en/permission-modes#which-mode-a-session-starts-in)    |
 | `API Error: 5xx`, `529 Overloaded`, `429`, request validation errors                                                                                 | [Error reference](/docs/en/errors)                                                            |
 | `model not found` or `you may not have access to it`                                                                                                 | [Error reference](/docs/en/errors#theres-an-issue-with-the-selected-model)                    |
 | VS Code extension not connecting or detecting Claude                                                                                                 | [VS Code integration](/docs/en/vs-code#fix-common-issues)                                     |

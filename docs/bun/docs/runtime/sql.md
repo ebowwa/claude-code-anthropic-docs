@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/sql.md
-Downloaded: 2026-08-16T20:22:01.461Z
+Downloaded: 2026-08-18T20:23:42.635Z
 -->
 
 # SQL
@@ -1004,6 +1004,13 @@ try {
   using reserved = await sql.reserve();
   await reserved`SELECT 1`;
 } // Automatically released
+```
+
+When every connection is busy, `reserve()` waits until one frees up. Pass an `AbortSignal` to stop waiting: the promise rejects with `signal.reason` and no connection is taken from the pool. Aborting after the promise resolved has no effect, so a connection you received must still be released.
+
+```ts
+// Give up if no connection frees up within 5 seconds
+using reserved = await sql.reserve({ signal: AbortSignal.timeout(5000) });
 ```
 
 ---

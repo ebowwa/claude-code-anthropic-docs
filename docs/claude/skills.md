@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/skills.md
-Downloaded: 2026-08-17T20:26:45.819Z
+Downloaded: 2026-08-18T20:23:49.703Z
 -->
 
 > ## Documentation Index
@@ -266,6 +266,18 @@ What Claude Code does with a synced skill's body depends on where the session ru
 * In a cloud session, the body keeps the behavior a local skill has, because the session runs in an isolated container.
 * In a Cowork session on your desktop, the body keeps the behavior a local skill has, except that Claude Code replaces every `!` command line with the [`disableSkillShellExecution` placeholder](#inject-dynamic-context), as it does for every skill you supply there.
 * In any other session on your machine, Claude Code doesn't run [`!` commands](#inject-dynamic-context), doesn't attach the files that `@` references name the way it does for a local skill, and doesn't substitute the `${CLAUDE_PROJECT_DIR}` and `${CLAUDE_SESSION_ID}` placeholders, so the `@` references and both placeholders reach Claude as literal text. A `!` command line reaches Claude as literal text too, or as that placeholder when `disableSkillShellExecution` is on.
+
+### Remove a skill
+
+How you remove a skill depends on where it came from:
+
+* **Personal or project skill**: delete the skill's directory, `~/.claude/skills/<skill-name>/` or `.claude/skills/<skill-name>/`. Claude Code [drops it from `/skills` in the current session](#live-change-detection); content from an invocation earlier in the session [stays in context](#skill-content-lifecycle) until the session ends.
+* **Enterprise skill**: an administrator deletes the skill's directory from `.claude/skills/` inside the [managed settings directory](/docs/en/settings#settings-files), for example `/etc/claude-code/.claude/skills/<skill-name>/` on Linux.
+* **Plugin skill**: disable or uninstall the plugin that provides it, from the `/plugin` menu or with `/plugin uninstall <plugin-name>@<marketplace-name>`. Claude Code unloads the plugin's skills after you run `/reload-plugins` or restart; see [Apply plugin changes without restarting](/docs/en/discover-plugins#apply-plugin-changes-without-restarting).
+* **Skill synced from claude.ai**: turn the skill off for your claude.ai account, in the same place you [enabled it](#skills-in-cowork-and-cloud-sessions). Claude Code removes it from `~/.claude/skills/synced/` the next time it [syncs your skills](#where-synced-skills-load). If you delete the directory by hand instead, the next sync downloads it again while the skill stays enabled on claude.ai.
+* **Bundled skill**: set [`disableBundledSkills`](#bundled-skills) to `true` to turn off every bundled skill except `/doctor`, or set one skill to `"off"` in [`skillOverrides`](#override-skill-visibility-from-settings) to hide it.
+
+To keep a personal or project skill but stop Claude from invoking it on its own, set [`disable-model-invocation: true`](#control-who-invokes-a-skill) in its frontmatter, or `"user-invocable-only"` in [`skillOverrides`](#override-skill-visibility-from-settings) when you don't want to edit the file.
 
 ## Configure skills
 
@@ -774,7 +786,7 @@ Each key is a skill name and each value is one of four states:
 
 The `/skills` menu labels the `"user-invocable-only"` state `user-only`.
 
-As of v2.1.199, `"off"` also hides the skill from the command lists advertised to [Remote Control](/docs/en/remote-control) clients and to [Agent SDK](/docs/en/agent-sdk/slash-commands) callers, in addition to the terminal `/` menu. Invoking a hidden skill by its full name still returns the `skillOverrides` error instead of running it.
+As of v2.1.199, `"off"` also hides the skill from the command lists advertised to [Remote Control](/docs/en/remote-control) clients and to [Agent SDK](/docs/en/agent-sdk/skills#discover-available-commands) callers, in addition to the terminal `/` menu. Invoking a hidden skill by its full name still returns the `skillOverrides` error instead of running it.
 
 A skill that is absent from `skillOverrides` is treated as `"on"`. The example below collapses one skill to its name and turns another off entirely:
 

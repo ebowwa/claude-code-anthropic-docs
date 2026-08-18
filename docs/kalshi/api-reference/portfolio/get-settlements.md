@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/portfolio/get-settlements.md
-Downloaded: 2026-08-14T20:31:01.981Z
+Downloaded: 2026-08-18T20:23:40.021Z
 -->
 
 > ## Documentation Index
@@ -173,6 +173,7 @@ components:
       type: object
       required:
         - ticker
+        - exchange_index
         - event_ticker
         - market_result
         - yes_count_fp
@@ -186,6 +187,8 @@ components:
         ticker:
           type: string
           description: The ticker symbol of the market that was settled.
+        exchange_index:
+          $ref: '#/components/schemas/ExchangeIndex'
         event_ticker:
           type: string
           description: The event ticker symbol of the market that was settled.
@@ -244,6 +247,10 @@ components:
         details:
           type: string
           description: Additional details about the error, if available
+    ExchangeIndex:
+      type: integer
+      description: Identifier for an exchange shard.
+      example: 0
     FixedPointCount:
       type: string
       description: >-

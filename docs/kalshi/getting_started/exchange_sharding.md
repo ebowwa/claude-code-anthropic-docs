@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/getting_started/exchange_sharding.md
-Downloaded: 2026-08-13T20:42:15.548Z
+Downloaded: 2026-08-18T20:23:40.016Z
 -->
 
 > ## Documentation Index
@@ -42,6 +42,14 @@ Kalshi's collateralization checks will continue to run within the matching engin
 * Next, use [Create Subaccount](/api-reference/portfolio/create-subaccount) with the `exchange_index` parameter to provision the subaccount on the new instance.
 * Then, use [Transfer Between Subaccounts](/api-reference/portfolio/transfer-between-subaccounts) with the `exchange_index` parameter to transfer funds from the primary account to the subaccount on that instance.
 * [Get All Subaccount Balances](/api-reference/portfolio/get-all-subaccount-balances) provides a breakdown of subaccount balances for each `(exchange_index, subaccount)` pair.
+
+**Auto-Rebalancing**
+
+* Institutional clients may opt in to automatic rebalancing between exchange shards.
+* The customer supplies a target balance allocation as a percentage of free capital per exchange shard. For example, `{Default: 80, Combos: 20}`.
+* Every 10 seconds, Kalshi computes the customer's free margin on each exchange shard as its balance minus the value of its resting orders.
+* If free margin has drifted from the target allocation, Kalshi executes an intra-exchange account transfer on the customer's behalf to restore the target allocation.
+* Target balance allocations can be configured through the [REST API](/api-reference/portfolio/set-target-balance-allocation) and the clearing portal.
 
 ## Order routing
 

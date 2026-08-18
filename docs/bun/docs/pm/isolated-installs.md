@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/pm/isolated-installs.md
-Downloaded: 2026-08-16T20:22:01.470Z
+Downloaded: 2026-08-18T20:23:42.641Z
 -->
 
 # Isolated installs
@@ -88,6 +88,8 @@ node_modules/
 │   └── ...
 └── package-name -> .bun/package@1.0.0/node_modules/package  # Symlinks
 ```
+
+The part of a store directory name after `@` is the package's resolution. For a registry package, that is its version. For a folder, tarball, git, or GitHub dependency, Bun derives it from the path or URL (plus the commit), so it can be long. Bun writes at most 80 bytes of it: it cuts a longer resolution to at most 63 bytes and appends `+` and 16 hex digits derived from the full resolution. The path of a package inside the store is therefore at most `34 + 2 * <name length> + 80` characters longer than your project directory (17 more when the package has peer dependencies). This matters on Windows, where a path longer than 260 characters still works for Bun itself, but not as the working directory of the package's lifecycle scripts.
 
 ### Resolution algorithm
 

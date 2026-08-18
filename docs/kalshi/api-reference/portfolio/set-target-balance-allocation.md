@@ -1,24 +1,23 @@
 <!--
-Source: https://docs.kalshi.com/api-reference/portfolio/intra-account-transfer.md
-Downloaded: 2026-08-18T20:23:40.020Z
+Source: https://docs.kalshi.com/api-reference/portfolio/set-target-balance-allocation.md
+Downloaded: 2026-08-18T20:23:40.022Z
 -->
 
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Intra Account Transfer
+# Set Target Balance Allocation
 
-> Transfers funds within the same account.
-
-Cross-exchange-index subaccount transfers run in up to three non-atomic steps. If a later step fails, completed steps are not undone, so funds may remain in the primary account on the source or destination exchange index.
+> Replaces the caller's target balance allocation across exchange indexes.
+Percentages must total 100. Passing an empty allocations array disables automatic rebalancing.
 
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml post /portfolio/intra_exchange_instance_transfer
+````yaml /openapi.yaml post /portfolio/target_balance_allocation
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -68,33 +67,30 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/intra_exchange_instance_transfer:
+  /portfolio/target_balance_allocation:
     post:
       tags:
         - portfolio
-      summary: Intra Account Transfer
+      summary: Set Target Balance Allocation
       description: >
-        Transfers funds within the same account.
+        Replaces the caller's target balance allocation across exchange indexes.
 
-
-        Cross-exchange-index subaccount transfers run in up to three non-atomic
-        steps. If a later step fails, completed steps are not undone, so funds
-        may remain in the primary account on the source or destination exchange
-        index.
-      operationId: IntraExchangeInstanceTransfer
+        Percentages must total 100. Passing an empty allocations array disables
+        automatic rebalancing.
+      operationId: SetTargetBalanceAllocation
       requestBody:
         required: true
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/IntraExchangeInstanceTransferRequest'
+              $ref: '#/components/schemas/SetTargetBalanceAllocationRequest'
       responses:
         '200':
-          description: Transfer request accepted. The transfer is processed asynchronously.
+          description: Target balance allocation updated successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IntraExchangeInstanceTransferResponse'
+                $ref: '#/components/schemas/EmptyResponse'
         '400':
           $ref: '#/components/responses/BadRequestError'
         '401':
@@ -109,73 +105,42 @@ paths:
           kalshiAccessTimestamp: []
 components:
   schemas:
-    IntraExchangeInstanceTransferRequest:
+    SetTargetBalanceAllocationRequest:
       type: object
       required:
-        - source
-        - destination
-        - amount
+        - allocations
       properties:
-        source:
-          $ref: '#/components/schemas/ExchangeInstance'
-          description: The source exchange instance
-        destination:
-          $ref: '#/components/schemas/ExchangeInstance'
-          description: The destination exchange instance
-        amount:
+        allocations:
+          type: array
+          maxItems: 101
+          x-oapi-codegen-extra-tags:
+            validate: max=101,dive
+          items:
+            $ref: '#/components/schemas/TargetBalanceAllocationInput'
+    EmptyResponse:
+      type: object
+      description: An empty response body
+    TargetBalanceAllocationInput:
+      type: object
+      required:
+        - exchange_index
+        - percent
+      properties:
+        exchange_index:
           type: integer
-          format: int64
-          description: The amount to transfer in centicents
-        source_exchange_shard:
+          minimum: 0
+          description: Exchange index that receives this percentage of sweepable balance
+          x-go-type: '*int'
+          x-oapi-codegen-extra-tags:
+            validate: required,gte=0
+        percent:
           type: integer
           minimum: 0
           maximum: 100
-          default: 0
-          x-go-type-skip-optional-pointer: true
-          description: Source exchange shard index (default 0)
+          description: Target percentage of sweepable balance for the exchange index
+          x-go-type: '*int'
           x-oapi-codegen-extra-tags:
-            validate: gte=0,lte=100
-        destination_exchange_shard:
-          type: integer
-          minimum: 0
-          maximum: 100
-          default: 0
-          x-go-type-skip-optional-pointer: true
-          description: Destination exchange shard index (default 0)
-          x-oapi-codegen-extra-tags:
-            validate: gte=0,lte=100
-        source_subaccount:
-          type: integer
-          default: 0
-          x-go-type-skip-optional-pointer: true
-          description: >-
-            Source subaccount number (default 0 for the primary account). Only
-            supported for event contract to event contract transfers.
-          x-oapi-codegen-extra-tags:
-            validate: gte=0
-        destination_subaccount:
-          type: integer
-          default: 0
-          x-go-type-skip-optional-pointer: true
-          description: >-
-            Destination subaccount number (default 0 for the primary account).
-            Only supported for event contract to event contract transfers.
-          x-oapi-codegen-extra-tags:
-            validate: gte=0
-    IntraExchangeInstanceTransferResponse:
-      type: object
-      required:
-        - transfer_id
-      properties:
-        transfer_id:
-          type: string
-          description: The ID of the transfer that was created
-    ExchangeInstance:
-      type: string
-      enum:
-        - event_contract
-        - margined
-      description: The exchange instance type
+            validate: required,gte=0,lte=100
     ErrorResponse:
       type: object
       properties:

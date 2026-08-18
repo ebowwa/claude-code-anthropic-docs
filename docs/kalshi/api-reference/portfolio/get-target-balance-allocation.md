@@ -1,24 +1,22 @@
 <!--
-Source: https://docs.kalshi.com/api-reference/portfolio/intra-account-transfer.md
-Downloaded: 2026-08-18T20:23:40.020Z
+Source: https://docs.kalshi.com/api-reference/portfolio/get-target-balance-allocation.md
+Downloaded: 2026-08-18T20:23:40.022Z
 -->
 
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Intra Account Transfer
+# Get Target Balance Allocation
 
-> Transfers funds within the same account.
-
-Cross-exchange-index subaccount transfers run in up to three non-atomic steps. If a later step fails, completed steps are not undone, so funds may remain in the primary account on the source or destination exchange index.
+> Retrieves the caller's target balance allocation across exchange indexes.
 
 
 
 
 ## OpenAPI
 
-````yaml /openapi.yaml post /portfolio/intra_exchange_instance_transfer
+````yaml /openapi.yaml get /portfolio/target_balance_allocation
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
@@ -68,35 +66,22 @@ tags:
   - name: structured-targets
     description: Structured targets endpoints
 paths:
-  /portfolio/intra_exchange_instance_transfer:
-    post:
+  /portfolio/target_balance_allocation:
+    get:
       tags:
         - portfolio
-      summary: Intra Account Transfer
+      summary: Get Target Balance Allocation
       description: >
-        Transfers funds within the same account.
-
-
-        Cross-exchange-index subaccount transfers run in up to three non-atomic
-        steps. If a later step fails, completed steps are not undone, so funds
-        may remain in the primary account on the source or destination exchange
-        index.
-      operationId: IntraExchangeInstanceTransfer
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: '#/components/schemas/IntraExchangeInstanceTransferRequest'
+        Retrieves the caller's target balance allocation across exchange
+        indexes.
+      operationId: GetTargetBalanceAllocation
       responses:
         '200':
-          description: Transfer request accepted. The transfer is processed asynchronously.
+          description: Target balance allocation retrieved successfully
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/IntraExchangeInstanceTransferResponse'
-        '400':
-          $ref: '#/components/responses/BadRequestError'
+                $ref: '#/components/schemas/GetTargetBalanceAllocationResponse'
         '401':
           $ref: '#/components/responses/UnauthorizedError'
         '403':
@@ -109,73 +94,30 @@ paths:
           kalshiAccessTimestamp: []
 components:
   schemas:
-    IntraExchangeInstanceTransferRequest:
+    GetTargetBalanceAllocationResponse:
       type: object
       required:
-        - source
-        - destination
-        - amount
+        - allocations
       properties:
-        source:
-          $ref: '#/components/schemas/ExchangeInstance'
-          description: The source exchange instance
-        destination:
-          $ref: '#/components/schemas/ExchangeInstance'
-          description: The destination exchange instance
-        amount:
+        allocations:
+          type: array
+          items:
+            $ref: '#/components/schemas/TargetBalanceAllocation'
+    TargetBalanceAllocation:
+      type: object
+      required:
+        - exchange_index
+        - percent
+      properties:
+        exchange_index:
           type: integer
-          format: int64
-          description: The amount to transfer in centicents
-        source_exchange_shard:
+          minimum: 0
+          description: Exchange index that receives this percentage of sweepable balance
+        percent:
           type: integer
           minimum: 0
           maximum: 100
-          default: 0
-          x-go-type-skip-optional-pointer: true
-          description: Source exchange shard index (default 0)
-          x-oapi-codegen-extra-tags:
-            validate: gte=0,lte=100
-        destination_exchange_shard:
-          type: integer
-          minimum: 0
-          maximum: 100
-          default: 0
-          x-go-type-skip-optional-pointer: true
-          description: Destination exchange shard index (default 0)
-          x-oapi-codegen-extra-tags:
-            validate: gte=0,lte=100
-        source_subaccount:
-          type: integer
-          default: 0
-          x-go-type-skip-optional-pointer: true
-          description: >-
-            Source subaccount number (default 0 for the primary account). Only
-            supported for event contract to event contract transfers.
-          x-oapi-codegen-extra-tags:
-            validate: gte=0
-        destination_subaccount:
-          type: integer
-          default: 0
-          x-go-type-skip-optional-pointer: true
-          description: >-
-            Destination subaccount number (default 0 for the primary account).
-            Only supported for event contract to event contract transfers.
-          x-oapi-codegen-extra-tags:
-            validate: gte=0
-    IntraExchangeInstanceTransferResponse:
-      type: object
-      required:
-        - transfer_id
-      properties:
-        transfer_id:
-          type: string
-          description: The ID of the transfer that was created
-    ExchangeInstance:
-      type: string
-      enum:
-        - event_contract
-        - margined
-      description: The exchange instance type
+          description: Target percentage of sweepable balance for the exchange index
     ErrorResponse:
       type: object
       properties:
@@ -189,12 +131,6 @@ components:
           type: string
           description: Additional details about the error, if available
   responses:
-    BadRequestError:
-      description: Bad request - invalid input
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponse'
     UnauthorizedError:
       description: Unauthorized - authentication required
       content:

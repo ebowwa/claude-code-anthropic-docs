@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/historical/get-historical-positions.md
-Downloaded: 2026-08-14T20:31:01.989Z
+Downloaded: 2026-08-18T20:23:40.028Z
 -->
 
 > ## Documentation Index
@@ -161,6 +161,7 @@ components:
       type: object
       required:
         - ticker
+        - exchange_index
         - total_traded_dollars
         - position_fp
         - market_exposure_dollars
@@ -172,6 +173,8 @@ components:
           type: string
           description: Unique identifier for the market
           x-go-type-skip-optional-pointer: true
+        exchange_index:
+          $ref: '#/components/schemas/ExchangeIndex'
         total_traded_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Total spent on this market in dollars
@@ -235,6 +238,10 @@ components:
         details:
           type: string
           description: Additional details about the error, if available
+    ExchangeIndex:
+      type: integer
+      description: Identifier for an exchange shard.
+      example: 0
     FixedPointDollars:
       type: string
       description: >-
