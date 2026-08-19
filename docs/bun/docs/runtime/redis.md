@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/runtime/redis.md
-Downloaded: 2026-08-18T20:23:42.635Z
+Downloaded: 2026-08-19T20:27:33.381Z
 -->
 
 # Redis
@@ -344,8 +344,9 @@ The client automatically converts Redis responses to JavaScript values:
 - Integer responses are returned as JavaScript numbers
 - Bulk strings are returned as JavaScript strings
 - Simple strings are returned as JavaScript strings
-- Null bulk strings are returned as `null`
+- Null bulk strings and null arrays are returned as `null`
 - Array responses are returned as JavaScript arrays
+- Big number responses (RESP3) are returned as `BigInt`. A payload that is not an integer literal is returned as a string. `getBuffer` returns the payload as a `Buffer`.
 - Error responses throw JavaScript errors with appropriate error codes
 - Boolean responses (RESP3) are returned as JavaScript booleans
 - Map responses (RESP3) are returned as JavaScript objects

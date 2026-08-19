@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/getting_started/exchange_sharding.md
-Downloaded: 2026-08-18T20:23:40.016Z
+Downloaded: 2026-08-19T20:27:33.382Z
 -->
 
 > ## Documentation Index
@@ -89,7 +89,9 @@ The following assignments determine the shard where new events will be created. 
 
 * All child markets of an event will live on the same exchange instance.
 * There is currently no plan to migrate any live market to a new exchange instance.
+* Single order writes that target a nonzero shard are rate-limited against a per-shard Write budget. REST batch writes, shard 0 writes, and auto-routed writes use the unscoped budget. See [Rate Limits and Tiers](/getting_started/rate_limits#sharded-exchanges-have-per-shard-write-budgets).
 * Providing `ExDestination` / `exchange_index` is unnecessary for all RFQ operations, including FIX [`QuoteRequest` (`35=R`), `Quote` (`35=S`), and `AcceptQuote` (`35=UA`)](/fix/rfq-messages), which are routed internally by Kalshi.
+* When trading via FIX, both `MassCancelRequest` and `CancelOrdersOnDisconnect` will target all exchange shards for the FIX session.
 * Automatic routing will incur an additional latency cost.
 * Subaccount balances are local to a specific exchange instance.
 * Order groups do not function across exchange instances.

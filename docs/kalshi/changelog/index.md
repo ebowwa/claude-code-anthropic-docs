@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/changelog/index.md
-Downloaded: 2026-08-18T20:23:40.038Z
+Downloaded: 2026-08-19T20:27:33.402Z
 -->
 
 > ## Documentation Index
@@ -105,6 +105,21 @@ description: "Maker fees will be enabled Wednesday night; post-only mode will be
 
 <Update
   label="August 20, 2026"
+  tags={["FIX", "Predictions"]}
+  rss={{
+title: "Entry timestamps for FIX market data",
+description: "FIX market data snapshots and incremental refreshes now include MDEntryDate<272> and MDEntryTime<273>."
+}}
+>
+  `MarketDataSnapshotFullRefresh<35=W>` and
+  `MarketDataIncrementalRefresh<35=X>` entries now include
+  `MDEntryDate<272>` and `MDEntryTime<273>`. Snapshot values identify when the
+  snapshot was captured. Incremental values identify the exchange event that
+  produced the update.
+</Update>
+
+<Update
+  label="August 20, 2026"
   tags={["REST", "Predictions"]}
   rss={{
 title: "Cross-shard subaccount transfers",
@@ -150,13 +165,13 @@ description: "Get Total Resting Order Value now returns a per-exchange-index bre
 
 <Update
   label="August 20, 2026"
-  tags={["REST", "Predictions"]}
+  tags={["REST", "WebSocket", "Predictions"]}
   rss={{
-title: "Exchange index on portfolio records",
-description: "Exchange index provided on fill, settlement, and market position responses."
+title: "Exchange index on portfolio and WebSocket fill records",
+description: "Exchange index provided on REST fill, settlement, and market position responses and WebSocket fill messages."
 }}
 >
-  Exchange index provided on fill, settlement, and market position responses.
+  Exchange index provided on REST fill, settlement, and market position responses and WebSocket fill messages.
 </Update>
 
 <Update

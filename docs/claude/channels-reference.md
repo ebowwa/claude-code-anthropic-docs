@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/channels-reference.md
-Downloaded: 2026-08-18T20:23:49.720Z
+Downloaded: 2026-08-19T20:28:25.409Z
 -->
 
 > ## Documentation Index
@@ -481,6 +481,8 @@ Clients on Claude Code v2.1.211 or later sanitize `description` and `input_previ
 * Claude Code relays text whole up to 3,500 code points. For a longer value, you receive its start and its end around a counted `⋯ N code points elided ⋯` marker. The end of a long command still reaches the approver.
 
 For `input_preview`, Claude Code applies the 3,500 limit to each top-level field of the arguments separately and keeps the JSON's own structural quotes. Clients before v2.1.211 relay `description` raw and cut `input_preview` to 200 UTF-16 units with a trailing ellipsis.
+
+Clients on Claude Code v2.1.234 or later relay the marker `(value unserializable)` in place of an `input_preview` field value they can't serialize safely, such as a circular structure or an extremely large array. You still receive the field's key, and the preview's other fields are unchanged.
 
 Clients on Claude Code v2.1.234 or later also mask credentials in `description` and `input_preview`. You receive `[REDACTED]` in place of a recognizable provider credential token, such as an API key or a personal access token. Expect three effects of the masking when you render the fields:
 

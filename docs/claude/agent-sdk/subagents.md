@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/agent-sdk/subagents.md
-Downloaded: 2026-08-17T20:26:45.837Z
+Downloaded: 2026-08-19T20:28:25.411Z
 -->
 
 > ## Documentation Index
@@ -197,6 +197,8 @@ You can also define subagents as markdown files in `.claude/agents/` directories
 
 <Note>
   Even without defining custom subagents, Claude can spawn the built-in `general-purpose` subagent. This is useful for delegating research or exploration tasks without creating specialized agents. Include `Agent` in `allowedTools` so these invocations auto-approve without a permission prompt.
+
+  When Claude calls the Agent tool without a `subagent_type`, it gets this built-in `general-purpose` subagent. If you set [`CLAUDE_AGENT_SDK_DISABLE_BUILTIN_AGENTS=1`](/docs/en/env-vars), that default is gone too. Such a call then fails with `subagent_type is required: the general-purpose agent is not available in this session`. The message ends with the subagent types that are still available. Before TypeScript SDK v0.3.235 (Python SDK: bundled Claude Code before v2.1.235), the same call failed with `Agent type 'general-purpose' not found`.
 </Note>
 
 ## What subagents inherit

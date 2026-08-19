@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/agent-sdk/modifying-system-prompts.md
-Downloaded: 2026-08-12T20:44:34.314Z
+Downloaded: 2026-08-19T20:28:25.411Z
 -->
 
 > ## Documentation Index
@@ -351,7 +351,7 @@ The four customization methods differ in where they live, how they're shared, an
 
 ## Combine approaches
 
-These methods compose. A persistent output style or CLAUDE.md sets the long-lived behavior, and `append` layers session-specific instructions on top without touching the saved configuration.
+The approaches compose. A persistent output style or CLAUDE.md sets the long-lived behavior, and `append` layers session-specific instructions on top without touching the saved configuration.
 
 ### Combine an output style with session-specific additions
 
