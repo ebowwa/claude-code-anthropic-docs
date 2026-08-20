@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/workflows.md
-Downloaded: 2026-08-14T20:31:08.318Z
+Downloaded: 2026-08-20T20:28:07.643Z
 -->
 
 > ## Documentation Index
@@ -89,10 +89,6 @@ Claude Code includes `/deep-research` as a built-in workflow:
 ### Watch the run
 
 Workflows run in the background, so the session stays responsive while agents work. Run `/workflows` at any time to list running and completed workflows, then select one to open its progress view.
-
-```text wrap theme={null}
-/workflows
-```
 
 The progress view shows each phase with its agent counts, token totals, and elapsed time. The footer lists the key for each action:
 

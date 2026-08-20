@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/websockets/market-and-event-lifecycle.md
-Downloaded: 2026-08-19T20:27:33.393Z
+Downloaded: 2026-08-20T20:27:57.806Z
 -->
 
 > ## Documentation Index
@@ -804,6 +804,7 @@ operations:
                     enumValues:
                       - quadratic
                       - quadratic_with_maker_fees
+                      - quadratic_with_combo_maker_fees
                       - flat
                     required: true
                   - name: fee_multiplier_override
@@ -842,6 +843,7 @@ operations:
                   enum:
                     - quadratic
                     - quadratic_with_maker_fees
+                    - quadratic_with_combo_maker_fees
                     - flat
                     - null
                   description: >-

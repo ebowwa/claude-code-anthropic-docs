@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/orders/cancel-order-v2.md
-Downloaded: 2026-08-17T20:26:37.798Z
+Downloaded: 2026-08-20T20:27:57.794Z
 -->
 
 > ## Documentation Index
@@ -81,10 +81,19 @@ paths:
       parameters:
         - $ref: '#/components/parameters/OrderIdPath'
         - $ref: '#/components/parameters/SubaccountQueryDefaultPrimary'
-        - $ref: '#/components/parameters/ExchangeIndexQuery'
+        - name: exchange_index
+          in: query
+          description: >-
+            Exchange shard index. If omitted, auto-routes when market_ticker is
+            provided; otherwise defaults to 0. Use -1 to require auto-routing by
+            market ticker.
+          schema:
+            $ref: '#/components/schemas/ExchangeIndex'
         - name: market_ticker
           in: query
-          description: Market ticker. Required when exchange_index is -1 (auto).
+          description: >-
+            Market ticker used for auto-routing when exchange_index is omitted
+            or -1.
           schema:
             type: string
             x-go-type-skip-optional-pointer: true
@@ -120,13 +129,11 @@ components:
       description: Subaccount number (0 for primary, 1-63 for subaccounts). Defaults to 0.
       schema:
         type: integer
-    ExchangeIndexQuery:
-      name: exchange_index
-      in: query
-      schema:
-        $ref: '#/components/schemas/ExchangeIndex'
-      x-go-type-skip-optional-pointer: true
   schemas:
+    ExchangeIndex:
+      type: integer
+      description: Identifier for an exchange shard.
+      example: 0
     CancelOrderV2Response:
       type: object
       required:
@@ -154,10 +161,6 @@ components:
           description: >-
             Matching engine timestamp at which the cancellation was processed,
             as Unix epoch milliseconds.
-    ExchangeIndex:
-      type: integer
-      description: Identifier for an exchange shard.
-      example: 0
     FixedPointCount:
       type: string
       description: >-

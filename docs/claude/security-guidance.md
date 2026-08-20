@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/security-guidance.md
-Downloaded: 2026-08-14T20:31:08.315Z
+Downloaded: 2026-08-20T20:28:07.641Z
 -->
 
 > ## Documentation Index
@@ -19,7 +19,6 @@ The plugin is the in-session companion to [Code Review](/docs/en/code-review), w
 
 ## Prerequisites
 
-* Claude Code CLI version 2.1.144 or later
 * Python 3.7 or later on your `PATH`. The agentic commit review needs Python 3.10 or later, as do all model-backed reviews when Claude Code uses a third-party provider such as Amazon Bedrock or Google Cloud's Agent Platform. The plugin prefers the versioned interpreters `python3.13` through `python3.10`, then falls back to `python3`, `python`, and `py -3`
 * A git repository for the directory you work in. The end-of-turn and commit reviews diff against git state and skip silently outside a repository. The per-edit pattern check works anywhere
 

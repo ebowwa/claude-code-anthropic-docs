@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/orders/create-order-v2.md
-Downloaded: 2026-08-17T20:26:37.798Z
+Downloaded: 2026-08-20T20:27:57.794Z
 -->
 
 > ## Documentation Index
@@ -216,11 +216,10 @@ components:
         exchange_index:
           allOf:
             - $ref: '#/components/schemas/ExchangeIndex'
-          default: 0
           description: >-
-            Exchange shard index. Defaults to 0. Use -1 to auto-route by market
+            Exchange shard index. If omitted, auto-routes when ticker is
+            provided; otherwise defaults to 0. Use -1 to require auto-routing by
             ticker.
-          x-go-type-skip-optional-pointer: true
     CreateOrderV2Response:
       type: object
       required:

@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-deposits.md
-Downloaded: 2026-08-14T20:31:01.252Z
+Downloaded: 2026-08-20T20:27:56.419Z
 -->
 
 > ## Documentation Index
@@ -14,6 +14,7 @@ If no end time is provided, the current time will be used.
 Maximum of 100 entries returned per request.
 
 
+<Badge color="gray" size="md">Request Weight: **10**</Badge>
 
 
 ## OpenAPI

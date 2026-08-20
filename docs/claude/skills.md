@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/skills.md
-Downloaded: 2026-08-18T20:23:49.703Z
+Downloaded: 2026-08-20T20:28:07.645Z
 -->
 
 > ## Documentation Index
@@ -46,8 +46,6 @@ Three bundled skills work together to launch your app and confirm changes agains
 | `/run`                 | Launch and drive your app to see a change working                                                                 |
 | `/verify`              | Build and run your app to confirm a code change does what it should, without falling back to tests or type checks |
 | `/run-skill-generator` | Teach `/run` and `/verify` how to build and launch your project                                                   |
-
-All three skills require Claude Code v2.1.145 or later. Check your version with `claude --version` or the `/status` command.
 
 `/run` and `/verify` work without setup. They infer the launch from your project type (CLI, server, TUI, browser-driven) and from what's in your README, `package.json`, or `Makefile`. That inference gets unreliable for projects that need anything beyond a standard launch: a database, an env file, a graphical session, a multi-step build.
 
@@ -171,22 +169,8 @@ Project skills load from `.claude/skills/` in the directory where you start Clau
 
 Skills in nested `.claude/skills/` directories below your starting directory aren't loaded at startup. They load the first time Claude reads or edits a file inside that subdirectory, and stay available for the rest of the session. For example, after Claude edits a file under `packages/frontend/`, skills in `packages/frontend/.claude/skills/` become available. Until then, those skills don't appear in autocomplete and can't be invoked by name.
 
-Each skill is a directory with `SKILL.md` as the entrypoint:
-
-```text theme={null}
-my-skill/
-├── SKILL.md           # Main instructions (required)
-├── template.md        # Template for Claude to fill in
-├── examples/
-│   └── sample.md      # Example output showing expected format
-└── scripts/
-    └── validate.sh    # Script Claude can execute
-```
-
-The `SKILL.md` contains the main instructions and is required. Other files are optional and let you build more powerful skills: templates for Claude to fill in, example outputs showing the expected format, scripts Claude can execute, or detailed reference documentation. Reference these files from your `SKILL.md` so Claude knows what they contain and when to load them. See [Add supporting files](#add-supporting-files) for more details.
-
 <Note>
-  Files in `.claude/commands/` support the same [frontmatter](#frontmatter-reference), except `name` and `paths`, which Claude Code ignores in a command file. You invoke a command file by its file name. Skills are recommended since they support additional features like supporting files.
+  Files in `.claude/commands/` support the same [frontmatter](#frontmatter-reference), except `name` and `paths`, which Claude Code ignores in a command file. You invoke a command file by its file name. Skills are recommended since they support additional features like [supporting files](#add-supporting-files).
 </Note>
 
 #### Skills from additional directories

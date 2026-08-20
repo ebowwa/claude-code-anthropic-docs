@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/apply-referral-code.md
-Downloaded: 2026-08-14T20:31:01.253Z
+Downloaded: 2026-08-20T20:27:56.420Z
 -->
 
 > ## Documentation Index
@@ -13,6 +13,7 @@ Downloaded: 2026-08-14T20:31:01.253Z
 can only apply a referral code if they do not already have one.
 
 
+<Badge color="gray" size="md">Request Weight: **1**</Badge>
 
 
 ## OpenAPI

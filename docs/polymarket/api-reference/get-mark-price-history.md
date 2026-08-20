@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-mark-price-history.md
-Downloaded: 2026-08-14T20:31:01.246Z
+Downloaded: 2026-08-20T20:27:56.414Z
 -->
 
 > ## Documentation Index
@@ -17,6 +17,11 @@ For intervals of a minute or coarser, a bucket cut mid-way by `end_timestamp`
 may be omitted, or may reflect the window's last mark at one-minute fidelity.
 
 
+<Badge color="gray" size="md">Request Weight: **5**</Badge>
+
+<br />
+
+<Badge color="gray" size="md">Cached for 2s. A request served from cache costs **1**</Badge>
 
 
 ## OpenAPI

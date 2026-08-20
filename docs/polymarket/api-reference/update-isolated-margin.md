@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/update-isolated-margin.md
-Downloaded: 2026-08-14T20:31:01.249Z
+Downloaded: 2026-08-20T20:27:56.417Z
 -->
 
 > ## Documentation Index
@@ -29,6 +29,7 @@ sequencer freshness revalidation with
 rejects with `signature_already_used`.
 
 
+<Badge color="gray" size="md">Request Weight: **1**</Badge> <Badge color="gray" size="md">Action Weight: **1**</Badge>
 
 
 ## OpenAPI

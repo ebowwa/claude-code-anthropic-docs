@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/agent-sdk/session-storage.md
-Downloaded: 2026-08-16T20:22:14.458Z
+Downloaded: 2026-08-20T20:28:07.666Z
 -->
 
 > ## Documentation Index
@@ -91,7 +91,11 @@ A `SessionStore` is an object with two required methods, `append` and `load`, an
   ```
 </CodeGroup>
 
-`SessionKey` addresses one transcript. `projectKey` is a stable, filesystem-safe encoding of the working directory, `sessionId` is the session UUID, and `subpath` is set when the entry belongs to a subagent transcript or sidecar file rather than the main conversation. Because `projectKey` encodes the working directory, resume or continue from the store from a working directory matching the original run's. Treat `subpath` as an opaque key suffix; it follows the on-disk layout, for example `subagents/agent-<id>`. When `subpath` is undefined the key refers to the main transcript.
+`SessionKey` addresses one transcript. `projectKey` is a stable, filesystem-safe encoding of the working directory, `sessionId` is the session UUID, and `subpath` is set when the entry belongs to a subagent transcript or sidecar file rather than the main conversation.
+
+Because `projectKey` encodes the working directory, resume or continue from the store from a working directory matching the original run's. In TypeScript, if you set [`CLAUDE_CODE_PROJECT_DIR_NAME`](/docs/en/sessions#name-the-project-directory-yourself) beside `CLAUDE_CONFIG_DIR` in a query's [`env` option](/docs/en/agent-sdk/typescript#options), the SDK keys that query's entries, and its `resume` and `continue` lookups, by that name instead. Requires Agent SDK v0.3.234 or later.
+
+Treat `subpath` as an opaque key suffix; it follows the on-disk layout, for example `subagents/agent-<id>`. When `subpath` is undefined the key refers to the main transcript.
 
 | Method                 | Required | Called when                                                                                                                                                                                                                                                                                               |
 | :--------------------- | :------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

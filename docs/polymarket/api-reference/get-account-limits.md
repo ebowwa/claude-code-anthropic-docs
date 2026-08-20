@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-account-limits.md
-Downloaded: 2026-08-14T20:31:01.252Z
+Downloaded: 2026-08-20T20:27:56.419Z
 -->
 
 > ## Documentation Index
@@ -16,6 +16,7 @@ open-order count; the rate-usage counters (`actions_per_minute`,
 `actions_burst`, and `reset`) are not tracked here and are reported as 0.
 
 
+<Badge color="gray" size="md">Request Weight: **2**</Badge>
 
 
 ## OpenAPI

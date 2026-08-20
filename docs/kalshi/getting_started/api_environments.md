@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.kalshi.com/getting_started/api_environments.md
+Downloaded: 2026-08-20T20:27:57.788Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -39,6 +44,8 @@ For participants requiring network-level isolation, Kalshi supports private conn
 PrivateLink is available for the production hosts `external-api.kalshi.com` (REST) and `external-api-ws.kalshi.com` (WebSocket). The two APIs are provisioned as separate interface endpoints, each reachable over TLS on port 443. Connect to the endpoint's DNS name from within your VPC and set the matching host above as the TLS server name (SNI).
 
 Members on the Premier tier or above can contact [institutional@kalshi.com](mailto:institutional@kalshi.com) to provision PrivateLink endpoints for their AWS account.
+
+Members on the Prime tier or above can also contact [institutional@kalshi.com](mailto:institutional@kalshi.com) to discuss VPC peering for production WebSocket connectivity from their AWS VPC.
 
 ## Request Signing
 

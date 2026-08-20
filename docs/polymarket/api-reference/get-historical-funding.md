@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-historical-funding.md
-Downloaded: 2026-08-14T20:31:01.247Z
+Downloaded: 2026-08-20T20:27:56.415Z
 -->
 
 > ## Documentation Index
@@ -13,6 +13,7 @@ Downloaded: 2026-08-14T20:31:01.247Z
 Maximum of 100 entries returned per request.
 
 
+<Badge color="gray" size="md">Request Weight: **10**</Badge>
 
 
 ## OpenAPI

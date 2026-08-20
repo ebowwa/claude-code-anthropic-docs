@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/routines.md
-Downloaded: 2026-08-12T20:44:34.286Z
+Downloaded: 2026-08-20T20:28:07.639Z
 -->
 
 > ## Documentation Index
@@ -49,7 +49,7 @@ Each example pairs a trigger type with the kind of work routines are suited to: 
 
 ## Create a routine
 
-Create a routine from the web at [claude.ai/code/routines](https://claude.ai/code/routines), from the Desktop app, or from the CLI. All three surfaces write to the same cloud account, so a routine you create in one shows up in the others immediately. In the Desktop app, click **Routines** in the sidebar, then **New routine**, and choose **Cloud**; choosing **Local** instead creates a [Desktop scheduled task](/docs/en/desktop-scheduled-tasks), which runs on your machine rather than in the cloud.
+Create a routine from the web at [claude.ai/code/routines](https://claude.ai/code/routines), from the Desktop app, or from the CLI. All three surfaces write to the same cloud account, so a routine you create in one shows up in the others immediately. In the Desktop app's **Code** tab, click **Routines** in the sidebar, then **New routine**, and choose **Cloud**; choosing **Local** instead creates a [Desktop scheduled task](/docs/en/desktop-scheduled-tasks), which runs on your machine rather than in the cloud.
 
 The creation form sets up the routine's prompt, repositories, environment, connectors, and triggers.
 

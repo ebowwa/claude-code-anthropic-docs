@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/withdraw.md
-Downloaded: 2026-08-14T20:31:01.251Z
+Downloaded: 2026-08-20T20:27:56.419Z
 -->
 
 > ## Documentation Index
@@ -19,6 +19,7 @@ The `ts` field is Unix seconds (not milliseconds) because the on-chain contract 
 against `block.timestamp`. It must also match the `uint64 ts` in the signed EIP-712 struct.
 
 
+<Badge color="gray" size="md">Request Weight: **1**</Badge>
 
 
 ## OpenAPI

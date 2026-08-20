@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-account-rewards.md
-Downloaded: 2026-08-14T20:31:01.253Z
+Downloaded: 2026-08-20T20:27:56.420Z
 -->
 
 > ## Documentation Index
@@ -18,6 +18,7 @@ The first reward period starts at 2026-07-06 12:00 UTC. If no date range is prov
 the latest computed reward period is returned.
 
 
+<Badge color="gray" size="md">Request Weight: **2**</Badge>
 
 
 ## OpenAPI

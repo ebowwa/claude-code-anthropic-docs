@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/structured-targets/get-structured-targets.md
-Downloaded: 2026-08-12T20:44:24.189Z
+Downloaded: 2026-08-20T20:27:57.803Z
 -->
 
 > ## Documentation Index
@@ -97,7 +97,8 @@ paths:
           in: query
           description: >-
             Filter by competition. Matches against the league, conference,
-            division, or tour in the structured target details.
+            division, or tour in the structured target details, or any entry in
+            the details leagues array.
           required: false
           schema:
             type: string

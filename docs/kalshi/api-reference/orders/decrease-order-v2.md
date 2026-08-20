@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/orders/decrease-order-v2.md
-Downloaded: 2026-08-17T20:26:37.798Z
+Downloaded: 2026-08-20T20:27:57.794Z
 -->
 
 > ## Documentation Index
@@ -140,11 +140,15 @@ components:
         exchange_index:
           allOf:
             - $ref: '#/components/schemas/ExchangeIndex'
-          default: 0
-          x-go-type-skip-optional-pointer: true
+          description: >-
+            Exchange shard index. If omitted, auto-routes when market_ticker is
+            provided; otherwise defaults to 0. Use -1 to require auto-routing by
+            market ticker.
         market_ticker:
           type: string
-          description: Market ticker. Required when exchange_index is -1 (auto).
+          description: >-
+            Market ticker used for auto-routing when exchange_index is omitted
+            or -1.
           x-go-type-skip-optional-pointer: true
     DecreaseOrderV2Response:
       type: object

@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/events/get-event-fee-changes.md
-Downloaded: 2026-08-12T20:44:24.180Z
+Downloaded: 2026-08-20T20:27:57.792Z
 -->
 
 > ## Documentation Index
@@ -192,10 +192,12 @@ components:
       enum:
         - quadratic
         - quadratic_with_maker_fees
+        - quadratic_with_combo_maker_fees
         - flat
       x-enum-varnames:
         - FeeTypeQuadratic
         - FeeTypeQuadraticWithMakerFees
+        - FeeTypeQuadraticWithComboMakerFees
         - FeeTypeFlat
       description: Fee type for a series or scheduled fee override.
   responses:

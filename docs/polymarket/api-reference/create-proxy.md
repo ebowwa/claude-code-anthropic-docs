@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/create-proxy.md
-Downloaded: 2026-08-14T20:31:01.249Z
+Downloaded: 2026-08-20T20:27:56.417Z
 -->
 
 > ## Documentation Index
@@ -13,6 +13,7 @@ Downloaded: 2026-08-14T20:31:01.249Z
 Requires EOA signature, see [EOA signing](/http/signing#1-eoa-signing).
 
 
+<Badge color="gray" size="md">Request Weight: **1**</Badge>
 
 
 ## OpenAPI

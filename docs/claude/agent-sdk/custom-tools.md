@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/agent-sdk/custom-tools.md
-Downloaded: 2026-08-15T20:21:56.907Z
+Downloaded: 2026-08-20T20:28:07.667Z
 -->
 
 > ## Documentation Index
@@ -850,10 +850,3 @@ From here:
 * If your server grows to dozens of tools, see [tool search](/docs/en/agent-sdk/tool-search) to defer loading them until Claude needs them.
 * To connect to external MCP servers (filesystem, GitHub, Slack) instead of building your own, see [Connect MCP servers](/docs/en/agent-sdk/mcp).
 * To control which tools run automatically versus requiring approval, see [Configure permissions](/docs/en/agent-sdk/permissions).
-
-## Related documentation
-
-* [TypeScript SDK Reference](/docs/en/agent-sdk/typescript)
-* [Python SDK Reference](/docs/en/agent-sdk/python)
-* [MCP Documentation](https://modelcontextprotocol.io)
-* [SDK Overview](/docs/en/agent-sdk/overview)

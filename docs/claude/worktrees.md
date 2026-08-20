@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/worktrees.md
-Downloaded: 2026-08-18T20:23:49.702Z
+Downloaded: 2026-08-20T20:28:07.644Z
 -->
 
 > ## Documentation Index
@@ -46,6 +46,13 @@ A worktree is a fresh checkout, so initialize your development environment there
 You can also ask Claude to "work in a worktree" during a session, and it creates one with the [`EnterWorktree`](/docs/en/tools-reference) tool. Once in a worktree, Claude can switch directly to another one under `.claude/worktrees/` by calling `EnterWorktree` with the target path; the previous worktree stays on disk untouched.
 
 When Claude enters a path outside the repository's `.claude/worktrees/` directory, Claude Code asks for your approval first, because the move takes the session's working directory, write access, and project configuration such as `CLAUDE.md` and settings to that location. An `EnterWorktree` [permission rule](/docs/en/permissions) or choosing "don't ask again" doesn't suppress this prompt; only `bypassPermissions` mode skips it. Before v2.1.206, Claude could enter any existing worktree path without asking.
+
+<Note>
+  **Hook paths don't follow the worktree.** After Claude enters a worktree, Claude Code keeps `${CLAUDE_PROJECT_DIR}` in your [hooks](/docs/en/hooks#reference-scripts-by-path) where it was and passes the worktree path to them a different way:
+
+  * **`${CLAUDE_PROJECT_DIR}` stays put**: it still points at the project root where the session started, so a hook command such as `${CLAUDE_PROJECT_DIR}/.claude/hooks/check-style.sh` still runs the script in the main checkout.
+  * **`cwd` follows Claude**: the `cwd` field in the hook's [input JSON](/docs/en/hooks#common-input-fields) is the worktree root, and it moves again when Claude runs `cd`. Read it when a hook needs the worktree path.
+</Note>
 
 ## Clean up worktrees
 

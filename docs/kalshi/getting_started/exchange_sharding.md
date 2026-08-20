@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/getting_started/exchange_sharding.md
-Downloaded: 2026-08-19T20:27:33.382Z
+Downloaded: 2026-08-20T20:27:57.790Z
 -->
 
 > ## Documentation Index
@@ -62,15 +62,16 @@ Kalshi's collateralization checks will continue to run within the matching engin
 
 The `exchange_index` parameter is available on a per-endpoint basis.
 
-* If omitted: defaults to `0`.
-* Else if `-1`: routes to the target exchange for the provided market ticker.
-* Else if `>= 0`: routes directly to the target exchange.
+* If `>= 0`: routes directly to the target exchange.
+* Else if `-1`: auto-routes to the target exchange for the provided market ticker.
+* Else if omitted and a market ticker is provided: auto-routes to the target exchange for the market ticker.
+* Else: defaults to exchange index `0`.
 
 ### FIX
 
 The [`ExDestination` parameter](/fix/order-entry) (FIX Tag 100) is available on a per-message basis.
 
-* If omitted: defaults to `0`.
+* On event-contract sessions, if omitted: routes to the target exchange for the provided `Symbol` (FIX Tag 55).
 * Else if `-1`: routes to the target exchange for the provided `Symbol` (FIX Tag 55).
 * Else if `>= 0`: routes directly to the target exchange.
 

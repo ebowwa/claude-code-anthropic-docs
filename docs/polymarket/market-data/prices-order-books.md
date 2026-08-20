@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/market-data/prices-order-books.md
-Downloaded: 2026-08-13T20:42:10.547Z
+Downloaded: 2026-08-20T20:27:56.394Z
 -->
 
 > ## Documentation Index
@@ -833,8 +833,7 @@ request.
 
 ## Last Trade Price
 
-The last trade price records the most recent matched trade for an outcome. It
-includes the trade price and side.
+Use the last trade price to see where an outcome most recently traded.
 
 ### Fetch a Last Trade Price
 
@@ -846,7 +845,7 @@ includes the trade price and side.
     ```ts theme={null}
     const lastTrade = await client.fetchLastTradePrice({ tokenId: yesTokenId });
 
-    // lastTrade: LastTradePrice
+    // lastTrade: LastTradePrice | null
     ```
 
     `LastTradePrice` pairs the traded price with its order side:
@@ -855,7 +854,7 @@ includes the trade price and side.
       ```ts LastTradePrice Type theme={null}
       type LastTradePrice = {
         price: DecimalString;
-        side: OrderSide | null;
+        side: OrderSide;
       };
       ```
 
@@ -867,14 +866,11 @@ includes the trade price and side.
       ```
     </CodeGroup>
 
-    When a token has never traded and its order book is empty, the SDK returns
-    the `"0.5"` placeholder as a `DecimalString` and sets `side` to `null`:
+    When a token has never traded, `fetchLastTradePrice()` returns `null`
+    instead of a `LastTradePrice` object:
 
     ```json theme={null}
-    {
-      "price": "0.5",
-      "side": null
-    }
+    null
     ```
   </Tab>
 
@@ -886,7 +882,7 @@ includes the trade price and side.
     ```python theme={null}
     last_trade = await client.get_last_trade_price(token_id=yes_token_id)
 
-    # last_trade: LastTradePrice
+    # last_trade: LastTradePrice | None
     ```
 
     `LastTradePrice` pairs the traded price with its order side:
@@ -895,7 +891,7 @@ includes the trade price and side.
       ```python LastTradePrice Type theme={null}
       class LastTradePrice:
           price: Decimal
-          side: OrderSide | None
+          side: OrderSide
       ```
 
       ```json LastTradePrice Example theme={null}
@@ -906,11 +902,11 @@ includes the trade price and side.
       ```
     </CodeGroup>
 
-    When a token has never traded and its order book is empty, the SDK returns
-    the `Decimal("0.5")` placeholder and sets `side` to `None`:
+    When a token has never traded, `get_last_trade_price()` returns `None`
+    instead of a `LastTradePrice` object:
 
     ```python theme={null}
-    LastTradePrice(price=Decimal("0.5"), side=None)
+    None
     ```
   </Tab>
 

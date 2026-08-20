@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-instruments.md
-Downloaded: 2026-08-14T20:31:01.245Z
+Downloaded: 2026-08-20T20:27:56.413Z
 -->
 
 > ## Documentation Index
@@ -11,6 +11,7 @@ Downloaded: 2026-08-14T20:31:01.245Z
 
 > Get all instruments.
 
+<Badge color="gray" size="md">Request Weight: **2**</Badge>
 
 
 ## OpenAPI

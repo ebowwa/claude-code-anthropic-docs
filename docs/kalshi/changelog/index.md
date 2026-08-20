@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/changelog/index.md
-Downloaded: 2026-08-19T20:27:33.402Z
+Downloaded: 2026-08-20T20:27:57.816Z
 -->
 
 > ## Documentation Index
@@ -20,6 +20,36 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="August 27, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Exchange auto-routing enabled by default",
+description: "Exchange auto-routing enabled by default"
+}}
+>
+  Exchange auto-routing enabled by default when providing `market_ticker` and excluding `exchange_index` parameter.
+</Update>
+
+<Update
+  label="August 20, 2026"
+  tags={["WebSocket", "FIX", "Predictions", "Margin"]}
+  rss={{
+title: "VPC peering for Prime members",
+description: "Prime-tier members can contact Kalshi to discuss VPC peering for production WebSocket and FIX connectivity."
+}}
+>
+  Members on the Prime tier or above can contact
+  [institutional@kalshi.com](mailto:institutional@kalshi.com) to discuss VPC
+  peering for production WebSocket and FIX connectivity from their AWS VPC.
+  Existing AWS PrivateLink connectivity remains available to members on the
+  Premier tier or above.
+
+  See [API Environments and Endpoints](/getting_started/api_environments#private-connectivity),
+  [FIX Connectivity](/fix/connectivity#private-connectivity), and
+  [Margin FIX Connectivity](/fix-margin/connectivity#private-connectivity).
+</Update>
 
 <Update
   label="August 20, 2026"
@@ -87,20 +117,38 @@ description: "Crypto, Tennis, and Baseball moving to dedicated exchange instance
   tags={["REST", "WebSocket", "FIX", "Predictions"]}
   rss={{
 title: "Combo RFQ fee assignment for briefly resting orders",
-description: "Maker fees will be enabled Wednesday night; post-only mode will be disabled and the combo RFQ quoter fee swap enabled Friday night."
+description: "Maker fees will be enabled at 5:00 AM ET on Thursday, August 20, after the maintenance window; post-only mode will be disabled and the combo RFQ quoter fee swap enabled Friday night."
 }}
 >
   **Rollout timing:**
 
-  * Maker fees will be enabled at 11:59 PM on Wednesday, August 19.
+  * Maker fees will be enabled at 5:00 AM ET on Thursday, August 20, after the
+    maintenance window.
   * Post-only mode will be disabled and the quoter fee swap will be enabled at
     11:59 PM on Friday, August 21.
 
   For combo trades, if a quoter executes against an order that has rested on
   the book for less than five seconds, both parties' fees will be adjusted: the
   quoter will pay the maker fee, and the resting counterparty will pay the
-  taker fee. See the [Kalshi Fee Schedule](https://kalshi.com/docs/kalshi-fee-schedule.pdf)
-  for details.
+  taker fee. The maker fee uses a fee multiplier of `0.5`, rather than the
+  standard `0.25`. See the
+  [Kalshi Fee Schedule](https://kalshi.com/fee-schedule) for details.
+</Update>
+
+<Update
+  label="August 20, 2026"
+  tags={["REST", "WebSocket", "FIX", "Predictions"]}
+  rss={{
+title: "Maker fee exemption for independent NFL combo markets",
+description: "Independent, NFL-only combo markets created after 11:59 PM ET on August 19, 2026 will have no maker fee."
+}}
+>
+  Combo markets created after 11:59 PM ET on August 19, 2026 that are composed
+  entirely of independent NFL components will have no maker fee. The Exchange
+  will consider a market to be composed of independent components if every
+  component ties to a different milestone (NFL game) and the market consists
+  exclusively of NFL components. Markets that meet these conditions will be
+  created under the `KXMVECROSSCATEGORY0-SHARD1` series.
 </Update>
 
 <Update
@@ -2027,7 +2075,7 @@ description: "REST and WebSocket Order, Fill, and Trade responses now include ou
   * `Fill` (GetFills, GetFillsHistorical)
   * `Trade` (public) — fields are named `taker_outcome_side` and `taker_book_side` to match the existing `taker_side`
 
-  Affected WebSocket channels (`svc-apiexternal-ws`):
+  Affected WebSocket channels (`apiexternal-ws`):
 
   * `user_orders`
   * `fill`

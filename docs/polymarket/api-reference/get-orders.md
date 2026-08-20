@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-orders.md
-Downloaded: 2026-08-14T20:31:01.250Z
+Downloaded: 2026-08-20T20:27:56.417Z
 -->
 
 > ## Documentation Index
@@ -15,6 +15,15 @@ filled, and cancelled orders. For currently resting orders only, use Get Open Or
 Maximum of 100 entries returned per request.
 
 
+<Badge color="gray" size="md">Request Weight:</Badge>
+
+<br />
+
+<Badge color="gray" size="md">With order ID: **1**</Badge>
+
+<br />
+
+<Badge color="gray" size="md">Without order ID: **10**</Badge>
 
 
 ## OpenAPI

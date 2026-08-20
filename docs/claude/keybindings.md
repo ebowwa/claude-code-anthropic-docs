@@ -1,3 +1,8 @@
+<!--
+Source: https://code.claude.com/docs/en/keybindings.md
+Downloaded: 2026-08-20T20:28:07.660Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://code.claude.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -130,17 +135,19 @@ Actions available in the `Autocomplete` context:
 
 Actions available in the `Confirmation` context:
 
-| Action                      | Default   | Description                                                                                                                        |
-| :-------------------------- | :-------- | :--------------------------------------------------------------------------------------------------------------------------------- |
-| `confirm:yes`               | Y, Enter  | Confirm action                                                                                                                     |
-| `confirm:no`                | N, Escape | Decline action                                                                                                                     |
-| `confirm:previous`          | Up        | Previous option                                                                                                                    |
-| `confirm:next`              | Down      | Next option                                                                                                                        |
-| `confirm:nextField`         | Tab       | Next field                                                                                                                         |
-| `confirm:previousField`     | (unbound) | Previous field                                                                                                                     |
-| `confirm:toggle`            | Space     | Toggle selection                                                                                                                   |
-| `confirm:cycleMode`         | Shift+Tab | Cycle permission modes                                                                                                             |
-| `confirm:toggleExplanation` | Ctrl+E    | Toggle a model-generated [explanation of the command](/docs/en/permissions#permission-system) on Bash and PowerShell permission prompts |
+| Action                      | Default     | Description                                                                                                                                                                                                                                                                           |
+| :-------------------------- | :---------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `confirm:yes`               | Y, Enter    | Confirm action                                                                                                                                                                                                                                                                        |
+| `confirm:no`                | N, Escape   | Decline action                                                                                                                                                                                                                                                                        |
+| `confirm:previous`          | Up          | Previous option                                                                                                                                                                                                                                                                       |
+| `confirm:next`              | Down        | Next option                                                                                                                                                                                                                                                                           |
+| `confirm:nextField`         | Tab         | Next field                                                                                                                                                                                                                                                                            |
+| `confirm:previousField`     | (unbound)   | Previous field                                                                                                                                                                                                                                                                        |
+| `confirm:toggle`            | Space       | Toggle selection                                                                                                                                                                                                                                                                      |
+| `confirm:cycleMode`         | Shift+Tab\* | Cycle permission modes. On a file permission prompt, closes an open [comment field](/docs/en/permissions#add-a-comment-when-you-answer-a-permission-prompt); with no field open, selects the option that allows the action for the rest of the session, when the prompt offers that option |
+| `confirm:toggleExplanation` | Ctrl+E      | Toggle a model-generated [explanation of the command](/docs/en/permissions#permission-system) on Bash and PowerShell permission prompts                                                                                                                                                    |
+
+\*On Windows without VT mode (Node \<24.2.0/\<22.17.0, Bun \<1.2.23), defaults to Meta+M.
 
 ### Permission actions
 
@@ -337,7 +344,7 @@ Actions available in the `Scroll` context when [fullscreen rendering](/docs/en/f
 | `scroll:fullPageUp`         | (unbound)            | Scroll up the full viewport height                                                                        |
 | `scroll:fullPageDown`       | (unbound)            | Scroll down the full viewport height                                                                      |
 | `selection:copy`            | Ctrl+Shift+C / Cmd+C | Copy the selected text to the clipboard                                                                   |
-| `selection:clear`           | (unbound)            | Clear the active text selection                                                                           |
+| `selection:clear`           | (unbound)            | Clear the active text selection. Requires v2.1.234 or later                                               |
 | `selection:extendLeft`      | Shift+Left           | Extend the active selection one column left                                                               |
 | `selection:extendRight`     | Shift+Right          | Extend the active selection one column right                                                              |
 | `selection:extendUp`        | Shift+Up             | Extend the active selection one row up. Scrolls the viewport when the selection reaches the top edge      |
