@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/api-reference/wss/perps-statistics.md
+Downloaded: 2026-08-21T20:25:29.692Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -73,7 +78,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-410>
+              x-parser-schema-id: <anonymous-schema-414>
             req:
               type: string
               description: Request type
@@ -81,7 +86,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-411>
+              x-parser-schema-id: <anonymous-schema-415>
             chs:
               type: array
               description: >
@@ -93,14 +98,14 @@ operations:
               items:
                 type: string
                 pattern: ^statistics::(\d+|all)$
-                x-parser-schema-id: <anonymous-schema-413>
+                x-parser-schema-id: <anonymous-schema-417>
               example:
                 - statistics::all
-              x-parser-schema-id: <anonymous-schema-412>
+              x-parser-schema-id: <anonymous-schema-416>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-409>
+          x-parser-schema-id: <anonymous-schema-413>
         title: Subscribe
         description: >-
           Subscribe to 24-hour statistics updates for all instruments or a
@@ -184,7 +189,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-415>
+              x-parser-schema-id: <anonymous-schema-419>
             data:
               title: Subscribe Response
               type: array
@@ -198,8 +203,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-419>
-                    x-parser-schema-id: <anonymous-schema-418>
+                        x-parser-schema-id: <anonymous-schema-423>
+                    x-parser-schema-id: <anonymous-schema-422>
                   - type: object
                     required:
                       - status
@@ -209,7 +214,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-421>
+                        x-parser-schema-id: <anonymous-schema-425>
                       error:
                         type: string
                         description: >-
@@ -229,13 +234,13 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-422>
-                    x-parser-schema-id: <anonymous-schema-420>
-                x-parser-schema-id: <anonymous-schema-417>
-              x-parser-schema-id: <anonymous-schema-416>
+                        x-parser-schema-id: <anonymous-schema-426>
+                    x-parser-schema-id: <anonymous-schema-424>
+                x-parser-schema-id: <anonymous-schema-421>
+              x-parser-schema-id: <anonymous-schema-420>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-414>
+          x-parser-schema-id: <anonymous-schema-418>
         title: Subscribe Response
         description: Response to statistics subscribe request
         example: |-
@@ -295,7 +300,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-424>
+              x-parser-schema-id: <anonymous-schema-428>
             req:
               type: string
               description: Request type
@@ -303,7 +308,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-425>
+              x-parser-schema-id: <anonymous-schema-429>
             chs:
               type: array
               description: >
@@ -315,14 +320,14 @@ operations:
               items:
                 type: string
                 pattern: ^statistics::(\d+|all)$
-                x-parser-schema-id: <anonymous-schema-427>
+                x-parser-schema-id: <anonymous-schema-431>
               example:
                 - statistics::all
-              x-parser-schema-id: <anonymous-schema-426>
+              x-parser-schema-id: <anonymous-schema-430>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-423>
+          x-parser-schema-id: <anonymous-schema-427>
         title: Unsubscribe
         description: Unsubscribe from statistics updates
         example: |-
@@ -402,7 +407,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-429>
+              x-parser-schema-id: <anonymous-schema-433>
             data:
               title: Subscribe Response
               type: array
@@ -416,8 +421,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-433>
-                    x-parser-schema-id: <anonymous-schema-432>
+                        x-parser-schema-id: <anonymous-schema-437>
+                    x-parser-schema-id: <anonymous-schema-436>
                   - type: object
                     required:
                       - status
@@ -427,7 +432,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-435>
+                        x-parser-schema-id: <anonymous-schema-439>
                       error:
                         type: string
                         description: >-
@@ -447,13 +452,13 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-436>
-                    x-parser-schema-id: <anonymous-schema-434>
-                x-parser-schema-id: <anonymous-schema-431>
-              x-parser-schema-id: <anonymous-schema-430>
+                        x-parser-schema-id: <anonymous-schema-440>
+                    x-parser-schema-id: <anonymous-schema-438>
+                x-parser-schema-id: <anonymous-schema-435>
+              x-parser-schema-id: <anonymous-schema-434>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-428>
+          x-parser-schema-id: <anonymous-schema-432>
         title: Unsubscribe Response
         description: Response to statistics unsubscribe request
         example: |-
@@ -545,7 +550,7 @@ operations:
                 "tickers::all"). Private channels use plain names (e.g. "fills",
                 "orders").
               example: trades::1
-              x-parser-schema-id: <anonymous-schema-438>
+              x-parser-schema-id: <anonymous-schema-442>
             ts:
               type: integer
               description: >-
@@ -553,12 +558,12 @@ operations:
                 seconds for withdrawals (must match the on-chain EIP-712 struct
                 verified against block.timestamp).
               example: 1767225600000
-              x-parser-schema-id: <anonymous-schema-439>
+              x-parser-schema-id: <anonymous-schema-443>
             sq:
               type: integer
               description: Sequence number
               example: 1234567890
-              x-parser-schema-id: <anonymous-schema-440>
+              x-parser-schema-id: <anonymous-schema-444>
             data:
               type: object
               description: Array of statistics objects
@@ -567,17 +572,17 @@ operations:
                   type: integer
                   description: Instrument ID
                   example: 1
-                  x-parser-schema-id: <anonymous-schema-442>
+                  x-parser-schema-id: <anonymous-schema-446>
                 vol:
                   type: string
                   description: 24-hour trading volume in contracts
                   example: '1000.00'
-                  x-parser-schema-id: <anonymous-schema-443>
+                  x-parser-schema-id: <anonymous-schema-447>
                 open:
                   type: string
                   description: Opening price from 24 hours ago
                   example: '100.50'
-                  x-parser-schema-id: <anonymous-schema-444>
+                  x-parser-schema-id: <anonymous-schema-448>
                 klines:
                   type: array
                   items:
@@ -598,21 +603,21 @@ operations:
                       - '102.00'
                       - '500.00'
                       - 42
-                    x-parser-schema-id: <anonymous-schema-446>
+                    x-parser-schema-id: <anonymous-schema-450>
                   description: Last 24-hour kline data
-                  x-parser-schema-id: <anonymous-schema-445>
+                  x-parser-schema-id: <anonymous-schema-449>
               required:
                 - iid
                 - vol
                 - open
                 - klines
-              x-parser-schema-id: <anonymous-schema-441>
+              x-parser-schema-id: <anonymous-schema-445>
           required:
             - ch
             - ts
             - sq
             - data
-          x-parser-schema-id: <anonymous-schema-437>
+          x-parser-schema-id: <anonymous-schema-441>
         title: Update
         description: 24-hour statistics for subscribed instruments
         example: |-

@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/cancel-orders-coid.md
-Downloaded: 2026-08-20T20:27:56.416Z
+Downloaded: 2026-08-21T20:25:29.685Z
 -->
 
 > ## Documentation Index
@@ -127,6 +127,7 @@ components:
       required:
         - status
         - oid
+        - ts
       properties:
         status:
           type: string
@@ -137,11 +138,14 @@ components:
         coid:
           $ref: '#/components/schemas/coid'
           description: Echoed only when the request carried a client_order_id.
+        ts:
+          $ref: '#/components/schemas/cancel_ts'
     CancelRejected:
       type: object
       required:
         - status
         - error
+        - ts
       properties:
         status:
           type: string
@@ -153,6 +157,8 @@ components:
           $ref: '#/components/schemas/coid'
         error:
           $ref: '#/components/schemas/error'
+        ts:
+          $ref: '#/components/schemas/cancel_ts'
     Error400:
       title: Error400
       type: object
@@ -218,6 +224,10 @@ components:
       type: integer
       description: Order ID
       example: 1234567890
+    cancel_ts:
+      type: integer
+      description: Cancellation outcome timestamp in Unix milliseconds
+      example: 1767225600000
     error:
       type: string
       description: >-

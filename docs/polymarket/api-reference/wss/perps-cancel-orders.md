@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/api-reference/wss/perps-cancel-orders.md
+Downloaded: 2026-08-21T20:25:29.689Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -227,7 +232,11 @@ operations:
                 required: false
               - name: data
                 type: array
-                description: Array of cancel results
+                description: >
+                  Array of cancel results. A request-level failure is returned
+                  as
+
+                  a single rejected item.
                 required: true
                 properties:
                   - name: item
@@ -247,6 +256,10 @@ operations:
                         type: string
                         description: Client order ID
                         required: false
+                      - name: ts
+                        type: integer
+                        description: Cancellation outcome timestamp in Unix milliseconds
+                        required: true
                       - name: status
                         type: string
                         enumValues:
@@ -279,6 +292,10 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         required: true
+                      - name: ts
+                        type: integer
+                        description: Cancellation outcome timestamp in Unix milliseconds
+                        required: true
         headers: []
         jsonPayloadSchema:
           type: object
@@ -290,13 +307,16 @@ operations:
               x-parser-schema-id: <anonymous-schema-59>
             data:
               type: array
-              description: Array of cancel results
+              description: |
+                Array of cancel results. A request-level failure is returned as
+                a single rejected item.
               items:
                 oneOf:
                   - type: object
                     required:
                       - status
                       - oid
+                      - ts
                     properties:
                       status:
                         type: string
@@ -316,22 +336,28 @@ operations:
                         pattern: ^[0-9a-f]{32}$
                         example: 550e8400e29b41d4a716446655440000
                         x-parser-schema-id: <anonymous-schema-65>
+                      ts:
+                        type: integer
+                        description: Cancellation outcome timestamp in Unix milliseconds
+                        example: 1767225600000
+                        x-parser-schema-id: <anonymous-schema-66>
                     x-parser-schema-id: <anonymous-schema-62>
                   - type: object
                     required:
                       - status
                       - error
+                      - ts
                     properties:
                       status:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-67>
+                        x-parser-schema-id: <anonymous-schema-68>
                       oid:
                         type: integer
                         description: Order ID
                         example: 1234567890
-                        x-parser-schema-id: <anonymous-schema-68>
+                        x-parser-schema-id: <anonymous-schema-69>
                       coid:
                         type: string
                         description: Client order ID
@@ -339,7 +365,7 @@ operations:
                         maxLength: 32
                         pattern: ^[0-9a-f]{32}$
                         example: 550e8400e29b41d4a716446655440000
-                        x-parser-schema-id: <anonymous-schema-69>
+                        x-parser-schema-id: <anonymous-schema-70>
                       error:
                         type: string
                         description: >-
@@ -359,8 +385,13 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-70>
-                    x-parser-schema-id: <anonymous-schema-66>
+                        x-parser-schema-id: <anonymous-schema-71>
+                      ts:
+                        type: integer
+                        description: Cancellation outcome timestamp in Unix milliseconds
+                        example: 1767225600000
+                        x-parser-schema-id: <anonymous-schema-72>
+                    x-parser-schema-id: <anonymous-schema-67>
                 x-parser-schema-id: <anonymous-schema-61>
               x-parser-schema-id: <anonymous-schema-60>
           required:
@@ -374,11 +405,13 @@ operations:
             "data": [
               {
                 "status": "ok",
-                "oid": 1234567890
+                "oid": 1234567890,
+                "ts": 1767225600100
               },
               {
                 "status": "ok",
-                "oid": 1234567891
+                "oid": 1234567891,
+                "ts": 1767225600101
               }
             ]
           }

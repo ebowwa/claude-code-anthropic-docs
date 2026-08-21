@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/api-reference/wss/perps-cancel-all.md
+Downloaded: 2026-08-21T20:25:29.690Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -111,7 +116,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-96>
+              x-parser-schema-id: <anonymous-schema-100>
             req:
               type: string
               description: Request type
@@ -119,7 +124,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-97>
+              x-parser-schema-id: <anonymous-schema-101>
             op:
               type: object
               required:
@@ -130,7 +135,7 @@ operations:
                   type: string
                   enum:
                     - cancelAll
-                  x-parser-schema-id: <anonymous-schema-99>
+                  x-parser-schema-id: <anonymous-schema-103>
                 args:
                   type: object
                   description: >
@@ -146,19 +151,19 @@ operations:
                       type: integer
                       description: Instrument ID
                       example: 1
-                      x-parser-schema-id: <anonymous-schema-101>
-                  x-parser-schema-id: <anonymous-schema-100>
-              x-parser-schema-id: <anonymous-schema-98>
+                      x-parser-schema-id: <anonymous-schema-105>
+                  x-parser-schema-id: <anonymous-schema-104>
+              x-parser-schema-id: <anonymous-schema-102>
             sig:
               type: string
               description: Signature in hex format
               example: 0x1234567890...
-              x-parser-schema-id: <anonymous-schema-102>
+              x-parser-schema-id: <anonymous-schema-106>
             salt:
               type: integer
               description: Salt
               example: 1234567890
-              x-parser-schema-id: <anonymous-schema-103>
+              x-parser-schema-id: <anonymous-schema-107>
             ts:
               type: integer
               description: >-
@@ -166,7 +171,7 @@ operations:
                 seconds for withdrawals (must match the on-chain EIP-712 struct
                 verified against block.timestamp).
               example: 1767225600000
-              x-parser-schema-id: <anonymous-schema-104>
+              x-parser-schema-id: <anonymous-schema-108>
             exp:
               type: integer
               description: >-
@@ -175,14 +180,14 @@ operations:
                 timeout. It can shorten request validity but cannot extend it.
                 This is not an order auto-cancel time.
               example: 1767225600000
-              x-parser-schema-id: <anonymous-schema-105>
+              x-parser-schema-id: <anonymous-schema-109>
           required:
             - req
             - op
             - sig
             - salt
             - ts
-          x-parser-schema-id: <anonymous-schema-95>
+          x-parser-schema-id: <anonymous-schema-99>
         title: Cancel All Orders Request
         description: Client submits a signed cancel-all request
         example: |-
@@ -265,7 +270,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-107>
+              x-parser-schema-id: <anonymous-schema-111>
             data:
               oneOf:
                 - type: object
@@ -276,8 +281,8 @@ operations:
                       type: string
                       enum:
                         - ok
-                      x-parser-schema-id: <anonymous-schema-110>
-                  x-parser-schema-id: <anonymous-schema-109>
+                      x-parser-schema-id: <anonymous-schema-114>
+                  x-parser-schema-id: <anonymous-schema-113>
                 - type: object
                   required:
                     - status
@@ -287,7 +292,7 @@ operations:
                       type: string
                       enum:
                         - err
-                      x-parser-schema-id: <anonymous-schema-112>
+                      x-parser-schema-id: <anonymous-schema-116>
                     error:
                       type: string
                       description: >-
@@ -307,12 +312,12 @@ operations:
                         order statuses such as `post_only_rejected`, not
                         rejections.)
                       example: insufficient_margin
-                      x-parser-schema-id: <anonymous-schema-113>
-                  x-parser-schema-id: <anonymous-schema-111>
-              x-parser-schema-id: <anonymous-schema-108>
+                      x-parser-schema-id: <anonymous-schema-117>
+                  x-parser-schema-id: <anonymous-schema-115>
+              x-parser-schema-id: <anonymous-schema-112>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-106>
+          x-parser-schema-id: <anonymous-schema-110>
         title: Cancel All Orders Response
         description: Server responds with the cancel-all result
         example: |-

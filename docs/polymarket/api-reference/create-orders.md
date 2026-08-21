@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/create-orders.md
-Downloaded: 2026-08-20T20:27:56.416Z
+Downloaded: 2026-08-21T20:25:29.685Z
 -->
 
 > ## Documentation Index
@@ -146,12 +146,12 @@ components:
           type: string
           enum:
             - err
+        error:
+          $ref: '#/components/schemas/error'
         oid:
           $ref: '#/components/schemas/oid'
         coid:
           $ref: '#/components/schemas/coid'
-        error:
-          $ref: '#/components/schemas/error'
     Error400:
       title: Error400
       type: object

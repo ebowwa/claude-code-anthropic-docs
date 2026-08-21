@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/api-reference/wss/perps-update-leverages.md
+Downloaded: 2026-08-21T20:25:29.690Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -113,7 +118,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-153>
+              x-parser-schema-id: <anonymous-schema-157>
             req:
               type: string
               description: Request type
@@ -121,7 +126,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-154>
+              x-parser-schema-id: <anonymous-schema-158>
             op:
               type: object
               required:
@@ -132,7 +137,7 @@ operations:
                   type: string
                   enum:
                     - updateLeverages
-                  x-parser-schema-id: <anonymous-schema-156>
+                  x-parser-schema-id: <anonymous-schema-160>
                 args:
                   type: array
                   minItems: 1
@@ -148,29 +153,29 @@ operations:
                         type: integer
                         description: Instrument ID
                         example: 1
-                        x-parser-schema-id: <anonymous-schema-159>
+                        x-parser-schema-id: <anonymous-schema-163>
                       lev:
                         type: integer
                         description: Leverage
                         example: 10
-                        x-parser-schema-id: <anonymous-schema-160>
+                        x-parser-schema-id: <anonymous-schema-164>
                       cross:
                         type: boolean
                         description: Whether to use cross margin mode
-                        x-parser-schema-id: <anonymous-schema-161>
-                    x-parser-schema-id: <anonymous-schema-158>
-                  x-parser-schema-id: <anonymous-schema-157>
-              x-parser-schema-id: <anonymous-schema-155>
+                        x-parser-schema-id: <anonymous-schema-165>
+                    x-parser-schema-id: <anonymous-schema-162>
+                  x-parser-schema-id: <anonymous-schema-161>
+              x-parser-schema-id: <anonymous-schema-159>
             sig:
               type: string
               description: Signature in hex format
               example: 0x1234567890...
-              x-parser-schema-id: <anonymous-schema-162>
+              x-parser-schema-id: <anonymous-schema-166>
             salt:
               type: integer
               description: Salt
               example: 1234567890
-              x-parser-schema-id: <anonymous-schema-163>
+              x-parser-schema-id: <anonymous-schema-167>
             ts:
               type: integer
               description: >-
@@ -178,14 +183,14 @@ operations:
                 seconds for withdrawals (must match the on-chain EIP-712 struct
                 verified against block.timestamp).
               example: 1767225600000
-              x-parser-schema-id: <anonymous-schema-164>
+              x-parser-schema-id: <anonymous-schema-168>
           required:
             - req
             - op
             - sig
             - salt
             - ts
-          x-parser-schema-id: <anonymous-schema-152>
+          x-parser-schema-id: <anonymous-schema-156>
         title: Update Leverages Request
         description: Client submits a signed batch leverage update request
         example: |-
@@ -274,7 +279,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-166>
+              x-parser-schema-id: <anonymous-schema-170>
             data:
               type: array
               description: |
@@ -297,22 +302,22 @@ operations:
                             type: string
                             enum:
                               - ok
-                            x-parser-schema-id: <anonymous-schema-171>
+                            x-parser-schema-id: <anonymous-schema-175>
                           instrument_id:
                             type: integer
                             description: Instrument ID
                             example: 1
-                            x-parser-schema-id: <anonymous-schema-172>
+                            x-parser-schema-id: <anonymous-schema-176>
                           leverage:
                             type: integer
                             description: Leverage
                             example: 10
-                            x-parser-schema-id: <anonymous-schema-173>
+                            x-parser-schema-id: <anonymous-schema-177>
                           cross:
                             type: boolean
                             description: Whether to use cross margin mode
-                            x-parser-schema-id: <anonymous-schema-174>
-                        x-parser-schema-id: <anonymous-schema-170>
+                            x-parser-schema-id: <anonymous-schema-178>
+                        x-parser-schema-id: <anonymous-schema-174>
                       - type: object
                         required:
                           - status
@@ -323,12 +328,12 @@ operations:
                             type: string
                             enum:
                               - err
-                            x-parser-schema-id: <anonymous-schema-176>
+                            x-parser-schema-id: <anonymous-schema-180>
                           instrument_id:
                             type: integer
                             description: Instrument ID
                             example: 1
-                            x-parser-schema-id: <anonymous-schema-177>
+                            x-parser-schema-id: <anonymous-schema-181>
                           error:
                             type: string
                             description: >-
@@ -350,9 +355,9 @@ operations:
                               are order statuses such as `post_only_rejected`,
                               not rejections.)
                             example: insufficient_margin
-                            x-parser-schema-id: <anonymous-schema-178>
-                        x-parser-schema-id: <anonymous-schema-175>
-                    x-parser-schema-id: <anonymous-schema-169>
+                            x-parser-schema-id: <anonymous-schema-182>
+                        x-parser-schema-id: <anonymous-schema-179>
+                    x-parser-schema-id: <anonymous-schema-173>
                   - type: object
                     required:
                       - status
@@ -362,7 +367,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-180>
+                        x-parser-schema-id: <anonymous-schema-184>
                       error:
                         type: string
                         description: >-
@@ -382,13 +387,13 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-181>
-                    x-parser-schema-id: <anonymous-schema-179>
-                x-parser-schema-id: <anonymous-schema-168>
-              x-parser-schema-id: <anonymous-schema-167>
+                        x-parser-schema-id: <anonymous-schema-185>
+                    x-parser-schema-id: <anonymous-schema-183>
+                x-parser-schema-id: <anonymous-schema-172>
+              x-parser-schema-id: <anonymous-schema-171>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-165>
+          x-parser-schema-id: <anonymous-schema-169>
         title: Update Leverages Response
         description: Server responds with an ordered result for each instrument
         example: |-

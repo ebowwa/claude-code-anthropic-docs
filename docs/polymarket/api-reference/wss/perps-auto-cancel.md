@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/api-reference/wss/perps-auto-cancel.md
+Downloaded: 2026-08-21T20:25:29.690Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -94,7 +99,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-115>
+              x-parser-schema-id: <anonymous-schema-119>
             req:
               type: string
               description: Request type
@@ -102,7 +107,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-116>
+              x-parser-schema-id: <anonymous-schema-120>
             op:
               type: object
               required:
@@ -113,7 +118,7 @@ operations:
                   type: string
                   enum:
                     - autoCancel
-                  x-parser-schema-id: <anonymous-schema-118>
+                  x-parser-schema-id: <anonymous-schema-122>
                 args:
                   type: object
                   required:
@@ -123,19 +128,19 @@ operations:
                       type: integer
                       description: Timestamp in milliseconds
                       example: 1767225600000
-                      x-parser-schema-id: <anonymous-schema-120>
-                  x-parser-schema-id: <anonymous-schema-119>
-              x-parser-schema-id: <anonymous-schema-117>
+                      x-parser-schema-id: <anonymous-schema-124>
+                  x-parser-schema-id: <anonymous-schema-123>
+              x-parser-schema-id: <anonymous-schema-121>
             sig:
               type: string
               description: Signature in hex format
               example: 0x1234567890...
-              x-parser-schema-id: <anonymous-schema-121>
+              x-parser-schema-id: <anonymous-schema-125>
             salt:
               type: integer
               description: Salt
               example: 1234567890
-              x-parser-schema-id: <anonymous-schema-122>
+              x-parser-schema-id: <anonymous-schema-126>
             ts:
               type: integer
               description: >-
@@ -143,14 +148,14 @@ operations:
                 seconds for withdrawals (must match the on-chain EIP-712 struct
                 verified against block.timestamp).
               example: 1767225600000
-              x-parser-schema-id: <anonymous-schema-123>
+              x-parser-schema-id: <anonymous-schema-127>
           required:
             - req
             - op
             - sig
             - salt
             - ts
-          x-parser-schema-id: <anonymous-schema-114>
+          x-parser-schema-id: <anonymous-schema-118>
         title: Auto-Cancel Request
         description: Client submits a signed auto-cancel request
         example: |-
@@ -232,7 +237,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-125>
+              x-parser-schema-id: <anonymous-schema-129>
             data:
               oneOf:
                 - type: object
@@ -243,8 +248,8 @@ operations:
                       type: string
                       enum:
                         - ok
-                      x-parser-schema-id: <anonymous-schema-128>
-                  x-parser-schema-id: <anonymous-schema-127>
+                      x-parser-schema-id: <anonymous-schema-132>
+                  x-parser-schema-id: <anonymous-schema-131>
                 - type: object
                   required:
                     - status
@@ -254,7 +259,7 @@ operations:
                       type: string
                       enum:
                         - err
-                      x-parser-schema-id: <anonymous-schema-130>
+                      x-parser-schema-id: <anonymous-schema-134>
                     error:
                       type: string
                       description: >-
@@ -274,12 +279,12 @@ operations:
                         order statuses such as `post_only_rejected`, not
                         rejections.)
                       example: insufficient_margin
-                      x-parser-schema-id: <anonymous-schema-131>
-                  x-parser-schema-id: <anonymous-schema-129>
-              x-parser-schema-id: <anonymous-schema-126>
+                      x-parser-schema-id: <anonymous-schema-135>
+                  x-parser-schema-id: <anonymous-schema-133>
+              x-parser-schema-id: <anonymous-schema-130>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-124>
+          x-parser-schema-id: <anonymous-schema-128>
         title: Auto-Cancel Response
         description: Server responds with auto-cancel result
         example: |-

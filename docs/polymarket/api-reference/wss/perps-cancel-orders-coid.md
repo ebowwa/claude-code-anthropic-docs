@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/api-reference/wss/perps-cancel-orders-coid.md
+Downloaded: 2026-08-21T20:25:29.690Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -113,7 +118,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-72>
+              x-parser-schema-id: <anonymous-schema-74>
             req:
               type: string
               description: Request type
@@ -121,7 +126,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-73>
+              x-parser-schema-id: <anonymous-schema-75>
             op:
               type: object
               required:
@@ -132,7 +137,7 @@ operations:
                   type: string
                   enum:
                     - cancelOrdersCOID
-                  x-parser-schema-id: <anonymous-schema-75>
+                  x-parser-schema-id: <anonymous-schema-77>
                 args:
                   type: array
                   description: >
@@ -152,19 +157,19 @@ operations:
                     maxLength: 32
                     pattern: ^[0-9a-f]{32}$
                     example: 550e8400e29b41d4a716446655440000
-                    x-parser-schema-id: <anonymous-schema-77>
-                  x-parser-schema-id: <anonymous-schema-76>
-              x-parser-schema-id: <anonymous-schema-74>
+                    x-parser-schema-id: <anonymous-schema-79>
+                  x-parser-schema-id: <anonymous-schema-78>
+              x-parser-schema-id: <anonymous-schema-76>
             sig:
               type: string
               description: Signature in hex format
               example: 0x1234567890...
-              x-parser-schema-id: <anonymous-schema-78>
+              x-parser-schema-id: <anonymous-schema-80>
             salt:
               type: integer
               description: Salt
               example: 1234567890
-              x-parser-schema-id: <anonymous-schema-79>
+              x-parser-schema-id: <anonymous-schema-81>
             ts:
               type: integer
               description: >-
@@ -172,7 +177,7 @@ operations:
                 seconds for withdrawals (must match the on-chain EIP-712 struct
                 verified against block.timestamp).
               example: 1767225600000
-              x-parser-schema-id: <anonymous-schema-80>
+              x-parser-schema-id: <anonymous-schema-82>
             exp:
               type: integer
               description: >-
@@ -181,14 +186,14 @@ operations:
                 timeout. It can shorten request validity but cannot extend it.
                 This is not an order auto-cancel time.
               example: 1767225600000
-              x-parser-schema-id: <anonymous-schema-81>
+              x-parser-schema-id: <anonymous-schema-83>
           required:
             - req
             - op
             - sig
             - salt
             - ts
-          x-parser-schema-id: <anonymous-schema-71>
+          x-parser-schema-id: <anonymous-schema-73>
         title: Cancel Orders COID Request
         description: Client submits a signed cancel-by-client-order-id request
         example: |-
@@ -233,7 +238,11 @@ operations:
                 required: false
               - name: data
                 type: array
-                description: Array of cancel results
+                description: >
+                  Array of cancel results. A request-level failure is returned
+                  as
+
+                  a single rejected item.
                 required: true
                 properties:
                   - name: item
@@ -253,6 +262,10 @@ operations:
                         type: string
                         description: Client order ID
                         required: false
+                      - name: ts
+                        type: integer
+                        description: Cancellation outcome timestamp in Unix milliseconds
+                        required: true
                       - name: status
                         type: string
                         enumValues:
@@ -285,6 +298,10 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         required: true
+                      - name: ts
+                        type: integer
+                        description: Cancellation outcome timestamp in Unix milliseconds
+                        required: true
         headers: []
         jsonPayloadSchema:
           type: object
@@ -293,27 +310,30 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-83>
+              x-parser-schema-id: <anonymous-schema-85>
             data:
               type: array
-              description: Array of cancel results
+              description: |
+                Array of cancel results. A request-level failure is returned as
+                a single rejected item.
               items:
                 oneOf:
                   - type: object
                     required:
                       - status
                       - oid
+                      - ts
                     properties:
                       status:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-87>
+                        x-parser-schema-id: <anonymous-schema-89>
                       oid:
                         type: integer
                         description: Order ID
                         example: 1234567890
-                        x-parser-schema-id: <anonymous-schema-88>
+                        x-parser-schema-id: <anonymous-schema-90>
                       coid:
                         type: string
                         description: Client order ID
@@ -321,23 +341,29 @@ operations:
                         maxLength: 32
                         pattern: ^[0-9a-f]{32}$
                         example: 550e8400e29b41d4a716446655440000
-                        x-parser-schema-id: <anonymous-schema-89>
-                    x-parser-schema-id: <anonymous-schema-86>
+                        x-parser-schema-id: <anonymous-schema-91>
+                      ts:
+                        type: integer
+                        description: Cancellation outcome timestamp in Unix milliseconds
+                        example: 1767225600000
+                        x-parser-schema-id: <anonymous-schema-92>
+                    x-parser-schema-id: <anonymous-schema-88>
                   - type: object
                     required:
                       - status
                       - error
+                      - ts
                     properties:
                       status:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-91>
+                        x-parser-schema-id: <anonymous-schema-94>
                       oid:
                         type: integer
                         description: Order ID
                         example: 1234567890
-                        x-parser-schema-id: <anonymous-schema-92>
+                        x-parser-schema-id: <anonymous-schema-95>
                       coid:
                         type: string
                         description: Client order ID
@@ -345,7 +371,7 @@ operations:
                         maxLength: 32
                         pattern: ^[0-9a-f]{32}$
                         example: 550e8400e29b41d4a716446655440000
-                        x-parser-schema-id: <anonymous-schema-93>
+                        x-parser-schema-id: <anonymous-schema-96>
                       error:
                         type: string
                         description: >-
@@ -365,13 +391,18 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-94>
-                    x-parser-schema-id: <anonymous-schema-90>
-                x-parser-schema-id: <anonymous-schema-85>
-              x-parser-schema-id: <anonymous-schema-84>
+                        x-parser-schema-id: <anonymous-schema-97>
+                      ts:
+                        type: integer
+                        description: Cancellation outcome timestamp in Unix milliseconds
+                        example: 1767225600000
+                        x-parser-schema-id: <anonymous-schema-98>
+                    x-parser-schema-id: <anonymous-schema-93>
+                x-parser-schema-id: <anonymous-schema-87>
+              x-parser-schema-id: <anonymous-schema-86>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-82>
+          x-parser-schema-id: <anonymous-schema-84>
         title: Cancel Orders COID Response
         description: Server responds with cancel result for each client order ID
         example: |-
@@ -381,12 +412,14 @@ operations:
               {
                 "status": "ok",
                 "oid": 1234567890,
-                "coid": "550e8400e29b41d4a716446655440000"
+                "coid": "550e8400e29b41d4a716446655440000",
+                "ts": 1767225600100
               },
               {
                 "status": "ok",
                 "oid": 1234567891,
-                "coid": "550e8400e29b41d4a716446655440001"
+                "coid": "550e8400e29b41d4a716446655440001",
+                "ts": 1767225600101
               }
             ]
           }

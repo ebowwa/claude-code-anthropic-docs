@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/api-reference/wss/perps-book.md
+Downloaded: 2026-08-21T20:25:29.691Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -66,7 +71,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-296>
+              x-parser-schema-id: <anonymous-schema-300>
             req:
               type: string
               description: Request type
@@ -74,21 +79,21 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-297>
+              x-parser-schema-id: <anonymous-schema-301>
             chs:
               type: array
               description: Book subscription in format "book::{iid}" (e.g., "book::1")
               items:
                 type: string
                 pattern: ^book::\d+$
-                x-parser-schema-id: <anonymous-schema-299>
+                x-parser-schema-id: <anonymous-schema-303>
               example:
                 - book::1
-              x-parser-schema-id: <anonymous-schema-298>
+              x-parser-schema-id: <anonymous-schema-302>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-295>
+          x-parser-schema-id: <anonymous-schema-299>
         title: Subscribe
         description: Subscribe to order book updates for an instrument
         example: |-
@@ -170,7 +175,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-301>
+              x-parser-schema-id: <anonymous-schema-305>
             data:
               title: Subscribe Response
               type: array
@@ -184,8 +189,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-305>
-                    x-parser-schema-id: <anonymous-schema-304>
+                        x-parser-schema-id: <anonymous-schema-309>
+                    x-parser-schema-id: <anonymous-schema-308>
                   - type: object
                     required:
                       - status
@@ -195,7 +200,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-307>
+                        x-parser-schema-id: <anonymous-schema-311>
                       error:
                         type: string
                         description: >-
@@ -215,13 +220,13 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-308>
-                    x-parser-schema-id: <anonymous-schema-306>
-                x-parser-schema-id: <anonymous-schema-303>
-              x-parser-schema-id: <anonymous-schema-302>
+                        x-parser-schema-id: <anonymous-schema-312>
+                    x-parser-schema-id: <anonymous-schema-310>
+                x-parser-schema-id: <anonymous-schema-307>
+              x-parser-schema-id: <anonymous-schema-306>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-300>
+          x-parser-schema-id: <anonymous-schema-304>
         title: Subscribe Response
         description: Response to book subscribe request
         example: |-
@@ -276,7 +281,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-310>
+              x-parser-schema-id: <anonymous-schema-314>
             req:
               type: string
               description: Request type
@@ -284,21 +289,21 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-311>
+              x-parser-schema-id: <anonymous-schema-315>
             chs:
               type: array
               description: Book subscription in format "book::{iid}" (e.g., "book::1")
               items:
                 type: string
                 pattern: ^book::\d+$
-                x-parser-schema-id: <anonymous-schema-313>
+                x-parser-schema-id: <anonymous-schema-317>
               example:
                 - book::1
-              x-parser-schema-id: <anonymous-schema-312>
+              x-parser-schema-id: <anonymous-schema-316>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-309>
+          x-parser-schema-id: <anonymous-schema-313>
         title: Unsubscribe
         description: Unsubscribe from order book updates
         example: |-
@@ -378,7 +383,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-315>
+              x-parser-schema-id: <anonymous-schema-319>
             data:
               title: Subscribe Response
               type: array
@@ -392,8 +397,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-319>
-                    x-parser-schema-id: <anonymous-schema-318>
+                        x-parser-schema-id: <anonymous-schema-323>
+                    x-parser-schema-id: <anonymous-schema-322>
                   - type: object
                     required:
                       - status
@@ -403,7 +408,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-321>
+                        x-parser-schema-id: <anonymous-schema-325>
                       error:
                         type: string
                         description: >-
@@ -423,13 +428,13 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-322>
-                    x-parser-schema-id: <anonymous-schema-320>
-                x-parser-schema-id: <anonymous-schema-317>
-              x-parser-schema-id: <anonymous-schema-316>
+                        x-parser-schema-id: <anonymous-schema-326>
+                    x-parser-schema-id: <anonymous-schema-324>
+                x-parser-schema-id: <anonymous-schema-321>
+              x-parser-schema-id: <anonymous-schema-320>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-314>
+          x-parser-schema-id: <anonymous-schema-318>
         title: Unsubscribe Response
         description: Response to book unsubscribe request
         example: |-
@@ -522,7 +527,7 @@ operations:
                 "tickers::all"). Private channels use plain names (e.g. "fills",
                 "orders").
               example: trades::1
-              x-parser-schema-id: <anonymous-schema-324>
+              x-parser-schema-id: <anonymous-schema-328>
             ts:
               type: integer
               description: >-
@@ -530,12 +535,12 @@ operations:
                 seconds for withdrawals (must match the on-chain EIP-712 struct
                 verified against block.timestamp).
               example: 1767225600000
-              x-parser-schema-id: <anonymous-schema-325>
+              x-parser-schema-id: <anonymous-schema-329>
             sq:
               type: integer
               description: Sequence number
               example: 1234567890
-              x-parser-schema-id: <anonymous-schema-326>
+              x-parser-schema-id: <anonymous-schema-330>
             data:
               type: object
               required:
@@ -548,7 +553,7 @@ operations:
                     type: array
                     items:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-330>
+                      x-parser-schema-id: <anonymous-schema-334>
                     maxItems: 2
                     description: |
                       - `"100.00"` - Price
@@ -556,16 +561,16 @@ operations:
                     example:
                       - '100.00'
                       - '10.00'
-                    x-parser-schema-id: <anonymous-schema-329>
+                    x-parser-schema-id: <anonymous-schema-333>
                   description: Bid levels
-                  x-parser-schema-id: <anonymous-schema-328>
+                  x-parser-schema-id: <anonymous-schema-332>
                 a:
                   type: array
                   items:
                     type: array
                     items:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-333>
+                      x-parser-schema-id: <anonymous-schema-337>
                     maxItems: 2
                     description: |
                       - `"100.00"` - Price
@@ -573,16 +578,16 @@ operations:
                     example:
                       - '100.00'
                       - '10.00'
-                    x-parser-schema-id: <anonymous-schema-332>
+                    x-parser-schema-id: <anonymous-schema-336>
                   description: Ask levels
-                  x-parser-schema-id: <anonymous-schema-331>
-              x-parser-schema-id: <anonymous-schema-327>
+                  x-parser-schema-id: <anonymous-schema-335>
+              x-parser-schema-id: <anonymous-schema-331>
           required:
             - ch
             - ts
             - sq
             - data
-          x-parser-schema-id: <anonymous-schema-323>
+          x-parser-schema-id: <anonymous-schema-327>
         title: Update
         description: Real-time order book updates for subscribed instruments
         example: |-

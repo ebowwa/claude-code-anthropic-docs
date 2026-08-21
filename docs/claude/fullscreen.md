@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/fullscreen.md
-Downloaded: 2026-08-20T20:28:07.659Z
+Downloaded: 2026-08-21T20:25:39.565Z
 -->
 
 > ## Documentation Index
@@ -36,7 +36,7 @@ Claude Code carries these into the relaunched session:
   * If you rewound to before your first message, Claude Code relaunches with an empty conversation
 * Your [permission mode](/docs/en/permission-modes) and [effort level](/docs/en/model-config#adjust-effort-level)
 * The model you last picked with [`/model`](/docs/en/model-config#setting-your-model)
-* Rules you passed with [`--allowed-tools` or `--disallowed-tools`](/docs/en/cli-reference#cli-flags)
+* Rules you passed with [`--allowed-tools` or `--disallowed-tools`](/docs/en/cli-reference#cli-flags), and your `--agent`, `--agents`, and `--append-system-prompt` flags
 
 Claude Code declines to relaunch if the session has a restriction it can't pass to the restarted process. Restrictions it can't pass include:
 
@@ -187,7 +187,9 @@ Your terminal's `Cmd+f` and tmux search don't see the conversation because it li
 
 ## Clear the conversation
 
-Press `Ctrl+L` twice within two seconds to run `/clear` and start a new conversation. The first press redraws the screen and shows a hint; the second press clears the conversation. On macOS, double-pressing `Cmd+K` also runs `/clear`.
+Run `/clear` to start a new conversation. Pressing `Ctrl+L` or `Cmd+K` doesn't clear the conversation; Claude Code redraws the screen and keeps it. Before v2.1.238, Claude Code ran `/clear` when you pressed `Ctrl+L` or `Cmd+K` twice within two seconds.
+
+On iTerm2 and Terminal.app, your terminal handles `Cmd+K` itself and clears its own screen without telling Claude Code. Claude Code detects the cleared screen and repaints the conversation.
 
 ## Use with tmux
 

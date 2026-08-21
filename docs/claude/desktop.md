@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/desktop.md
-Downloaded: 2026-08-18T20:23:49.698Z
+Downloaded: 2026-08-21T20:25:39.543Z
 -->
 
 > ## Documentation Index
@@ -369,7 +369,7 @@ Claude Code applies four safety behaviors across sessions:
 
 * Before archiving any session, Claude asks you first. You see the approval card in every permission mode, including Auto and Bypass permissions.
 * Through this surface, Claude can't send cross-session messages from a session nobody is watching, such as a scheduled-task run, and can't deliver messages into one.
-* Claude Code checks each message from this surface against the receiving session's [inbound controls](/docs/en/cross-session-messaging#control-inbound-messages). If you set [`crossSessionInbound`](/docs/en/settings#available-settings) to `refuse` in the receiving session, Claude Code drops messages from this surface. The check runs even when the receiving session doesn't have [cross-session messaging](/docs/en/cross-session-messaging#availability) itself. Before v2.1.234, Claude Code dropped every message from this surface to a receiving session without cross-session messaging.
+* Claude Code checks each message from this surface against the receiving session's [inbound controls](/docs/en/cross-session-messaging#control-inbound-messages), even when the receiving session doesn't have [cross-session messaging](/docs/en/cross-session-messaging#availability) itself. If you set [`crossSessionInbound`](/docs/en/settings#available-settings) to `refuse` in the receiving session, Claude Code drops messages from this surface. Claude Code reports the refusal to the Claude desktop app. Before v2.1.234, Claude Code dropped every message from this surface to a receiving session without cross-session messaging.
 * Claude Code quotes each incoming message and attributes it to the session that sent it, and Claude still follows the receiving session's own permission settings when acting on one.
 
 Claude can also suggest new sessions. When it notices something worth fixing that's out of scope for the current task, it offers the work as a task chip in the chat. Click the chip to start that work in a new session with its own worktree; Claude continues your current session uninterrupted.
@@ -883,7 +883,7 @@ This table compares core capabilities between the CLI and Desktop. For a full li
 
 ### What's not available in Desktop
 
-The following features are only available in the CLI or VS Code extension, except where noted:
+The following features aren't available in Desktop, except where noted:
 
 * **Third-party providers**: Desktop connects to Anthropic's API by default. To route Desktop through a gateway, or to run the Code tab on Amazon Bedrock, Google Cloud's Agent Platform, Microsoft Foundry, or a self-hosted LLM gateway, follow the links in the [Third-party providers row](#feature-comparison).
 * **Linux (beta)**: Computer Use isn't yet available in the Linux desktop app. See [Claude Desktop on Linux](/docs/en/desktop-linux).

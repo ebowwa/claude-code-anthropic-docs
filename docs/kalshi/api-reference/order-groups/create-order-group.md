@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/order-groups/create-order-group.md
-Downloaded: 2026-08-17T20:26:37.799Z
+Downloaded: 2026-08-21T20:25:30.746Z
 -->
 
 > ## Documentation Index
@@ -131,6 +131,7 @@ components:
           allOf:
             - $ref: '#/components/schemas/ExchangeIndex'
           default: 0
+          description: Identifier for an exchange shard. Defaults to 0.
           x-go-type-skip-optional-pointer: true
     CreateOrderGroupResponse:
       type: object

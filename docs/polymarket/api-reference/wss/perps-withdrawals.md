@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/wss/perps-withdrawals.md
-Downloaded: 2026-08-13T20:42:10.574Z
+Downloaded: 2026-08-21T20:25:29.693Z
 -->
 
 > ## Documentation Index
@@ -75,7 +75,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-758>
+              x-parser-schema-id: <anonymous-schema-762>
             req:
               type: string
               description: Request type
@@ -83,7 +83,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-759>
+              x-parser-schema-id: <anonymous-schema-763>
             chs:
               type: array
               description: 'Withdrawals private channel: "withdrawals"'
@@ -91,14 +91,14 @@ operations:
                 type: string
                 enum:
                   - withdrawals
-                x-parser-schema-id: <anonymous-schema-761>
+                x-parser-schema-id: <anonymous-schema-765>
               example:
                 - withdrawals
-              x-parser-schema-id: <anonymous-schema-760>
+              x-parser-schema-id: <anonymous-schema-764>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-757>
+          x-parser-schema-id: <anonymous-schema-761>
         title: Subscribe
         description: Subscribe to private withdrawal updates (requires prior auth)
         example: |-
@@ -180,7 +180,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-763>
+              x-parser-schema-id: <anonymous-schema-767>
             data:
               title: Subscribe Response
               type: array
@@ -194,8 +194,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-767>
-                    x-parser-schema-id: <anonymous-schema-766>
+                        x-parser-schema-id: <anonymous-schema-771>
+                    x-parser-schema-id: <anonymous-schema-770>
                   - type: object
                     required:
                       - status
@@ -205,7 +205,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-769>
+                        x-parser-schema-id: <anonymous-schema-773>
                       error:
                         type: string
                         description: >-
@@ -225,13 +225,13 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-770>
-                    x-parser-schema-id: <anonymous-schema-768>
-                x-parser-schema-id: <anonymous-schema-765>
-              x-parser-schema-id: <anonymous-schema-764>
+                        x-parser-schema-id: <anonymous-schema-774>
+                    x-parser-schema-id: <anonymous-schema-772>
+                x-parser-schema-id: <anonymous-schema-769>
+              x-parser-schema-id: <anonymous-schema-768>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-762>
+          x-parser-schema-id: <anonymous-schema-766>
         title: Subscribe Response
         description: Response to withdrawals subscribe request
         example: |-
@@ -288,7 +288,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-772>
+              x-parser-schema-id: <anonymous-schema-776>
             req:
               type: string
               description: Request type
@@ -296,7 +296,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-773>
+              x-parser-schema-id: <anonymous-schema-777>
             chs:
               type: array
               description: 'Withdrawals private channel: "withdrawals"'
@@ -304,14 +304,14 @@ operations:
                 type: string
                 enum:
                   - withdrawals
-                x-parser-schema-id: <anonymous-schema-775>
+                x-parser-schema-id: <anonymous-schema-779>
               example:
                 - withdrawals
-              x-parser-schema-id: <anonymous-schema-774>
+              x-parser-schema-id: <anonymous-schema-778>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-771>
+          x-parser-schema-id: <anonymous-schema-775>
         title: Unsubscribe
         description: Unsubscribe from private withdrawal updates
         example: |-
@@ -391,7 +391,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-777>
+              x-parser-schema-id: <anonymous-schema-781>
             data:
               title: Subscribe Response
               type: array
@@ -405,8 +405,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-781>
-                    x-parser-schema-id: <anonymous-schema-780>
+                        x-parser-schema-id: <anonymous-schema-785>
+                    x-parser-schema-id: <anonymous-schema-784>
                   - type: object
                     required:
                       - status
@@ -416,7 +416,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-783>
+                        x-parser-schema-id: <anonymous-schema-787>
                       error:
                         type: string
                         description: >-
@@ -436,13 +436,13 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-784>
-                    x-parser-schema-id: <anonymous-schema-782>
-                x-parser-schema-id: <anonymous-schema-779>
-              x-parser-schema-id: <anonymous-schema-778>
+                        x-parser-schema-id: <anonymous-schema-788>
+                    x-parser-schema-id: <anonymous-schema-786>
+                x-parser-schema-id: <anonymous-schema-783>
+              x-parser-schema-id: <anonymous-schema-782>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-776>
+          x-parser-schema-id: <anonymous-schema-780>
         title: Unsubscribe Response
         description: Response to withdrawals unsubscribe request
         example: |-
@@ -539,7 +539,7 @@ operations:
                 "tickers::all"). Private channels use plain names (e.g. "fills",
                 "orders").
               example: trades::1
-              x-parser-schema-id: <anonymous-schema-786>
+              x-parser-schema-id: <anonymous-schema-790>
             ts:
               type: integer
               description: >-
@@ -547,12 +547,12 @@ operations:
                 seconds for withdrawals (must match the on-chain EIP-712 struct
                 verified against block.timestamp).
               example: 1767225600000
-              x-parser-schema-id: <anonymous-schema-787>
+              x-parser-schema-id: <anonymous-schema-791>
             sq:
               type: integer
               description: Sequence number
               example: 1234567890
-              x-parser-schema-id: <anonymous-schema-788>
+              x-parser-schema-id: <anonymous-schema-792>
             data:
               type: object
               description: Array of withdrawal objects
@@ -560,27 +560,27 @@ operations:
                 withdraw_id:
                   type: integer
                   description: Withdraw ID
-                  x-parser-schema-id: <anonymous-schema-790>
+                  x-parser-schema-id: <anonymous-schema-794>
                 asset:
                   type: string
                   description: Asset name
                   example: USDC
-                  x-parser-schema-id: <anonymous-schema-791>
+                  x-parser-schema-id: <anonymous-schema-795>
                 amount:
                   type: string
                   description: Token amount in decimal units (e.g. "100" for 100 USDC).
                   example: '100'
-                  x-parser-schema-id: <anonymous-schema-792>
+                  x-parser-schema-id: <anonymous-schema-796>
                 fee:
                   type: string
                   description: Withdrawal transaction fee in decimalized asset units
                   example: '5.00'
-                  x-parser-schema-id: <anonymous-schema-793>
+                  x-parser-schema-id: <anonymous-schema-797>
                 to:
                   type: string
                   description: Destination address in hex format
                   example: '0x1234567890abcdef1234567890abcdef12345678'
-                  x-parser-schema-id: <anonymous-schema-794>
+                  x-parser-schema-id: <anonymous-schema-798>
                 status:
                   type: string
                   description: Withdrawal status
@@ -589,14 +589,14 @@ operations:
                     - confirmed
                     - removed
                     - failed
-                  x-parser-schema-id: <anonymous-schema-795>
+                  x-parser-schema-id: <anonymous-schema-799>
                 hash:
                   type: string
                   description: On-chain transaction hash, "0x" if not yet mined
                   default: 0x
                   example: >-
                     0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
-                  x-parser-schema-id: <anonymous-schema-796>
+                  x-parser-schema-id: <anonymous-schema-800>
               required:
                 - withdraw_id
                 - asset
@@ -605,13 +605,13 @@ operations:
                 - to
                 - status
                 - hash
-              x-parser-schema-id: <anonymous-schema-789>
+              x-parser-schema-id: <anonymous-schema-793>
           required:
             - ch
             - ts
             - sq
             - data
-          x-parser-schema-id: <anonymous-schema-785>
+          x-parser-schema-id: <anonymous-schema-789>
         title: Update
         description: Withdrawal status updates for authenticated users
         example: |-

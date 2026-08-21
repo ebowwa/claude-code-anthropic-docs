@@ -1,30 +1,45 @@
 <!--
-Source: https://docs.polymarket.com/api-reference/get-fills.md
-Downloaded: 2026-08-21T20:25:29.687Z
+Source: https://docs.polymarket.com/api-reference/get-current-position-fills.md
+Downloaded: 2026-08-21T20:25:29.684Z
 -->
 
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Get Fills
+# Get Current Position Fills
 
-> Get fill history for the authenticated account.
-If no end time is provided, the current time will be used.
-Maximum of 100 entries returned per request.
-Results are ordered by time; use `sort` to choose newest-first (`desc`,
-default) or oldest-first (`asc`). To page through more than 100 fills,
-pass the `cursor` returned by the previous page (keep `sort` consistent
-across pages). Passing the trade ID of the last fill from the previous
-page is also still accepted.
+> Get every fill in a registered account's current open position cycle for
+one instrument. A cycle begins when the position opens from flat or flips
+direction. For a flip, every fill from the flipping engine event belongs
+to the new cycle so a fill is never split between cycles.
+
+Returns an empty page when the account has no open position for the
+instrument. Maximum of 100 entries returned per request. Results are
+ordered by time; use `sort` to choose newest-first (`desc`, default) or
+oldest-first (`asc`). To page through more than 100 fills, pass the opaque
+`cursor` returned by the previous page and keep `sort` unchanged. Each page
+verifies that the cursor still describes the account's current position
+cycle. If that position changes while pagination is in progress, the
+cursor returns `400` and pagination must restart from the first page.
+
+Cycle discovery for a position inherited from a gateway snapshot is
+limited to 250,000 account-history rows. A cycle older than that bound
+returns `413` rather than allowing a public request to run an unbounded
+ClickHouse scan. Positions opened or flipped after gateway startup carry
+their cycle boundary directly and do not use this discovery scan.
 
 
 <Badge color="gray" size="md">Request Weight: **10**</Badge>
 
+<br />
+
+<Badge color="gray" size="md">Cached 2s — a request served from cache costs **1**</Badge>
+
 
 ## OpenAPI
 
-````yaml /api-spec/perps-openapi.json get /v1/account/fills
+````yaml /api-spec/perps-openapi.json get /v1/info/position-fills
 openapi: 3.0.3
 info:
   title: Polymarket Perps HTTP API
@@ -38,35 +53,69 @@ servers:
     description: Production Perps HTTP API
 security: []
 paths:
-  /v1/account/fills:
+  /v1/info/position-fills:
     get:
-      summary: Get Fills
-      description: |
-        Get fill history for the authenticated account.
-        If no end time is provided, the current time will be used.
-        Maximum of 100 entries returned per request.
-        Results are ordered by time; use `sort` to choose newest-first (`desc`,
-        default) or oldest-first (`asc`). To page through more than 100 fills,
-        pass the `cursor` returned by the previous page (keep `sort` consistent
-        across pages). Passing the trade ID of the last fill from the previous
-        page is also still accepted.
-      operationId: getFills
+      summary: Get Current Position Fills
+      description: >
+        Get every fill in a registered account's current open position cycle for
+
+        one instrument. A cycle begins when the position opens from flat or
+        flips
+
+        direction. For a flip, every fill from the flipping engine event belongs
+
+        to the new cycle so a fill is never split between cycles.
+
+
+        Returns an empty page when the account has no open position for the
+
+        instrument. Maximum of 100 entries returned per request. Results are
+
+        ordered by time; use `sort` to choose newest-first (`desc`, default) or
+
+        oldest-first (`asc`). To page through more than 100 fills, pass the
+        opaque
+
+        `cursor` returned by the previous page and keep `sort` unchanged. Each
+        page
+
+        verifies that the cursor still describes the account's current position
+
+        cycle. If that position changes while pagination is in progress, the
+
+        cursor returns `400` and pagination must restart from the first page.
+
+
+        Cycle discovery for a position inherited from a gateway snapshot is
+
+        limited to 250,000 account-history rows. A cycle older than that bound
+
+        returns `413` rather than allowing a public request to run an unbounded
+
+        ClickHouse scan. Positions opened or flipped after gateway startup carry
+
+        their cycle boundary directly and do not use this discovery scan.
+      operationId: getPublicPositionFills
       parameters:
-        - name: start_timestamp
+        - name: address
           in: query
-          required: false
+          required: true
           schema:
-            $ref: '#/components/schemas/start_timestamp'
-        - name: end_timestamp
+            $ref: '#/components/schemas/address'
+        - name: instrument_id
           in: query
-          required: false
+          required: true
           schema:
-            $ref: '#/components/schemas/end_timestamp'
+            type: integer
+            format: int64
+            minimum: 0
+            maximum: 4294967295
+            description: Instrument ID
         - name: cursor
           in: query
           required: false
           schema:
-            $ref: '#/components/schemas/cursor'
+            $ref: '#/components/schemas/fills_cursor'
         - name: sort
           in: query
           required: false
@@ -74,40 +123,34 @@ paths:
             $ref: '#/components/schemas/sort'
       responses:
         '200':
-          description: Fills response.
+          description: Current position fills response.
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/AccountTrades'
         '400':
           $ref: '#/components/responses/Error400Response'
-        '401':
-          $ref: '#/components/responses/Error401Response'
+        '408':
+          $ref: '#/components/responses/Error408Response'
+        '413':
+          $ref: '#/components/responses/Error413Response'
         '429':
           $ref: '#/components/responses/Error429Response'
         '500':
           $ref: '#/components/responses/Error500Response'
-      security:
-        - polymarket_proxy: []
-          polymarket_secret: []
+      security: []
 components:
   schemas:
-    start_timestamp:
-      type: integer
-      description: Start timestamp in milliseconds
-      example: 1767225600000
-    end_timestamp:
-      type: integer
-      description: End timestamp in milliseconds
-      example: 1767229200000
-    cursor:
+    address:
+      type: string
+      description: Address
+      example: '0x1234567890abcdef1234567890abcdef12345678'
+    fills_cursor:
       type: string
       description: >-
-        Pagination cursor. Pass the opaque `cursor` returned by the previous
-        page to fetch the next page. Paging follows the `sort` direction
-        (strictly older fills when `sort=desc`, strictly newer when `sort=asc`).
-        The trade ID of the last fill from the previous page is also accepted
-        for backwards compatibility.
+        Opaque keyset pagination cursor for the next page of fills. Present
+        while `more` is true; pass it as `cursor` on the next request, keeping
+        the other parameters the same across pages.
       example: eyJ0cyI6MTc2NzIyNTYwMDAwMDAwMDAwMCwiaWQiOjF9
     sort:
       type: string
@@ -188,13 +231,6 @@ components:
     more:
       type: boolean
       description: More data available
-    fills_cursor:
-      type: string
-      description: >-
-        Opaque keyset pagination cursor for the next page of fills. Present
-        while `more` is true; pass it as `cursor` on the next request, keeping
-        the other parameters the same across pages.
-      example: eyJ0cyI6MTc2NzIyNTYwMDAwMDAwMDAwMCwiaWQiOjF9
     Error400:
       title: Error400
       type: object
@@ -208,8 +244,21 @@ components:
             - err
         error:
           $ref: '#/components/schemas/error'
-    Error401:
-      title: Error401
+    Error408:
+      title: Error408
+      type: object
+      required:
+        - status
+        - error
+      properties:
+        status:
+          type: string
+          enum:
+            - err
+        error:
+          $ref: '#/components/schemas/error'
+    Error413:
+      title: Error413
       type: object
       required:
         - status
@@ -344,16 +393,26 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error400'
-    Error401Response:
-      description: >
-        Unauthorized — missing or invalid `POLYMARKET-PROXY` /
-        `POLYMARKET-SECRET`
-
-        credentials. `error` is `unauthorized`.
+    Error408Response:
+      description: |
+        Request Timeout — the request body was not delivered within the
+        gateway's read deadline. Protects against slow uploads holding
+        connections open; send the complete body promptly and retry.
+        `error` is `request_body_timeout`.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error401'
+            $ref: '#/components/schemas/Error408'
+    Error413Response:
+      description: |
+        Content Too Large — the request body exceeds the gateway's size cap,
+        judged on the declared `Content-Length` or the actual stream. Split
+        oversized batches into smaller requests. `error` is
+        `payload_too_large`.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error413'
     Error429Response:
       description: >
         Too Many Requests. `error` distinguishes the limit that was hit:
@@ -392,16 +451,5 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error500'
-  securitySchemes:
-    polymarket_proxy:
-      type: apiKey
-      name: POLYMARKET-PROXY
-      in: header
-      description: Proxy address
-    polymarket_secret:
-      type: apiKey
-      name: POLYMARKET-SECRET
-      in: header
-      description: Correponding proxy secret
 
 ````

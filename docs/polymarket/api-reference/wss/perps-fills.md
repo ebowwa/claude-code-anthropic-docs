@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/wss/perps-fills.md
-Downloaded: 2026-08-13T20:42:10.573Z
+Downloaded: 2026-08-21T20:25:29.692Z
 -->
 
 > ## Documentation Index
@@ -73,7 +73,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-448>
+              x-parser-schema-id: <anonymous-schema-452>
             req:
               type: string
               description: Request type
@@ -81,7 +81,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-449>
+              x-parser-schema-id: <anonymous-schema-453>
             chs:
               type: array
               description: 'Fills private channel: "fills"'
@@ -89,14 +89,14 @@ operations:
                 type: string
                 enum:
                   - fills
-                x-parser-schema-id: <anonymous-schema-451>
+                x-parser-schema-id: <anonymous-schema-455>
               example:
                 - fills
-              x-parser-schema-id: <anonymous-schema-450>
+              x-parser-schema-id: <anonymous-schema-454>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-447>
+          x-parser-schema-id: <anonymous-schema-451>
         title: Subscribe
         description: Subscribe to private fill updates (requires prior auth)
         example: |-
@@ -178,7 +178,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-453>
+              x-parser-schema-id: <anonymous-schema-457>
             data:
               title: Subscribe Response
               type: array
@@ -192,8 +192,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-457>
-                    x-parser-schema-id: <anonymous-schema-456>
+                        x-parser-schema-id: <anonymous-schema-461>
+                    x-parser-schema-id: <anonymous-schema-460>
                   - type: object
                     required:
                       - status
@@ -203,7 +203,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-459>
+                        x-parser-schema-id: <anonymous-schema-463>
                       error:
                         type: string
                         description: >-
@@ -223,13 +223,13 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-460>
-                    x-parser-schema-id: <anonymous-schema-458>
-                x-parser-schema-id: <anonymous-schema-455>
-              x-parser-schema-id: <anonymous-schema-454>
+                        x-parser-schema-id: <anonymous-schema-464>
+                    x-parser-schema-id: <anonymous-schema-462>
+                x-parser-schema-id: <anonymous-schema-459>
+              x-parser-schema-id: <anonymous-schema-458>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-452>
+          x-parser-schema-id: <anonymous-schema-456>
         title: Subscribe Response
         description: Response to fills subscribe request
         example: |-
@@ -286,7 +286,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-462>
+              x-parser-schema-id: <anonymous-schema-466>
             req:
               type: string
               description: Request type
@@ -294,7 +294,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-463>
+              x-parser-schema-id: <anonymous-schema-467>
             chs:
               type: array
               description: 'Fills private channel: "fills"'
@@ -302,14 +302,14 @@ operations:
                 type: string
                 enum:
                   - fills
-                x-parser-schema-id: <anonymous-schema-465>
+                x-parser-schema-id: <anonymous-schema-469>
               example:
                 - fills
-              x-parser-schema-id: <anonymous-schema-464>
+              x-parser-schema-id: <anonymous-schema-468>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-461>
+          x-parser-schema-id: <anonymous-schema-465>
         title: Unsubscribe
         description: Unsubscribe from private fill updates
         example: |-
@@ -389,7 +389,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-467>
+              x-parser-schema-id: <anonymous-schema-471>
             data:
               title: Subscribe Response
               type: array
@@ -403,8 +403,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-471>
-                    x-parser-schema-id: <anonymous-schema-470>
+                        x-parser-schema-id: <anonymous-schema-475>
+                    x-parser-schema-id: <anonymous-schema-474>
                   - type: object
                     required:
                       - status
@@ -414,7 +414,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-473>
+                        x-parser-schema-id: <anonymous-schema-477>
                       error:
                         type: string
                         description: >-
@@ -434,13 +434,13 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-474>
-                    x-parser-schema-id: <anonymous-schema-472>
-                x-parser-schema-id: <anonymous-schema-469>
-              x-parser-schema-id: <anonymous-schema-468>
+                        x-parser-schema-id: <anonymous-schema-478>
+                    x-parser-schema-id: <anonymous-schema-476>
+                x-parser-schema-id: <anonymous-schema-473>
+              x-parser-schema-id: <anonymous-schema-472>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-466>
+          x-parser-schema-id: <anonymous-schema-470>
         title: Unsubscribe Response
         description: Response to fills unsubscribe request
         example: |-
@@ -581,7 +581,7 @@ operations:
                 "tickers::all"). Private channels use plain names (e.g. "fills",
                 "orders").
               example: trades::1
-              x-parser-schema-id: <anonymous-schema-476>
+              x-parser-schema-id: <anonymous-schema-480>
             ts:
               type: integer
               description: >-
@@ -589,12 +589,12 @@ operations:
                 seconds for withdrawals (must match the on-chain EIP-712 struct
                 verified against block.timestamp).
               example: 1767225600000
-              x-parser-schema-id: <anonymous-schema-477>
+              x-parser-schema-id: <anonymous-schema-481>
             sq:
               type: integer
               description: Sequence number
               example: 1234567890
-              x-parser-schema-id: <anonymous-schema-478>
+              x-parser-schema-id: <anonymous-schema-482>
             data:
               type: object
               description: Array of fill objects
@@ -603,63 +603,63 @@ operations:
                   type: integer
                   description: Trade ID
                   example: 1
-                  x-parser-schema-id: <anonymous-schema-480>
+                  x-parser-schema-id: <anonymous-schema-484>
                 oid:
                   type: integer
                   description: Order ID
                   example: 1234567890
-                  x-parser-schema-id: <anonymous-schema-481>
+                  x-parser-schema-id: <anonymous-schema-485>
                 iid:
                   type: integer
                   description: Instrument ID
                   example: 1
-                  x-parser-schema-id: <anonymous-schema-482>
+                  x-parser-schema-id: <anonymous-schema-486>
                 side:
                   type: string
                   description: Side
                   enum:
                     - long
                     - short
-                  x-parser-schema-id: <anonymous-schema-483>
+                  x-parser-schema-id: <anonymous-schema-487>
                 p:
                   type: string
                   description: Price
                   example: '100.00'
-                  x-parser-schema-id: <anonymous-schema-484>
+                  x-parser-schema-id: <anonymous-schema-488>
                 qty:
                   type: string
                   description: Quantity in no. of contracts
                   example: '10.00'
-                  x-parser-schema-id: <anonymous-schema-485>
+                  x-parser-schema-id: <anonymous-schema-489>
                 taker:
                   type: boolean
                   description: Whether this side was the taker
-                  x-parser-schema-id: <anonymous-schema-486>
+                  x-parser-schema-id: <anonymous-schema-490>
                 fee:
                   type: string
                   description: Fee amount for this trade side
                   example: '1.25'
-                  x-parser-schema-id: <anonymous-schema-487>
+                  x-parser-schema-id: <anonymous-schema-491>
                 fea:
                   type: string
                   description: Fee asset name
                   example: USDC
-                  x-parser-schema-id: <anonymous-schema-488>
+                  x-parser-schema-id: <anonymous-schema-492>
                 psz:
                   type: string
                   description: Position size before the fill
                   example: '26.86'
-                  x-parser-schema-id: <anonymous-schema-489>
+                  x-parser-schema-id: <anonymous-schema-493>
                 pep:
                   type: string
                   description: Position entry price before the fill
                   example: '100.00'
-                  x-parser-schema-id: <anonymous-schema-490>
+                  x-parser-schema-id: <anonymous-schema-494>
                 pnl:
                   type: string
                   description: PnL in USD
                   example: '100.00'
-                  x-parser-schema-id: <anonymous-schema-491>
+                  x-parser-schema-id: <anonymous-schema-495>
                 liq:
                   type: boolean
                   description: >-
@@ -670,11 +670,11 @@ operations:
                     auto-deleveraging or backstop match — its fill is part of
                     someone else's liquidation, flagged by `adl` where
                     applicable
-                  x-parser-schema-id: <anonymous-schema-492>
+                  x-parser-schema-id: <anonymous-schema-496>
                 adl:
                   type: boolean
                   description: Whether the fill came from auto-deleveraging
-                  x-parser-schema-id: <anonymous-schema-493>
+                  x-parser-schema-id: <anonymous-schema-497>
                 ts:
                   type: integer
                   description: >-
@@ -682,7 +682,7 @@ operations:
                     Unix seconds for withdrawals (must match the on-chain
                     EIP-712 struct verified against block.timestamp).
                   example: 1767225600000
-                  x-parser-schema-id: <anonymous-schema-494>
+                  x-parser-schema-id: <anonymous-schema-498>
                 coid:
                   type: string
                   description: Client order ID
@@ -690,7 +690,7 @@ operations:
                   maxLength: 32
                   pattern: ^[0-9a-f]{32}$
                   example: 550e8400e29b41d4a716446655440000
-                  x-parser-schema-id: <anonymous-schema-495>
+                  x-parser-schema-id: <anonymous-schema-499>
               required:
                 - tid
                 - oid
@@ -707,13 +707,13 @@ operations:
                 - ts
                 - liq
                 - adl
-              x-parser-schema-id: <anonymous-schema-479>
+              x-parser-schema-id: <anonymous-schema-483>
           required:
             - ch
             - ts
             - sq
             - data
-          x-parser-schema-id: <anonymous-schema-475>
+          x-parser-schema-id: <anonymous-schema-479>
         title: Update
         description: Real-time fill updates for authenticated users
         example: |-

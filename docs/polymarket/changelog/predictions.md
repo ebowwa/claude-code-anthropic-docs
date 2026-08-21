@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/changelog/predictions.md
+Downloaded: 2026-08-21T20:25:29.694Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -6,11 +11,27 @@
 
 > Important changes to Polymarket prediction markets, including the CLOB, APIs, web application, and mobile applications.
 
+<Update label="Aug 17, 2026" description="Crypto taker delay reduced to 50ms">
+  * **Lower taker delay**: The taker delay on crypto markets is now `50ms`, down from `250ms`. The change took effect on **August 17 at 11:00 UTC (7:00 AM ET)**.
+</Update>
+
+<Update label="Aug 14, 2026" description="5-minute crypto markets moved to a 60-second Chainlink TWAP">
+  * **Longer TWAP window**: All 5-minute crypto markets now resolve using a `60-second` Chainlink TWAP, replacing the `30-second` window introduced on August 7. The change took effect at **00:00 UTC**.
+  * **Updated documentation**: See [Chainlink TWAP Prices](/market-data/chainlink-twap).
+</Update>
+
 <Update label="Aug 10, 2026" description="Data API: per-outcome redemption activity, position fee basis fields, and event artwork fallback">
   * **Redemptions are now reported per outcome**: on `GET /activity`, a `REDEEM` row carries the outcome it settles in `asset`, `outcome`, and `outcomeIndex`, with `size` as the tokens burned for that outcome and `usdcSize` as that outcome's payout. Redeeming both sides of a market returns **two rows** — one per outcome — where a single combined row appeared before, and the losing outcome's `usdcSize` is `0`. Sum `usdcSize` across a transaction's rows to get the total payout. See [Resolution](/concepts/resolution).
   * **New position basis fields**: `GET /positions` entries can include `grossInitialValue`, the remaining entry basis including attributed buy fees, and `entryFeesUsdc`, that fee component. `initialValue` and `avgPrice` keep their existing fee-exclusive meaning, so the fee-exclusive basis is `grossInitialValue - entryFeesUsdc`. Both fields are optional — treat an omitted field as unavailable, not as zero. See [Positions and Tokens](/concepts/positions-tokens).
   * **New `includeArchived` filter**: `GET /positions` accepts `includeArchived` to return positions in archived markets that are still active. Archived positions remain excluded by default, so existing clients are unaffected.
   * **Event artwork fallback**: `icon` on `GET /activity` and `GET /trades` now falls back to the market image, then the parent event's icon and image, when a market has no icon of its own. Previously these rows returned an empty `icon`.
+</Update>
+
+<Update label="Aug 7, 2026" description="Chainlink TWAP resolution for crypto up/down markets">
+  * **TWAP-based resolution**: Crypto up/down markets now resolve using Chainlink-computed time-weighted average prices instead of a single price snapshot.
+  * **Opening and settlement prices**: Both the price to beat and the final settlement price come from the applicable TWAP feed.
+  * **Averaging windows**: 5-minute markets use a `30-second` lookback; 15-minute and 4-hour markets use a `60-second` lookback.
+  * **Developer access**: See [Chainlink TWAP Prices](/market-data/chainlink-twap) for RTDS topics, SDK examples, and direct Chainlink Data Streams access.
 </Update>
 
 <Update label="Jul 17, 2026" description="Latency improvements and order response changes — Friday July 24, 04:00 UTC">

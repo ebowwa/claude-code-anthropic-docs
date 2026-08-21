@@ -1,8 +1,3 @@
-<!--
-Source: https://docs.polymarket.com/perps/learn-about-trading/liquidation-mechanics.md
-Downloaded: 2026-08-13T20:42:10.553Z
--->
-
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.

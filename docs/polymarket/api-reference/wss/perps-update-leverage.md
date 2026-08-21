@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/api-reference/wss/perps-update-leverage.md
+Downloaded: 2026-08-21T20:25:29.690Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -102,7 +107,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-133>
+              x-parser-schema-id: <anonymous-schema-137>
             req:
               type: string
               description: Request type
@@ -110,7 +115,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-134>
+              x-parser-schema-id: <anonymous-schema-138>
             op:
               type: object
               required:
@@ -121,7 +126,7 @@ operations:
                   type: string
                   enum:
                     - updateLeverage
-                  x-parser-schema-id: <anonymous-schema-136>
+                  x-parser-schema-id: <anonymous-schema-140>
                 args:
                   type: object
                   required:
@@ -133,28 +138,28 @@ operations:
                       type: integer
                       description: Instrument ID
                       example: 1
-                      x-parser-schema-id: <anonymous-schema-138>
+                      x-parser-schema-id: <anonymous-schema-142>
                     lev:
                       type: integer
                       description: Leverage
                       example: 10
-                      x-parser-schema-id: <anonymous-schema-139>
+                      x-parser-schema-id: <anonymous-schema-143>
                     cross:
                       type: boolean
                       description: Whether to use cross margin mode
-                      x-parser-schema-id: <anonymous-schema-140>
-                  x-parser-schema-id: <anonymous-schema-137>
-              x-parser-schema-id: <anonymous-schema-135>
+                      x-parser-schema-id: <anonymous-schema-144>
+                  x-parser-schema-id: <anonymous-schema-141>
+              x-parser-schema-id: <anonymous-schema-139>
             sig:
               type: string
               description: Signature in hex format
               example: 0x1234567890...
-              x-parser-schema-id: <anonymous-schema-141>
+              x-parser-schema-id: <anonymous-schema-145>
             salt:
               type: integer
               description: Salt
               example: 1234567890
-              x-parser-schema-id: <anonymous-schema-142>
+              x-parser-schema-id: <anonymous-schema-146>
             ts:
               type: integer
               description: >-
@@ -162,14 +167,14 @@ operations:
                 seconds for withdrawals (must match the on-chain EIP-712 struct
                 verified against block.timestamp).
               example: 1767225600000
-              x-parser-schema-id: <anonymous-schema-143>
+              x-parser-schema-id: <anonymous-schema-147>
           required:
             - req
             - op
             - sig
             - salt
             - ts
-          x-parser-schema-id: <anonymous-schema-132>
+          x-parser-schema-id: <anonymous-schema-136>
         title: Update Leverage Request
         description: Client submits a signed leverage update request
         example: |-
@@ -252,7 +257,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-145>
+              x-parser-schema-id: <anonymous-schema-149>
             data:
               oneOf:
                 - type: object
@@ -263,8 +268,8 @@ operations:
                       type: string
                       enum:
                         - ok
-                      x-parser-schema-id: <anonymous-schema-148>
-                  x-parser-schema-id: <anonymous-schema-147>
+                      x-parser-schema-id: <anonymous-schema-152>
+                  x-parser-schema-id: <anonymous-schema-151>
                 - type: object
                   required:
                     - status
@@ -274,7 +279,7 @@ operations:
                       type: string
                       enum:
                         - err
-                      x-parser-schema-id: <anonymous-schema-150>
+                      x-parser-schema-id: <anonymous-schema-154>
                     error:
                       type: string
                       description: >-
@@ -294,12 +299,12 @@ operations:
                         order statuses such as `post_only_rejected`, not
                         rejections.)
                       example: insufficient_margin
-                      x-parser-schema-id: <anonymous-schema-151>
-                  x-parser-schema-id: <anonymous-schema-149>
-              x-parser-schema-id: <anonymous-schema-146>
+                      x-parser-schema-id: <anonymous-schema-155>
+                  x-parser-schema-id: <anonymous-schema-153>
+              x-parser-schema-id: <anonymous-schema-150>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-144>
+          x-parser-schema-id: <anonymous-schema-148>
         title: Update Leverage Response
         description: Server responds with leverage update result
         example: |-

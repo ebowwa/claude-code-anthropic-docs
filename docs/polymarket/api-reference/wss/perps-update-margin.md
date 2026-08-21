@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/api-reference/wss/perps-update-margin.md
+Downloaded: 2026-08-21T20:25:29.690Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -115,7 +120,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-183>
+              x-parser-schema-id: <anonymous-schema-187>
             req:
               type: string
               description: Request type
@@ -123,7 +128,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-184>
+              x-parser-schema-id: <anonymous-schema-188>
             op:
               type: object
               required:
@@ -134,7 +139,7 @@ operations:
                   type: string
                   enum:
                     - updateMargin
-                  x-parser-schema-id: <anonymous-schema-186>
+                  x-parser-schema-id: <anonymous-schema-190>
                 args:
                   type: object
                   required:
@@ -145,7 +150,7 @@ operations:
                       type: integer
                       description: Instrument ID
                       example: 1
-                      x-parser-schema-id: <anonymous-schema-188>
+                      x-parser-schema-id: <anonymous-schema-192>
                     amt:
                       type: string
                       description: >-
@@ -153,19 +158,19 @@ operations:
                         quote asset. Positive values add allocation; negative
                         values remove it.
                       example: '100.00'
-                      x-parser-schema-id: <anonymous-schema-189>
-                  x-parser-schema-id: <anonymous-schema-187>
-              x-parser-schema-id: <anonymous-schema-185>
+                      x-parser-schema-id: <anonymous-schema-193>
+                  x-parser-schema-id: <anonymous-schema-191>
+              x-parser-schema-id: <anonymous-schema-189>
             sig:
               type: string
               description: Signature in hex format
               example: 0x1234567890...
-              x-parser-schema-id: <anonymous-schema-190>
+              x-parser-schema-id: <anonymous-schema-194>
             salt:
               type: integer
               description: Salt
               example: 1234567890
-              x-parser-schema-id: <anonymous-schema-191>
+              x-parser-schema-id: <anonymous-schema-195>
             ts:
               type: integer
               description: >-
@@ -173,14 +178,14 @@ operations:
                 seconds for withdrawals (must match the on-chain EIP-712 struct
                 verified against block.timestamp).
               example: 1767225600000
-              x-parser-schema-id: <anonymous-schema-192>
+              x-parser-schema-id: <anonymous-schema-196>
           required:
             - req
             - op
             - sig
             - salt
             - ts
-          x-parser-schema-id: <anonymous-schema-182>
+          x-parser-schema-id: <anonymous-schema-186>
         title: Update Isolated Margin Request
         description: Client submits a signed isolated-margin adjustment
         example: |-
@@ -264,7 +269,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-194>
+              x-parser-schema-id: <anonymous-schema-198>
             data:
               oneOf:
                 - type: object
@@ -275,8 +280,8 @@ operations:
                       type: string
                       enum:
                         - ok
-                      x-parser-schema-id: <anonymous-schema-197>
-                  x-parser-schema-id: <anonymous-schema-196>
+                      x-parser-schema-id: <anonymous-schema-201>
+                  x-parser-schema-id: <anonymous-schema-200>
                 - type: object
                   required:
                     - status
@@ -286,7 +291,7 @@ operations:
                       type: string
                       enum:
                         - err
-                      x-parser-schema-id: <anonymous-schema-199>
+                      x-parser-schema-id: <anonymous-schema-203>
                     error:
                       type: string
                       description: >-
@@ -306,12 +311,12 @@ operations:
                         order statuses such as `post_only_rejected`, not
                         rejections.)
                       example: insufficient_margin
-                      x-parser-schema-id: <anonymous-schema-200>
-                  x-parser-schema-id: <anonymous-schema-198>
-              x-parser-schema-id: <anonymous-schema-195>
+                      x-parser-schema-id: <anonymous-schema-204>
+                  x-parser-schema-id: <anonymous-schema-202>
+              x-parser-schema-id: <anonymous-schema-199>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-193>
+          x-parser-schema-id: <anonymous-schema-197>
         title: Update Isolated Margin Response
         description: Server responds with the margin update result
         example: |-

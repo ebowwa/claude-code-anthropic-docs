@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/trading/combos/market-makers.md
+Downloaded: 2026-08-21T20:25:29.664Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -4195,3 +4200,15 @@ rejections rather than assuming this list is exhaustive.
     | `SIGNED_ORDER_PRICE_WORSE_THAN_QUOTE`             | Signed-order limit price is worse than the quoted price         |
   </Accordion>
 </AccordionGroup>
+
+### Common Footguns
+
+When quoting combos, there's a few things you should be aware of:
+
+1. It is of course possible to receive requests where legs are correlated, and an extremely common case of this is same-game combos: for example, if a user requests a combo of the moneyline (certain team to win) and the total number of points scored in the game. Another case that may happen is duplicated events stemming from upstream provider issues -- these events may have 100% correlation and must be accounted for in pricing.
+2. Oftentimes, it is not sufficient to use the midpoint of the CLOB orderbook as a "true indicator" of probability of an outcome. Since placing liquidity on orderbooks is open to anyone, this can be problematic to use as a reference price. Be vigilant on quoting illiquid markets.
+3. Markets may resolve 50-50 as outlined in the rules of each market, or by clarification. The payout for a YES combo position is the product of the outcome of each individual leg -- if each individual leg resolves 1, then the combo resolves to 1, and can be redeemed for 1 pUSD. If one leg resolves to 0.5, and all others resolve to 1, then that YES combo can be redeemed for `(1 * 1 * 1...) * 0.5 = 0.5`. A NO combo can be redeemed for the complement to the redeemable value of a YES combo. For example, if a YES combo share can be redeemed for 0.25 (perhaps it's two legs resolved to 0.5 each), then the corresponding NO combo share would be redeemable for `1 - 0.25 = 0.75`. Price the likelihood of a leg resolving to 50-50 accordingly.
+4. Consider implementing risk thresholds on maximum exposure to a particular outcome.
+5. Legs marked as "pending" for comboStatus (in the Gamma API) may come through the requester websocket. It is up to quoters to choose whether or not to respond to these, as with all RFQs.
+
+Remember that as with all trading, RFQs you choose to quote and fill are your responsibility to vet.

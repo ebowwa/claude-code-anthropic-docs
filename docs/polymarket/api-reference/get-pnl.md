@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-pnl.md
-Downloaded: 2026-08-20T20:27:56.418Z
+Downloaded: 2026-08-21T20:25:29.687Z
 -->
 
 > ## Documentation Index
@@ -11,7 +11,18 @@ Downloaded: 2026-08-20T20:27:56.418Z
 
 > Get PnL history for the authenticated account.
 If no end time is provided, the current time will be used.
-Maximum of 1000 entries returned per request.
+Each point is the PnL realized inside its `interval` bucket — not a running
+total. Buckets are aligned to the Unix epoch, and one in which nothing was
+realized is omitted, so the series is sparse.
+A point is stamped with the last populated hour in its bucket, not with the
+bucket's start, so every returned timestamp falls within the requested
+window. Window bounds select whole one-hour rollup rows before coarser
+buckets are formed.
+Maximum of 1000 entries returned per request — of buckets, so a coarser
+interval covers a longer window before `more` is set. When `more` is true,
+page by re-requesting from one millisecond past the last timestamp
+returned; that always lands on the next bucket, never back inside the one
+just served.
 
 
 <Badge color="gray" size="md">Request Weight: **10**</Badge>
@@ -36,10 +47,39 @@ paths:
   /v1/account/pnl:
     get:
       summary: Get PnL
-      description: |
+      description: >
         Get PnL history for the authenticated account.
+
         If no end time is provided, the current time will be used.
-        Maximum of 1000 entries returned per request.
+
+        Each point is the PnL realized inside its `interval` bucket — not a
+        running
+
+        total. Buckets are aligned to the Unix epoch, and one in which nothing
+        was
+
+        realized is omitted, so the series is sparse.
+
+        A point is stamped with the last populated hour in its bucket, not with
+        the
+
+        bucket's start, so every returned timestamp falls within the requested
+
+        window. Window bounds select whole one-hour rollup rows before coarser
+
+        buckets are formed.
+
+        Maximum of 1000 entries returned per request — of buckets, so a coarser
+
+        interval covers a longer window before `more` is set. When `more` is
+        true,
+
+        page by re-requesting from one millisecond past the last timestamp
+
+        returned; that always lands on the next bucket, never back inside the
+        one
+
+        just served.
       operationId: getPnlHistory
       parameters:
         - name: interval

@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/events/get-multivariate-events.md
-Downloaded: 2026-08-17T20:26:37.796Z
+Downloaded: 2026-08-21T20:25:30.744Z
 -->
 
 > ## Documentation Index
@@ -218,7 +218,10 @@ components:
           x-go-type-skip-optional-pointer: true
         available_on_brokers:
           type: boolean
-          description: Whether this event is available to trade on brokers.
+          description: >-
+            Deprecated. No longer populated and always returns false; it will be
+            removed in a future release.
+          deprecated: true
         product_metadata:
           type: object
           nullable: true

@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/get-equity.md
-Downloaded: 2026-08-20T20:27:56.418Z
+Downloaded: 2026-08-21T20:25:29.687Z
 -->
 
 > ## Documentation Index
@@ -11,7 +11,17 @@ Downloaded: 2026-08-20T20:27:56.418Z
 
 > Get equity history for the authenticated account.
 If no end time is provided, the current time will be used.
-Maximum of 1000 entries returned per request.
+Each point is the last equity sample in its `interval` bucket, stamped with
+that sample's own timestamp rather than the bucket's start — so every
+timestamp falls within the requested window. Buckets are aligned to the
+Unix epoch.
+Equity history is served at one-minute resolution, so `1s` is served as
+`1m`.
+Maximum of 1000 entries returned per request — of buckets, so a coarser
+interval covers a longer window before `more` is set. When `more` is true,
+page by re-requesting from one millisecond past the last timestamp
+returned; that always lands on the next bucket, never back inside the one
+just served.
 
 
 <Badge color="gray" size="md">Request Weight: **10**</Badge>
@@ -36,10 +46,35 @@ paths:
   /v1/account/equity:
     get:
       summary: Get Equity
-      description: |
+      description: >
         Get equity history for the authenticated account.
+
         If no end time is provided, the current time will be used.
-        Maximum of 1000 entries returned per request.
+
+        Each point is the last equity sample in its `interval` bucket, stamped
+        with
+
+        that sample's own timestamp rather than the bucket's start — so every
+
+        timestamp falls within the requested window. Buckets are aligned to the
+
+        Unix epoch.
+
+        Equity history is served at one-minute resolution, so `1s` is served as
+
+        `1m`.
+
+        Maximum of 1000 entries returned per request — of buckets, so a coarser
+
+        interval covers a longer window before `more` is set. When `more` is
+        true,
+
+        page by re-requesting from one millisecond past the last timestamp
+
+        returned; that always lands on the next bucket, never back inside the
+        one
+
+        just served.
       operationId: getEquityHistory
       parameters:
         - name: interval

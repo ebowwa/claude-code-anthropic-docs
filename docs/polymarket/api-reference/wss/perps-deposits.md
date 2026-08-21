@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/api-reference/wss/perps-deposits.md
-Downloaded: 2026-08-13T20:42:10.574Z
+Downloaded: 2026-08-21T20:25:29.693Z
 -->
 
 > ## Documentation Index
@@ -75,7 +75,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-721>
+              x-parser-schema-id: <anonymous-schema-725>
             req:
               type: string
               description: Request type
@@ -83,7 +83,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-722>
+              x-parser-schema-id: <anonymous-schema-726>
             chs:
               type: array
               description: 'Deposits private channel: "deposits"'
@@ -91,14 +91,14 @@ operations:
                 type: string
                 enum:
                   - deposits
-                x-parser-schema-id: <anonymous-schema-724>
+                x-parser-schema-id: <anonymous-schema-728>
               example:
                 - deposits
-              x-parser-schema-id: <anonymous-schema-723>
+              x-parser-schema-id: <anonymous-schema-727>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-720>
+          x-parser-schema-id: <anonymous-schema-724>
         title: Subscribe
         description: Subscribe to private deposit updates (requires prior auth)
         example: |-
@@ -180,7 +180,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-726>
+              x-parser-schema-id: <anonymous-schema-730>
             data:
               title: Subscribe Response
               type: array
@@ -194,8 +194,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-730>
-                    x-parser-schema-id: <anonymous-schema-729>
+                        x-parser-schema-id: <anonymous-schema-734>
+                    x-parser-schema-id: <anonymous-schema-733>
                   - type: object
                     required:
                       - status
@@ -205,7 +205,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-732>
+                        x-parser-schema-id: <anonymous-schema-736>
                       error:
                         type: string
                         description: >-
@@ -225,13 +225,13 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-733>
-                    x-parser-schema-id: <anonymous-schema-731>
-                x-parser-schema-id: <anonymous-schema-728>
-              x-parser-schema-id: <anonymous-schema-727>
+                        x-parser-schema-id: <anonymous-schema-737>
+                    x-parser-schema-id: <anonymous-schema-735>
+                x-parser-schema-id: <anonymous-schema-732>
+              x-parser-schema-id: <anonymous-schema-731>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-725>
+          x-parser-schema-id: <anonymous-schema-729>
         title: Subscribe Response
         description: Response to deposits subscribe request
         example: |-
@@ -288,7 +288,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-735>
+              x-parser-schema-id: <anonymous-schema-739>
             req:
               type: string
               description: Request type
@@ -296,7 +296,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-736>
+              x-parser-schema-id: <anonymous-schema-740>
             chs:
               type: array
               description: 'Deposits private channel: "deposits"'
@@ -304,14 +304,14 @@ operations:
                 type: string
                 enum:
                   - deposits
-                x-parser-schema-id: <anonymous-schema-738>
+                x-parser-schema-id: <anonymous-schema-742>
               example:
                 - deposits
-              x-parser-schema-id: <anonymous-schema-737>
+              x-parser-schema-id: <anonymous-schema-741>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-734>
+          x-parser-schema-id: <anonymous-schema-738>
         title: Unsubscribe
         description: Unsubscribe from private deposit updates
         example: |-
@@ -391,7 +391,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-740>
+              x-parser-schema-id: <anonymous-schema-744>
             data:
               title: Subscribe Response
               type: array
@@ -405,8 +405,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-744>
-                    x-parser-schema-id: <anonymous-schema-743>
+                        x-parser-schema-id: <anonymous-schema-748>
+                    x-parser-schema-id: <anonymous-schema-747>
                   - type: object
                     required:
                       - status
@@ -416,7 +416,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-746>
+                        x-parser-schema-id: <anonymous-schema-750>
                       error:
                         type: string
                         description: >-
@@ -436,13 +436,13 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-747>
-                    x-parser-schema-id: <anonymous-schema-745>
-                x-parser-schema-id: <anonymous-schema-742>
-              x-parser-schema-id: <anonymous-schema-741>
+                        x-parser-schema-id: <anonymous-schema-751>
+                    x-parser-schema-id: <anonymous-schema-749>
+                x-parser-schema-id: <anonymous-schema-746>
+              x-parser-schema-id: <anonymous-schema-745>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-739>
+          x-parser-schema-id: <anonymous-schema-743>
         title: Unsubscribe Response
         description: Response to deposits unsubscribe request
         example: |-
@@ -526,7 +526,7 @@ operations:
                 "tickers::all"). Private channels use plain names (e.g. "fills",
                 "orders").
               example: trades::1
-              x-parser-schema-id: <anonymous-schema-749>
+              x-parser-schema-id: <anonymous-schema-753>
             ts:
               type: integer
               description: >-
@@ -534,12 +534,12 @@ operations:
                 seconds for withdrawals (must match the on-chain EIP-712 struct
                 verified against block.timestamp).
               example: 1767225600000
-              x-parser-schema-id: <anonymous-schema-750>
+              x-parser-schema-id: <anonymous-schema-754>
             sq:
               type: integer
               description: Sequence number
               example: 1234567890
-              x-parser-schema-id: <anonymous-schema-751>
+              x-parser-schema-id: <anonymous-schema-755>
             data:
               type: object
               description: Array of deposit objects
@@ -550,17 +550,17 @@ operations:
                   default: 0x
                   example: >-
                     0x1234567890abcdef1234567890abcdef1234567890abcdef1234567890abcdef
-                  x-parser-schema-id: <anonymous-schema-753>
+                  x-parser-schema-id: <anonymous-schema-757>
                 asset:
                   type: string
                   description: Asset name
                   example: USDC
-                  x-parser-schema-id: <anonymous-schema-754>
+                  x-parser-schema-id: <anonymous-schema-758>
                 amount:
                   type: string
                   description: Token amount in decimal units (e.g. "100" for 100 USDC).
                   example: '100'
-                  x-parser-schema-id: <anonymous-schema-755>
+                  x-parser-schema-id: <anonymous-schema-759>
                 status:
                   type: string
                   description: Deposit status
@@ -568,19 +568,19 @@ operations:
                     - pending
                     - confirmed
                     - removed
-                  x-parser-schema-id: <anonymous-schema-756>
+                  x-parser-schema-id: <anonymous-schema-760>
               required:
                 - hash
                 - asset
                 - amount
                 - status
-              x-parser-schema-id: <anonymous-schema-752>
+              x-parser-schema-id: <anonymous-schema-756>
           required:
             - ch
             - ts
             - sq
             - data
-          x-parser-schema-id: <anonymous-schema-748>
+          x-parser-schema-id: <anonymous-schema-752>
         title: Update
         description: Deposit status updates for authenticated users
         example: |-

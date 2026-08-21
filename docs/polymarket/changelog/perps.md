@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/changelog/perps.md
-Downloaded: 2026-08-13T20:42:10.574Z
+Downloaded: 2026-08-21T20:25:29.694Z
 -->
 
 > ## Documentation Index
@@ -12,6 +12,32 @@ Downloaded: 2026-08-13T20:42:10.574Z
 > Recent changes to the Polymarket Perps API and platform
 
 Notable changes to the Polymarket Perps API.
+
+<Update label="Aug 16, 2026" description="Current position fills endpoint added">
+  Added `GET /v1/info/position-fills`, a public endpoint returning every fill
+  in a registered account's current open position cycle for one instrument. A
+  cycle begins when the position opens from flat or flips direction, and a
+  multi-leg flip stays in one cycle. Pages of up to 100 fills are linked by an
+  opaque `cursor` returned alongside the data; the cursor is validated against
+  the live position on every page and returns `400` if the position changed
+  mid-pagination. `GET /v1/account/fills` has returned the same opaque
+  `cursor` field since Jul 24 — passing the last fill's trade ID as `cursor`
+  still works there.
+</Update>
+
+<Update label="Aug 14, 2026" description="Equity and PnL history honour the requested interval">
+  `GET /v1/account/equity` and `GET /v1/account/pnl` now bucket the returned
+  series by the `interval` query parameter. Previously the parameter was
+  validated but ignored: every accepted value returned the same
+  fixed-granularity series (per minute for equity, per hour for PnL), and long
+  windows were truncated at 1000 rows instead of aggregated. Each equity point
+  is now the last sample in its interval bucket; each PnL point is the PnL
+  realized inside its bucket — not a running total — and empty buckets are
+  omitted. Buckets are aligned to the Unix epoch, points keep real sample
+  timestamps, and the 1000-entry cap now counts buckets, so a coarser interval
+  covers a longer window before `more` is set. Responses for the finest
+  intervals (`1m` equity, `1h` PnL) are unchanged.
+</Update>
 
 <Update label="Aug 13, 2026" description="Deposit and withdrawal history amounts are always decimal token units">
   `GET /v1/account/deposits` and `GET /v1/account/withdrawals` now serialize

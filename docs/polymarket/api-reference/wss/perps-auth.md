@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/api-reference/wss/perps-auth.md
+Downloaded: 2026-08-21T20:25:29.691Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -79,7 +84,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-202>
+              x-parser-schema-id: <anonymous-schema-206>
             req:
               type: string
               description: Request type
@@ -87,7 +92,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-203>
+              x-parser-schema-id: <anonymous-schema-207>
             op:
               type: object
               required:
@@ -98,7 +103,7 @@ operations:
                   type: string
                   enum:
                     - auth
-                  x-parser-schema-id: <anonymous-schema-205>
+                  x-parser-schema-id: <anonymous-schema-209>
                 args:
                   type: object
                   required:
@@ -109,18 +114,18 @@ operations:
                       type: string
                       description: Proxy address in hex format
                       example: '0x70997970C51812dc3A010C7d01b50e0d17dc79C8'
-                      x-parser-schema-id: <anonymous-schema-207>
+                      x-parser-schema-id: <anonymous-schema-211>
                     secret:
                       type: string
                       description: API secret
                       example: wJalrXUtnFEMI/K7MDENG/bPxRfiCYEXAMPLEKEY
-                      x-parser-schema-id: <anonymous-schema-208>
-                  x-parser-schema-id: <anonymous-schema-206>
-              x-parser-schema-id: <anonymous-schema-204>
+                      x-parser-schema-id: <anonymous-schema-212>
+                  x-parser-schema-id: <anonymous-schema-210>
+              x-parser-schema-id: <anonymous-schema-208>
           required:
             - req
             - op
-          x-parser-schema-id: <anonymous-schema-201>
+          x-parser-schema-id: <anonymous-schema-205>
         title: Auth
         description: Authenticate this WebSocket connection for private channels
         example: |-
@@ -200,7 +205,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-210>
+              x-parser-schema-id: <anonymous-schema-214>
             data:
               oneOf:
                 - type: object
@@ -211,8 +216,8 @@ operations:
                       type: string
                       enum:
                         - ok
-                      x-parser-schema-id: <anonymous-schema-213>
-                  x-parser-schema-id: <anonymous-schema-212>
+                      x-parser-schema-id: <anonymous-schema-217>
+                  x-parser-schema-id: <anonymous-schema-216>
                 - type: object
                   required:
                     - status
@@ -222,7 +227,7 @@ operations:
                       type: string
                       enum:
                         - err
-                      x-parser-schema-id: <anonymous-schema-215>
+                      x-parser-schema-id: <anonymous-schema-219>
                     error:
                       type: string
                       description: >-
@@ -242,12 +247,12 @@ operations:
                         order statuses such as `post_only_rejected`, not
                         rejections.)
                       example: insufficient_margin
-                      x-parser-schema-id: <anonymous-schema-216>
-                  x-parser-schema-id: <anonymous-schema-214>
-              x-parser-schema-id: <anonymous-schema-211>
+                      x-parser-schema-id: <anonymous-schema-220>
+                  x-parser-schema-id: <anonymous-schema-218>
+              x-parser-schema-id: <anonymous-schema-215>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-209>
+          x-parser-schema-id: <anonymous-schema-213>
         title: Auth Response
         description: Authentication result
         example: |-

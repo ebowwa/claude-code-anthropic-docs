@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/api-reference/wss/perps-tickers.md
+Downloaded: 2026-08-21T20:25:29.692Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -70,7 +75,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-369>
+              x-parser-schema-id: <anonymous-schema-373>
             req:
               type: string
               description: Request type
@@ -78,7 +83,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-370>
+              x-parser-schema-id: <anonymous-schema-374>
             chs:
               type: array
               description: |
@@ -87,14 +92,14 @@ operations:
               items:
                 type: string
                 pattern: ^tickers::(\d+|all)$
-                x-parser-schema-id: <anonymous-schema-372>
+                x-parser-schema-id: <anonymous-schema-376>
               example:
                 - tickers::all
-              x-parser-schema-id: <anonymous-schema-371>
+              x-parser-schema-id: <anonymous-schema-375>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-368>
+          x-parser-schema-id: <anonymous-schema-372>
         title: Subscribe
         description: Subscribe to ticker updates for all instruments or a specific one
         example: |-
@@ -176,7 +181,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-374>
+              x-parser-schema-id: <anonymous-schema-378>
             data:
               title: Subscribe Response
               type: array
@@ -190,8 +195,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-378>
-                    x-parser-schema-id: <anonymous-schema-377>
+                        x-parser-schema-id: <anonymous-schema-382>
+                    x-parser-schema-id: <anonymous-schema-381>
                   - type: object
                     required:
                       - status
@@ -201,7 +206,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-380>
+                        x-parser-schema-id: <anonymous-schema-384>
                       error:
                         type: string
                         description: >-
@@ -221,13 +226,13 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-381>
-                    x-parser-schema-id: <anonymous-schema-379>
-                x-parser-schema-id: <anonymous-schema-376>
-              x-parser-schema-id: <anonymous-schema-375>
+                        x-parser-schema-id: <anonymous-schema-385>
+                    x-parser-schema-id: <anonymous-schema-383>
+                x-parser-schema-id: <anonymous-schema-380>
+              x-parser-schema-id: <anonymous-schema-379>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-373>
+          x-parser-schema-id: <anonymous-schema-377>
         title: Subscribe Response
         description: Response to tickers subscribe request
         example: |-
@@ -286,7 +291,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-383>
+              x-parser-schema-id: <anonymous-schema-387>
             req:
               type: string
               description: Request type
@@ -294,7 +299,7 @@ operations:
                 - post
                 - sub
                 - unsub
-              x-parser-schema-id: <anonymous-schema-384>
+              x-parser-schema-id: <anonymous-schema-388>
             chs:
               type: array
               description: |
@@ -303,14 +308,14 @@ operations:
               items:
                 type: string
                 pattern: ^tickers::(\d+|all)$
-                x-parser-schema-id: <anonymous-schema-386>
+                x-parser-schema-id: <anonymous-schema-390>
               example:
                 - tickers::all
-              x-parser-schema-id: <anonymous-schema-385>
+              x-parser-schema-id: <anonymous-schema-389>
           required:
             - req
             - chs
-          x-parser-schema-id: <anonymous-schema-382>
+          x-parser-schema-id: <anonymous-schema-386>
         title: Unsubscribe
         description: Unsubscribe from ticker updates
         example: |-
@@ -390,7 +395,7 @@ operations:
             id:
               type: integer
               description: Correlation ID for request-response matching
-              x-parser-schema-id: <anonymous-schema-388>
+              x-parser-schema-id: <anonymous-schema-392>
             data:
               title: Subscribe Response
               type: array
@@ -404,8 +409,8 @@ operations:
                         type: string
                         enum:
                           - ok
-                        x-parser-schema-id: <anonymous-schema-392>
-                    x-parser-schema-id: <anonymous-schema-391>
+                        x-parser-schema-id: <anonymous-schema-396>
+                    x-parser-schema-id: <anonymous-schema-395>
                   - type: object
                     required:
                       - status
@@ -415,7 +420,7 @@ operations:
                         type: string
                         enum:
                           - err
-                        x-parser-schema-id: <anonymous-schema-394>
+                        x-parser-schema-id: <anonymous-schema-398>
                       error:
                         type: string
                         description: >-
@@ -435,13 +440,13 @@ operations:
                           outcomes are order statuses such as
                           `post_only_rejected`, not rejections.)
                         example: insufficient_margin
-                        x-parser-schema-id: <anonymous-schema-395>
-                    x-parser-schema-id: <anonymous-schema-393>
-                x-parser-schema-id: <anonymous-schema-390>
-              x-parser-schema-id: <anonymous-schema-389>
+                        x-parser-schema-id: <anonymous-schema-399>
+                    x-parser-schema-id: <anonymous-schema-397>
+                x-parser-schema-id: <anonymous-schema-394>
+              x-parser-schema-id: <anonymous-schema-393>
           required:
             - data
-          x-parser-schema-id: <anonymous-schema-387>
+          x-parser-schema-id: <anonymous-schema-391>
         title: Unsubscribe Response
         description: Response to tickers unsubscribe request
         example: |-
@@ -537,7 +542,7 @@ operations:
                 "tickers::all"). Private channels use plain names (e.g. "fills",
                 "orders").
               example: trades::1
-              x-parser-schema-id: <anonymous-schema-397>
+              x-parser-schema-id: <anonymous-schema-401>
             ts:
               type: integer
               description: >-
@@ -545,12 +550,12 @@ operations:
                 seconds for withdrawals (must match the on-chain EIP-712 struct
                 verified against block.timestamp).
               example: 1767225600000
-              x-parser-schema-id: <anonymous-schema-398>
+              x-parser-schema-id: <anonymous-schema-402>
             sq:
               type: integer
               description: Sequence number
               example: 1234567890
-              x-parser-schema-id: <anonymous-schema-399>
+              x-parser-schema-id: <anonymous-schema-403>
             data:
               type: object
               description: Array of ticker objects
@@ -559,42 +564,42 @@ operations:
                   type: integer
                   description: Instrument ID
                   example: 1
-                  x-parser-schema-id: <anonymous-schema-401>
+                  x-parser-schema-id: <anonymous-schema-405>
                 idx:
                   type: string
                   description: Index price
                   example: '100.00'
-                  x-parser-schema-id: <anonymous-schema-402>
+                  x-parser-schema-id: <anonymous-schema-406>
                 mark:
                   type: string
                   description: Mark price
                   example: '100.00'
-                  x-parser-schema-id: <anonymous-schema-403>
+                  x-parser-schema-id: <anonymous-schema-407>
                 last:
                   type: string
                   description: Last traded price
                   example: '100.00'
-                  x-parser-schema-id: <anonymous-schema-404>
+                  x-parser-schema-id: <anonymous-schema-408>
                 mid:
                   type: string
                   description: Mid price
                   example: '100.00'
-                  x-parser-schema-id: <anonymous-schema-405>
+                  x-parser-schema-id: <anonymous-schema-409>
                 oi:
                   type: string
                   description: Open interest in number of contracts
                   example: '10.00'
-                  x-parser-schema-id: <anonymous-schema-406>
+                  x-parser-schema-id: <anonymous-schema-410>
                 fr:
                   type: string
                   description: Funding rate
                   example: '0.0001'
-                  x-parser-schema-id: <anonymous-schema-407>
+                  x-parser-schema-id: <anonymous-schema-411>
                 nxf:
                   type: integer
                   description: Next funding timestamp in milliseconds
                   example: 1767225600000
-                  x-parser-schema-id: <anonymous-schema-408>
+                  x-parser-schema-id: <anonymous-schema-412>
               required:
                 - iid
                 - idx
@@ -604,13 +609,13 @@ operations:
                 - oi
                 - fr
                 - nxf
-              x-parser-schema-id: <anonymous-schema-400>
+              x-parser-schema-id: <anonymous-schema-404>
           required:
             - ch
             - ts
             - sq
             - data
-          x-parser-schema-id: <anonymous-schema-396>
+          x-parser-schema-id: <anonymous-schema-400>
         title: Update
         description: Real-time ticker updates for subscribed instruments
         example: |-

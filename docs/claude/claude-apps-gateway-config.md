@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/claude-apps-gateway-config.md
-Downloaded: 2026-08-20T20:28:07.651Z
+Downloaded: 2026-08-21T20:25:39.557Z
 -->
 
 > ## Documentation Index
@@ -599,7 +599,7 @@ The gateway's [telemetry](#telemetry) configuration pushes `OTEL_EXPORTER_OTLP_E
 
 A non-interactive run with the `-p` flag can't show the dialog. It applies the pushed settings for that run only and doesn't record them as approved, so the developer's next interactive session still shows the dialog. Before v2.1.207, a non-interactive run saved the settings as approved and no later interactive session showed the dialog for them.
 
-If a developer declines, Claude Code exits rather than applying the policy. Pushing a new hook, or any env var that triggers the dialog, to a broad policy therefore means an approval prompt on every matching developer's next startup.
+If a developer declines, Claude Code exits that session rather than applying the policy. When you push a new hook, or any env var that triggers the dialog, to a broad policy, Claude Code therefore shows the dialog to every matching developer. It shows the dialog in a running session on the next hourly poll, and otherwise at the developer's next startup.
 
 The `cli` key was named `settings` in earlier releases. That spelling is still accepted as an alias, but new deployments should use `cli`.
 
@@ -668,15 +668,15 @@ Both are covered in the list later in this section. The highest-priority source 
 3. The `managed-settings.json` file
 4. The HKCU registry, on Windows only
 
-When an MDM or file-based source wins and configures a [`policyHelper`](/docs/en/settings#compute-managed-settings-with-a-policy-helper), the helper's output replaces that source and neither per-key exception applies. A `policyHelper` in those sources doesn't run while the gateway delivers a non-empty configuration.
+When an MDM or file-based source wins and its [`policyHelper`](/docs/en/settings#compute-managed-settings-with-a-policy-helper) supplies managed settings, the helper's output replaces that source and neither per-key exception applies. A `policyHelper` in those sources doesn't run while the gateway delivers a non-empty configuration.
 
 Embedding hosts such as [Claude Desktop](/docs/en/desktop) can supply policy through the SDK `managedSettings` option. Whether it applies depends on the machine's managed configuration:
 
 * On machines with an admin-deployed managed source, it is ignored unless the highest-priority source opts in with [`parentSettingsBehavior: "merge"`](/docs/en/settings#available-settings).
-* It is never merged when an MDM or file-based source wins and configures a [`policyHelper`](/docs/en/settings#compute-managed-settings-with-a-policy-helper).
+* It is never merged when an MDM or file-based source wins and its [`policyHelper`](/docs/en/settings#compute-managed-settings-with-a-policy-helper) supplies managed settings.
 * When merged, it passes through a restrictive-only allowlist. [Restrict parent settings](/docs/en/claude-apps-gateway#restrict-parent-settings) lists which allow-direction settings still apply without the `allowManaged*Only` locks.
 
-The following keys are honored when any admin source above the user-writable HKCU tier sets them, regardless of which source provides the rest of the policy. When an MDM or file-based source wins and configures a [`policyHelper`](/docs/en/settings#compute-managed-settings-with-a-policy-helper), the helper's output is the only source these checks read:
+The following keys are honored when any admin source above the user-writable HKCU tier sets them, regardless of which source provides the rest of the policy. When an MDM or file-based source wins and its [`policyHelper`](/docs/en/settings#compute-managed-settings-with-a-policy-helper) supplies managed settings, the helper's output is the only source these checks read:
 
 * `sandbox.network.allowManagedDomainsOnly` and `sandbox.filesystem.allowManagedReadPathsOnly`: when locked, the corresponding allowlists are unioned across sources
 * [`allowAllClaudeAiMcps`](/docs/en/settings#available-settings): allow-only override for the claude.ai MCP server allowlist

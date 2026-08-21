@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/perps/errors.md
+Downloaded: 2026-08-21T20:25:29.670Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -6,8 +11,25 @@
 
 > Error messages returned by the API and the conditions that trigger them
 
-The API returns descriptive error messages when a request is rejected. Below are
-the errors you may encounter when placing or cancelling orders.
+The API returns descriptive error messages when a request is rejected. Use the
+HTTP status and response body to decide whether to retry or correct the request.
+
+## Service Unavailable
+
+The gateway returns `503 Service Unavailable` when it deliberately sheds a
+request it cannot serve safely. This can happen when database read capacity is
+exhausted, a response cache is stale or unprimed, or a bounded deferred-write
+queue is full. It is temporary overload protection, not a gateway crash.
+
+```json theme={null}
+{
+  "status": "err",
+  "error": "service_unavailable"
+}
+```
+
+Retry with client-side backoff. By contrast, `500 Internal Server Error` with
+`internal_error` means the gateway encountered an unexpected error.
 
 ## Order Placement Errors
 

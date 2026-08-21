@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/order-groups/delete-order-group.md
-Downloaded: 2026-08-17T20:26:37.799Z
+Downloaded: 2026-08-21T20:25:30.746Z
 -->
 
 > ## Documentation Index
@@ -111,6 +111,7 @@ components:
     ExchangeIndexQuery:
       name: exchange_index
       in: query
+      description: Identifier for an exchange shard. Defaults to 0.
       schema:
         $ref: '#/components/schemas/ExchangeIndex'
       x-go-type-skip-optional-pointer: true

@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/perps/account-management.md
-Downloaded: 2026-08-13T20:42:10.553Z
+Downloaded: 2026-08-21T20:25:29.669Z
 -->
 
 > ## Documentation Index
@@ -1059,7 +1059,10 @@ Use equity and PnL history to explain how the account's value changed over time.
 
 ### Equity
 
-Use equity history to chart account value over time.
+Use equity history to chart account value over time. Each point is the last
+equity sample in its `interval` bucket, stamped with that sample's own
+timestamp. A coarser interval lets each 1000-point page cover a longer window
+before `more` is set.
 
 <Tabs>
   <Tab title="TypeScript">
@@ -1148,7 +1151,10 @@ Use equity history to chart account value over time.
 
 ### PnL
 
-Use PnL history to chart account profit and loss over the same interval.
+Use PnL history to chart account profit and loss over the same interval. Each
+point is the PnL realized inside its `interval` bucket — not a running total —
+and buckets in which nothing was realized are omitted, so the series is
+sparse.
 
 <Tabs>
   <Tab title="TypeScript">
