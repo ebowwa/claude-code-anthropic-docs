@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/ecosystem/nextjs.md
-Downloaded: 2026-08-15T20:21:45.864Z
--->
-
 # Build an app with Next.js and Bun
 
 [Next.js](https://nextjs.org/) is a React framework for building full-stack web applications. It supports server-side rendering, static site generation, and API routes. Bun installs packages fast and can run Next.js development and production servers.

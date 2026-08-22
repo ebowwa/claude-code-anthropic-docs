@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/html-rewriter/extract-social-meta.md
-Downloaded: 2026-08-15T20:21:45.878Z
--->
-
 # Extract social share images and Open Graph tags
 
 ## Extract social share images and Open Graph tags

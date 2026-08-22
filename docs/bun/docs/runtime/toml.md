@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/toml.md
-Downloaded: 2026-08-15T20:21:45.844Z
--->
-
 # TOML
 
 > Use Bun's built-in support for TOML files through both runtime APIs and bundler integration

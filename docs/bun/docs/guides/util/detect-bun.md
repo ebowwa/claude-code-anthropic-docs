@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/util/detect-bun.md
-Downloaded: 2026-08-15T20:21:45.861Z
--->
-
 # Detect when code is executed with Bun
 
 Check `process.versions.bun` to detect whether code is running in Bun. This works in both JavaScript and TypeScript without extra type definitions.

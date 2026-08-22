@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/html-rewriter/extract-links.md
-Downloaded: 2026-08-15T20:21:45.878Z
--->
-
 # Extract links from a webpage using HTMLRewriter
 
 ## Extract links from a webpage

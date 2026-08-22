@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/templating/init.md
-Downloaded: 2026-08-15T20:21:45.836Z
--->
-
 # bun init
 
 > Scaffold an empty Bun project with the interactive `bun init` command

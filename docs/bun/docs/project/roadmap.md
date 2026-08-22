@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/project/roadmap.md
-Downloaded: 2026-08-14T20:31:00.556Z
--->
-
 # Roadmap
 
 > Bun's roadmap and long-term plans

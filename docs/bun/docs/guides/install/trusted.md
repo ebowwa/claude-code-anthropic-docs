@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/install/trusted.md
-Downloaded: 2026-08-15T20:21:45.872Z
--->
-
 # Add a trusted dependency
 
 By default, Bun does not execute arbitrary lifecycle scripts for installed dependencies, such as `postinstall` and `node-gyp` builds. These scripts represent a potential security risk, as they can execute arbitrary code on your machine.

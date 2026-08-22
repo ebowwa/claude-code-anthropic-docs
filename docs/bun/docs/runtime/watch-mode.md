@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/watch-mode.md
-Downloaded: 2026-08-15T20:21:45.836Z
--->
-
 # Watch Mode
 
 > Automatic reloading in Bun with --watch and --hot modes

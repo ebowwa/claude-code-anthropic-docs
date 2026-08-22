@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/read-file/watch.md
-Downloaded: 2026-08-15T20:21:45.876Z
--->
-
 # Watch a directory for changes
 
 Bun implements the `node:fs` module, including the `fs.watch` function for listening for file system changes.

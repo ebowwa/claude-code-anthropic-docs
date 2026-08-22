@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/binary/typedarray-to-string.md
-Downloaded: 2026-08-14T20:31:00.596Z
--->
-
 # Convert a Uint8Array to a string
 
 Bun implements the Web-standard [`TextDecoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder) class for converting binary data types like `Uint8Array` to strings.

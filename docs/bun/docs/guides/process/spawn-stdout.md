@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/process/spawn-stdout.md
-Downloaded: 2026-08-14T20:31:00.581Z
--->
-
 # Read stdout from a child process
 
 When you spawn a child process with [`Bun.spawn()`](/runtime/child-process), `proc.stdout` is a `ReadableStream` of the child's `stdout`.

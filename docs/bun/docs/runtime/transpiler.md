@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/transpiler.md
-Downloaded: 2026-08-15T20:21:45.844Z
--->
-
 # Transpiler
 
 > Use Bun's transpiler to transpile JavaScript and TypeScript code

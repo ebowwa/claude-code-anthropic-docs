@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/test/spy-on.md
-Downloaded: 2026-08-14T20:31:00.586Z
--->
-
 # Spy on methods in `bun test`
 
 Use the `spyOn` utility to track method calls with Bun's test runner.

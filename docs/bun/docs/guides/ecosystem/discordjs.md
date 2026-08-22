@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/ecosystem/discordjs.md
-Downloaded: 2026-08-15T20:21:45.863Z
--->
-
 # Create a Discord bot
 
 Discord.js runs on Bun with no extra setup. This guide builds a bot that answers a `/ping` slash command: you register the command once, then start the bot and use it in your server. If this is your first bot, copy each block as you reach it.

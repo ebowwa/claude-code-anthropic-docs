@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/networking/udp.md
-Downloaded: 2026-08-15T20:21:45.840Z
--->
-
 # UDP
 
 > Use Bun's UDP API to implement services with advanced real-time requirements, such as voice chat.

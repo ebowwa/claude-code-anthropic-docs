@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/streams/to-typedarray.md
-Downloaded: 2026-08-15T20:21:45.881Z
--->
-
 # Convert a ReadableStream to a Uint8Array
 
 To convert a [`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream) to a `Uint8Array`, read its contents into an [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) with `Bun.readableStreamToArrayBuffer`, then create a [`Uint8Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array) that points to the buffer.

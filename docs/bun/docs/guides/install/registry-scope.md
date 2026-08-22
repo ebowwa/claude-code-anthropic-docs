@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/install/registry-scope.md
-Downloaded: 2026-08-15T20:21:45.871Z
--->
-
 # Configure a private registry for an organization scope with bun install
 
 You can configure private registries in [`.npmrc`](/pm/npmrc) or [`bunfig.toml`](/runtime/bunfig#install-registry). Both work; we recommend `bunfig.toml` for its Bun-specific options.

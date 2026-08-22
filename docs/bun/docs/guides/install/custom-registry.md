@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/install/custom-registry.md
-Downloaded: 2026-08-15T20:21:45.871Z
--->
-
 # Override the default npm registry for bun install
 
 The default registry is `registry.npmjs.org`. Override it globally in `bunfig.toml`.

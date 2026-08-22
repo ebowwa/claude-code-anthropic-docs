@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/binary/typedarray-to-arraybuffer.md
-Downloaded: 2026-08-14T20:31:00.596Z
--->
-
 # Convert a Uint8Array to an ArrayBuffer
 
 A [`Uint8Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array) is a _typed array_, a view over data in an underlying `ArrayBuffer`. The `buffer` property returns that `ArrayBuffer`.

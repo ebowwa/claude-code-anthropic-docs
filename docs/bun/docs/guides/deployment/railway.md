@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/deployment/railway.md
-Downloaded: 2026-08-15T20:21:45.858Z
--->
-
 # Deploy a Bun application on Railway
 
 > Deploy a Bun application to Railway from the CLI or dashboard, with optional PostgreSQL setup and automatic SSL

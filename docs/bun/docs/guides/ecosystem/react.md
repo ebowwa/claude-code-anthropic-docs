@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/ecosystem/react.md
-Downloaded: 2026-08-15T20:21:45.865Z
--->
-
 # Build a React app with Bun
 
 Bun has built-in support for `.jsx` and `.tsx` files. React works with Bun.

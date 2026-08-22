@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/streams/to-buffer.md
-Downloaded: 2026-08-14T20:31:00.598Z
--->
-
 # Convert a ReadableStream to a Buffer
 
 To convert a [`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream) to a `Buffer`, read its contents into an [`ArrayBuffer`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ArrayBuffer) with `Bun.readableStreamToArrayBuffer`, then create a [`Buffer`](https://nodejs.org/api/buffer.html) that points to it.

@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/binary/buffer-to-arraybuffer.md
-Downloaded: 2026-08-14T20:31:00.594Z
--->
-
 # Convert a Buffer to an ArrayBuffer
 
 The Node.js [`Buffer`](https://nodejs.org/api/buffer.html) class views and manipulates data in an underlying `ArrayBuffer`. The `buffer` property returns that `ArrayBuffer`.

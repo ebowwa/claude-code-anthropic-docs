@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/bundler/standalone-html.md
-Downloaded: 2026-08-15T20:21:45.854Z
--->
-
 # Standalone HTML
 
 > Bundle a single-page app into a single self-contained .html file with no external dependencies

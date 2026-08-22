@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/test/mock-clock.md
-Downloaded: 2026-08-14T20:31:00.586Z
--->
-
 # Set the system time in Bun's test runner
 
 Set the system time in tests with the `setSystemTime` function from `bun:test`.

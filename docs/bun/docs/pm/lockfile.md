@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/pm/lockfile.md
-Downloaded: 2026-08-15T20:21:45.853Z
--->
-
 # Lockfile
 
 > Bun's lockfile format and configuration

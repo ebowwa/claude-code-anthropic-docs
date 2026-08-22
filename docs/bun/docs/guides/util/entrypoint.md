@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/util/entrypoint.md
-Downloaded: 2026-08-14T20:31:00.573Z
--->
-
 # Check if the current file is the entrypoint
 
 Bun provides a handful of module-specific utilities on the [`import.meta`](/runtime/module-resolution#import-meta) object. Use `import.meta.main` to check if the current file is the entrypoint of the current process.

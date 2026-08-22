@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/http/file-uploads.md
-Downloaded: 2026-08-14T20:31:00.579Z
--->
-
 # Upload files via HTTP using FormData
 
 To upload files over HTTP with Bun, use the [`FormData`](https://developer.mozilla.org/en-US/docs/Web/API/FormData) API. Start with an HTTP server that serves an HTML form.

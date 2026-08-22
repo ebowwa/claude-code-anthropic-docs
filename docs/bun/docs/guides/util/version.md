@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/util/version.md
-Downloaded: 2026-08-14T20:31:00.570Z
--->
-
 # Get the current Bun version
 
 `Bun.version` contains the current version of Bun in semver format.

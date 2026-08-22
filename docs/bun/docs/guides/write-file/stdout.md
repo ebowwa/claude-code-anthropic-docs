@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/write-file/stdout.md
-Downloaded: 2026-08-14T20:31:00.592Z
--->
-
 # Write to stdout
 
 The `console.log` function writes to `stdout` and appends a line break to the printed data.

@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/websocket/simple.md
-Downloaded: 2026-08-14T20:31:00.580Z
--->
-
 # Build a simple WebSocket server
 
 Start a WebSocket server with [`Bun.serve`](/runtime/http/server).

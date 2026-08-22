@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/test/timeout.md
-Downloaded: 2026-08-15T20:21:45.874Z
--->
-
 # Set a per-test timeout with the Bun test runner
 
 Use the `--timeout` flag to set a timeout for each test in milliseconds. Bun marks a test that exceeds this timeout as failed.

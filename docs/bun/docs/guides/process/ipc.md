@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/process/ipc.md
-Downloaded: 2026-08-15T20:21:45.869Z
--->
-
 # Spawn a child process and communicate using IPC
 
 Use [`Bun.spawn()`](/runtime/child-process) to spawn a child process. When spawning a second `bun` process, you can open a direct inter-process communication (IPC) channel between the two processes.

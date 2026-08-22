@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/test/concurrent-test-glob.md
-Downloaded: 2026-08-14T20:31:00.587Z
--->
-
 # Selectively run tests concurrently with glob patterns
 
 > Set a glob pattern to decide which tests from which files run in parallel

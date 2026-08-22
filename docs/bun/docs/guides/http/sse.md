@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/http/sse.md
-Downloaded: 2026-08-15T20:21:45.868Z
--->
-
 # Server-Sent Events (SSE) with Bun
 
 [Server-Sent Events](https://developer.mozilla.org/en-US/docs/Web/API/Server-sent_events) let you push a stream of text events to the browser over a single HTTP response. The client consumes them with [`EventSource`](https://developer.mozilla.org/en-US/docs/Web/API/EventSource).

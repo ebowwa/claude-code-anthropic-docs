@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/streams/node-readable-to-string.md
-Downloaded: 2026-08-14T20:31:00.599Z
--->
-
 # Convert a Node.js Readable to a string
 
 To convert a Node.js `Readable` stream to a string in Bun, create a [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response) with the stream as the body, then call [`response.text()`](https://developer.mozilla.org/en-US/docs/Web/API/Response/text).

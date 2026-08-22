@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/runtime/tsconfig-paths.md
-Downloaded: 2026-08-15T20:21:45.859Z
--->
-
 # Re-map import paths
 
 Bun reads the `paths` field in your `tsconfig.json` to re-write import paths. This is useful for aliasing package names or avoiding long relative paths.

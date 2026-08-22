@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/image.md
-Downloaded: 2026-08-15T20:21:45.846Z
--->
-
 # Image
 
 > Decode, transform, and encode images with a fast native pipeline

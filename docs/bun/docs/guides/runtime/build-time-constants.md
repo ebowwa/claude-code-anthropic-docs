@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/runtime/build-time-constants.md
-Downloaded: 2026-08-15T20:21:45.860Z
--->
-
 # Build-time constants with --define
 
 Pass `--define` to `bun build` or `bun build --compile` to inject build-time constants into your application. Use it to embed metadata like build versions, timestamps, or configuration flags directly into your compiled executables.

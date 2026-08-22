@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/util/base64.md
-Downloaded: 2026-08-15T20:21:45.861Z
--->
-
 # Encode and decode base64 data
 
 Prefer [`Uint8Array.prototype.toBase64()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array/toBase64) and [`Uint8Array.fromBase64()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array/fromBase64) for encoding and decoding base64 data in Bun. These APIs work directly with bytes, so they are a better fit for binary data than the older `btoa()` and `atob()` globals.

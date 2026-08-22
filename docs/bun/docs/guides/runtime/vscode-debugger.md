@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/runtime/vscode-debugger.md
-Downloaded: 2026-08-15T20:21:45.860Z
--->
-
 # Debugging Bun with the VS Code extension
 
 <Note>The VS Code extension is buggy. We recommend the [web debugger](/guides/runtime/web-debugger) instead.</Note>

@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/install/add-git.md
-Downloaded: 2026-08-15T20:21:45.871Z
--->
-
 # Add a Git dependency
 
 Bun supports directly adding GitHub repositories as dependencies of your project.

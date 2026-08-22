@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/jsonl.md
-Downloaded: 2026-08-15T20:21:45.845Z
--->
-
 # JSONL
 
 > Parse newline-delimited JSON (JSONL) with Bun's built-in streaming parser

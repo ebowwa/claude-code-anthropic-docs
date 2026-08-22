@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/http/stream-file.md
-Downloaded: 2026-08-15T20:21:45.868Z
--->
-
 # Stream a file as an HTTP Response
 
 [`Bun.file()`](/runtime/file-io#reading-files-bun-file) accepts a path and returns a lazily-loaded `BunFile` instance, which you can pass directly to the `new Response` constructor.

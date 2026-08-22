@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/util/import-meta-path.md
-Downloaded: 2026-08-14T20:31:00.573Z
--->
-
 # Get the absolute path of the current file
 
 Bun provides a handful of module-specific utilities on the [`import.meta`](/runtime/module-resolution#import-meta) object. Use `import.meta.path` to retrieve the absolute path of the current file.

@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/ecosystem/mongoose.md
-Downloaded: 2026-08-15T20:21:45.864Z
--->
-
 # Read and write data to MongoDB using Mongoose and Bun
 
 MongoDB and Mongoose work with Bun with no extra configuration. This guide assumes you've already installed MongoDB and are running it as a background process or service on your development machine. See the [MongoDB installation guide](https://www.mongodb.com/docs/manual/installation/) for details.

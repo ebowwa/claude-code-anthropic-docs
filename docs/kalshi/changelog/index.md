@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/changelog/index.md
-Downloaded: 2026-08-21T20:25:30.764Z
+Downloaded: 2026-08-22T20:22:21.309Z
 -->
 
 > ## Documentation Index
@@ -79,6 +79,20 @@ description: "Prime-tier members can contact Kalshi to discuss VPC peering for p
   See [API Environments and Endpoints](/getting_started/api_environments#private-connectivity),
   [FIX Connectivity](/fix/connectivity#private-connectivity), and
   [Margin FIX Connectivity](/fix-margin/connectivity#private-connectivity).
+</Update>
+
+<Update
+  label="August 27, 2026"
+  tags={["REST", "Margin"]}
+  rss={{
+title: "Margin maker-volume incentive programs",
+description: "GET /trade-api/v2/incentive_programs supports margin_maker_volume programs and their optional per-account reward cap."
+}}
+>
+  `GET /trade-api/v2/incentive_programs` now accepts
+  `type=margin_maker_volume`. These programs include the optional
+  `max_reward_per_account` field; event-only fields are omitted when they do
+  not apply.
 </Update>
 
 <Update

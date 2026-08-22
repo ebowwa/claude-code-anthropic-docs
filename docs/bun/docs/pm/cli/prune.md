@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/pm/cli/prune.md
-Downloaded: 2026-08-15T20:21:45.850Z
+Downloaded: 2026-08-22T20:22:19.936Z
 -->
 
 # bun prune
@@ -20,7 +20,7 @@ bun prune v1.4.0 (abc12345)
 
 - @types/node@20.11.5
 - left-pad@1.3.0
-2 packages removed (checked 948) [22.00ms]
+2 packages removed (checked 948 installed packages) [22.00ms]
 ```
 
 Packages removed from a workspace or nested `node_modules` folder show the folder in parentheses, e.g. `- typescript@5.4.0 (packages/app/node_modules)`.
@@ -51,7 +51,7 @@ bun prune --production --dry-run
 bun prune v1.4.0 (abc12345)
 
 - typescript@5.4.0
-1 package can be removed (checked 948) [9.00ms]
+1 package can be removed (checked 948 installed packages) [9.00ms]
   bun prune --production
 ```
 

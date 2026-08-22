@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/test/migrate-from-jest.md
-Downloaded: 2026-08-15T20:21:45.873Z
--->
-
 # Migrate from Jest to Bun's test runner
 
 In many cases, Bun's test runner can run Jest test suites with no code changes. Run `bun test` instead of `npx jest` or `yarn test`.

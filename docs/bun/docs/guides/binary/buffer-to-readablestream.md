@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/binary/buffer-to-readablestream.md
-Downloaded: 2026-08-15T20:21:45.879Z
--->
-
 # Convert a Buffer to a ReadableStream
 
 The naive approach to creating a [`ReadableStream`](https://developer.mozilla.org/en-US/docs/Web/API/ReadableStream) from a [`Buffer`](https://nodejs.org/api/buffer.html) is to use the `ReadableStream` constructor and enqueue the entire array as a single chunk. For a large buffer, this approach may be undesirable because it doesn't stream the data in smaller chunks.

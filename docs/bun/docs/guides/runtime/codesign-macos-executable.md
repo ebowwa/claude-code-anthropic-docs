@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/runtime/codesign-macos-executable.md
-Downloaded: 2026-08-14T20:31:00.570Z
--->
-
 # Codesign a single-file JavaScript executable on macOS
 
 > Fix the "can't be opened because it is from an unidentified developer" Gatekeeper warning when running your JavaScript executable.

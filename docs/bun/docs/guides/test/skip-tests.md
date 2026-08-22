@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/test/skip-tests.md
-Downloaded: 2026-08-15T20:21:45.874Z
--->
-
 # Skip tests with the Bun test runner
 
 To skip a test with the Bun test runner, use the `test.skip` function.

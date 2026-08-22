@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/test/dom.md
-Downloaded: 2026-08-14T20:31:00.567Z
--->
-
 # DOM testing
 
 > Learn how to test DOM elements and components using Bun with happy-dom and React Testing Library

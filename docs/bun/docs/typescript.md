@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/typescript.md
-Downloaded: 2026-08-14T20:31:00.543Z
--->
-
 # TypeScript
 
 > Using TypeScript with Bun, including type definitions and compiler options

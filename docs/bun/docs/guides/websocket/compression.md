@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/websocket/compression.md
-Downloaded: 2026-08-15T20:21:45.869Z
--->
-
 # Enable compression for WebSocket messages
 
 Set the `perMessageDeflate` parameter to enable the [permessage-deflate](https://tools.ietf.org/html/rfc7692) WebSocket extension. Bun then negotiates compression with clients that support it. Messages sent with `ws.send()` are still uncompressed unless you opt in per message (see below).

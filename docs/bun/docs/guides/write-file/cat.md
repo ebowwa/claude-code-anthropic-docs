@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/write-file/cat.md
-Downloaded: 2026-08-14T20:31:00.592Z
--->
-
 # Write a file to stdout
 
 Bun exposes `stdout` as a `BunFile` with the `Bun.stdout` property. Pass it as the destination to [`Bun.write()`](/runtime/file-io#writing-files-bun-write).

@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/test/coverage.md
-Downloaded: 2026-08-15T20:21:45.873Z
--->
-
 # Generate code coverage reports with the Bun test runner
 
 Bun's test runner has built-in _code coverage reporting_. Use it to see how much of your codebase your tests cover, and where the gaps are.

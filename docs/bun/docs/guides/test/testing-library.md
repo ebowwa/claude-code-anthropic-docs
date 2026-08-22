@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/test/testing-library.md
-Downloaded: 2026-08-15T20:21:45.874Z
--->
-
 # Using Testing Library with Bun
 
 You can use [Testing Library](https://testing-library.com/) with Bun's test runner.

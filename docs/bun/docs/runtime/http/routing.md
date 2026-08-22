@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/http/routing.md
-Downloaded: 2026-08-15T20:21:45.839Z
--->
-
 # Routing
 
 > Define routes in `Bun.serve` using static paths, parameters, and wildcards

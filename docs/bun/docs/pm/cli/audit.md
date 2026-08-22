@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/pm/cli/audit.md
-Downloaded: 2026-08-15T20:21:45.851Z
--->
-
 # bun audit
 
 > Check your installed packages for known security vulnerabilities

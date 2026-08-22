@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/auto-install.md
-Downloaded: 2026-08-15T20:21:45.838Z
--->
-
 # Auto-install
 
 > Bun's automatic package installation feature for standalone script execution

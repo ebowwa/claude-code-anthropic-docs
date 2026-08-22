@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/networking/dns.md
-Downloaded: 2026-08-15T20:21:45.840Z
--->
-
 # DNS
 
 > Use Bun's DNS module to resolve DNS records

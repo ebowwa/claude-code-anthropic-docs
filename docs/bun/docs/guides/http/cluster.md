@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/http/cluster.md
-Downloaded: 2026-08-14T20:31:00.578Z
--->
-
 # Start a cluster of HTTP servers
 
 > Run multiple HTTP servers concurrently with the "reusePort" option to share the same port across multiple processes

@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/test/discovery.md
-Downloaded: 2026-08-15T20:21:45.857Z
--->
-
 # Finding tests
 
 > Learn how Bun's test runner discovers and filters test files in your project

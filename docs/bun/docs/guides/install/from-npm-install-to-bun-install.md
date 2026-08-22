@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/guides/install/from-npm-install-to-bun-install.md
-Downloaded: 2026-08-14T20:31:00.585Z
+Downloaded: 2026-08-22T20:22:19.951Z
 -->
 
 # Migrate from npm install to bun install
@@ -156,7 +156,7 @@ bun pm ls
 ```
 
 ```txt
-my-pkg node_modules (781)
+my-pkg node_modules (781 installed)
 ├── @types/node@20.16.5
 ├── @types/react@18.3.8
 ├── @types/react-dom@18.3.0

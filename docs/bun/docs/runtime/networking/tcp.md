@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/networking/tcp.md
-Downloaded: 2026-08-15T20:21:45.839Z
--->
-
 # TCP
 
 > Use Bun's native TCP API to implement performance-sensitive systems like database clients, game servers, or anything that needs to communicate over TCP (instead of HTTP)

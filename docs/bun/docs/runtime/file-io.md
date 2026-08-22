@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/file-io.md
-Downloaded: 2026-08-15T20:21:45.840Z
--->
-
 # File I/O
 
 > Bun provides a set of optimized APIs for reading and writing files.

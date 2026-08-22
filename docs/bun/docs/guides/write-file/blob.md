@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/write-file/blob.md
-Downloaded: 2026-08-15T20:21:45.877Z
--->
-
 # Write a Blob to a file
 
 Use [`Bun.write()`](/runtime/file-io#writing-files-bun-write) to write a `Blob` to disk. The first argument is a _destination_, like an absolute path or `BunFile` instance. The second argument is the _data_ to write.

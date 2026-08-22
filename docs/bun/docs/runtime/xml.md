@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/xml.md
-Downloaded: 2026-08-15T20:21:45.845Z
--->
-
 # XML
 
 > Use Bun's built-in support for XML through both runtime APIs and bundler integration

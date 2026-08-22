@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/deployment/render.md
-Downloaded: 2026-08-15T20:21:45.858Z
--->
-
 # Deploy a Bun application on Render
 
 [Render](https://render.com/) is a cloud platform for building, deploying, and scaling apps.

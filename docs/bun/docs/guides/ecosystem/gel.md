@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/ecosystem/gel.md
-Downloaded: 2026-08-15T20:21:45.863Z
--->
-
 # Use Gel with Bun
 
 Gel (formerly EdgeDB) is a graph-relational database built on Postgres. It provides a declarative schema language, migrations system, and object-oriented query language. It also supports raw SQL queries. It solves object-relational mapping at the database layer, so your application code doesn't need an ORM library.

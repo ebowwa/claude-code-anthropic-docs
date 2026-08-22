@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/binary/blob-to-typedarray.md
-Downloaded: 2026-08-14T20:31:00.595Z
--->
-
 # Convert a Blob to a Uint8Array
 
 The [`Blob`](https://developer.mozilla.org/en-US/docs/Web/API/Blob) class provides several methods for consuming its contents in different formats. Use `.bytes()` to read the contents as a `Uint8Array`.

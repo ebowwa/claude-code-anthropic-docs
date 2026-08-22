@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/write-file/response.md
-Downloaded: 2026-08-15T20:21:45.877Z
--->
-
 # Write a Response to a file
 
 Use [`Bun.write()`](/runtime/file-io#writing-files-bun-write) to write a `Response` to disk. Bun writes the body of the `Response` to the destination.

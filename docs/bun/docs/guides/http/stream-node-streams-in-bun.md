@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/http/stream-node-streams-in-bun.md
-Downloaded: 2026-08-14T20:31:00.580Z
--->
-
 # Streaming HTTP Server with Node.js Streams
 
 In Bun, a [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response) accepts a Node.js [`Readable`](https://nodejs.org/api/stream.html#stream_readable_streams) as its body.

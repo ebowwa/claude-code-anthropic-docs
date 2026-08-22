@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/archive.md
-Downloaded: 2026-08-15T20:21:45.841Z
--->
-
 # Archive
 
 > Create and extract tar archives with Bun's fast native implementation

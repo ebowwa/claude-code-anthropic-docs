@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/runtime/delete-directory.md
-Downloaded: 2026-08-14T20:31:00.593Z
--->
-
 # Delete directories
 
 To recursively delete a directory and all its contents, use `rm` from `node:fs/promises`. This is like running `rm -rf` in JavaScript.

@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/project/contributing.md
-Downloaded: 2026-08-15T20:21:45.848Z
--->
-
 # Contributing
 
 > Contributing to Bun

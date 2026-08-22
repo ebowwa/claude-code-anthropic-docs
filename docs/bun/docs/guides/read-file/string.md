@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/read-file/string.md
-Downloaded: 2026-08-14T20:31:00.590Z
--->
-
 # Read a file as a string
 
 The `Bun.file()` function accepts a path and returns a `BunFile` instance. `BunFile` extends `Blob`, so you can read the file lazily in a variety of formats. Use `.text()` to read the contents as a string.

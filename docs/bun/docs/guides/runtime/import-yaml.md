@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/runtime/import-yaml.md
-Downloaded: 2026-08-15T20:21:45.875Z
--->
-
 # Import a YAML file
 
 Bun natively supports `.yaml` and `.yml` imports.

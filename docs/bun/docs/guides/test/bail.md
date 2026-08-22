@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/test/bail.md
-Downloaded: 2026-08-14T20:31:00.588Z
--->
-
 # Bail early with the Bun test runner
 
 Use the `--bail` flag to abort a test run after the first failure, so a continuous integration run fails as early as possible.

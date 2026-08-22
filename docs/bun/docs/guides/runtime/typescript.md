@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/runtime/typescript.md
-Downloaded: 2026-08-14T20:31:00.569Z
--->
-
 # Install TypeScript declarations for Bun
 
 To add TypeScript definitions for Bun's built-in APIs to your project, install `@types/bun`.

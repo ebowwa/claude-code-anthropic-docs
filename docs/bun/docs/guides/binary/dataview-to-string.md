@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/binary/dataview-to-string.md
-Downloaded: 2026-08-14T20:31:00.597Z
--->
-
 # Convert a DataView to a string
 
 If a [`DataView`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/DataView) contains ASCII-encoded text, use the [`TextDecoder`](https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder) class to convert it to a string.

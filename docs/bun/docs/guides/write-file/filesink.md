@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/write-file/filesink.md
-Downloaded: 2026-08-15T20:21:45.877Z
--->
-
 # Write a file incrementally
 
 Bun provides an API for incrementally writing to a file. Use it for large files, or when writing to a file over a long period of time.

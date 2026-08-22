@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/ecosystem/pm2.md
-Downloaded: 2026-08-15T20:21:45.865Z
--->
-
 # Run Bun as a daemon with PM2
 
 [PM2](https://pm2.keymetrics.io/) is a process manager that runs your applications as daemons (background processes).

@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/runtime/import-toml.md
-Downloaded: 2026-08-14T20:31:00.589Z
--->
-
 # Import a TOML file
 
 Bun natively supports importing `.toml` files.

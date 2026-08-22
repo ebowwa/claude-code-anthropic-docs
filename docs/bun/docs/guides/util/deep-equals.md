@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/util/deep-equals.md
-Downloaded: 2026-08-14T20:31:00.572Z
--->
-
 # Check if two objects are deeply equal
 
 `Bun.deepEquals()` checks if two objects are deeply equal. `expect().toEqual()` in Bun's [test runner](/test/writing-tests) uses it internally.

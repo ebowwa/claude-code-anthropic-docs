@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/process/argv.md
-Downloaded: 2026-08-14T20:31:00.581Z
--->
-
 # Parse command-line arguments
 
 The _argument vector_ is the list of arguments passed to the program when it is run. It is available as `Bun.argv`.

@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/http/cookies.md
-Downloaded: 2026-08-14T20:31:00.547Z
--->
-
 # Cookies
 
 > Work with cookies in HTTP requests and responses using Bun's built-in Cookie API.

@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/write-file/file-cp.md
-Downloaded: 2026-08-14T20:31:00.592Z
--->
-
 # Copy a file to another location
 
 Use [`Bun.write()`](/runtime/file-io#writing-files-bun-write) to copy a file to another location on disk. The first argument is a _destination_, like an absolute path or `BunFile` instance. The second argument is the _data_ to write.

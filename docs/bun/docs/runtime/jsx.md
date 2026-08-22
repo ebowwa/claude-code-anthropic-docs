@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/jsx.md
-Downloaded: 2026-08-15T20:21:45.838Z
--->
-
 # JSX
 
 > Built-in JSX and TSX support in Bun with configurable transpilation options

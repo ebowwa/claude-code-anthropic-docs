@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/troubleshooting.md
-Downloaded: 2026-08-21T20:25:39.551Z
+Downloaded: 2026-08-22T20:22:25.688Z
 -->
 
 > ## Documentation Index
@@ -123,7 +123,7 @@ If the Search tool, `@file` mentions, custom agents, or custom skills aren't fin
   </Tab>
 </Tabs>
 
-Then set `USE_BUILTIN_RIPGREP` to `0`, either in your shell [environment](/docs/en/env-vars) or in the `env` block of your [`settings.json`](/docs/en/settings#available-settings):
+Then set `USE_BUILTIN_RIPGREP` to `0`, either in your shell [environment](/docs/en/env-vars) or in the `env` block of your [`settings.json`](/docs/en/settings-reference#all-settings):
 
 ```json theme={null}
 {

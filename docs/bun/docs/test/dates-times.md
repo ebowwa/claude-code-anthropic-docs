@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/test/dates-times.md
-Downloaded: 2026-08-15T20:21:45.858Z
--->
-
 # Dates and times
 
 > Learn how to manipulate time and dates in your Bun tests using setSystemTime and Jest compatibility functions

@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/ecosystem/astro.md
-Downloaded: 2026-08-15T20:21:45.863Z
--->
-
 # Build an app with Astro and Bun
 
 Initialize a fresh Astro app with `bun create astro`. The `create-astro` package detects when you are using `bunx` and installs dependencies with `bun`.

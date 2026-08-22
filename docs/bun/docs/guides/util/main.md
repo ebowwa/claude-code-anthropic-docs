@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/util/main.md
-Downloaded: 2026-08-14T20:31:00.573Z
--->
-
 # Get the absolute path to the current entrypoint
 
 The `Bun.main` property contains the absolute path to the current entrypoint.

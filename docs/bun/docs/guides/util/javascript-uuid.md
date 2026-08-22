@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/util/javascript-uuid.md
-Downloaded: 2026-08-15T20:21:45.861Z
--->
-
 # Generate a UUID
 
 Use `crypto.randomUUID()` to generate a UUID v4. It works in Bun, Node.js, and browsers, with no dependencies.

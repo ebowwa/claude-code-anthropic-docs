@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/install/git-diff-bun-lockfile.md
-Downloaded: 2026-08-14T20:31:00.585Z
--->
-
 # Configure git to diff Bun's lockb lockfile
 
 <Note>

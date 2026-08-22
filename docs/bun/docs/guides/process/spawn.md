@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/process/spawn.md
-Downloaded: 2026-08-14T20:31:00.581Z
--->
-
 # Spawn a child process
 
 Use [`Bun.spawn()`](/runtime/child-process) to spawn a child process.

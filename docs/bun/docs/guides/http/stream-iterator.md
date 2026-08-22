@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/http/stream-iterator.md
-Downloaded: 2026-08-14T20:31:00.580Z
--->
-
 # Streaming HTTP Server with Async Iterators
 
 In Bun, a [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response) accepts an async generator function as its body, so you can stream data to the client as it becomes available rather than waiting for the entire response to be ready.

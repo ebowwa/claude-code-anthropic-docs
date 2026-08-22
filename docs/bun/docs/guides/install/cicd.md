@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/install/cicd.md
-Downloaded: 2026-08-15T20:21:45.872Z
--->
-
 # Install dependencies with Bun in GitHub Actions
 
 Use the official [`setup-bun`](https://github.com/oven-sh/setup-bun) GitHub Action to install `bun` in your GitHub Actions runner.

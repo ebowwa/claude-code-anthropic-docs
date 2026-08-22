@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/pm/catalogs.md
-Downloaded: 2026-08-15T20:21:45.851Z
--->
-
 # Catalogs
 
 > Share common dependency versions across multiple packages in a monorepo

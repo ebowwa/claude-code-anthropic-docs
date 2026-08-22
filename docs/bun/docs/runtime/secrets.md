@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/secrets.md
-Downloaded: 2026-08-15T20:21:45.844Z
--->
-
 # Secrets
 
 > Use Bun's Secrets API to store and retrieve sensitive credentials securely

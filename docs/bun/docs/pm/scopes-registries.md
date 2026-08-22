@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/pm/scopes-registries.md
-Downloaded: 2026-08-14T20:31:00.562Z
--->
-
 # Scopes and registries
 
 > Configure private registries and scoped packages

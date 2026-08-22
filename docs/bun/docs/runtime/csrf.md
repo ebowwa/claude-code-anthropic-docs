@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/csrf.md
-Downloaded: 2026-08-15T20:21:45.844Z
--->
-
 # CSRF Protection
 
 > Generate and verify CSRF tokens with Bun's built-in API

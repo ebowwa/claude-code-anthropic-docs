@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/ecosystem/remix.md
-Downloaded: 2026-08-15T20:21:45.865Z
--->
-
 # Build an app with Remix and Bun
 
 [Remix 3](https://github.com/remix-run/remix) is a web framework built from standalone packages: a router, HTML rendering, sessions, form parsing, and more. These packages are distributed together as the `remix` package. Remix 3 is published under the `next` tag on npm while it is in beta. Its server runs on Bun as-is.

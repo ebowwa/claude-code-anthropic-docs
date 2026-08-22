@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/binary/arraybuffer-to-array.md
-Downloaded: 2026-08-14T20:31:00.594Z
--->
-
 # Convert an ArrayBuffer to an array of numbers
 
 To retrieve the contents of an `ArrayBuffer` as an array of numbers, create a [`Uint8Array`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8Array) over the buffer, then use [`Array.from()`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/from) to convert it to an array.

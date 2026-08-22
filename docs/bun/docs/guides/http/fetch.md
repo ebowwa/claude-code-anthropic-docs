@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/http/fetch.md
-Downloaded: 2026-08-14T20:31:00.578Z
--->
-
 # Send an HTTP request using fetch
 
 Bun implements the Web-standard [`fetch`](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) API for sending HTTP requests. To send a `GET` request to a URL:

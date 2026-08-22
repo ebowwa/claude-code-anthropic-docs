@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/http/server.md
-Downloaded: 2026-08-14T20:31:00.578Z
--->
-
 # Common HTTP server usage
 
 This code starts an HTTP server listening on port `3000`. It demonstrates basic routing with common responses and handles POST data from standard forms or as JSON.

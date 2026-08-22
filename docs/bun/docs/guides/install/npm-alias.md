@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/install/npm-alias.md
-Downloaded: 2026-08-14T20:31:00.584Z
--->
-
 # Install a package under a different name
 
 To install an npm package under an alias:

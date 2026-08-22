@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/memory.md
-Downloaded: 2026-08-21T20:25:39.540Z
+Downloaded: 2026-08-22T20:22:25.681Z
 -->
 
 > ## Documentation Index
@@ -157,7 +157,7 @@ You can also run [`/import`](/docs/en/commands) to bring a supported coding agen
 
 ### How CLAUDE.md files load
 
-Claude Code reads CLAUDE.md files by walking up the directory tree from your current working directory, checking each directory along the way for `CLAUDE.md` and `CLAUDE.local.md` files. This means if you run Claude Code in `foo/bar/`, it loads instructions from `foo/bar/CLAUDE.md`, `foo/CLAUDE.md`, and any `CLAUDE.local.md` files alongside them.
+Claude Code loads `CLAUDE.md` and `CLAUDE.local.md` from your current working directory and every directory above it. Run Claude Code in `foo/bar/` and it loads instructions from `foo/bar/CLAUDE.md`, `foo/CLAUDE.md`, and any `CLAUDE.local.md` files alongside them.
 
 All discovered files are concatenated into context rather than overriding each other. Across the directory tree, content is ordered from the filesystem root down to your working directory. For the `foo/bar/` example, `foo/CLAUDE.md` appears in context before `foo/bar/CLAUDE.md`, so instructions closer to where you launched Claude are read last. Within each directory, `CLAUDE.local.md` is appended after `CLAUDE.md`, so your personal notes are the last thing Claude reads at that level.
 
@@ -289,7 +289,7 @@ Organizations can deploy a centrally managed CLAUDE.md that applies to all users
   </Step>
 
   <Step title="Deploy with your configuration management system">
-    Use MDM, Group Policy, Ansible, or similar tools to distribute the file across developer machines. See [managed settings](/docs/en/permissions#managed-settings) for other organization-wide configuration options.
+    Use MDM, Group Policy, Ansible, or similar tools to distribute the file across developer machines. See [managed settings](/docs/en/managed-settings) for other organization-wide configuration options.
   </Step>
 </Steps>
 
@@ -309,7 +309,7 @@ The example below adds behavioral instructions directly in a managed settings fi
 }
 ```
 
-A managed CLAUDE.md and [managed settings](/docs/en/settings#settings-files) serve different purposes. Use settings for technical enforcement and CLAUDE.md for behavioral guidance:
+A managed CLAUDE.md and [managed settings](/docs/en/managed-settings) serve different purposes. Use settings for technical enforcement and CLAUDE.md for behavioral guidance:
 
 | Concern                                        | Configure in                                              |
 | :--------------------------------------------- | :-------------------------------------------------------- |
@@ -338,7 +338,7 @@ This example excludes a top-level CLAUDE.md and a rules directory from a parent 
 }
 ```
 
-Patterns are matched against absolute file paths using glob syntax. You can configure `claudeMdExcludes` at any [settings layer](/docs/en/settings#settings-files): user, project, local, or managed policy. Arrays merge across layers.
+Patterns are matched against absolute file paths using glob syntax. You can configure `claudeMdExcludes` at any [settings layer](/docs/en/settings#where-settings-live): user, project, local, or managed policy. Arrays merge across layers.
 
 Managed policy CLAUDE.md files cannot be excluded. This ensures organization-wide instructions always apply regardless of individual settings.
 
@@ -397,15 +397,13 @@ The directory contains a `MEMORY.md` index and one topic file per memory:
 
 Auto memory is machine-local. All worktrees and subdirectories within the same git repository share one auto memory directory. Files are not shared across machines or cloud environments.
 
-Claude Code deletes old session transcripts after the [`cleanupPeriodDays`](/docs/en/settings#available-settings) retention period, but excludes the files in the memory directory from that [retention sweep](/docs/en/claude-directory#cleaned-up-automatically). `MEMORY.md` and topic files stay until you or Claude edits or deletes them.
+Claude Code deletes old session transcripts after the [`cleanupPeriodDays`](/docs/en/settings-reference#cleanupperioddays) retention period, but excludes the files in the memory directory from that [retention sweep](/docs/en/claude-directory#cleaned-up-automatically). `MEMORY.md` and topic files stay until you or Claude edits or deletes them.
 
 ### How it works
 
 The first 200 lines of `MEMORY.md`, or the first 25KB, whichever comes first, are loaded at the start of every conversation. Content beyond that threshold is not loaded at session start. Claude keeps `MEMORY.md` concise by moving detailed notes into separate topic files.
 
 After Claude writes to `MEMORY.md`, Claude Code measures the file against the 200-line and 25KB read limits. If the file is near a limit, Claude Code reminds Claude to shorten it: keep one line per entry, move detail into topic files, and merge or drop stale entries. If the file is over a limit, the write still succeeds, but Claude Code returns an [error telling Claude to rewrite the index](/docs/en/errors#memory-index-is-over-its-read-limit), because everything past the limit is dropped on the next load.
-
-The check measures only the content that loads: YAML frontmatter and block-level HTML comments are stripped before the index is loaded, so they don't count toward the limits. Before v2.1.211, Claude Code measured the raw file, and frontmatter or comments could trigger the error even when the loaded content fit.
 
 This limit applies only to `MEMORY.md`. Claude Code loads a CLAUDE.md file of up to 4 MiB in full and skips a larger file. Shorter files produce better adherence.
 

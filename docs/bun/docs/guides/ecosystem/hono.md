@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/ecosystem/hono.md
-Downloaded: 2026-08-15T20:21:45.864Z
--->
-
 # Build an HTTP server using Hono and Bun
 
 [Hono](https://github.com/honojs/hono) is a lightweight web framework designed for the edge.

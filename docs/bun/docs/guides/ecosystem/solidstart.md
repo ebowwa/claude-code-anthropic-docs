@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/ecosystem/solidstart.md
-Downloaded: 2026-08-15T20:21:45.866Z
--->
-
 # Build an app with SolidStart and Bun
 
 Initialize a SolidStart app with `create-solid`. Pass the `--solidstart` flag to create a SolidStart project and `--ts` for TypeScript support. When prompted for a SolidStart version, select `2 (Stable)`. When prompted for a template, select `basic` for a minimal starter app.

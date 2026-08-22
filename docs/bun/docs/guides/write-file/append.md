@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/write-file/append.md
-Downloaded: 2026-08-14T20:31:00.591Z
--->
-
 # Append content to a file
 
 Bun implements the `node:fs` module, which includes the `fs.appendFile` and `fs.appendFileSync` functions for appending content to files.

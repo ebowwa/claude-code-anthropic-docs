@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/deployment/digital-ocean.md
-Downloaded: 2026-08-15T20:21:45.859Z
--->
-
 # Deploy a Bun application on DigitalOcean
 
 [DigitalOcean](https://www.digitalocean.com/) is a cloud platform that provides a range of services for building and deploying applications.

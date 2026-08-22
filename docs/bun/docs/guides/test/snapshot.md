@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/test/snapshot.md
-Downloaded: 2026-08-15T20:21:45.873Z
--->
-
 # Use snapshot testing in `bun test`
 
 Bun's test runner supports Jest-style snapshot testing with `.toMatchSnapshot()`.

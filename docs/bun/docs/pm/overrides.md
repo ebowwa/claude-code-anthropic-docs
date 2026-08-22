@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/pm/overrides.md
-Downloaded: 2026-08-15T20:21:45.853Z
--->
-
 # Overrides and resolutions
 
 > Control metadependency versions with npm overrides and Yarn resolutions

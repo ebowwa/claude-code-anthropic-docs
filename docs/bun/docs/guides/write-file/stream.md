@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/write-file/stream.md
-Downloaded: 2026-08-15T20:21:45.877Z
--->
-
 # Write a ReadableStream to a file
 
 To write a `ReadableStream` to disk, call `.writer()` on a `BunFile` to get a [`FileSink`](/runtime/file-io#incremental-writing-with-filesink). The stream is an async iterable, so write each of its chunks to the `FileSink` with `for await`. Then call `.end()` to flush the buffer and close the file.

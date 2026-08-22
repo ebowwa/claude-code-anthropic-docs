@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/install/add-tarball.md
-Downloaded: 2026-08-14T20:31:00.584Z
--->
-
 # Add a tarball dependency
 
 Bun's package manager can install any publicly available tarball URL as a dependency of your project.

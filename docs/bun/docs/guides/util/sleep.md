@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/util/sleep.md
-Downloaded: 2026-08-15T20:21:45.862Z
--->
-
 # Sleep for a fixed number of milliseconds
 
 `Bun.sleep()` returns a void `Promise` that resolves after a given number of milliseconds.

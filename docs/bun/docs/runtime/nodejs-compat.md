@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/nodejs-compat.md
-Downloaded: 2026-08-15T20:21:45.848Z
--->
-
 # Node.js Compatibility
 
 > Bun's compatibility status with Node.js APIs, modules, and globals

@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/http/fetch-unix.md
-Downloaded: 2026-08-14T20:31:00.579Z
--->
-
 # fetch with unix domain sockets in Bun
 
 In Bun, `fetch()` can send HTTP requests over a [unix domain socket](https://en.wikipedia.org/wiki/Unix_domain_socket) with the `unix` option.

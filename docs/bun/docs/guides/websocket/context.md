@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/websocket/context.md
-Downloaded: 2026-08-15T20:21:45.868Z
--->
-
 # Set per-socket contextual data on a WebSocket
 
 A WebSocket server typically needs to store some identifying information or context for each connected client.

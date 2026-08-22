@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/util/hash-a-password.md
-Downloaded: 2026-08-14T20:31:00.571Z
--->
-
 # Hash a password
 
 Use `Bun.password.hash()` to securely hash passwords. It's built into Bun, with no third-party dependencies.

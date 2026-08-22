@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/util/deflate.md
-Downloaded: 2026-08-15T20:21:45.861Z
--->
-
 # Compress and decompress data with DEFLATE
 
 Use `Bun.deflateSync()` to compress a `Uint8Array` with DEFLATE.

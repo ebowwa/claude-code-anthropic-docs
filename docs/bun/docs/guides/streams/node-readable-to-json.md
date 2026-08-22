@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/streams/node-readable-to-json.md
-Downloaded: 2026-08-14T20:31:00.599Z
--->
-
 # Convert a Node.js Readable to JSON
 
 To convert a Node.js `Readable` stream to a JSON object in Bun, create a [`Response`](https://developer.mozilla.org/en-US/docs/Web/API/Response) with the stream as the body, then call [`response.json()`](https://developer.mozilla.org/en-US/docs/Web/API/Response/json).

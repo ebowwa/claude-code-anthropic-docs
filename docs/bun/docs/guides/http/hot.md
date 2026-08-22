@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/http/hot.md
-Downloaded: 2026-08-14T20:31:00.578Z
--->
-
 # Hot reload an HTTP server
 
 The [`--hot`](/runtime/watch-mode#hot-mode) flag runs a file with hot reloading enabled. When any module or file changes, Bun re-runs the file.

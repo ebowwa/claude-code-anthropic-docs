@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/binary/arraybuffer-to-buffer.md
-Downloaded: 2026-08-14T20:31:00.593Z
--->
-
 # Convert an ArrayBuffer to a Buffer
 
 The Node.js [`Buffer`](https://nodejs.org/api/buffer.html) API predates the introduction of `ArrayBuffer` into the JavaScript language. Bun implements both.

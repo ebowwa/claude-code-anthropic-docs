@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/test/mocks.md
-Downloaded: 2026-08-15T20:21:45.857Z
--->
-
 # Mocks
 
 > Learn how to create and use mock functions, spies, and module mocks in Bun tests

@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/pm/filter.md
-Downloaded: 2026-08-15T20:21:45.852Z
--->
-
 # bun --filter
 
 > Select packages by pattern in a monorepo using the --filter flag

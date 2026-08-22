@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/ecosystem/nuxt.md
-Downloaded: 2026-08-15T20:21:45.864Z
--->
-
 # Build an app with Nuxt and Bun
 
 Bun supports [Nuxt](https://nuxt.com) with no extra configuration. Initialize a Nuxt app with the official `create-nuxt` CLI.

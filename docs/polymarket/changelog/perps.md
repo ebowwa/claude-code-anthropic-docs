@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/changelog/perps.md
-Downloaded: 2026-08-21T20:25:29.694Z
+Downloaded: 2026-08-22T20:22:21.778Z
 -->
 
 > ## Documentation Index
@@ -12,6 +12,67 @@ Downloaded: 2026-08-21T20:25:29.694Z
 > Recent changes to the Polymarket Perps API and platform
 
 Notable changes to the Polymarket Perps API.
+
+<Update label="Aug 24, 2026" description="Response timestamps, rejection references, and liquidation metadata">
+  Rejections and acknowledgements now carry inspectable timing, every WebSocket
+  push is stamped with engine event time, and backstop liquidation fills include
+  optional metadata.
+
+  **Added**
+
+  * **Timestamps on rejections.** All rejection responses — orders, cancels,
+    modifies, withdrawals, and transfers — now include `ts` (engine decision
+    time), `arts` (gateway arrival time), and `ref` (a support reference for
+    locating the server-side trace). All three are nullable, except on cancel
+    rejections where `ts` is always present.
+  * **Timestamps on acknowledgements.** Accepted create-order items now include
+    `ts` and `arts`. Accepted cancels, which already carried `ts`, now also
+    include `arts`.
+  * **Event time on every WebSocket push.** Push envelopes across all channels
+    now carry `ets`, the engine event time for the update. This field is always
+    present and is the one to use for event-time analysis.
+  * **Liquidation metadata on fills.** Fills and trades from backstop
+    liquidations carry an optional `liquidation_details` object with `mark`,
+    `method`, and `liquidated_user`. Available on private WebSocket fills,
+    `GET /v1/account/fills`, position fills, and public trades. The anonymous
+    trade tape omits `liquidated_user`. Ordinary order-book liquidations do not
+    carry this object yet — only backstop liquidations, where `method` is
+    `backstop`. The object is absent where metadata was not captured.
+
+  **Changed**
+
+  * **WebSocket envelope `ts` is now server send time.** Push frames previously
+    stamped the envelope `ts` with internal stream time, which could lag actual
+    send time on quiet channels or during catch-up. Engine event time is now
+    carried separately in `ets`. Per-item `ts` inside `data` is unchanged. If
+    you measure latency as `local_receive − envelope_ts`, your values will
+    decrease after this release. Earlier measurements included server-internal
+    lag and are not comparable — re-baseline at the deploy timestamp.
+  * **Backstop liquidations publish fills to both parties.** The liquidated
+    account and each absorbing account now receive private WebSocket fills for
+    backstop liquidations. The liquidated account previously received no fills
+    event. These fills are system-generated, with order id `0` and no client
+    order id, matching the shape of ADL fills.
+  * **`order_already_terminal` replaces `order_not_in_orderbook` for terminal
+    orders.** Canceling an order that has already filled or canceled now
+    returns `order_already_terminal` to the order's owner. Unknown and foreign
+    order ids continue to return `order_not_in_orderbook`. Treat unrecognized
+    error codes as non-retryable.
+
+  **Fixed**
+
+  * **`FillsUpdate.data` and `TradesUpdate.data` are documented as arrays.**
+    The specification previously described objects. The wire format is
+    unchanged; regenerate your client/bindings if you generated the object form.
+
+  | Field         | Meaning              |
+  | ------------- | -------------------- |
+  | Request `ts`  | Client send time     |
+  | `arts`        | Gateway arrival time |
+  | Item `ts`     | Engine decision time |
+  | Envelope `ts` | Server send time     |
+  | `ets`         | Engine event time    |
+</Update>
 
 <Update label="Aug 16, 2026" description="Current position fills endpoint added">
   Added `GET /v1/info/position-fills`, a public endpoint returning every fill

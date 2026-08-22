@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/test/happy-dom.md
-Downloaded: 2026-08-15T20:21:45.874Z
--->
-
 # Write browser DOM tests with Bun and happy-dom
 
 Use [Happy DOM](https://github.com/capricorn86/happy-dom) to write browser tests with Bun's test runner. Happy DOM implements mocked versions of browser APIs like `document` and `location`.

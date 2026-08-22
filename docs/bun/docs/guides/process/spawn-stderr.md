@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/process/spawn-stderr.md
-Downloaded: 2026-08-14T20:31:00.581Z
--->
-
 # Read stderr from a child process
 
 When you spawn a child process with [`Bun.spawn()`](/runtime/child-process), it inherits the `stderr` of the spawning process. To read and handle `stderr` instead, set the `stderr` option to `"pipe"`.

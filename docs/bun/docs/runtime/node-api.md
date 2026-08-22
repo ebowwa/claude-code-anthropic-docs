@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/node-api.md
-Downloaded: 2026-08-14T20:31:00.551Z
--->
-
 # Node-API
 
 > Use Bun's Node-API module to build native add-ons to Node.js

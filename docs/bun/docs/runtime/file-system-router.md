@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/file-system-router.md
-Downloaded: 2026-08-15T20:21:45.838Z
--->
-
 # File System Router
 
 > Bun provides a fast API for resolving routes against file-system paths

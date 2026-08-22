@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/bundler/html-static.md
-Downloaded: 2026-08-15T20:21:45.854Z
--->
-
 # HTML & static sites
 
 > Build static sites, landing pages, and web applications with Bun's bundler

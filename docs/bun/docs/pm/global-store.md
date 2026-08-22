@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/pm/global-store.md
-Downloaded: 2026-08-15T20:21:45.852Z
--->
-
 # Global virtual store
 
 > Install packages once. Every project links to the same copy.

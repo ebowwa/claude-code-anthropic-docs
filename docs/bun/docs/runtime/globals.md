@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/globals.md
-Downloaded: 2026-08-15T20:21:45.847Z
--->
-
 # Globals
 
 > Use Bun's global objects

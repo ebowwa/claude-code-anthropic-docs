@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/runtime/delete-file.md
-Downloaded: 2026-08-14T20:31:00.593Z
--->
-
 # Delete files
 
 To delete a file, use `Bun.file(path).delete()`.

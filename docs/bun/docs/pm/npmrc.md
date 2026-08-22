@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/pm/npmrc.md
-Downloaded: 2026-08-15T20:21:45.853Z
--->
-
 # .npmrc support
 
 Bun loads configuration options from [`.npmrc`](https://docs.npmjs.com/cli/v10/configuring-npm/npmrc) files, so you can reuse your existing registry and scope configuration.

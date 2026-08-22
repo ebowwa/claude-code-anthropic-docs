@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/test/mock-functions.md
-Downloaded: 2026-08-14T20:31:00.586Z
--->
-
 # Mock functions in `bun test`
 
 Create mocks with the `mock` function from `bun:test`.

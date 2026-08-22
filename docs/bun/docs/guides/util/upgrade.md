@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/util/upgrade.md
-Downloaded: 2026-08-15T20:21:45.861Z
--->
-
 # Upgrade Bun to the latest version
 
 Bun upgrades itself with the built-in `bun upgrade` command.

@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/bun-apis.md
-Downloaded: 2026-08-15T20:21:45.847Z
--->
-
 # Bun APIs
 
 > Overview of Bun's native APIs available on the Bun global object and built-in modules

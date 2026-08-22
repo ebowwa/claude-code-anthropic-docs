@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/pm/security-scanner-api.md
-Downloaded: 2026-08-15T20:21:45.853Z
--->
-
 # Security Scanner API
 
 Bun's package manager can scan packages before installing them, to catch supply chain attacks and known vulnerabilities.

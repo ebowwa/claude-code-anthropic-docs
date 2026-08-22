@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/ecosystem/prisma.md
-Downloaded: 2026-08-15T20:21:45.865Z
--->
-
 # Use Prisma with Bun
 
 <Note>

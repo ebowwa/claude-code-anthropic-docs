@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/write-file/basic.md
-Downloaded: 2026-08-14T20:31:00.591Z
--->
-
 # Write a string to a file
 
 Use [`Bun.write()`](/runtime/file-io#writing-files-bun-write) to write a string to disk at an _absolute path_. The first argument is a _destination_; the second is the _data_ to write.

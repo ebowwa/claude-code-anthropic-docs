@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/networking/fetch.md
-Downloaded: 2026-08-15T20:21:45.839Z
--->
-
 # Fetch
 
 > Send HTTP requests with Bun's fetch API

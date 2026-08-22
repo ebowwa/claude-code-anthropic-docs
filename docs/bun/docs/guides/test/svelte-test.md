@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/test/svelte-test.md
-Downloaded: 2026-08-15T20:21:45.875Z
--->
-
 # import, require, and test Svelte components with bun test
 
 Use Bun's [Plugin API](/runtime/plugins) to add a custom loader for `.svelte` files, and the `test.preload` option in `bunfig.toml` to load it before your tests run.

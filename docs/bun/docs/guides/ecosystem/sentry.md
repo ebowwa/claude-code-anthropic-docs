@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/ecosystem/sentry.md
-Downloaded: 2026-08-15T20:21:45.866Z
--->
-
 # Add Sentry to a Bun app
 
 [Sentry](https://sentry.io) is an error tracking and performance monitoring platform. Its Bun SDK, `@sentry/bun`, instruments your application to automatically collect error and performance data.

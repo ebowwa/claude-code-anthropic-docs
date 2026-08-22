@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/ecosystem/systemd.md
-Downloaded: 2026-08-15T20:21:45.866Z
--->
-
 # Run Bun as a daemon with systemd
 
 [systemd](https://systemd.io) is an init system and service manager for Linux. It manages the startup and control of system processes and services.

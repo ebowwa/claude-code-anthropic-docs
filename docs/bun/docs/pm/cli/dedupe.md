@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/pm/cli/dedupe.md
-Downloaded: 2026-08-15T20:21:45.850Z
+Downloaded: 2026-08-22T20:22:19.936Z
 -->
 
 # bun dedupe
@@ -19,7 +19,7 @@ bun dedupe v1.4.0 (abc12345)
 ↳ esbuild 0.15.10 → 0.15.11
 ↳ react 18.2.0 → 18.3.1
 
-2 duplicate versions removed, 3 packages installed (checked 5 packages) [12.00ms]
+2 duplicate versions removed, 3 packages installed (checked 5 packages in bun.lock) [12.00ms]
 ```
 
 Each row is a version Bun removed and the version its dependents now use.
@@ -40,7 +40,7 @@ bun dedupe v1.4.0 (abc12345)
 ↳ esbuild 0.15.10 → 0.15.11
 ↳ react 18.2.0 → 18.3.1
 
-2 duplicate versions can be removed (checked 5 packages) [9.00ms]
+2 duplicate versions can be removed (checked 5 packages in bun.lock) [9.00ms]
   bun dedupe
 ```
 

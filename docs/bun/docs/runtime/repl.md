@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/repl.md
-Downloaded: 2026-08-15T20:21:45.837Z
--->
-
 # REPL
 
 > An interactive JavaScript and TypeScript REPL with syntax highlighting, history, and tab completion

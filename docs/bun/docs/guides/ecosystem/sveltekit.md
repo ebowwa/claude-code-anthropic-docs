@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/ecosystem/sveltekit.md
-Downloaded: 2026-08-15T20:21:45.866Z
--->
-
 # Build an app with SvelteKit and Bun
 
 Use `sv create my-app` to create a SvelteKit project with the Svelte CLI. Answer the prompts to select a template and set up your development environment.

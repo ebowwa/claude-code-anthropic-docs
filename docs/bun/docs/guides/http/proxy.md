@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/http/proxy.md
-Downloaded: 2026-08-15T20:21:45.867Z
--->
-
 # Proxy HTTP requests using fetch()
 
 In Bun, `fetch` supports sending requests through an HTTP or HTTPS proxy. Use it on corporate networks or when a request must come from a specific IP address.

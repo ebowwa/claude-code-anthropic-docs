@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/http/simple.md
-Downloaded: 2026-08-14T20:31:00.578Z
--->
-
 # Write a simple HTTP server
 
 This code starts an HTTP server listening on port `3000`. It responds to every request with a `200` status and the body `"Welcome to Bun!"`.

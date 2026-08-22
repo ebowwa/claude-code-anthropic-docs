@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/install/add-peer.md
-Downloaded: 2026-08-14T20:31:00.583Z
--->
-
 # Add a peer dependency
 
 To add an npm package as a peer dependency, use the `--peer` flag.

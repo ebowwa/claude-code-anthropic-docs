@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/ecosystem/upstash.md
-Downloaded: 2026-08-14T20:31:00.578Z
--->
-
 # Bun Redis with Upstash
 
 [Upstash](https://upstash.com/) is a fully managed Redis database as a service. It works with the Redis® API, so you can connect with Bun's native Redis client.

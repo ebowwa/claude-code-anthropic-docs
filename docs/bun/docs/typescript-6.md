@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/typescript-6.md
-Downloaded: 2026-08-15T20:21:45.836Z
--->
-
 # TypeScript 6 and 7
 
 > How to configure Bun's type definitions for TypeScript 6.0 and 7.0, which no longer auto-discover @types packages. Fix 'Cannot find name Bun' and other missing type errors after upgrading TypeScript.

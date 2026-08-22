@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/markdown.md
-Downloaded: 2026-08-15T20:21:45.845Z
--->
-
 # Markdown
 
 > Parse and render Markdown with Bun's built-in Markdown API, supporting GFM extensions and custom rendering callbacks

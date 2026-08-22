@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/color.md
-Downloaded: 2026-08-15T20:21:45.847Z
--->
-
 # Color
 
 > Format colors as CSS, ANSI, numbers, hex strings, and more

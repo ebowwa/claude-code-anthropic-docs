@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/read-file/uint8array.md
-Downloaded: 2026-08-15T20:21:45.876Z
--->
-
 # Read a file to a Uint8Array
 
 The `Bun.file()` function accepts a path and returns a `BunFile` instance. `BunFile` extends `Blob`, so you can read the file lazily in a variety of formats.

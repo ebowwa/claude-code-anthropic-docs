@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/ecosystem/express.md
-Downloaded: 2026-08-14T20:31:00.574Z
--->
-
 # Build an HTTP server using Express and Bun
 
 Express and other major Node.js HTTP libraries should work in Bun without changes. Bun implements the [`node:http`](https://nodejs.org/api/http.html) and [`node:https`](https://nodejs.org/api/https.html) modules that these libraries rely on.

@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/shell.md
-Downloaded: 2026-08-15T20:21:45.842Z
--->
-
 # Shell
 
 > Use Bun's shell scripting API to run shell commands from JavaScript

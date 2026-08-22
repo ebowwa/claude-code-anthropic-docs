@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/test/lifecycle.md
-Downloaded: 2026-08-15T20:21:45.857Z
--->
-
 # Lifecycle hooks
 
 > Learn how to use beforeAll, beforeEach, afterEach, and afterAll lifecycle hooks in Bun tests

@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/feedback.md
-Downloaded: 2026-08-15T20:21:45.882Z
--->
-
 # Feedback
 
 > Share feedback, bug reports, and feature requests

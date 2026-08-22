@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/pm/bunx.md
-Downloaded: 2026-08-15T20:21:45.850Z
--->
-
 # bunx
 
 > Run packages from npm

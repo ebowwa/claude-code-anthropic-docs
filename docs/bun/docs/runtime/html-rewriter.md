@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/html-rewriter.md
-Downloaded: 2026-08-15T20:21:45.846Z
--->
-
 # HTMLRewriter
 
 > Use Bun's HTMLRewriter to transform HTML documents with CSS selectors

@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/util/escape-html.md
-Downloaded: 2026-08-15T20:21:45.862Z
--->
-
 # Escape an HTML string
 
 `Bun.escapeHTML()` escapes HTML characters in a string. It makes the following replacements.

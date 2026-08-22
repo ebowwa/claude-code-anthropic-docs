@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/ecosystem/qwik.md
-Downloaded: 2026-08-15T20:21:45.865Z
--->
-
 # Build an app with Qwik and Bun
 
 Initialize a new Qwik app with `bunx create-qwik`.

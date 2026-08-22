@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/runtime/web-debugger.md
-Downloaded: 2026-08-15T20:21:45.860Z
--->
-
 # Debugging Bun with the web debugger
 
 Bun speaks the [WebKit Inspector Protocol](https://github.com/oven-sh/bun/blob/main/packages/bun-inspector-protocol/src/protocol/jsc/index.d.ts). To enable debugging when running code with Bun, use the `--inspect` flag. Consider the following web server.

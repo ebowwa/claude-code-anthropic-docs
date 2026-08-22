@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/test/coverage-threshold.md
-Downloaded: 2026-08-15T20:21:45.873Z
--->
-
 # Set a code coverage threshold with the Bun test runner
 
 Bun's test runner has built-in code coverage reporting. Enable it with the `--coverage` flag.

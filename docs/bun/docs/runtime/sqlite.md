@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/sqlite.md
-Downloaded: 2026-08-15T20:21:45.841Z
--->
-
 # SQLite
 
 > Bun natively implements a high-performance SQLite3 driver.

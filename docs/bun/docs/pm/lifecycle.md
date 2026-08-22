@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/pm/lifecycle.md
-Downloaded: 2026-08-15T20:21:45.853Z
--->
-
 # Lifecycle scripts
 
 > How Bun handles package lifecycle scripts securely

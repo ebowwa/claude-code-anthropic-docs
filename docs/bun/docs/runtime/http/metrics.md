@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/http/metrics.md
-Downloaded: 2026-08-14T20:31:00.547Z
--->
-
 # Metrics
 
 > Monitor server activity with built-in metrics

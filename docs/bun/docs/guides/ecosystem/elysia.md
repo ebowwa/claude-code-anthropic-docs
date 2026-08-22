@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/ecosystem/elysia.md
-Downloaded: 2026-08-15T20:21:45.863Z
--->
-
 # Build an HTTP server using Elysia and Bun
 
 [Elysia](https://elysiajs.com) is a Bun-first web framework built on Bun's HTTP, file system, and hot reloading APIs. Get started with `bun create`.

@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/ecosystem/ssr-react.md
-Downloaded: 2026-08-15T20:21:45.866Z
--->
-
 # Server-side render (SSR) a React component
 
 Install `react` and `react-dom`:

@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/runtime/timezone.md
-Downloaded: 2026-08-15T20:21:45.870Z
--->
-
 # Set a time zone in Bun
 
 Bun supports programmatically setting a default time zone for the lifetime of the `bun` process. Set the `TZ` environment variable to a [valid time zone identifier](https://en.wikipedia.org/wiki/List_of_tz_database_time_zones).

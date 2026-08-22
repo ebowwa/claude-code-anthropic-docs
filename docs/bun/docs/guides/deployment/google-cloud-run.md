@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/deployment/google-cloud-run.md
-Downloaded: 2026-08-15T20:21:45.859Z
--->
-
 # Deploy a Bun application on Google Cloud Run
 
 [Google Cloud Run](https://cloud.google.com/run) is a managed platform for deploying and scaling serverless applications. Google handles the infrastructure for you.

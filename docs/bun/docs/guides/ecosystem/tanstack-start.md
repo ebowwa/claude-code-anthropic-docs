@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/ecosystem/tanstack-start.md
-Downloaded: 2026-08-15T20:21:45.866Z
--->
-
 # Use TanStack Start with Bun
 
 [TanStack Start](https://tanstack.com/start/latest) is a full-stack framework powered by TanStack Router and [Vite](https://vite.dev/). It supports full-document SSR, streaming, server functions, and bundling.

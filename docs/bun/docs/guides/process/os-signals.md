@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/process/os-signals.md
-Downloaded: 2026-08-15T20:21:45.869Z
--->
-
 # Listen to OS signals
 
 Bun supports the Node.js `process` global, including the `process.on()` method for listening to OS signals.

@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/web-apis.md
-Downloaded: 2026-08-15T20:21:45.847Z
--->
-
 # Web APIs
 
 > Web-standard APIs supported by Bun for server-side JavaScript

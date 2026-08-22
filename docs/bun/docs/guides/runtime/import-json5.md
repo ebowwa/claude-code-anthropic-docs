@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/runtime/import-json5.md
-Downloaded: 2026-08-14T20:31:00.589Z
--->
-
 # Import a JSON5 file
 
 Bun natively supports `.json5` imports.

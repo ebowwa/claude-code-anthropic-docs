@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/workers.md
-Downloaded: 2026-08-15T20:21:45.842Z
--->
-
 # Workers
 
 > Use Bun's Workers API to create and communicate with a new JavaScript instance running on a separate thread while sharing I/O resources with the main thread

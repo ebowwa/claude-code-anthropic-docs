@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/binary/arraybuffer-to-typedarray.md
-Downloaded: 2026-08-15T20:21:45.879Z
--->
-
 # Convert an ArrayBuffer to a Uint8Array
 
 A `Uint8Array` is a _typed array_, a view over the data in an underlying `ArrayBuffer`.

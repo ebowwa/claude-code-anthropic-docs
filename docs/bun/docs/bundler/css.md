@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/bundler/css.md
-Downloaded: 2026-08-15T20:21:45.854Z
--->
-
 # CSS
 
 > Bun's bundler has built-in support for CSS with modern features

@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/pm/cli/info.md
-Downloaded: 2026-08-14T20:31:00.559Z
--->
-
 # bun info
 
 > Display package metadata from the npm registry

@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/json5.md
-Downloaded: 2026-08-15T20:21:45.845Z
--->
-
 # JSON5
 
 > Use Bun's built-in support for JSON5 files through both runtime APIs and bundler integration
