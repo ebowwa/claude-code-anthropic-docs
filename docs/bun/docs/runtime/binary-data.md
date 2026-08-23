@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/binary-data.md
-Downloaded: 2026-08-16T20:22:01.461Z
--->
-
 # Binary Data
 
 > Working with binary data in JavaScript

@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/ffi.md
-Downloaded: 2026-08-16T20:22:01.463Z
--->
-
 # FFI
 
 > Use Bun's FFI module to efficiently call native libraries from JavaScript

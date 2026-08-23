@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/test/todo-tests.md
-Downloaded: 2026-08-16T20:22:01.488Z
--->
-
 # Mark a test as a "todo" with the Bun test runner
 
 To remind yourself to write a test later, use the `test.todo` function. An implementation isn't required.

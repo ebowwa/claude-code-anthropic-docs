@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/test/configuration.md
-Downloaded: 2026-08-16T20:22:01.473Z
--->
-
 # Test configuration
 
 > Configure bun test behavior with bunfig.toml and command-line options

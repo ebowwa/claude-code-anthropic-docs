@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/bundler/hot-reloading.md
-Downloaded: 2026-08-16T20:22:01.471Z
--->
-
 # Hot reloading
 
 > Hot Module Replacement (HMR) for Bun's development server

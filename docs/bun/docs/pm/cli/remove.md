@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/pm/cli/remove.md
-Downloaded: 2026-08-16T20:22:01.467Z
--->
-
 # bun remove
 
 > Remove dependencies from your project

@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/pm/cli/outdated.md
-Downloaded: 2026-08-16T20:22:01.468Z
--->
-
 # bun outdated
 
 > Check for outdated dependencies

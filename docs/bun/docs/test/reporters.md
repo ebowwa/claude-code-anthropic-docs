@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/test/reporters.md
-Downloaded: 2026-08-16T20:22:01.475Z
--->
-
 # Test Reporters
 
 `bun test` supports different output formats through reporters, both built-in and custom.

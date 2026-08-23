@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/ecosystem/neon-serverless-postgres.md
-Downloaded: 2026-08-16T20:22:01.479Z
--->
-
 # Use Neon's Serverless Postgres with Bun
 
 [Neon](https://neon.com/) is a fully managed serverless Postgres. Neon separates compute and storage to offer features such as autoscaling, branching, and bottomless storage.

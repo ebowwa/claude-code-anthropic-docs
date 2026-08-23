@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/perps/trading.md
+Downloaded: 2026-08-23T20:22:43.304Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -1444,6 +1449,184 @@ These orders do not rest on the book.
   </Tab>
 </Tabs>
 
+## Modify Orders
+
+Change the price or total quantity of an existing order without canceling it and
+creating a new one. The order keeps its identity, direction, and other execution
+constraints.
+
+You can modify standalone good-til-canceled (GTC) limit orders that are resting
+on the book, including partially filled orders.
+
+### Modify an Order
+
+<Tabs>
+  <Tab title="TypeScript">
+    SDK support is coming soon.
+  </Tab>
+
+  <Tab title="Python">
+    SDK support is coming soon.
+  </Tab>
+
+  <Tab title="API">
+    <Steps>
+      <Step title="Build and Sign the Modification">
+        Choose whether to identify the order by its exchange order ID or client order
+        ID. Set `p` to the new limit price and `qty` to the new total quantity, including
+        any quantity that has already filled.
+
+        Use the same proxy-signing flow as [Place Orders](#place-orders). When creating
+        the operation hash, MessagePack-encode the matching compact operation and hash
+        the encoded bytes with `keccak256`.
+
+        <CodeGroup>
+          ```ts Order ID theme={null}
+          ["modifyOrders", [[1234567890, "100.25", "7"]]];
+          ```
+
+          ```ts Client Order ID theme={null}
+          ["modifyOrdersCOID", [["7f9e4a2b6c8d0e1f1234567890abcdef", "100.25", "7"]]];
+          ```
+        </CodeGroup>
+      </Step>
+
+      <Step title="Submit the Modification">
+        Send the signed operation to the route that matches the identifier you chose.
+
+        <CodeGroup>
+          ```bash Order ID theme={null}
+          curl -X PATCH "https://api.perpetuals.polymarket.com/v1/trade/orders" \
+            -H "content-type: application/json" \
+            -d '{
+              "op": {
+                "type": "modifyOrders",
+                "args": [
+                  {
+                    "oid": 1234567890,
+                    "p": "100.25",
+                    "qty": "7"
+                  }
+                ]
+              },
+              "sig": "<modify_signature>",
+              "salt": 234567894,
+              "ts": 1767000050000
+            }'
+          ```
+
+          ```bash Client Order ID theme={null}
+          curl -X PATCH "https://api.perpetuals.polymarket.com/v1/trade/orders-coid" \
+            -H "content-type: application/json" \
+            -d '{
+              "op": {
+                "type": "modifyOrdersCOID",
+                "args": [
+                  {
+                    "coid": "7f9e4a2b6c8d0e1f1234567890abcdef",
+                    "p": "100.25",
+                    "qty": "7"
+                  }
+                ]
+              },
+              "sig": "<modify_signature>",
+              "salt": 234567894,
+              "ts": 1767000050000
+            }'
+          ```
+        </CodeGroup>
+      </Step>
+
+      <Step title="Check the Result">
+        The response contains one result per requested order, in request order. A
+        successful result returns the updated order. In this example, `4` units were
+        already filled, so changing the total quantity to `7` leaves `3` resting.
+
+        <CodeGroup>
+          ```json Success theme={null}
+          [
+            {
+              "status": "ok",
+              "order": {
+                "oid": 1234567890,
+                "iid": 1,
+                "buy": true,
+                "p": "100.25",
+                "qty": "7",
+                "tif": "gtc",
+                "po": false,
+                "ro": false,
+                "status": "open",
+                "rest": "3",
+                "fill": "4",
+                "cts": 1767000010000,
+                "uts": 1767000050000,
+                "coid": "7f9e4a2b6c8d0e1f1234567890abcdef"
+              }
+            }
+          ]
+          ```
+
+          ```json Failure theme={null}
+          [
+            {
+              "status": "err",
+              "oid": 1234567890,
+              "error": "modify_would_cross"
+            }
+          ]
+          ```
+        </CodeGroup>
+
+        A rejected result does not change the live order, although separately processed
+        fills or cancellations still can. See
+        [Modify Order Errors](/perps/errors#modify-order-errors) for the complete
+        rejection list.
+      </Step>
+    </Steps>
+  </Tab>
+</Tabs>
+
+### Resize a Partially Filled Order
+
+The order's cumulative fill is its current total quantity minus its current
+remaining quantity. The requested new total must be greater than that cumulative
+fill. On success, the new remaining quantity is:
+
+```text theme={null}
+new remaining quantity = requested total quantity - cumulative fill
+```
+
+For example, suppose an order has a total quantity of `10`, a remaining quantity
+of `6`, and therefore a cumulative fill of `4`. Modifying the total quantity to
+`7` leaves `3` resting. A requested total of `4` or less is rejected.
+
+The exchange evaluates these values from the live order when it applies the
+modification. A fill that arrives while the modification is in progress can
+change the resulting remaining quantity or cause the request to be rejected.
+
+### Check Whether an Order Can Be Modified
+
+| Rule                  | Behavior                                                                                                 |
+| --------------------- | -------------------------------------------------------------------------------------------------------- |
+| Resting order         | The order must be a standalone GTC limit order currently resting on the book.                            |
+| Order in flight       | An order still moving through creation or taker delay is not yet resting and cannot be modified.         |
+| Crossing price        | The modified order must remain non-crossing against the live opposite best price when it is applied.     |
+| TP/SL relationship    | A TP/SL leg or an order with attached or order-scoped TP/SL cannot be modified.                          |
+| Rejected modification | The rejected modification itself does not alter the live order; separately processed activity still can. |
+
+### Understand Queue Priority
+
+Queue treatment is determined from the live order state when the modification
+is applied.
+
+| Modification                        | Queue treatment                           |
+| ----------------------------------- | ----------------------------------------- |
+| Same price and lower total quantity | Keeps its existing queue priority.        |
+| Higher total quantity               | Re-enters at the back of the price level. |
+| Any price change                    | Re-enters at the back of the price level. |
+| Same price and same total quantity  | Rejected because it makes no change.      |
+
 ## Cancel Orders
 
 Cancel resting orders when they are stale, conflict with updated strategy, or
@@ -1606,9 +1789,9 @@ filled position.
 
     <Note>
       During maintenance the exchange can enter cancel-only mode: new orders are
-      rejected with `cancel_only_mode` while cancels keep working. Entering the
-      mode does not purge resting orders or change any of the semantics above — a
-      cancel reject means the same thing it does at any other time.
+      rejected with `cancel_only_mode` while cancels keep working. Entering the mode
+      does not purge resting orders or change any of the semantics above — a cancel
+      reject means the same thing it does at any other time.
     </Note>
   </Tab>
 </Tabs>

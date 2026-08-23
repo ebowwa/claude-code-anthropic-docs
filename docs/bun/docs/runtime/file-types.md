@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/file-types.md
-Downloaded: 2026-08-16T20:22:01.458Z
--->
-
 # File Types
 
 > File types and loaders supported by Bun's bundler and runtime

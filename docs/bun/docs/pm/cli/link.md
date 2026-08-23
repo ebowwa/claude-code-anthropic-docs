@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/pm/cli/link.md
-Downloaded: 2026-08-16T20:22:01.469Z
--->
-
 # bun link
 
 > Link local packages for development

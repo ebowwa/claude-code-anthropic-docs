@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/bundler/macros.md
-Downloaded: 2026-08-16T20:22:01.472Z
--->
-
 # Macros
 
 > Run JavaScript functions at bundle-time with Bun macros

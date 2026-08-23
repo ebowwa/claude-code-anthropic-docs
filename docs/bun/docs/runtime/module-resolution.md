@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/module-resolution.md
-Downloaded: 2026-08-16T20:22:01.458Z
--->
-
 # Module Resolution
 
 > How Bun resolves modules and handles imports in JavaScript and TypeScript

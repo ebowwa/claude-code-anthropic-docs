@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/environment-variables.md
-Downloaded: 2026-08-16T20:22:01.462Z
--->
-
 # Environment Variables
 
 > Read and configure environment variables in Bun, including automatic .env file support

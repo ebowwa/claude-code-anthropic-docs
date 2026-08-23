@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/bundler/minifier.md
-Downloaded: 2026-08-16T20:22:01.472Z
--->
-
 # Minifier
 
 > Reduce bundle sizes with Bun's JavaScript and TypeScript minifier

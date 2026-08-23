@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/hashing.md
-Downloaded: 2026-08-16T20:22:01.465Z
--->
-
 # Hashing
 
 > Utility functions for hashing and verifying passwords with various cryptographically secure algorithms

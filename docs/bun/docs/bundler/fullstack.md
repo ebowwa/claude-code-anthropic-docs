@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/bundler/fullstack.md
-Downloaded: 2026-08-16T20:22:01.471Z
--->
-
 # Fullstack dev server
 
 > Build fullstack applications with Bun's integrated dev server that bundles frontend assets and handles API routes

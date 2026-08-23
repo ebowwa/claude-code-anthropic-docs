@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/child-process.md
-Downloaded: 2026-08-16T20:22:01.463Z
--->
-
 # Spawn
 
 > Spawn child processes with `Bun.spawn` or `Bun.spawnSync`

@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/debugger.md
-Downloaded: 2026-08-16T20:22:01.457Z
--->
-
 # Debugging
 
 > Debug your Bun code with an interactive debugger using WebKit Inspector Protocol

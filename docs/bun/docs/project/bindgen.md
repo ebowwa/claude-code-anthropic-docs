@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/project/bindgen.md
-Downloaded: 2026-08-16T20:22:01.467Z
--->
-
 # Bindgen
 
 > Bindgen for Bun

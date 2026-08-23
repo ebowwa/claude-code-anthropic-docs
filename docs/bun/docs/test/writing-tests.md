@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/test/writing-tests.md
-Downloaded: 2026-08-16T20:22:01.473Z
--->
-
 # Writing tests
 
 > Write tests with Bun's Jest-compatible API, including async tests, timeouts, and test modifiers

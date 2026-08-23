@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/test/snapshots.md
-Downloaded: 2026-08-16T20:22:01.474Z
--->
-
 # Snapshots
 
 > Learn how to use snapshot testing in Bun to save and compare output between test runs

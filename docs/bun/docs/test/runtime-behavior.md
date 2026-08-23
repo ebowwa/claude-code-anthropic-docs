@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/test/runtime-behavior.md
-Downloaded: 2026-08-16T20:22:01.473Z
--->
-
 # Runtime behavior
 
 > Learn about Bun test's runtime integration, environment variables, timeouts, and error handling

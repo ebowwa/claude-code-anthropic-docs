@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/test/parallel.md
-Downloaded: 2026-08-16T20:22:01.473Z
--->
-
 # Parallel & isolated test runs
 
 > Run test files across CPU cores with --parallel, isolate files from each other with --isolate, run tests within a file concurrently, and split suites across CI machines with --shard and --timings

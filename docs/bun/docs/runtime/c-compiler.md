@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/c-compiler.md
-Downloaded: 2026-08-16T20:22:01.463Z
--->
-
 # C Compiler
 
 > Compile and run C from JavaScript with low overhead

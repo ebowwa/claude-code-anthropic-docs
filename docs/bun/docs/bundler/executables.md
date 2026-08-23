@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/bundler/executables.md
-Downloaded: 2026-08-21T20:25:30.418Z
+Downloaded: 2026-08-23T20:22:43.448Z
 -->
 
 # Single-file executable
@@ -761,6 +761,19 @@ const wasmModule = await WebAssembly.instantiate(wasmBytes);
 // Read binary font data
 const fontData = await file(fontPath).bytes();
 ```
+
+### Embed text as a string
+
+Use the `text` loader when you want the contents of a file as a string. `.txt` files use it by default. For other extensions, add `with { type: "text" }` or pass `--loader .md:text`.
+
+```ts index.ts icon="/icons/typescript.svg"
+import notes from "./notes.txt";
+import readme from "./README.md" with { type: "text" };
+
+console.log(notes); // the contents of notes.txt
+```
+
+In a compiled executable the text is stored once, in the form the JavaScript engine uses for strings (one byte per character for ASCII text, UTF-16 otherwise). The runtime hands the string back without a copy, so a large text import costs its size in the binary and no extra copy on the heap. A text import is a module, not a file: `Bun.embeddedFiles` does not list it. Use `with { type: "file" }` when you need a file path instead.
 
 ### Embed SQLite databases
 

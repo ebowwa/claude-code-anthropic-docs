@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/test/code-coverage.md
-Downloaded: 2026-08-16T20:22:01.474Z
--->
-
 # Code coverage
 
 > Use Bun's built-in code coverage reporting to track test coverage and find untested code

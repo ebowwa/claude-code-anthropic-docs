@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/glob.md
-Downloaded: 2026-08-16T20:22:01.465Z
--->
-
 # Glob
 
 > Use Bun's fast native implementation of file globbing

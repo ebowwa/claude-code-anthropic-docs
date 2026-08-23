@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/pm/cli/patch.md
-Downloaded: 2026-08-16T20:22:01.469Z
--->
-
 # bun patch
 
 > Persistently patch node_modules packages in a git-friendly way

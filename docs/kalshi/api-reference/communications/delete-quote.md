@@ -1,8 +1,3 @@
-<!--
-Source: https://docs.kalshi.com/api-reference/communications/delete-quote.md
-Downloaded: 2026-08-16T20:22:00.182Z
--->
-
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.

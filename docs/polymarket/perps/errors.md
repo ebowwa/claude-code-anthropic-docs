@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/perps/errors.md
-Downloaded: 2026-08-21T20:25:29.670Z
+Downloaded: 2026-08-23T20:22:43.306Z
 -->
 
 > ## Documentation Index
@@ -51,6 +51,30 @@ Retry with client-side backoff. By contrast, `500 Internal Server Error` with
 | `quantity exceeds allowed significant figures` | More than 5 significant figures in quantity        |
 | `command expired`                              | `exp_ms` is in the past                            |
 | `command expiry too far in future`             | `exp_ms` is more than 5 seconds from now           |
+
+## Modify Order Errors
+
+Modify Order returns one result per requested order. A rejected modification
+does not change the live order, although a separately processed fill or
+cancellation can still change its state.
+
+| Error                              | Condition                                                                                  |
+| ---------------------------------- | ------------------------------------------------------------------------------------------ |
+| `modify_already_pending`           | Another modification for the same order is still in progress.                              |
+| `modify_no_op`                     | The requested price and total quantity equal the live order values.                        |
+| `modify_limit_reached`             | The order has already reached 10,000 successful modifications.                             |
+| `modify_would_cross`               | The modified order would lock or cross the live opposite best price.                       |
+| `duplicate_order_in_batch`         | An earlier item in the same batch resolved to the same order ID.                           |
+| `order_not_modifiable`             | The order is not an eligible standalone resting GTC limit order.                           |
+| `order_has_tpsl`                   | The order is a TP/SL leg or has attached or order-scoped TP/SL.                            |
+| `modify_quantity_not_above_filled` | The requested new total quantity is less than or equal to the live cumulative fill.        |
+| `order_unknown`                    | The client order ID does not resolve to an order owned by the account.                     |
+| `order_not_in_orderbook`           | The order ID is unknown, terminal, owned by another account, or otherwise not disclosable. |
+| `order_in_flight`                  | The order is still in creation or taker delay and is not yet resting.                      |
+| `invalid_command`                  | A per-item price, quantity, or notional validation failed before sequencing.               |
+
+Shared account, instrument, margin, position, reduce-only, and rate-limit errors
+can also reject a modification under the same conditions as a new order.
 
 ## Order Cancellation Errors
 

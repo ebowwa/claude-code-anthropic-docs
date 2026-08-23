@@ -1,15 +1,15 @@
 <!--
-Source: https://docs.polymarket.com/api-reference/create-orders.md
-Downloaded: 2026-08-23T20:22:43.324Z
+Source: https://docs.polymarket.com/api-reference/modify-orders-coid.md
+Downloaded: 2026-08-23T20:22:43.325Z
 -->
 
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Create Orders
+# Modify Orders COID
 
-> Create new orders.
+> Modify the price and total quantity of existing orders by client order ID.
 Requires proxy signature, see [proxy signing](/http/signing#2-proxy-signing).
 
 
@@ -18,7 +18,7 @@ Requires proxy signature, see [proxy signing](/http/signing#2-proxy-signing).
 
 ## OpenAPI
 
-````yaml /api-spec/perps-openapi.json post /v1/trade/orders
+````yaml /api-spec/perps-openapi.json patch /v1/trade/orders-coid
 openapi: 3.0.3
 info:
   title: Polymarket Perps HTTP API
@@ -32,59 +32,60 @@ servers:
     description: Production Perps HTTP API
 security: []
 paths:
-  /v1/trade/orders:
-    post:
-      summary: Create Orders
+  /v1/trade/orders-coid:
+    patch:
+      summary: Modify Orders COID
       description: >
-        Create new orders.
+        Modify the price and total quantity of existing orders by client order
+        ID.
 
         Requires proxy signature, see [proxy
         signing](/http/signing#2-proxy-signing).
-      operationId: createOrders
+      operationId: modifyOrdersByCoid
       requestBody:
-        description: Order request.
+        description: Modify by coid request.
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/OrderRequest'
+              $ref: '#/components/schemas/ModifyByCoidRequest'
       responses:
         '200':
-          description: >-
-            Order ACK response. Order result should be fetched using the get
-            orders endpoint.
+          description: One modify result per requested order, in request order.
           content:
             application/json:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/OrderResponse'
+                  $ref: '#/components/schemas/ModifyResponse'
         '400':
-          $ref: '#/components/responses/Error400Response'
+          $ref: '#/components/responses/BatchError400Response'
+        '404':
+          $ref: '#/components/responses/BatchError404Response'
         '429':
-          $ref: '#/components/responses/Error429Response'
+          $ref: '#/components/responses/BatchError429Response'
         '500':
-          $ref: '#/components/responses/Error500Response'
+          $ref: '#/components/responses/BatchError500Response'
       security: []
 components:
   schemas:
-    OrderRequest:
+    ModifyByCoidRequest:
       allOf:
         - type: object
           required:
             - op
           properties:
             op:
-              $ref: '#/components/schemas/OpCreateOrders'
+              $ref: '#/components/schemas/OpModifyOrdersByCoid'
         - $ref: '#/components/schemas/BaseOp'
         - type: object
           properties:
             exp:
               $ref: '#/components/schemas/exp'
-    OrderResponse:
+    ModifyResponse:
       oneOf:
-        - $ref: '#/components/schemas/OrderAccepted'
-        - $ref: '#/components/schemas/OrderRejected'
-    OpCreateOrders:
+        - $ref: '#/components/schemas/ModifyAccepted'
+        - $ref: '#/components/schemas/ModifyRejected'
+    OpModifyOrdersByCoid:
       type: object
       required:
         - type
@@ -93,13 +94,12 @@ components:
         type:
           type: string
           enum:
-            - createOrders
+            - modifyOrdersCOID
         args:
           type: array
+          minItems: 1
           items:
-            $ref: '#/components/schemas/CreateOrder'
-        grp:
-          $ref: '#/components/schemas/grp'
+            $ref: '#/components/schemas/ModifyOrderByCoid'
     BaseOp:
       type: object
       required:
@@ -121,22 +121,19 @@ components:
         shorten request validity but cannot extend it. This is not an order
         auto-cancel time.
       example: 1767225600000
-    OrderAccepted:
+    ModifyAccepted:
       type: object
       required:
         - status
-        - oid
+        - order
       properties:
         status:
           type: string
           enum:
             - ok
-        oid:
-          $ref: '#/components/schemas/oid'
-        coid:
-          $ref: '#/components/schemas/coid'
-          description: Echoed only when the request carried a client_order_id.
-    OrderRejected:
+        order:
+          $ref: '#/components/schemas/Order'
+    ModifyRejected:
       type: object
       required:
         - status
@@ -152,8 +149,7 @@ components:
           $ref: '#/components/schemas/coid'
         error:
           $ref: '#/components/schemas/error'
-    Error400:
-      title: Error400
+    GenericRejected:
       type: object
       required:
         - status
@@ -165,71 +161,20 @@ components:
             - err
         error:
           $ref: '#/components/schemas/error'
-    Error429:
-      title: Error429
+    ModifyOrderByCoid:
       type: object
+      additionalProperties: false
       required:
-        - status
-        - error
-      properties:
-        status:
-          type: string
-          enum:
-            - err
-        error:
-          $ref: '#/components/schemas/error'
-    Error500:
-      title: Error500
-      type: object
-      required:
-        - status
-        - error
-      properties:
-        status:
-          type: string
-          enum:
-            - err
-        error:
-          $ref: '#/components/schemas/error'
-    CreateOrder:
-      type: object
-      required:
-        - iid
-        - buy
+        - coid
+        - p
         - qty
       properties:
-        iid:
-          $ref: '#/components/schemas/iid'
-        buy:
-          $ref: '#/components/schemas/buy'
+        coid:
+          $ref: '#/components/schemas/coid'
         p:
           $ref: '#/components/schemas/p'
         qty:
           $ref: '#/components/schemas/qty'
-        tif:
-          $ref: '#/components/schemas/tif'
-        po:
-          $ref: '#/components/schemas/po'
-        ro:
-          $ref: '#/components/schemas/ro'
-        c:
-          $ref: '#/components/schemas/coid'
-        tr:
-          type: object
-          description: Optional trigger attached to this order.
-          properties:
-            market:
-              $ref: '#/components/schemas/market'
-            trp:
-              $ref: '#/components/schemas/trp'
-            tpsl:
-              $ref: '#/components/schemas/tpsl'
-    grp:
-      type: string
-      description: TPSL grouping
-      enum:
-        - order
-        - position
     sig:
       type: string
       description: Signature in hex format
@@ -245,6 +190,51 @@ components:
         for withdrawals (must match the on-chain EIP-712 struct verified against
         block.timestamp).
       example: 1767225600000
+    Order:
+      type: object
+      required:
+        - oid
+        - iid
+        - buy
+        - p
+        - qty
+        - tif
+        - po
+        - ro
+        - status
+        - rest
+        - fill
+        - cts
+        - uts
+      properties:
+        oid:
+          $ref: '#/components/schemas/oid'
+        iid:
+          $ref: '#/components/schemas/iid'
+        buy:
+          $ref: '#/components/schemas/buy'
+        p:
+          $ref: '#/components/schemas/p'
+        qty:
+          $ref: '#/components/schemas/qty'
+        tif:
+          $ref: '#/components/schemas/tif'
+        po:
+          $ref: '#/components/schemas/po'
+        ro:
+          $ref: '#/components/schemas/ro'
+        rest:
+          $ref: '#/components/schemas/rest'
+        fill:
+          $ref: '#/components/schemas/fill'
+        cts:
+          $ref: '#/components/schemas/cts'
+        uts:
+          $ref: '#/components/schemas/uts'
+        status:
+          $ref: '#/components/schemas/st'
+        coid:
+          $ref: '#/components/schemas/coid'
     oid:
       type: integer
       description: Order ID
@@ -271,14 +261,6 @@ components:
         identifiers. (Post-only / Fill-or-Kill outcomes are order statuses such
         as `post_only_rejected`, not rejections.)
       example: insufficient_margin
-    iid:
-      type: integer
-      description: Instrument ID
-      example: 1
-    buy:
-      type: boolean
-      description: Is buy
-      example: true
     p:
       type: string
       description: Price
@@ -287,6 +269,14 @@ components:
       type: string
       description: Quantity in no. of contracts
       example: '10.00'
+    iid:
+      type: integer
+      description: Instrument ID
+      example: 1
+    buy:
+      type: boolean
+      description: Is buy
+      example: true
     tif:
       type: string
       description: Time in force
@@ -304,37 +294,70 @@ components:
       description: Reduce only
       example: false
       default: false
-    market:
-      type: boolean
-      description: Whether the trigger executes as a market order
-    trp:
+    rest:
       type: string
-      description: Trigger price
-      example: '110.00'
-    tpsl:
+      description: Resting quantity
+      example: '9.00'
+    fill:
       type: string
-      description: Trigger type
-      enum:
-        - tp
-        - sl
+      description: Filled quantity
+      example: '1.00'
+    cts:
+      type: integer
+      description: Create timestamp in milliseconds
+      example: 1767225600000
+    uts:
+      type: integer
+      description: Update timestamp in milliseconds
+      example: 1767225600000
+    st:
+      type: string
+      description: Order status
+      example: open
   responses:
-    Error400Response:
-      description: |
-        Bad request — the request was malformed or failed validation (bad query
-        parameters, unparseable body, invalid signature, or a domain pre-check).
-        The `error` field is a human-readable validation detail.
+    BatchError400Response:
+      description: >
+        Bad request — the batch request was malformed or failed validation
+
+        (unparseable body, invalid signature, or a domain pre-check).
+        Request-level
+
+        failures are returned as a single rejected item so batch endpoints
+
+        always return an array. The `error` field is a human-readable validation
+
+        detail.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error400'
-    Error429Response:
+            type: array
+            minItems: 1
+            maxItems: 1
+            items:
+              $ref: '#/components/schemas/GenericRejected'
+    BatchError404Response:
       description: >
-        Too Many Requests. `error` distinguishes the limit that was hit:
+        Not found — the batch endpoint is disabled on this venue. Request-level
 
-        `ip_rate_limited` (per-IP token bucket), `action_rate_limited`
-        (per-account
+        failures are returned as a single rejected item so batch endpoints
+        always
 
-        action rate), or `open_orders_limit` (resting open-order cap).
+        return an array. `error` is `not_found`.
+      content:
+        application/json:
+          schema:
+            type: array
+            minItems: 1
+            maxItems: 1
+            items:
+              $ref: '#/components/schemas/GenericRejected'
+    BatchError429Response:
+      description: |
+        Too Many Requests. Request-level failures are returned as a single
+        rejected item so batch endpoints always return an array. `error`
+        distinguishes the limit that was hit: `ip_rate_limited` (per-IP token
+        bucket), `action_rate_limited` (per-account action rate), or
+        `open_orders_limit` (resting open-order cap).
       headers:
         Retry-After:
           description: >
@@ -357,13 +380,23 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error429'
-    Error500Response:
+            type: array
+            minItems: 1
+            maxItems: 1
+            items:
+              $ref: '#/components/schemas/GenericRejected'
+    BatchError500Response:
       description: |
-        Internal server error. `error` is `internal_error`.
+        Internal server error. Request-level failures are returned as a single
+        rejected item so batch endpoints always return an array. `error` is
+        `internal_error`.
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/Error500'
+            type: array
+            minItems: 1
+            maxItems: 1
+            items:
+              $ref: '#/components/schemas/GenericRejected'
 
 ````

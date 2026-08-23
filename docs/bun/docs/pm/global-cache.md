@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/pm/global-cache.md
-Downloaded: 2026-08-16T20:22:01.470Z
--->
-
 # Global cache
 
 > How Bun stores and manages packages in its global cache

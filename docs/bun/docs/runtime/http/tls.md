@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/http/tls.md
-Downloaded: 2026-08-16T20:22:01.459Z
--->
-
 # TLS
 
 > Enable TLS in Bun.serve

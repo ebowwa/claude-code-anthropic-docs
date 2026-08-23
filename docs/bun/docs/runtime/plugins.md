@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/plugins.md
-Downloaded: 2026-08-16T20:22:01.459Z
--->
-
 # Plugins
 
 > Universal plugin API for extending Bun's runtime and bundler

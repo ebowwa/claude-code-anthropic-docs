@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/pm/cli/publish.md
-Downloaded: 2026-08-16T20:22:01.468Z
--->
-
 # bun publish
 
 > Use `bun publish` to publish a package to the npm registry

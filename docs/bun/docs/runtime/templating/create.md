@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/templating/create.md
-Downloaded: 2026-08-16T20:22:01.457Z
--->
-
 # bun create
 
 > Create a new Bun project from a React component, a `create-<template>` npm package, a GitHub repo, or a local template

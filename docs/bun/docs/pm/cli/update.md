@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/pm/cli/update.md
-Downloaded: 2026-08-16T20:22:01.468Z
--->
-
 # bun update
 
 > Update dependencies to the newest versions their ranges allow

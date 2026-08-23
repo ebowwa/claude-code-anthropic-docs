@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/quickstart.md
-Downloaded: 2026-08-16T20:22:01.456Z
--->
-
 # Quickstart
 
 > Build your first app with Bun
