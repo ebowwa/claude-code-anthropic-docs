@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/portfolio/get-target-balance-allocation.md
-Downloaded: 2026-08-18T20:23:40.022Z
+Downloaded: 2026-08-24T20:30:00.768Z
 -->
 
 > ## Documentation Index
@@ -20,7 +20,7 @@ Downloaded: 2026-08-18T20:23:40.022Z
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.28.0
+  version: 3.29.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach

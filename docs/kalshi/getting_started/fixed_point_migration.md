@@ -1,8 +1,3 @@
-<!--
-Source: https://docs.kalshi.com/getting_started/fixed_point_migration.md
-Downloaded: 2026-08-17T20:26:37.793Z
--->
-
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.

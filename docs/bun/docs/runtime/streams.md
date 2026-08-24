@@ -1,3 +1,8 @@
+<!--
+Source: https://bun.com/docs/runtime/streams.md
+Downloaded: 2026-08-24T20:30:01.361Z
+-->
+
 # Streams
 
 > Use Bun's streams API to work with binary data without loading it all into memory at once
@@ -117,6 +122,19 @@ const response = new Response({
 });
 
 await response.text(); // "helloworld"
+```
+
+The body contains the yielded values only. As with `for await`, the generator's return value is not part of the body.
+
+```ts
+const response = new Response(
+  (async function* () {
+    yield "hello";
+    return "ignored";
+  })(),
+);
+
+await response.text(); // "hello"
 ```
 
 For more control over the stream, `yield` returns the direct `ReadableStream` controller.

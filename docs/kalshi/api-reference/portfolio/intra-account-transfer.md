@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/portfolio/intra-account-transfer.md
-Downloaded: 2026-08-18T20:23:40.020Z
+Downloaded: 2026-08-24T20:30:00.765Z
 -->
 
 > ## Documentation Index
@@ -22,7 +22,7 @@ Cross-exchange-index subaccount transfers run in up to three non-atomic steps. I
 openapi: 3.0.0
 info:
   title: Kalshi Trade API Manual Endpoints
-  version: 3.28.0
+  version: 3.29.0
   description: >-
     Manually defined OpenAPI spec for endpoints being migrated to spec-first
     approach
