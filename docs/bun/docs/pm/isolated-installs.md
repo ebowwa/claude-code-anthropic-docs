@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/pm/isolated-installs.md
-Downloaded: 2026-08-18T20:23:42.641Z
--->
-
 # Isolated installs
 
 > Strict dependency isolation similar to pnpm's approach

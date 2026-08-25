@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/changelog/index.md
-Downloaded: 2026-08-22T20:22:21.309Z
+Downloaded: 2026-08-25T20:28:48.196Z
 -->
 
 > ## Documentation Index
@@ -20,6 +20,31 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="August 27, 2026"
+  tags={["FIX", "Predictions", "Margin"]}
+  rss={{
+title: "Trade type on FIX market data",
+description: "FIX market data trade entries now carry TrdType<828>."
+}}
+>
+  Trade entries on `MarketDataIncrementalRefresh<35=X>` now carry
+  `TrdType<828>`=`1` for block trades. The tag is absent on regular order book
+  trades.
+</Update>
+
+<Update
+  label="August 27, 2026"
+  tags={["WebSocket", "Predictions"]}
+  rss={{
+title: "Exchange index on user order messages",
+description: "The user_orders WebSocket channel now includes exchange_index on each order update."
+}}
+>
+  The `user_orders` WebSocket channel now includes `exchange_index` on each
+  order update, identifying the exchange shard where the order resides.
+</Update>
 
 <Update
   label="August 27, 2026"

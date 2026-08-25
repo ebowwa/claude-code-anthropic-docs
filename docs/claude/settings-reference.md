@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/settings-reference.md
-Downloaded: 2026-08-24T20:30:12.133Z
+Downloaded: 2026-08-25T20:29:10.100Z
 -->
 
 > ## Documentation Index
@@ -611,6 +611,7 @@ scope: "Which settings files can set the key: user (~/.claude/settings.json), pr
 | [`autoCompactEnabled`](#autocompactenabled)                                                     | Turn [automatic compaction](/docs/en/context-window) off or on                                                                                                                                                                   | Memory and context                 | Any file                |
 | [`autoCompactWindow`](#autocompactwindow)                                                       | Set how full the context gets before Claude Code [compacts](/docs/en/context-window)                                                                                                                                             | Memory and context                 | Any file                |
 | [`autoConnectIde`](#autoconnectide)                                                             | Connect to a running [VS Code](/docs/en/vs-code) or [JetBrains](/docs/en/jetbrains#from-external-terminals) IDE automatically from an external terminal                                                                               | Global config settings             | Global config           |
+| [`autoContinueAtUsageLimit`](#autocontinueatusagelimit)                                         | Wait in the open session and [continue the task automatically](/docs/en/interactive-mode#wait-for-a-usage-limit-to-reset) after a claude.ai usage limit resets                                                                   | Interface and terminal             | User or managed         |
 | [`autoInstallIdeExtension`](#autoinstallideextension)                                           | Turn off automatic install of the [IDE extension](/docs/en/vs-code#install-the-extension) from a VS Code terminal                                                                                                                | Global config settings             | Global config           |
 | [`autoMemoryDirectory`](#automemorydirectory)                                                   | Store [auto memory](/docs/en/memory#auto-memory) in a directory you choose                                                                                                                                                       | Memory and context                 | Any file                |
 | [`autoMemoryEnabled`](#automemoryenabled)                                                       | Turn [auto memory](/docs/en/memory#auto-memory) off or on                                                                                                                                                                        | Memory and context                 | Any file                |
@@ -644,6 +645,7 @@ scope: "Which settings files can set the key: user (~/.claude/settings.json), pr
 | [`disableClaudeAiConnectors`](#disableclaudeaiconnectors)                                       | Turn off [claude.ai connectors](/docs/en/mcp#disable-claude-ai-connectors) so Claude Code doesn't fetch them                                                                                                                     | MCP                                | Any file                |
 | [`disableCommandPluginSources`](#disablecommandpluginsources)                                   | Block [plugins](/docs/en/plugins) that install by running a marketplace-declared command                                                                                                                                         | Plugins and skills                 | Managed                 |
 | [`disableDeepLinkRegistration`](#disabledeeplinkregistration)                                   | Stop Claude Code from registering the [`claude-cli://` handler](/docs/en/deep-links)                                                                                                                                             | Remote, desktop, and notifications | Any file                |
+| [`disableDesktopLocalSessions`](#disabledesktoplocalsessions)                                   | Turn off [Desktop Code sessions](/docs/en/desktop#local-sessions-on-managed-devices) that run on the device, leaving SSH to other hosts and cloud                                                                                | Remote, desktop, and notifications | Managed                 |
 | [`disabledMcpjsonServers`](#disabledmcpjsonservers)                                             | Reject specific servers from a project's [`.mcp.json`](/docs/en/mcp#project-scope)                                                                                                                                               | MCP                                | Any file                |
 | [`disableMobileSimulatorTools`](#disablemobilesimulatortools)                                   | Block Claude's tools in the [desktop](/docs/en/desktop) iOS Simulator pane                                                                                                                                                       | Tools                              | Managed                 |
 | [`disableRemoteControl`](#disableremotecontrol)                                                 | Turn off [Remote Control](/docs/en/remote-control) everywhere it can start                                                                                                                                                       | Remote, desktop, and notifications | Any file                |
@@ -685,6 +687,7 @@ scope: "Which settings files can set the key: user (~/.claude/settings.json), pr
 | [`minimumVersion`](#minimumversion)                                                             | Keep [auto-updates](/docs/en/setup#pin-a-minimum-version) from installing anything below a version                                                                                                                               | Updates and versioning             | Any file                |
 | [`model`](#model)                                                                               | Change the [model](/docs/en/model-config#set-a-default-model-for-new-sessions) Claude Code starts with                                                                                                                           | Model and responses                | Any file                |
 | [`modelOverrides`](#modeloverrides)                                                             | [Map model IDs](/docs/en/model-config#override-model-ids-per-version) to your provider's IDs, such as Bedrock ARNs                                                                                                               | Model and responses                | Any file                |
+| [`modelPicker`](#modelpicker)                                                                   | Choose which models the [`/model` picker](/docs/en/model-config#available-models) lists, in your own order and with your own labels                                                                                              | Model and responses                | User or managed         |
 | [`otelHeadersHelper`](#otelheadershelper)                                                       | Generate rotating [OpenTelemetry](/docs/en/monitoring-usage#dynamic-headers) headers with your own command                                                                                                                       | Authentication and providers       | Any file                |
 | [`outputStyle`](#outputstyle)                                                                   | Change Claude's role, tone, and output format with an [output style](/docs/en/output-styles)                                                                                                                                     | Model and responses                | Any file                |
 | [`parentSettingsBehavior`](#parentsettingsbehavior)                                             | Apply or drop restrictions an [SDK or IDE host](/docs/en/managed-settings#let-an-embedding-host-add-policy) passes when you deploy [managed settings](/docs/en/managed-settings)                                                      | Enterprise and managed settings    | Managed                 |
@@ -707,6 +710,7 @@ scope: "Which settings files can set the key: user (~/.claude/settings.json), pr
 | [`preferredNotifChannel`](#preferrednotifchannel)                                               | Choose a [terminal bell or desktop notification](/docs/en/terminal-config#get-a-terminal-bell-or-notification) for task completion                                                                                               | Remote, desktop, and notifications | Any file                |
 | [`prefersReducedMotion`](#prefersreducedmotion)                                                 | [Reduce or turn off](/docs/en/accessibility#accessibility-settings) spinner, shimmer, and flash animations                                                                                                                       | Interface and terminal             | Any file                |
 | [`processWrapper`](#processwrapper)                                                             | Run Claude Code's background processes through a [corporate launcher](/docs/en/corporate-launcher) on macOS and Linux                                                                                                            | Agents, sessions, and worktrees    | User or managed         |
+| [`promptCacheTtl`](#promptcachettl)                                                             | Choose the [prompt cache lifetime](/docs/en/prompt-caching#cache-lifetime) for the main conversation                                                                                                                             | Model and responses                | Any file                |
 | [`promptSuggestionEnabled`](#promptsuggestionenabled)                                           | Hide the grayed-out [prompt suggestions](/docs/en/interactive-mode#prompt-suggestions) in the input box                                                                                                                          | Interface and terminal             | Any file                |
 | [`prUrlTemplate`](#prurltemplate)                                                               | Point PR links at an internal code-review tool instead of github.com                                                                                                                                                        | Git and attribution                | Any file                |
 | [`remote.defaultEnvironmentId`](#remote-defaultenvironmentid)                                   | Pick the default [cloud environment](/docs/en/cloud-environments) for `claude --cloud`; a self-hosted `ccpool_` ID is read only from user and managed settings and `--settings`                                                  | Remote, desktop, and notifications | Any file                |
@@ -775,6 +779,7 @@ scope: "Which settings files can set the key: user (~/.claude/settings.json), pr
 | [`strictPluginOnlyCustomization.hooks`](#strictpluginonlycustomization-hooks)                   | Lock [hooks](/docs/en/hooks) to plugin and managed sources                                                                                                                                                                       | Plugins and skills                 | Managed                 |
 | [`strictPluginOnlyCustomization.mcp`](#strictpluginonlycustomization-mcp)                       | Lock [MCP servers](/docs/en/mcp) to plugin and managed sources                                                                                                                                                                   | Plugins and skills                 | Managed                 |
 | [`strictPluginOnlyCustomization.skills`](#strictpluginonlycustomization-skills)                 | Lock [skills](/docs/en/skills) to plugin and managed sources                                                                                                                                                                     | Plugins and skills                 | Managed                 |
+| [`subagentPromptCacheTtl`](#subagentpromptcachettl)                                             | Choose the [prompt cache lifetime](/docs/en/prompt-caching#cache-lifetime) for subagents and other requests outside the main conversation                                                                                        | Model and responses                | Any file                |
 | [`subagentStatusLine`](#subagentstatusline)                                                     | Rewrite rows in the [subagent](/docs/en/sub-agents) task display with your own command                                                                                                                                           | Interface and terminal             | Any file                |
 | [`switchModelsOnFlag`](#switchmodelsonflag)                                                     | Switch models automatically or pause when a [safety classifier](/docs/en/model-config#ask-before-switching) flags a request                                                                                                      | Model and responses                | Any file                |
 | [`syncClaudeAiSkills`](#syncclaudeaiskills)                                                     | Stop downloading the [skills enabled on your claude.ai account](/docs/en/skills#how-synced-skills-behave) and hide the ones already synced                                                                                       | Plugins and skills                 | User, local, or managed |
@@ -1015,6 +1020,54 @@ This example routes every call for Opus 4.6 to the named Bedrock inference profi
 
 See [Override model IDs per version](/docs/en/model-config#override-model-ids-per-version).
 
+### `modelPicker`
+
+List the models the `/model` picker offers, in the order you write them and under labels you choose, so the picker lists the models your organization runs, after the built-in lineup or instead of it. Each row's `model` is taken verbatim, so it accepts anything `--model` accepts: an alias such as `opus`, an Anthropic model ID, or a provider-format ID for Amazon Bedrock, Google Cloud's Agent Platform, Microsoft Foundry, or an LLM gateway. Requires Claude Code v2.1.242 or later.
+
+* **Scope**: [`User or managed`](#scopes). Claude Code reads the key from managed settings, `--settings`, and user settings, and ignores it in project and local settings so a repository you clone can't relabel the picker. The highest of those three that sets the key supplies the whole lineup, and Claude Code never combines lineups from two sources.
+* **Type**: object with an `options` array of rows and an optional `replaceBuiltInOptions` Boolean
+* **Default**: unset, so the picker shows the built-in lineup
+
+This example adds two Bedrock deployments after the built-in lineup, under names your team recognizes:
+
+```json managed-settings.json theme={null}
+{
+  "modelPicker": {
+    "options": [
+      { "model": "us.anthropic.claude-opus-4-8", "label": "Opus (production)" },
+      {
+        "model": "us.anthropic.claude-sonnet-4-6",
+        "label": "Sonnet (production)",
+        "description": "Day-to-day work"
+      }
+    ]
+  }
+}
+```
+
+<span id="modelpicker-options" />
+
+<span id="modelpicker-replacebuiltinoptions" />
+
+#### Fields for `modelPicker`
+
+The key takes two fields, one for the rows themselves and one for whether they replace the built-in lineup or add to it.
+
+| Field                   | Type                                                                                  | What it does                                                                                                                                                                                                                                                                  |
+| :---------------------- | :------------------------------------------------------------------------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `options`               | array of rows, each with a required `model` and an optional `label` and `description` | The rows the picker shows, in this order, except that a grayed-out row moves to the bottom. Without a `label`, Claude Code titles the row with the built-in name for a model it knows, or the model ID otherwise, and without a `description` it writes a generic second line |
+| `replaceBuiltInOptions` | Boolean, default `false`                                                              | Set it to `true` to show only these rows, **Default**, and a row for the model the session is already using. Leave it unset to add these rows after the built-in lineup                                                                                                       |
+
+With `replaceBuiltInOptions` on, Claude Code hides every other row: the built-in lineup, the rows it adds for [`availableModels`](#availablemodels) entries, the models [gateway discovery](/docs/en/llm-gateway-protocol#model-discovery) found, and [`ANTHROPIC_CUSTOM_MODEL_OPTION`](/docs/en/model-config#add-a-custom-model-option). With it off, Claude Code skips a listed model that the built-in lineup already covers. A label changes what the picker shows, not which model Claude Code runs.
+
+An [`availableModels`](#availablemodels) allowlist still applies to these rows. Before you add a listed model to the allowlist, read [Merge behavior](/docs/en/model-config#merge-behavior): a specific model ID narrows its family's wildcard entry. Claude Code also checks each row against the session before it shows the picker:
+
+* **Dropped**: a row Claude Code can't serve, such as a retired model or a model your organization has no access to
+* **Grayed out**: a row you can't select yet, shown with the reason
+* **No row survives**: Claude Code keeps the built-in lineup, filtered by the allowlist as usual
+
+Claude Code drops a row it can't parse and keeps the rest. See [Fix a broken settings file](/docs/en/settings#fix-a-broken-settings-file).
+
 ### `outputStyle`
 
 Select an [output style](/docs/en/output-styles) by name. An output style is a saved set of instructions that Claude Code adds to the system prompt to change Claude's role, tone, and output format, such as the built-in Explanatory and Learning styles or one you wrote yourself.
@@ -1033,6 +1086,28 @@ This example selects the built-in Explanatory style, which adds educational insi
 }
 ```
 
+### `promptCacheTtl`
+
+Choose how long the [prompt cache](/docs/en/prompt-caching) holds the main conversation. This key applies to your interactive, `-p`, and Agent SDK turns, together with the helpers Claude Code runs inline with them. The one-hour lifetime keeps the cache warm across longer breaks, and the API [bills each cache write at a higher rate](https://platform.claude.com/docs/en/build-with-claude/prompt-caching#pricing) than at the five-minute lifetime. Requires Claude Code v2.1.242 or later.
+
+* **Scope**: [`Any file`](#scopes)
+* **Type**: string, one of:
+  * `"5m"`: the cache holds for five minutes
+  * `"1h"`: the cache holds for an hour
+* **Default**: unset, so each main-conversation request gets [its default lifetime](/docs/en/prompt-caching#which-ttl-each-request-gets)
+* **Per-session overrides**: [`FORCE_PROMPT_CACHING_5M`](/docs/en/env-vars) takes precedence over everything else, then [`CLAUDE_CODE_PROMPT_CACHE_TTL`](/docs/en/env-vars), then this key, and last [`ENABLE_PROMPT_CACHING_1H`](/docs/en/env-vars)
+
+This example keeps the main conversation on the one-hour lifetime and leaves subagents on five minutes:
+
+```json settings.json theme={null}
+{
+  "promptCacheTtl": "1h",
+  "subagentPromptCacheTtl": "5m"
+}
+```
+
+For what each lifetime costs, see [Cache lifetime](/docs/en/prompt-caching#cache-lifetime).
+
 ### `showThinkingSummaries`
 
 See summaries of Claude's [extended thinking](/docs/en/model-config#extended-thinking) in interactive sessions. Set it if you want the full summaries when you expand thinking with `Ctrl+O`. When unset or `false`, the Anthropic API redacts thinking blocks and Claude Code shows a collapsed stub; third-party providers don't redact.
@@ -1050,6 +1125,27 @@ See summaries of Claude's [extended thinking](/docs/en/model-config#extended-thi
 ```
 
 Redaction only changes what you see, not what the model generates: to reduce thinking spend, [lower the budget or disable thinking](/docs/en/model-config#extended-thinking) instead. This setting has no effect in non-interactive mode (`-p`), the Agent SDK, or IDE extensions such as VS Code.
+
+### `subagentPromptCacheTtl`
+
+Choose how long the [prompt cache](/docs/en/prompt-caching) holds the requests Claude Code makes outside the main conversation. This key applies to [subagents](/docs/en/sub-agents), [workflows](/docs/en/workflows), and Claude Code's own background and helper requests, such as compaction and session titles. The one-hour lifetime keeps the cache warm across longer breaks, and the API [bills each cache write at a higher rate](https://platform.claude.com/docs/en/build-with-claude/prompt-caching#pricing) than at the five-minute lifetime. Requires Claude Code v2.1.242 or later.
+
+* **Scope**: [`Any file`](#scopes)
+* **Type**: string, one of:
+  * `"5m"`: the cache holds for five minutes
+  * `"1h"`: the cache holds for an hour
+* **Default**: unset, so each of these requests gets [its default lifetime](/docs/en/prompt-caching#which-ttl-each-request-gets)
+* **Per-session overrides**: [`FORCE_PROMPT_CACHING_5M`](/docs/en/env-vars) takes precedence over everything else, then [`CLAUDE_CODE_SUBAGENT_PROMPT_CACHE_TTL`](/docs/en/env-vars), then this key, and last [`ENABLE_PROMPT_CACHING_1H`](/docs/en/env-vars), which asks for the one-hour lifetime on every request
+
+This example gives subagents and the other requests outside the main conversation the one-hour lifetime:
+
+```json settings.json theme={null}
+{
+  "subagentPromptCacheTtl": "1h"
+}
+```
+
+This key covers the requests [`promptCacheTtl`](#promptcachettl) doesn't, so set both to choose a lifetime for every request Claude Code makes. For how a subagent's cache differs from the main conversation's, see [Subagents and the cache](/docs/en/prompt-caching#subagents-and-the-cache).
 
 ### `switchModelsOnFlag`
 
@@ -1541,7 +1637,7 @@ This lets sandboxed commands write to a build directory and your kubeconfig, and
 }
 ```
 
-Claude Code enforces these lists at the OS sandbox boundary, so they apply to every subprocess a sandboxed command starts, such as `kubectl`, `terraform`, or `npm`, not only to Claude's file tools. Your [permission rules](/docs/en/sandboxing#permission-rules) feed the same lists: `Edit` allow and deny rules join `allowWrite` and `denyWrite`, `Read` deny rules join `denyRead`, and `WebFetch` allow and deny rules join the [`network`](#sandbox-network) domain lists. Every list merges across settings files. When you edit a list during a session, Claude Code [applies the change to the running session](/docs/en/settings#when-edits-take-effect).
+Claude Code enforces these lists at the OS sandbox boundary, so they apply to every subprocess a sandboxed command starts, such as `kubectl`, `terraform`, or `npm`, not only to Claude's file tools. Your [permission rules](/docs/en/sandboxing#permission-rules) feed the same lists: `Edit` allow and deny rules join `allowWrite` and `denyWrite`, `Read` deny rules join `denyRead`, and `WebFetch(domain:...)` allow and deny rules join the [`network`](#sandbox-network) domain lists. Every list merges across settings files. When you edit a list during a session, Claude Code [applies the change to the running session](/docs/en/settings#when-edits-take-effect).
 
 #### Sandbox path prefixes
 
@@ -2583,6 +2679,24 @@ Let an unanswered [`AskUserQuestion`](/docs/en/tools-reference) dialog auto-cont
 
 Appears in `/config` as **Question auto-continue timeout**, which writes this key to user settings; Claude Code hides the row while managed settings or the `--settings` flag set the key. Requires Claude Code v2.1.200 or later.
 
+### `autoContinueAtUsageLimit`
+
+After a claude.ai usage limit stops your session, wait in the open session and continue the task automatically after the reset. See [Turn automatic continue off](/docs/en/interactive-mode#turn-automatic-continue-off). Requires Claude Code v2.1.234 or later.
+
+* **Scope**: [`User or managed`](#scopes). Read from user settings, `--settings`, and managed settings only. When none of those sets the key, a project or local settings file that sets it turns the feature off rather than being ignored.
+* **Type**: Boolean
+  * `true`: after a claude.ai usage limit stops your session, Claude Code waits in the open session and continues the task automatically after the reset
+  * `false`: Claude Code doesn't start the wait on its own. You can still [start a wait yourself](/docs/en/interactive-mode#start-a-wait-yourself) from the usage-limit options menu
+* **Default**: `true`
+
+```json settings.json theme={null}
+{
+  "autoContinueAtUsageLimit": false
+}
+```
+
+Appears in `/config` as **Continue automatically at usage limit**, which writes this key to user settings; Claude Code hides the row while managed settings or the `--settings` flag set the key.
+
 ### `autoScrollEnabled`
 
 Follow new output to the bottom of the conversation in [fullscreen rendering](/docs/en/fullscreen). Turn it off to stay where you scrolled while Claude keeps working; permission prompts still scroll into view.
@@ -3424,6 +3538,7 @@ When you set it to `true`, Claude Code changes which hooks and hook-like command
 * **Force-enabled plugin hooks run**: hooks from plugins your managed settings force-enable through [`enabledPlugins`](#enabledplugins). Claude Code matches on the full `plugin@marketplace` ID, so a plugin with the same name from a different marketplace stays blocked. This lets you distribute vetted hooks through an organization marketplace while blocking everything else
 * **Everything else is blocked**: user, project, and local hooks, hooks from other plugins, and hooks declared in agent frontmatter
 * **Command-sourced plugins are disabled**: Claude Code also disables plugins with a [`command` source](/docs/en/plugin-marketplaces#command-sources), including plugins force-enabled in managed `enabledPlugins`, unless you set [`disableCommandPluginSources`](#disablecommandpluginsources) to `false` explicitly
+* **Marketplace `headersHelper` commands are blocked**: Claude Code also blocks marketplace [`headersHelper` commands](/docs/en/plugin-marketplaces#authenticate-archive-downloads) unless [`disableCommandPluginSources`](#disablecommandpluginsources) is explicitly set to `false`, except for a marketplace that managed settings themselves declare. Requires Claude Code v2.1.238 or later
 * **Status line and file suggestion narrow to managed settings**: Claude Code reads [`statusLine`](/docs/en/statusline), [`fileSuggestion`](#filesuggestion), and [`subagentStatusLine`](/docs/en/statusline#subagent-status-lines) from managed settings only, following the [status line and file suggestion gates](#status-line-and-file-suggestion-gates)
 
 The [`/goal`](/docs/en/goal) command can't run while this key is set, because it depends on hooks.
@@ -3446,8 +3561,10 @@ Turn off [hooks](/docs/en/hooks#disable-or-remove-hooks), any custom [status lin
 
 The reach depends on which file carries the key:
 
-* **In managed settings**: Claude Code disables every hook, including managed ones
-* **In any other settings file**: Claude Code disables user, project, local, and plugin hooks; managed hooks and hooks from plugins force-enabled in managed [`enabledPlugins`](#enabledplugins) keep running
+* **In managed settings**: Claude Code disables every configured hook, including managed ones, and keeps running the hooks the [Agent SDK](/docs/en/agent-sdk/overview) registers in process
+* **In any other settings file**: Claude Code disables user, project, local, and plugin hooks; managed hooks, Agent SDK hooks, and hooks from plugins force-enabled in managed [`enabledPlugins`](#enabledplugins) keep running
+
+Keeping Agent SDK hooks running when managed settings set this key requires Claude Code v2.1.242 or later.
 
 The [`/goal`](/docs/en/goal) command can't run while hooks are disabled, and the `/hooks` menu shows a notice instead of your hooks.
 
@@ -3730,7 +3847,7 @@ To restrict which plugins can register as channels once they're enabled, set [`a
 
 ### `disableCommandPluginSources`
 
-Block the [`command` plugin source](/docs/en/plugin-marketplaces#command-sources), which installs a plugin by running a marketplace-declared command on the user's machine. When you set it to `true`, Claude Code never runs the command, doesn't install or update command-sourced plugins, and stops loading the ones already installed. Set it to `false` to allow them explicitly. Requires Claude Code v2.1.229 or later.
+Block the [`command` plugin source](/docs/en/plugin-marketplaces#command-sources), which installs a plugin by running a marketplace-declared command on the user's machine. When you set it to `true`, Claude Code never runs the command, doesn't install or update command-sourced plugins, and stops loading the ones already installed. Set it to `false` to allow them explicitly. Whenever it blocks command sources, whether you set it to `true` or leave it unset under [`allowManagedHooksOnly`](#allowmanagedhooksonly), it also blocks marketplace [`headersHelper` commands](/docs/en/plugin-marketplaces#authenticate-archive-downloads), except for a marketplace that managed settings themselves declare. Requires Claude Code v2.1.229 or later, and the `headersHelper` block requires v2.1.238 or later.
 
 * **Scope**: [`Managed`](#scopes)
 * **Type**: Boolean
@@ -3816,7 +3933,7 @@ Each entry below shows one allowlist entry per source type and the fields it acc
 
 Three source types carry rules beyond the table:
 
-* **`url`**: a URL marketplace downloads only the `marketplace.json` file, not plugin files, so its plugins must use a [plugin source](/docs/en/plugin-marketplaces#plugin-sources) other than a relative path. For plugins with relative paths, use a Git-based marketplace instead. See [Plugins with relative paths fail in URL-based marketplaces](/docs/en/plugin-marketplaces#plugins-with-relative-paths-fail-in-url-based-marketplaces).
+* **`url`**: a URL marketplace downloads only the `marketplace.json` file, and Claude Code doesn't fetch plugin files by relative path from that server, so its plugins must use a [plugin source](/docs/en/plugin-marketplaces#plugin-sources) other than a relative path, such as an archive URL, which can be on the same host. For plugins with relative paths, use a Git-based marketplace instead. See [Plugins with relative paths fail in URL-based marketplaces](/docs/en/plugin-marketplaces#plugins-with-relative-paths-fail-in-url-based-marketplaces).
 * **`hostPattern`**: use it to allow every marketplace on an internal GitHub Enterprise or GitLab server without listing each repository. Claude Code matches `github` sources against `github.com`, takes the hostname from `url` sources, and takes it from `git` sources depending on the [git URL](https://git-scm.com/docs/git-clone#_git_urls)'s form:
 
   * A URL with a scheme, such as `https://` or `ssh://`: the hostname in the URL.
@@ -4061,7 +4178,7 @@ The `source` object takes one of these forms:
 
 * **`github`**: a GitHub repository, with `repo`
 * **`git`**: any git URL, with `url`
-* **`url`**: a direct URL to a `marketplace.json` file, with `url` and optional `headers` for authenticated access
+* **`url`**: a direct URL to a `marketplace.json` file, with `url` and optional `headers` and `headersHelper` for authenticated access. `headersHelper` names a command that prints headers whose values are too short-lived to list in `headers`, and requires Claude Code v2.1.238 or later
 * **`file`**: a local path to a `marketplace.json` file, with `path`
 * **`directory`**: a local filesystem path, with `path`, for development only
 * **`settings`**: an inline marketplace declared directly in the settings file without a hosted repository, with `name` and `plugins`
@@ -4069,6 +4186,13 @@ The `source` object takes one of these forms:
 The `git` source type works with any git hosting service, including self-hosted GitLab and Bitbucket. Claude Code clones the repository with the same authentication that `git clone` would use on that machine: configured credential helpers or SSH keys. A provider token such as `GITHUB_TOKEN` takes effect only through a credential helper that reads it. See [Private repositories](/docs/en/plugin-marketplaces#private-repositories) for setup details.
 
 For `github` and `git` sources, set `"skipLfs": true` inside the `source` object, alongside `repo` or `url`, to skip Git LFS downloads when Claude Code clones or updates the marketplace repository. LFS pointer files remain as pointers instead of downloading their content. Use this when the repository contains large LFS objects unrelated to plugin content. Requires Claude Code v2.1.153 or later.
+
+For a `url` source, set `headersHelper` inside the `source` object when the credential in `headers` expires and a command has to produce a fresh one. Requires Claude Code v2.1.238 or later. For what the command must print and where Claude Code runs it, see [Write the headersHelper command](/docs/en/plugin-marketplaces#write-the-headershelper-command), and for the cases where Claude Code doesn't run it, see [When Claude Code skips a headersHelper command](/docs/en/plugin-marketplaces#when-claude-code-skips-a-headershelper-command-or-drops-its-output). Once you set `headersHelper` on an `https://` marketplace URL, Claude Code runs the command at two points, reusing one run's output for up to 60 seconds:
+
+* Before each fetch of that marketplace's `marketplace.json`, including a later refresh. Claude Code sends the printed headers with that fetch.
+* Before each plugin archive download on the marketplace URL's origin, meaning the same scheme, host, and port. Claude Code sends the output with that download, and no other download gets the headers.
+
+Claude Code ignores any `headersHelper` set in the `.claude/settings.json` or `.claude/settings.local.json` of a directory you add with [`--add-dir`](/docs/en/permissions#what-runs-before-you-trust-a-folder), on a `url` source and on an inline plugin entry alike, and sends only the fixed `headers` set in that file. [How users accept a headersHelper command](/docs/en/plugin-marketplaces#how-users-accept-a-headershelper-command) covers the other settings files.
 
 Plugins listed in a `settings` source must reference external sources such as GitHub or npm, and the `name` must match the marketplace key. You still enable each plugin separately in `enabledPlugins`. This example declares one plugin inline:
 
@@ -4093,6 +4217,14 @@ Plugins listed in a `settings` source must reference external sources such as Gi
   }
 }
 ```
+
+A plugin entry under `source: 'settings'` whose own `source` is an [`archive`](/docs/en/plugin-marketplaces#zip-archives) can set `headers` for the archive download. If the value you would put in `headers` is short-lived, such as a token your registry mints on request, set a `headersHelper` command instead. An entry may set both. Both fields require Claude Code v2.1.238 or later.
+
+Claude Code sends the entry's `headers`, and whatever the command prints, with that plugin's archive download and with no other download. Claude Code runs the command only when a user [installs or updates that one plugin by itself](/docs/en/plugin-marketplaces#how-users-accept-a-headershelper-command). Three further rules depend on which file holds the entry:
+
+* **`strict`**: unlike an entry in a marketplace's `marketplace.json`, an entry in settings doesn't need `"strict": false`, because a settings file carries no manifest fields to inline. See [Strict mode](/docs/en/plugin-marketplaces#strict-mode).
+* **Folder trust**: for an entry in a project's `.claude/settings.json` or `.claude/settings.local.json`, Claude Code runs the command only after the user has also [trusted that folder](/docs/en/permissions#what-runs-before-you-trust-a-folder).
+* **Header filter**: Claude Code drops [request-routing and client-identity header names](/docs/en/plugin-marketplaces#when-claude-code-skips-a-headershelper-command-or-drops-its-output) from an entry in a project's `.claude/settings.json` or `.claude/settings.local.json`, because a repository can supply those files. Claude Code applies the same filter to a catalog entry and to an entry in an `--add-dir` directory's settings, and no filter to an entry in your user settings, a `--settings` file, or managed settings.
 
 #### Marketplace key aliases
 
@@ -4570,6 +4702,26 @@ Stop Claude Code from registering the `claude-cli://` protocol handler with the 
   "disableDeepLinkRegistration": "disable"
 }
 ```
+
+### `disableDesktopLocalSessions`
+
+Turn off Code sessions that run on the device in the [desktop app](/docs/en/desktop#local-sessions-on-managed-devices), for deployments where developers should work on remote machines over SSH. In the Code tab, the **Local** environment stays in the environment dropdown but is grayed out and can't be selected, with a tooltip saying your organization turned it off; on Windows the WSL entry is grayed out the same way, though whether WSL sessions run on a managed device at all is [governed separately](/docs/en/admin-setup#wsl-sessions-in-claude-code-desktop). New sessions default to the first [SSH connection](/docs/en/desktop#ssh-sessions) if one is configured, and the app refuses to start or resume a session on the device, including an SSH connection back to the same machine. SSH sessions to other hosts and cloud sessions are unaffected. The desktop app reads this key; the terminal CLI ignores it.
+
+* **Scope**: [`Managed`](#scopes)
+* **Type**: Boolean; only the JSON Boolean `true` takes effect
+  * `true`: the desktop app offers no on-device Code sessions; existing local sessions stay listed but can't continue
+  * `false`: local sessions stay available
+* **Default**: unset, so local sessions are available
+
+```json managed-settings.json theme={null}
+{
+  "disableDesktopLocalSessions": true
+}
+```
+
+The desktop app ignores any other value, and a value that isn't a Boolean, such as the string `"true"` or `1`, also logs a warning. Pair it with [`sshConfigs`](#sshconfigs) so users land on a working connection, and with [`sshHostAllowlist`](#sshhostallowlist) to limit which hosts they can reach. See [Local sessions on managed devices](/docs/en/desktop#local-sessions-on-managed-devices).
+
+Claude Desktop supplies Code sessions with policy derived from your desktop configuration, for example the egress allowlist, filesystem sandbox, and MCP restrictions in third-party deployments. Claude Code ignores those parent settings whenever an [admin source](/docs/en/managed-settings#which-managed-source-claude-code-uses) is present: server-managed settings, an MDM or OS-level policy, or a managed settings file. Deploying this key through one of those on a device that had none before, as in third-party deployments, therefore stops the desktop-derived policies from applying. [Let an embedding host add policy](/docs/en/managed-settings#let-an-embedding-host-add-policy) covers when parent settings can still merge; this holds for any key you deploy that way, not only this one.
 
 ### `disableRemoteControl`
 

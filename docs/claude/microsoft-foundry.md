@@ -1,3 +1,8 @@
+<!--
+Source: https://code.claude.com/docs/en/microsoft-foundry.md
+Downloaded: 2026-08-25T20:29:10.092Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://code.claude.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -187,6 +192,8 @@ For current and legacy model IDs, see [Models overview](https://platform.claude.
 ```bash theme={null}
 export ENABLE_PROMPT_CACHING_1H=1
 ```
+
+To set different TTLs for your main conversation and for the requests Claude Code makes outside it, [choose the TTL yourself](/docs/en/prompt-caching#choose-the-ttl-yourself).
 
 ### 5. Run Claude Code
 

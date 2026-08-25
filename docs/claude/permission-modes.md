@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/permission-modes.md
-Downloaded: 2026-08-24T20:30:12.134Z
+Downloaded: 2026-08-25T20:29:10.102Z
 -->
 
 > ## Documentation Index
@@ -410,6 +410,8 @@ When auto mode can't approve your session's actions, what happens depends on the
 * **A mode switch during a check**: if you switch permission modes while a classifier check is pending, Claude Code discards a verdict the new mode wouldn't have requested rather than applying it: you're prompted for approval instead, or the action is auto-denied in [`dontAsk` mode](#allow-only-pre-approved-tools-with-dontask-mode).
 
 Repeated blocks usually mean the classifier is missing context about your infrastructure. Use `/feedback` to report false positives, or have an administrator [configure trusted infrastructure](/docs/en/auto-mode-config).
+
+<span id="how-the-classifier-evaluates-actions" />
 
 <AccordionGroup>
   <Accordion title="How the classifier evaluates actions">

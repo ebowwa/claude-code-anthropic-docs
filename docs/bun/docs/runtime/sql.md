@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/sql.md
-Downloaded: 2026-08-18T20:23:42.635Z
--->
-
 # SQL
 
 > Bun provides native bindings for working with SQL databases through a unified Promise-based API that supports PostgreSQL, MySQL, and SQLite.

@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/permissions.md
-Downloaded: 2026-08-22T20:22:25.696Z
+Downloaded: 2026-08-25T20:29:10.101Z
 -->
 
 > ## Documentation Index
@@ -144,17 +144,20 @@ You can't match a tool's primary content field this way: `command` for Bash and 
 
 ### Wildcard patterns
 
-Bash rules support glob patterns with `*`. This configuration allows npm and git commit commands while blocking git push:
+A `*` in a Bash rule matches any text, including spaces, so one rule covers a family of commands. A rule with no `*` matches one exact command.
+
+<Warning>
+  Put the `*` after the subcommand. In `git log --oneline main`, `git` is the program and `log` is the subcommand, the word that picks what the program does. Claude Code matches everything before the first `*` as written, so those words are what limit the rule: `Bash(git log *)` allows only `git log` commands, and `Bash(git *)` allows every git command.
+</Warning>
+
+Write the command you want Claude to run without asking, and replace the parts that vary with `*`. With this configuration, Claude Code runs npm scripts and git commits without asking and refuses git push:
 
 ```json theme={null}
 {
   "permissions": {
     "allow": [
       "Bash(npm run *)",
-      "Bash(git commit *)",
-      "Bash(git * main)",
-      "Bash(* --version)",
-      "Bash(* --help *)"
+      "Bash(git commit *)"
     ],
     "deny": [
       "Bash(git push *)"
@@ -162,6 +165,25 @@ Bash rules support glob patterns with `*`. This configuration allows npm and git
   }
 }
 ```
+
+A `*` can go anywhere in the rule: at the start, in the middle, or at the end. Each row shows a rule, commands it matches, and nearby commands it doesn't match:
+
+| You write              | Matches                                                                              | Doesn't match                          |
+| :--------------------- | :----------------------------------------------------------------------------------- | :------------------------------------- |
+| `Bash(npm run build)`  | `npm run build`                                                                      | `npm run build --watch`                |
+| `Bash(npm run *)`      | `npm run build`, `npm run test --watch`, `npm run`                                   | `npm install`                          |
+| `Bash(git log * main)` | `git log --oneline main`, `git log -5 main`, `git log --output=<file> main`          | `git log main`, `git push origin main` |
+| `Bash(git * main)`     | `git merge main`, `git push origin main`, `git -c core.fsmonitor=<script> diff main` | `git log`                              |
+| `Bash(* --version)`    | `node --version`, `bash -c 'echo hi' --version`                                      | `node -v`                              |
+| `Bash(ls *)`           | `ls -la`, `ls`                                                                       | `lsof`                                 |
+| `Bash(ls*)`            | `ls -la`, `lsof`                                                                     |                                        |
+| `Bash(* --help *)`     | `npm --help x`                                                                       | `npm --help`                           |
+
+Three matching rules produce those rows:
+
+* **The `*` stands in for whatever text is in its place.** In `Bash(git * main)`, it stands in for the subcommand, so Claude Code matches every git subcommand and every option before it. That includes `-c`, which makes git run a program you name. In `Bash(* --version)`, the `*` stands in for the program, so any program matches.
+* **A `*` at the end, with a space before it, also matches the bare command.** `Bash(ls *)` matches `ls`, and `Bash(git log *)` matches `git log`. That holds only when the trailing `*` is the rule's only wildcard: `Bash(* --help *)` matches `npm --help x` but not `npm --help`.
+* **The space before a trailing `*` is part of the rule.** `Bash(ls *)` requires a space after `ls`, so `lsof` doesn't match. `Bash(ls*)` has no space, so it matches `lsof` too.
 
 The `:*` suffix is an equivalent way to write a trailing wildcard, so `Bash(ls:*)` matches the same commands as `Bash(ls *)`.
 
@@ -191,17 +213,7 @@ The label shown for a tool in the transcript and permission dialog can differ fr
 
 ### Bash
 
-Bash permission rules support wildcard matching with `*`. Wildcards can appear at any position in the command, including at the beginning, middle, or end:
-
-* `Bash(npm run build)` matches the exact Bash command `npm run build`
-* `Bash(npm run test *)` matches Bash commands starting with `npm run test`
-* `Bash(npm *)` matches any command starting with `npm `
-* `Bash(* install)` matches any command ending with ` install`
-* `Bash(git * main)` matches commands like `git checkout main` and `git log --oneline main`
-
-A single `*` matches any sequence of characters including spaces, so one wildcard can span multiple arguments. `Bash(git *)` matches `git log --oneline --all`, and `Bash(git * main)` matches `git push origin main` as well as `git merge main`.
-
-When `*` appears at the end with a space before it (like `Bash(ls *)`), it enforces a word boundary, requiring the prefix to be followed by a space or end-of-string. For example, `Bash(ls *)` matches `ls -la` but not `lsof`. In contrast, `Bash(ls*)` without a space matches both `ls -la` and `lsof` because there's no word boundary constraint.
+Bash rules match the whole command text, with `*` standing in for any text. [Wildcard patterns](#wildcard-patterns) shows which commands each rule shape matches and where to put the `*`. The rest of this section covers how Claude Code matches compound commands, wrappers, read-only commands, and redirections.
 
 #### Compound commands
 
@@ -392,9 +404,34 @@ WebFetch rules use a `domain:` prefix and match against the hostname of the requ
 
 * `WebFetch(domain:example.com)` matches requests to `example.com`
 * `WebFetch(domain:*.example.com)` matches any subdomain at any depth, such as `api.example.com` or `a.b.example.com`, but not `example.com` itself
-* `WebFetch(domain:*)` matches every domain and is equivalent to a bare `WebFetch` rule
+* `WebFetch(domain:*)` matches every domain. It isn't the same as a bare `WebFetch` rule; see [Allow or deny every fetch](#allow-or-deny-every-fetch)
 
 In any position other than a leading `*.` or a bare `*`, the wildcard matches only the text between two dots. `WebFetch(domain:example.*)` matches `example.org`, where `*` becomes `org`, but not `example.evil.com`, where `*` would have to become `evil.com` and cross a dot. This keeps a trailing wildcard from matching domains an attacker could register.
+
+Wildcards in `WebFetch` rules require Claude Code v2.1.172 or later to match fetches.
+
+#### Allow or deny every fetch
+
+A bare `WebFetch` rule is the tool name with no `domain:` part, such as `"deny": ["WebFetch"]`. Both it and `WebFetch(domain:*)` cover every URL, but Claude Code applies them differently, and only the `domain:` form also adds its domain to the sandbox's [allowed or denied domain list](/docs/en/sandboxing#network-isolation). That section lists the wildcard forms the sandbox honors and the version that added bare `*`.
+
+Each row shows what a rule does in the `allow` list and in the `deny` list:
+
+| Rule                 | In `allow`                                                                                     | In `deny`                                                                                                                       |
+| :------------------- | :--------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------ |
+| `WebFetch`           | Claude fetches without prompting you. Doesn't change which hosts sandboxed commands can reach. | Claude Code removes the `WebFetch` tool, so Claude can't fetch at all. Doesn't change which hosts sandboxed commands can reach. |
+| `WebFetch(domain:*)` | Claude fetches without prompting you, and sandboxed commands can reach any host.               | Claude Code keeps the tool and refuses each fetch, and sandboxed commands can't reach any host.                                 |
+
+To let Claude fetch freely while keeping the sandbox allowlist as it is, use the bare form. This `settings.json` does that:
+
+```json theme={null}
+{
+  "permissions": {
+    "allow": ["WebFetch"]
+  }
+}
+```
+
+When you ask Claude to fetch a page, it fetches without a prompt. When you ask it to run a [sandboxed](/docs/en/sandboxing) `curl` against a host outside the sandbox allowlist, Claude Code still prompts you for that host, or in [auto mode](/docs/en/permission-modes#eliminate-prompts-with-auto-mode) sends the request to the classifier, because the bare rule didn't add the host to the allowlist.
 
 ### MCP
 
@@ -502,7 +539,7 @@ Use both for defense-in-depth:
 * Permission deny rules block Claude from even attempting to access restricted resources
 * Sandbox restrictions prevent Bash commands from reaching resources outside defined boundaries, even if a prompt injection bypasses Claude's decision-making
 * Filesystem restrictions in the sandbox combine the [`sandbox.filesystem`](/docs/en/sandboxing) settings with Read and Edit deny rules; both are merged into the final sandbox boundary
-* Network restrictions combine WebFetch permission rules with the sandbox's `allowedDomains` and `deniedDomains` lists
+* Network restrictions combine `WebFetch(domain:...)` permission rules with the sandbox's `allowedDomains` and `deniedDomains` lists
 
 When you enable sandboxing and leave `autoAllowBashIfSandboxed` at its default of `true`, sandboxed Bash commands run without prompting even if your permissions include a bare `Bash` ask rule, or the [equivalent `Bash(*)` form](#match-all-uses-of-a-tool): the sandbox boundary substitutes for that whole-tool prompt.
 

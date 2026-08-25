@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/getting_started/exchange_sharding.md
-Downloaded: 2026-08-21T20:25:30.742Z
+Downloaded: 2026-08-25T20:28:48.169Z
 -->
 
 > ## Documentation Index
@@ -46,9 +46,9 @@ Kalshi's collateralization checks will continue to run within the matching engin
 **Auto-Rebalancing**
 
 * Institutional clients may opt in to automatic rebalancing between exchange shards.
-* The customer supplies a target balance allocation as a percentage of free capital per exchange shard. For example, `{Default: 80, Combos: 20}`.
-* Every 10 seconds, Kalshi computes the customer's free margin on each exchange shard as its balance minus the value of its resting orders.
-* If free margin has drifted from the target allocation, Kalshi executes an intra-exchange account transfer on the customer's behalf to restore the target allocation.
+* The customer supplies a target balance allocation as a percentage of their balance across exchange shards. For example, `{Default: 80, Combos: 20}`.
+* Every 10 seconds, Kalshi computes the customer's balance on each exchange shard as its account balance minus the value of its resting orders.
+* If the balance has drifted from the target allocation, Kalshi executes an intra-exchange account transfer on the customer's behalf to restore the target allocation.
 * Target balance allocations can be configured through the [REST API](/api-reference/portfolio/set-target-balance-allocation) and the clearing portal.
 
 ## Order routing
@@ -90,7 +90,7 @@ The following assignments determine the shard where new events will be created. 
 
 * All child markets of an event will live on the same exchange instance.
 * There is currently no plan to migrate any live market to a new exchange instance.
-* Single order writes that target a nonzero shard are rate-limited against a per-shard Write budget. REST batch writes, shard 0 writes, and auto-routed writes use the unscoped budget. See [Rate Limits and Tiers](/getting_started/rate_limits#sharded-exchanges-have-per-shard-write-budgets).
+* Single REST order writes that explicitly target a nonzero shard are rate-limited against that shard's Write budget. Auto-routed single REST order writes are billed to the unscoped Write bucket and every nonzero shard's Write bucket. REST batch writes and explicit shard 0 writes use only the unscoped Write budget. See [Rate Limits and Tiers](/getting_started/rate_limits#sharded-exchanges-have-per-shard-write-budgets).
 * Providing `ExDestination` / `exchange_index` is unnecessary for all RFQ operations, including FIX [`QuoteRequest` (`35=R`), `Quote` (`35=S`), and `AcceptQuote` (`35=UA`)](/fix/rfq-messages), which are routed internally by Kalshi.
 * When trading via FIX, both `MassCancelRequest` and `CancelOrdersOnDisconnect` will target all exchange shards for the FIX session.
 * Automatic routing will incur an additional latency cost.

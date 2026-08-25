@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/pm/cli/add.md
-Downloaded: 2026-08-18T20:23:42.640Z
--->
-
 # bun add
 
 > Add packages to your project with Bun's fast package manager
