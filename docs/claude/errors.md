@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/errors.md
-Downloaded: 2026-08-25T20:29:10.089Z
+Downloaded: 2026-08-26T22:47:59.258Z
 -->
 
 > ## Documentation Index
@@ -87,6 +87,7 @@ Match the message you see to a section below.
 | `Socket is closed`                                                                                                                                                                            | [Network](#socket-is-closed)                                                                                                  |
 | `Waiting for API response · will retry in`                                                                                                                                                    | [Automatic retries](#automatic-retries), or [Network](#unable-to-connect-to-api) if it persists                               |
 | `API returned an empty or malformed response`                                                                                                                                                 | [Network](#api-returned-an-empty-or-malformed-response)                                                                       |
+| `Streaming response ended before any complete data was received`                                                                                                                              | [Network](#streaming-response-ended-before-any-complete-data-was-received)                                                    |
 | `Bedrock streaming response has content-type "..."; expected "application/vnd.amazon.eventstream"`                                                                                            | [Network](#bedrock-streaming-response-has-an-unexpected-content-type)                                                         |
 | `SSL certificate verification failed`                                                                                                                                                         | [Network](#ssl-certificate-errors)                                                                                            |
 | `SSL certificate error (...)` during login or startup                                                                                                                                         | [Network](#ssl-certificate-errors)                                                                                            |
@@ -121,6 +122,8 @@ Match the message you see to a section below.
 | `thinking.type.enabled is not supported for this model`                                                                                                                                       | [Request errors](#thinking-type-enabled-is-not-supported-for-this-model)                                                      |
 | `max_tokens must be greater than thinking.budget_tokens`                                                                                                                                      | [Request errors](#thinking-budget-exceeds-output-limit)                                                                       |
 | `API Error: 400 due to tool use concurrency issues`                                                                                                                                           | [Request errors](#tool-use-or-thinking-block-mismatch)                                                                        |
+| `[Unsupported tool content removed]`                                                                                                                                                          | [Request errors](#unsupported-tool-content-removed)                                                                           |
+| `server_tool_use.name: Input should be` on every turn of a resumed session                                                                                                                    | [Request errors](#unsupported-tool-content-removed)                                                                           |
 | `<model> can't help with this. Start a new session to continue`                                                                                                                               | [Request errors](#usage-policy-refusal)                                                                                       |
 | `Claude Code is unable to respond to this request, which appears to violate our Usage Policy`                                                                                                 | [Request errors](#usage-policy-refusal)                                                                                       |
 | `<model>'s safeguards flagged this message`                                                                                                                                                   | [Request errors](#safety-measures-flagged-a-cybersecurity-topic)                                                              |
@@ -184,6 +187,7 @@ Match the message you see to a section below.
 | `Ignoring N permissions.allow entries from ... this workspace has not been trusted`                                                                                                           | [Configuration warnings](#workspace-has-not-been-trusted)                                                                     |
 | `headersHelper not run — this workspace has no persisted trust`                                                                                                                               | [Configuration warnings](#headershelper-not-run)                                                                              |
 | `... is not matched by file permission checks`                                                                                                                                                | [Configuration warnings](#is-not-matched-by-file-permission-checks)                                                           |
+| `... has a wildcard before the rest of the command`                                                                                                                                           | [Configuration warnings](#has-a-wildcard-before-the-rest-of-the-command)                                                      |
 | `CLAUDE_CODE_DISABLE_1M_CONTEXT is set, but the 200K limit isn't enforced`                                                                                                                    | [Configuration warnings](#the-200k-limit-isnt-enforced)                                                                       |
 | `[claude-code:unrecognized_model]`                                                                                                                                                            | [Configuration warnings](#unrecognized-model-id-on-a-request)                                                                 |
 | Responses seem lower quality than usual                                                                                                                                                       | [Response quality](#responses-seem-lower-quality-than-usual)                                                                  |
@@ -210,7 +214,7 @@ Before v2.1.227, `Connection lost before a response was produced` read `Connecti
 Claude Code doesn't retry these failures:
 
 * A TLS certificate validation failure, such as a TLS-inspecting proxy, a missing `NODE_EXTRA_CA_CERTS` bundle, or an expired certificate. Claude Code reports the error on the first attempt, so you can fix the certificate setup right away; see [SSL certificate errors](#ssl-certificate-errors). Claude Code still retries transient TLS conditions such as a handshake timeout. Before v2.1.199, Claude Code retried certificate failures through the full retry budget before showing the error.
-* A server error, dropped connection, or stalled stream that arrives after Claude has completed a block of text or a tool call, or has started one after finishing its thinking, but before it finishes the response. Claude Code could execute the same tool calls twice if it re-ran the request, so it keeps what Claude completed and shows an [incomplete-response notice](#the-response-above-may-be-incomplete). Claude Code still runs any tool calls Claude completed and continues the turn from their results. Before v2.1.199, Claude Code discarded the partial output and reported the whole turn as an error when a server error arrived mid-stream.
+* A server error, dropped connection, or stalled stream that arrives after Claude has completed a block of text or a tool call, or has started one after finishing its thinking, but before it finishes the response. Claude Code doesn't re-run the request, because that could execute the same tool calls twice. It keeps what Claude completed, runs any tool calls Claude finished, and continues the turn from their results. For what you see in an interactive session and in a non-interactive one, read [The response above may be incomplete](#the-response-above-may-be-incomplete). Before v2.1.199, Claude Code discarded the partial output and reported the whole turn as an error when a server error arrived mid-stream.
 * A failure that arrives after Claude has finished the response: nothing needs retrying, so Claude Code keeps the complete response and ends the turn normally.
 * An [Amazon Bedrock streaming response with an unexpected content-type](#bedrock-streaming-response-has-an-unexpected-content-type), because the gateway or proxy rewriting the response would rewrite the retry the same way. Requires Claude Code v2.1.208 or later.
 * A non-streaming retry of a failed streaming request that gets a success status but [no Claude API message in the body](#api-returned-an-empty-or-malformed-response). Claude Code ends the turn with that error.
@@ -222,7 +226,13 @@ While retrying, the spinner shows a `Retrying in Ns · attempt x/y` countdown af
 
 As of v2.1.198, the usual spinner tip is suppressed during retries. Once the error reason is revealed, if the failure is a 529 overload the line below the countdown also names where to check service status: `status.claude.com` on the Anthropic API, or the provider or gateway host named in the message on other configurations.
 
-If no data arrives on the response stream for 20 seconds while a request is still pending, the spinner shows `Waiting for API response · will retry in … · check your network` before any retry has started. The request hasn't failed yet: the countdown runs to the point where Claude Code aborts the stalled connection. After the abort, Claude Code retries the request, ends the turn with an error when the failure isn't retryable or [retries run out](#automatic-retries), shows [The response above may be incomplete](#the-response-above-may-be-incomplete) and continues the turn from the results of any tool calls Claude completed, or ends the turn normally when Claude had already finished the response before the stall. The banner clears on its own once data resumes or a retry succeeds; if it reappears on every attempt, treat it as a [network issue](#unable-to-connect-to-api). Before v2.1.185, the banner appeared after 10 seconds with different wording.
+If no data arrives on the response stream for 20 seconds while a request is still pending, the spinner shows `Waiting for API response · will retry in … · check your network` before any retry has started. The request hasn't failed yet: the countdown runs to the point where Claude Code aborts the stalled connection. After the abort, what you see depends on how far the response had got:
+
+* Before Claude has completed a block of text or a tool call, or started one after finishing its thinking, Claude Code retries the request or ends the turn with an error. [Automatic retries](#automatic-retries) says which stalls it retries and how many times.
+* After Claude has completed a block of text or a tool call, or started one after finishing its thinking, but before Claude has finished the response, Claude Code keeps what Claude completed, continues the turn from any tool calls Claude finished, and shows [The response above may be incomplete](#the-response-above-may-be-incomplete). In a non-interactive session, Claude Code may first prompt Claude to continue the response; that entry says when it does and when you still see the notice there.
+* After Claude finished the response, Claude Code ends the turn normally.
+
+The banner clears on its own once data resumes or a retry succeeds. If it reappears on every attempt, treat it as a [network issue](#unable-to-connect-to-api). Before v2.1.185, the banner appeared after 10 seconds with different wording.
 
 While Claude is consulting the [advisor](/docs/en/advisor), the banner appears after 90 seconds without data instead of 20, because a long advisor review can send nothing for well over 20 seconds. Before v2.1.214, the 20-second threshold applied during advisor calls too, so the banner appeared during advisor reviews even when nothing was wrong.
 
@@ -311,10 +321,11 @@ API Error: The response stopped arriving. The response above may be incomplete.
 
 Before v2.1.227, `Connection lost mid-response` read `Connection closed mid-response` and `The response stopped arriving` read `Response stalled mid-stream`.
 
-When one of these failures lands at another point in the turn, Claude Code handles it without this notice:
+In three cases, Claude Code handles the failure without showing this notice right away:
 
 * Earlier in the response, Claude Code either retries the failure or ends the turn with a different error. See [Automatic retries](#automatic-retries).
 * When one of these failures arrives after Claude has finished the response, Claude Code keeps the complete response and ends the turn normally, without this notice. Before v2.1.222, Claude Code showed this notice when the connection dropped or stalled after the response finished, and reported the turn as an error even though the response was complete.
+* In a [non-interactive session](/docs/en/headless), such as a `-p` run, an [Agent SDK](/docs/en/agent-sdk/overview) run, or a [cloud session](/docs/en/claude-code-on-the-web), you don't have to send `continue` yourself when the cut-off response is in the main conversation and contains text but no tool calls: Claude Code keeps the partial output and prompts Claude to continue from where it stopped, up to three times in a row. You see this notice for such a response only once Claude Code has used up those continuations. Before v2.1.246, Claude Code ended a non-interactive turn with this notice on the first cut-off.
 
 **What to do:**
 
@@ -322,7 +333,7 @@ When one of these failures lands at another point in the turn, Claude Code handl
 * In [non-interactive mode](/docs/en/headless) (`-p`):
   * With the default text output, Claude Code prints the last completed block of text it still holds from earlier in the turn, followed by this message. When it holds none, Claude Code prints this message alone, for example because Claude Code compacted the conversation mid-turn and cleared that text. Before v2.1.219, Claude Code printed only this message in `-p` text output and dropped the response it had already produced.
   * With `--output-format json` or `stream-json`, Claude Code reports this message in the `result` field.
-  * To continue the turn, resume the session and send `continue` as described in [Continue conversations](/docs/en/headless#continue-conversations).
+  * To continue the turn once the connection is stable, resume the session and send `continue` as described in [Continue conversations](/docs/en/headless#continue-conversations).
 
 ### Auto mode cannot determine the safety of an action
 
@@ -1130,6 +1141,21 @@ Before v2.1.234, the message ended after `intercepting the request`.
 * On a network with a sign-in page, such as guest Wi-Fi, complete the sign-in in a browser, then retry
 * If only the non-streaming route through your gateway is broken, set [`CLAUDE_CODE_DISABLE_NONSTREAMING_FALLBACK=1`](/docs/en/env-vars#variables) so a request that fails mid-stream goes to the normal retry path instead of this fallback, except when the streaming endpoint itself returns `404`, where Claude Code still falls back
 
+### Streaming response ended before any complete data was received
+
+A streaming response from your model provider completed without delivering any usable data, so Claude Code re-sent the request without streaming to finish the turn. Claude Code shows the warning once per session, in interactive sessions only. Before v2.1.239, Claude Code silently retried without streaming.
+
+```text theme={null}
+Streaming response ended before any complete data was received. Retrying without streaming. If this keeps happening, check any proxy or gateway between Claude Code and your model provider.
+```
+
+Claude Code sends each affected request twice: the empty streaming attempt and the retry. The usual cause is a proxy or gateway that consumes or transforms the streaming response body on its way back.
+
+**What to do:**
+
+* Configure any proxy or gateway between Claude Code and your model provider to pass streaming response bodies and their headers through unmodified
+* On [Amazon Bedrock](/docs/en/amazon-bedrock), see [Streaming errors behind a gateway or proxy](/docs/en/amazon-bedrock#streaming-errors-behind-a-gateway-or-proxy) for the header and body requirements
+
 ### Bedrock streaming response has an unexpected content-type
 
 A gateway or proxy between Claude Code and [Amazon Bedrock](/docs/en/amazon-bedrock) is transforming the streaming response body or its `Content-Type` header. Amazon Bedrock streams responses as `application/vnd.amazon.eventstream`, and Claude Code rejects a successful streaming response that reports a different content-type instead of decoding a body it can't read. The request isn't retried.
@@ -1211,7 +1237,7 @@ The status is the proxy's answer to the `CONNECT`. The host never answered, so e
 **What to do:**
 
 * Check the address and credentials in the proxy variable, as [Proxy configuration](/docs/en/network-config#proxy-configuration) describes, then run `curl -x http://proxy.example.com:8080 -I https://api.anthropic.com` from the shell you start Claude Code in, using your own proxy URL. On Windows PowerShell, run `curl.exe`. If this probe fails the same way, fix the proxy setup first. If it succeeds, the refusal is specific to the artifact host.
-* If your network lets Claude Code reach the artifact host directly, add `.claudeusercontent.com` to [`NO_PROXY`](/docs/en/network-config#environment-variables).
+* If your network lets Claude Code reach the artifact host directly, add `.frame.claudeusercontent.com` to [`NO_PROXY`](/docs/en/network-config#environment-variables). Keep the entry that narrow: a broader `.claudeusercontent.com` entry also bypasses the proxy for `bridge.claudeusercontent.com`, which organizations with [IP allowlisting](/docs/en/network-config#organization-ip-allowlists-and-proxy-egress) need to keep on the proxy.
 
 Before v2.1.238, Claude Code reported a refused tunnel as a generic network error.
 
@@ -1581,6 +1607,21 @@ All three variants mean the same thing: the sequence of `tool_use`, `tool_result
 
 * If you are using Opus 4.7 or Opus 4.8, run `claude update` first. Versions before v2.1.156 can trigger this error during normal tool use, and `/rewind` doesn't clear it.
 * Run `/rewind`, or press Esc twice, to step back to a checkpoint before the corrupted turn and continue from there. See [Checkpointing](/docs/en/checkpointing) for how checkpoints are created and restored.
+
+### Unsupported tool content removed
+
+When Claude Code connects directly to the Anthropic API and loads or previews a saved session, it removes tool content the Anthropic API doesn't accept and leaves this line where removed content sat between two thinking blocks:
+
+```text theme={null}
+[Unsupported tool content removed]
+```
+
+Such content reaches a session file when something other than the Anthropic API answered in the API's format, typically a third-party proxy set through [`ANTHROPIC_BASE_URL`](/docs/en/env-vars) that translates another provider's tool calls. Claude Code removes it only when the session connects directly to the Anthropic API, and loads the saved history as it is when the session runs through a proxy or on another provider. Before v2.1.246, Claude Code sent the tool use and its result back to the API, and every turn of the resumed session failed with a 400 error such as `messages.1.content.0.server_tool_use.name: Input should be 'web_search', 'web_fetch', ...`.
+
+**What to do:**
+
+* None needed when you see the placeholder line. The session continues without the removed content.
+* If every turn of a resumed session fails with the 400 error instead, run `claude update` and resume the session again. Versions before v2.1.246 don't remove the content.
 
 ### Usage Policy refusal
 
@@ -2490,7 +2531,7 @@ Inside tmux, Claude Code detects a marker that arrived through the tmux server's
 
 ## Configuration warnings
 
-Claude Code writes these messages to stderr rather than showing an error in the conversation, except where an entry notes that it writes the message to the debug log instead. It writes most of them at startup, reporting configuration it read but didn't apply, and writes the [unrecognized-model diagnostic line](#unrecognized-model-id-on-a-request) at request time.
+Claude Code writes these messages to stderr rather than showing an error in the conversation, except where an entry notes that it writes the message to the debug log instead. It writes most of them at startup and writes the [unrecognized-model diagnostic line](#unrecognized-model-id-on-a-request) at request time.
 
 ### Workspace has not been trusted
 
@@ -2541,6 +2582,27 @@ Permission deny rule (.claude/settings.json): Write(docs/**) is not matched by f
 * If the source reads `managed policy settings`, forward the warning to whoever maintains your managed settings; you can't clear it yourself.
 
 In a [background session](/docs/en/agent-view) or with `--output-format json` or `stream-json`, Claude Code writes the warning to the debug log instead of stderr, so machine-read output stays clean; run with `--debug` to capture it at `~/.claude/debug/<session-id>.txt`. Before v2.1.210, Claude Code accepted these rules without a warning.
+
+### Has a wildcard before the rest of the command
+
+Claude Code found a `Bash` allow rule whose `*` comes before a later word that determines which command it is, such as `Bash(git * main)` or `Bash(git -C * status *)`, in one of your [settings files](/docs/en/settings#where-settings-live), in [managed settings](/docs/en/managed-settings), or in an `--allowedTools` or `--settings` flag value. The `*` matches any text, including options inserted at that position: `Bash(git * main)` also approves `git -c core.fsmonitor=<script> diff main`, where `-c` makes git run a program the command names. [Wildcard patterns](/docs/en/permissions#wildcard-patterns) shows the matching rules.
+
+The warning exists so you can narrow a rule whose wildcard is broader than you intended. Claude Code keeps the rule and changes nothing about how it matches; the warning names the rule and its source in parentheses:
+
+```text theme={null}
+Permission allow rule (.claude/settings.json): Bash(git -C * status *) has a wildcard before the rest of the command, so it also matches any options inserted at that position and approves them without a prompt. For git, options such as -c and --exec-path can run arbitrary commands. Replace that * with the exact value you mean, or only use * after the subcommand (for example Bash(git status *)).
+```
+
+**What to do:**
+
+* Replace the `*` before the subcommand with the exact value you mean: `Bash(git checkout main)` in place of `Bash(git * main)`.
+* Move every `*` after the subcommand: `Bash(git status *)` in place of `Bash(git -C * status *)`. Write one rule per subcommand you want to allow.
+* Fix the rule at the source the warning names in parentheses: a settings file path, or the `--allowed-tools` flag itself. A `claude-settings-<hash>.json` path that doesn't exist on disk stands for an inline `--settings` value. Fix the JSON you pass to that flag.
+* If the source reads `managed policy settings`, forward the warning to whoever maintains your managed settings, since you can't clear it yourself.
+
+Claude Code doesn't warn about deny and ask rules with the same shape: it refuses or prompts for the extra commands they match rather than approving them. It also doesn't warn about rules whose subcommand comes before the first `*`, such as `Bash(git commit *)`, or rules in which no word other than an option follows the `*`, such as `Bash(git *)`, or about `:*` prefix rules such as `Bash(git:*)`.
+
+In a [background session](/docs/en/agent-view) or with `--output-format json` or `stream-json`, Claude Code writes the warning to the debug log instead of stderr, so machine-read output stays clean. Run with `--debug` to capture it at `~/.claude/debug/<session-id>.txt`. Before v2.1.246, Claude Code accepted these rules without a warning.
 
 <h3 id="the-200k-limit-isnt-enforced">
   The 200K limit isn't enforced

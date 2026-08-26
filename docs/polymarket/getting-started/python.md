@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/getting-started/python.md
+Downloaded: 2026-08-26T22:47:43.264Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -367,7 +372,7 @@ page.items[0]
 
 ## Next Steps
 
-<CardGroup cols={3}>
+<CardGroup cols={2}>
   <Card title="Read Market Data" icon="chart-line" href="/market-data/overview">
     Discover markets and work with prices, order books, and historical data.
   </Card>
@@ -378,5 +383,9 @@ page.items[0]
 
   <Card title="Place Your First Order" icon="rocket" href="/trading/quickstart">
     Set up an account and complete your first authenticated trade.
+  </Card>
+
+  <Card title="Use Session Keys" icon="key" href="/trading/session-keys">
+    Grant scoped, time-limited Deposit Wallet access to a separate signer.
   </Card>
 </CardGroup>

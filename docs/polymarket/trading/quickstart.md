@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/trading/quickstart.md
+Downloaded: 2026-08-26T22:47:43.266Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -195,3 +200,6 @@ Find your Polymarket wallet address in your profile menu:
     That's it—you placed your first market order on Polymarket.
   </Step>
 </Steps>
+
+To let a separate signer place and cancel orders without using the owner key,
+continue to [Session Keys](/trading/session-keys).

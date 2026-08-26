@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/trading/overview.md
+Downloaded: 2026-08-26T22:47:43.266Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -40,7 +45,7 @@ Set up your account once, then repeat the remaining steps for each order.
 
 ## Start Trading
 
-<CardGroup cols={3}>
+<CardGroup cols={2}>
   <Card title="Place Your First Order" icon="rocket" href="/trading/quickstart">
     Complete the first authenticated trading workflow.
   </Card>
@@ -52,5 +57,9 @@ Set up your account once, then repeat the remaining steps for each order.
   <Card title="Order Lifecycle" icon="repeat" href="/concepts/order-lifecycle">
     Understand how orders move from submission through fills, cancellation, or
     expiration.
+  </Card>
+
+  <Card title="Session Keys" icon="clock" href="/trading/session-keys">
+    Give a separate signer scoped, time-limited Deposit Wallet access.
   </Card>
 </CardGroup>

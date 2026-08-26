@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/changelog/sdks.md
+Downloaded: 2026-08-26T22:47:43.293Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -8,6 +13,22 @@
 
 <Tabs>
   <Tab title="TypeScript">
+    ### `0.7.0`
+
+    * Added scoped Deposit Wallet session keys through `client.authorizeSessionKey(...)`, `client.fetchSessionKeys()`, and `client.revokeSessionKey(...)`. Secure clients can use an authorized session signer for ordinary operations. Scopes default to `ALL`; known scopes are enumerated while newer scope strings remain usable.
+    * Account notifications now use a `NotificationType`-discriminated union with a typed payload for every supported kind. `fetchNotifications(...)` omits kinds unknown to this SDK version and rejects a response when a recognized kind has a malformed payload.
+    * `RateLimitError.rateLimit` now carries the `Poly-RateLimit-*` state returned with a rejection. Pass `onRateLimitUpdate` when creating a client to receive per-signer bucket, remaining, reset, tier, and warning updates from any response that reports them.
+    * Order estimation, preparation, creation, and placement now accept PolyV2 position IDs and route them through Exchange V3 signing and trading approvals. Existing token-ID orders remain supported.
+    * `listComboPositions(...)` now accepts either one status or an array of statuses.
+    * `RequestRejectedError.restriction` distinguishes matching-engine restarts from post-only mode, and `retryAfter` falls back to the response body's `retry_after_seconds` value when the header is absent. Batch post-only rejections now use the `post_only_mode` order error code.
+    * Order preparation now tolerates insignificant floating-point drift on valid tick-grid prices and uses exact fixed-point amount calculations. CLOB salts that cannot round-trip through a JavaScript number are rejected before submission.
+    * Breaking change: deprecated `CtfConditionId` type, use ConditionId\` instead.
+
+    ```diff theme={null}
+    -import type { CtfConditionId } from "@polymarket/client";
+    +import type { ConditionId } from "@polymarket/client";
+    ```
+
     ### `0.6.0`
 
     * Added requester-side Combos RFQ support through `client.requestComboQuote(...)`, `client.acceptComboQuote(...)`, and `client.waitForComboFill(...)`. You can also call `fetchRfqStatus` from `@polymarket/client/actions`. Authenticate requests with `builderApiKey(...)` or `remoteBuilderSigning(...)`. Winning quotes can be stored as JSON, and SELL quotes include the exact post-fee `netReceive`. No-quote, decline, and expiry outcomes return values. Gateway rejections throw `RfqRequestRejectedError`.
@@ -241,6 +262,21 @@
   </Tab>
 
   <Tab title="Python">
+    ### `0.7.0`
+
+    * Added scoped Deposit Wallet session keys through `authorize_session_key(...)`, `fetch_session_keys()`, and `revoke_session_key(...)` on secure clients. Secure clients can use an authorized session signer for ordinary operations. Scopes default to `ALL`; known scopes are enumerated while newer scope strings remain usable.
+    * `RateLimitError.rate_limit` now carries the `Poly-RateLimit-*` state returned with a rejection. Pass `on_rate_limit_update` when creating a client to receive per-signer rate-limit updates from any response that reports them.
+    * Added `get_trading_approvals_state(...)` to public and secure clients so applications can inspect missing ERC-20 and ERC-1155 approvals without submitting transactions.
+    * `RequestRejectedError.restriction` now distinguishes matching-engine restarts, cancel-only mode, and post-only mode. `retry_after` falls back to the response body's `retry_after_seconds` value when the header is absent.
+    * Breaking change: account notifications are now a `NotificationType`-discriminated union whose payloads are typed Pydantic models instead of arbitrary mappings. Narrow on `notification.type`, then read payload fields as attributes.
+
+    ```diff theme={null}
+    -if notification.type == 2:
+    -    order_id = notification.payload["order_id"]
+    +if notification.type == NotificationType.ORDER_FILL:
+    +    order_id = notification.payload.order_id
+    ```
+
     ### `0.6.0`
 
     * Added requester-side Combos RFQ support to `SecureClient` and `AsyncSecureClient` through `request_combo_quote(...)`, `accept_combo_quote(...)`, `wait_for_combo_fill(...)`, and `fetch_rfq_status(...)`. Pass a Builder API key through `api_key=`. `ComboQuote` values can be serialized, and SELL quotes include the exact post-fee `net_receive`. No-quote, decline, expiry, and terminal failure outcomes return values. Gateway rejections raise `RfqRequestRejectedError`.

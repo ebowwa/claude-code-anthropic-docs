@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/trading/wallets-auth.md
+Downloaded: 2026-08-26T22:47:43.266Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -17,6 +22,10 @@ A Deposit Wallet is the default smart wallet for trading on Polymarket. Your wal
 | **Deposit Wallet** | All Polymarket account wallets deployed on or after May 4, 2026 use it.                      |
 | **Proxy Wallet**   | A legacy smart wallet created through Magic Link or Google authentication on polymarket.com. |
 | **Safe Wallet**    | A legacy smart wallet created with an external signer such as MetaMask or Rabby Wallet.      |
+
+A Deposit Wallet owner can give a separate signer scoped, time-limited trading
+access. See [Session Keys](/trading/session-keys) to authorize the signer and
+use its credentials.
 
 ## Connect Your Account
 
