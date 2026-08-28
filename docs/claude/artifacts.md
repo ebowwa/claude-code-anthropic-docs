@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/artifacts.md
-Downloaded: 2026-08-26T22:47:59.255Z
+Downloaded: 2026-08-28T04:04:57.599Z
 -->
 
 > ## Documentation Index
@@ -50,9 +50,18 @@ Make an artifact that walks through this PR with the diff annotated inline.
 Build a dashboard artifact of last week's deploy failures by service and keep it updated as you investigate.
 ```
 
-Claude writes the page to an HTML or Markdown file in your project, then publishes it. Before publishing a new artifact, Claude Code asks for permission; it might say something like `Claude wants to publish "Deploy failures by service" (deploy-failures.html) to a private page on claude.ai`. Republishing an artifact you have already approved does not prompt again.
+Unless you name a location, Claude writes the page to an HTML or Markdown file in a temporary directory outside your project, then publishes it. Publishing a new artifact goes through your session's [permission mode](/docs/en/permission-modes):
 
-Select **Yes** to publish. Claude prints the URL, and your browser opens to the new page. Press `Ctrl+]` at any time to reopen the most recent artifact from the terminal.
+* **Auto mode**: the classifier reviews the publish instead of prompting you, so Claude can publish a page without you seeing a prompt. Which mode your sessions start in depends on your plan; see [the starting permission mode](/docs/en/permission-modes#eliminate-prompts-with-auto-mode).
+* **Manual and Accept edits modes**: Claude Code asks for permission; it might say something like `Claude wants to publish deploy-failures.html, uploading it to claude.ai (Anthropic's servers) to host as the page "Deploy failures by service", private to you until you share it`. Select **Yes** to publish.
+
+After you approve an artifact once, Claude Code republishes it without asking, and asks again in some cases, including when:
+
+* Claude declares a runtime capability for the page, such as [connector calls](#pull-live-data-with-mcp-connectors)
+* You have since [shared it publicly](#share-an-artifact)
+* You have since shared it with specific people or your organization with the latest version chosen as the version viewers see
+
+After the first publish, Claude prints the URL, and your browser opens to the new page. Press `Ctrl+]` at any time to reopen the most recent artifact from the terminal.
 
 Claude picks the artifact's title and an emoji for its browser-tab icon. Both appear in your [gallery of artifacts](#share-an-artifact) on claude.ai and in shared links, so ask Claude to use a specific title or icon if you want one.
 
@@ -116,11 +125,11 @@ If Claude tells you it can't read comments, check three things:
 
 * You're running Claude Code v2.1.221 or later.
 * You're not in your first session since you installed Claude Code or upgraded from a version before v2.1.221. In that [first session after an install or upgrade](/docs/en/env-vars#first-session-after-an-install-or-upgrade), Claude might not be able to read comments yet; start a new session and ask again.
-* You haven't turned feature-flag fetching off. If you set `DISABLE_GROWTHBOOK`, `DISABLE_TELEMETRY`, or `DO_NOT_TRACK`, also set [`CLAUDE_CODE_ARTIFACT_COMMENTS=1`](/docs/en/env-vars#features-that-need-feature-flag-fetching) so Claude can read comments without fetching flags.
+* You haven't turned feature-flag fetching off.
 
 ### Let Claude reply to comments on its own
 
-After your session publishes an artifact, Claude Code watches that artifact for comments for as long as the session runs. When a commenter sends a comment to Claude, it reaches your session right away, and Claude can read the thread and reply without you asking. You need Claude Code v2.1.228 or later. If you turned feature-flag fetching off, also set both [`CLAUDE_CODE_ARTIFACT_COMMENTS=1` and `CLAUDE_CODE_ARTIFACT_COMMENTS_AUTOREACT=1`](/docs/en/env-vars#features-that-need-feature-flag-fetching). Your [permission mode](/docs/en/permission-modes) decides what Claude does when a sent comment arrives:
+After your session publishes an artifact, Claude Code watches that artifact for comments for as long as the session runs. When a commenter sends a comment to Claude, it reaches your session right away, and Claude can read the thread and reply without you asking. You need Claude Code v2.1.228 or later. If you turned [feature-flag fetching](/docs/en/env-vars#features-that-need-feature-flag-fetching) off, Claude Code doesn't watch for comments. Your [permission mode](/docs/en/permission-modes) decides what Claude does when a sent comment arrives:
 
 * **Claude replies on its own**: when your permission mode lets Claude post the reply without asking you, Claude reads the thread and replies, and edits the artifact when the comment asks for a change. You see `Auto-replied to comment thread on Artifact: <name>` or `Auto-edited Artifact: <name> in response to a comment thread`.
 * **Claude waits for you**: outside plan mode, when posting the reply would need your approval, you see `Comments are waiting on Artifact: <name>`. Claude then asks you for approval to read the thread, and again to post the reply.
@@ -262,11 +271,16 @@ Artifacts require every condition below. When one is not met, Claude writes a lo
 
 To turn artifacts off for your own sessions regardless of your organization's setting, use any of:
 
-| Method                               | Setting                              |
-| :----------------------------------- | :----------------------------------- |
-| [Settings file](/docs/en/settings)        | `"disableArtifact": true`            |
-| [Environment variable](/docs/en/env-vars) | `CLAUDE_CODE_DISABLE_ARTIFACT=1`     |
-| [Permission rule](/docs/en/permissions)   | Add `Artifact` to `permissions.deny` |
+| Where                                | What to do                                                                                                                            |
+| :----------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------ |
+| [`/config`](/docs/en/commands)            | Turn the **Artifacts** row off, which writes [`"enableArtifact": false`](/docs/en/settings-reference#enableartifact) to your user settings |
+| [Settings file](/docs/en/settings)        | Set `"enableArtifact": false`. The deprecated `"disableArtifact": true` also turns artifacts off                                      |
+| [Environment variable](/docs/en/env-vars) | Set `CLAUDE_CODE_DISABLE_ARTIFACT=1`                                                                                                  |
+| [Permission rule](/docs/en/permissions)   | Add `Artifact` to `permissions.deny`                                                                                                  |
+
+Once you turn artifacts off in a [`--settings`](/docs/en/cli-reference#cli-flags) file or with `CLAUDE_CODE_DISABLE_ARTIFACT`, or your administrator turns them off in [managed settings](/docs/en/server-managed-settings), no settings file turns them back on. Before v2.1.242, a file higher in the [precedence stack](/docs/en/settings#settings-precedence) could turn artifacts back on even when a lower-precedence file set `"enableArtifact": false`.
+
+You can also set `"enableArtifact": false` in a project's `.claude/settings.json` or `.claude/settings.local.json` to turn artifacts off for sessions in that project. An `"enableArtifact": true` in either file doesn't turn them back on. Honoring the key in project and local settings requires Claude Code v2.1.242 or later.
 
 ## Manage artifacts for your organization
 

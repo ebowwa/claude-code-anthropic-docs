@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/plugin-relevance.md
-Downloaded: 2026-08-22T20:22:25.694Z
+Downloaded: 2026-08-28T04:04:57.608Z
 -->
 
 > ## Documentation Index
@@ -14,8 +14,6 @@ Downloaded: 2026-08-22T20:22:25.694Z
 If you operate a plugin marketplace for your organization, you can have Claude Code suggest specific plugins to users based on what they are working on. Add a `relevance` block to a plugin's entry in `marketplace.json`, then allowlist the marketplace in managed settings. When a user's session matches one of the declared signals, Claude Code surfaces an install suggestion for that plugin.
 
 Marketplace-declared suggestions are opt-in per marketplace through [managed settings](/docs/en/managed-settings). No marketplace's `relevance` declarations produce suggestions until an administrator adds it to the allowlist, including the official Anthropic marketplace. Claude Code also includes one built-in suggestion that is independent of this allowlist; that tip and all marketplace-declared tips are disabled when [`spinnerTipsEnabled`](/docs/en/settings-reference#spinnertipsenabled) is set to `false`.
-
-This feature requires Claude Code v2.1.152 or later. Older clients ignore the `relevance` field.
 
 This page is for marketplace operators and enterprise administrators. If you are looking to install plugins, see [Discover and install plugins](/docs/en/discover-plugins).
 
@@ -31,7 +29,9 @@ When a signal matches and the plugin is not already installed, Claude Code shows
 * **Session-start suggestion**: if the `cwd` signal matches the working directory, a one-line `plugin suggestion: <name>@<marketplace> · /plugin` notification appears before the first turn. This surface requires Claude Code v2.1.153 or later.
 * **`/plugin` Discover tab**: the plugin is pinned to the top of the Discover list with an annotation such as "suggested for this directory" or "suggested for stripe commands". This surface requires Claude Code v2.1.154 or later.
 
-The spinner tip and the session-start notification are part of the spinner-tips system. Both are disabled when the user or project sets `spinnerTipsEnabled` to `false`, or when a custom `spinnerTipsOverride` is configured with `excludeDefault`. The Discover-tab pin is independent of tip settings.
+The spinner tip and the session-start notification are part of the spinner-tips system. Claude Code disables both when `spinnerTipsEnabled` resolves to `false` across your settings files, or when `excludeDefault` resolves to `true` across the [`spinnerTipsOverride`](/docs/en/settings-reference#spinnertipsoverride) keys in user, `--settings`, and managed settings and those keys configure at least one tip or a `tipsFile`.
+
+The Discover-tab pin is independent of tip settings.
 
 Claude Code never installs a plugin automatically. The user always confirms.
 

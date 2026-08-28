@@ -1,8 +1,3 @@
-<!--
-Source: https://docs.polymarket.com/api-reference/get-instruments.md
-Downloaded: 2026-08-20T20:27:56.413Z
--->
-
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.

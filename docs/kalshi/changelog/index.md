@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/changelog/index.md
-Downloaded: 2026-08-25T20:28:48.196Z
+Downloaded: 2026-08-28T04:04:23.865Z
 -->
 
 > ## Documentation Index
@@ -20,6 +20,20 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="August 27, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Localized market content in REST responses",
+description: "Trade API v2 market responses can now return available Spanish or Portuguese translations when requested with Accept-Language."
+}}
+>
+  Trade API v2 market responses can now return available Spanish or Portuguese
+  translations, including localized market rules, when requested with the
+  `Accept-Language` header. Regional variants such as `es-MX` and `pt-BR` are
+  supported. Requests without a supported language continue to receive English.
+</Update>
 
 <Update
   label="August 27, 2026"
@@ -44,6 +58,25 @@ description: "The user_orders WebSocket channel now includes exchange_index on e
 >
   The `user_orders` WebSocket channel now includes `exchange_index` on each
   order update, identifying the exchange shard where the order resides.
+</Update>
+
+<Update
+  label="August 27, 2026"
+  tags={["REST", "Predictions", "Margin"]}
+  rss={{
+title: "Bulk order cancellation endpoints",
+description: "New endpoints cancel up to 10,000 arbitrarily selected resting Predictions or margin orders across all subaccounts or one selected subaccount."
+}}
+>
+  New endpoints: `DELETE /trade-api/v2/portfolio/events/orders` cancels up to
+  10,000 resting Predictions orders across every exchange shard, and
+  `DELETE /trade-api/v2/margin/orders` cancels up to 10,000 resting margin
+  orders. Omit `subaccount` to select matching orders from any subaccount, or
+  pass a subaccount number to restrict cancellation to its orders. If more than
+  10,000 orders match, the orders selected are arbitrary; callers must not rely
+  on any ordering guarantee. Each request consumes the same number of write
+  tokens as a batch cancel containing the maximum number of orders allowed for
+  the caller's API tier.
 </Update>
 
 <Update

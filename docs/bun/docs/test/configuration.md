@@ -1,3 +1,8 @@
+<!--
+Source: https://bun.com/docs/test/configuration.md
+Downloaded: 2026-08-28T04:04:28.294Z
+-->
+
 # Test configuration
 
 > Configure bun test behavior with bunfig.toml and command-line options
@@ -293,7 +298,7 @@ coverageThreshold = 0.8
 coverageThreshold = { lines = 0.9, functions = 0.8 }
 ```
 
-Setting a threshold makes `bun test` exit with code 1 when coverage is enabled and any file's line or function coverage is below it. Bun accepts the `statements` key but does not currently enforce it. Outside `--parallel`, the check only runs when the `text` reporter is enabled (the default); a run with only the `lcov` reporter currently exits 0 regardless of the threshold.
+Setting a threshold makes `bun test` exit with code 1 when coverage is enabled and any file's line or function coverage is below it. Bun accepts the `statements` key but does not currently enforce it. The check applies with any coverage reporter.
 
 #### Threshold Examples
 

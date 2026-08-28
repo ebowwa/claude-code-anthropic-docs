@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/portfolio/intra-account-transfer.md
-Downloaded: 2026-08-24T20:30:00.765Z
+Downloaded: 2026-08-28T04:04:23.848Z
 -->
 
 > ## Documentation Index
@@ -10,6 +10,8 @@ Downloaded: 2026-08-24T20:30:00.765Z
 # Intra Account Transfer
 
 > Transfers funds within the same account.
+
+When `source_exchange_shard` and `destination_exchange_shard` are the same, Kalshi treats the request as a subaccount transfer. The returned transfer ID appears in the subaccount transfer history.
 
 Cross-exchange-index subaccount transfers run in up to three non-atomic steps. If a later step fails, completed steps are not undone, so funds may remain in the primary account on the source or destination exchange index.
 
@@ -75,6 +77,11 @@ paths:
       summary: Intra Account Transfer
       description: >
         Transfers funds within the same account.
+
+
+        When `source_exchange_shard` and `destination_exchange_shard` are the
+        same, Kalshi treats the request as a subaccount transfer. The returned
+        transfer ID appears in the subaccount transfer history.
 
 
         Cross-exchange-index subaccount transfers run in up to three non-atomic

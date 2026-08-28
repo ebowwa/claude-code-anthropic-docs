@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/agent-sdk/cost-tracking.md
-Downloaded: 2026-08-25T20:29:10.117Z
+Downloaded: 2026-08-28T04:04:57.622Z
 -->
 
 > ## Documentation Index
@@ -92,6 +92,8 @@ The three result-level fields differ in what they count when the agent spawns [s
 | `usage`                      | Excluded. Counts only the top-level agent loop, so tokens consumed inside subagents are not added |
 | `total_cost_usd`             | Included. Counts subagent requests alongside the top-level loop                                   |
 | `modelUsage` / `model_usage` | Included. Counts subagent requests alongside the top-level loop, broken down by model             |
+
+In [single message input mode](/docs/en/agent-sdk/streaming-vs-single-mode#single-message-input), when background subagents are still running at the end of the final turn, Claude Code waits for them, up to the cap described in [background tasks at exit](/docs/en/headless#background-tasks-at-exit), before emitting the result.
 
 The following examples iterate over the message stream from a `query()` call and print the total cost when the `result` message arrives:
 

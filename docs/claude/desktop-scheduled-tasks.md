@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/desktop-scheduled-tasks.md
-Downloaded: 2026-08-22T20:22:25.683Z
+Downloaded: 2026-08-28T04:04:57.594Z
 -->
 
 > ## Documentation Index
@@ -86,7 +86,7 @@ Each task has its own permission mode, which you set when creating or editing th
 
 To avoid stalls, click **Run now** after creating a task, watch for permission prompts, and select "always allow" for each one. Future runs of that task auto-approve the same tools without prompting. You can review and revoke these approvals from the task's detail page.
 
-Connector tools [your organization set to `ask`](/docs/en/mcp#organization-controls-on-connector-tools) and MCP tools marked [`requiresUserInteraction`](/docs/en/mcp#require-approval-for-a-specific-tool) prompt on every call and don't offer an always-allow option. Runs that call these tools stall each time.
+MCP tools marked [`requiresUserInteraction`](/docs/en/mcp#require-approval-for-a-specific-tool) prompt on every call and don't offer an always-allow option. Runs that call these tools stall each time.
 
 ## Manage scheduled tasks
 

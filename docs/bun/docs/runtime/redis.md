@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/redis.md
-Downloaded: 2026-08-20T20:27:58.397Z
--->
-
 # Redis
 
 > Use Bun's native Redis client with a Promise-based API

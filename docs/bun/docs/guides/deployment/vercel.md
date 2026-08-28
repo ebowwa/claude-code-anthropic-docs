@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/deployment/vercel.md
-Downloaded: 2026-08-20T20:27:58.406Z
--->
-
 # Deploy a Bun application on Vercel
 
 [Vercel](https://vercel.com/) is a cloud platform for building, deploying, and scaling apps. Vercel Functions can run on the Bun runtime, either behind a framework that Vercel supports or as a [`Bun.serve()`](/runtime/http/server) server.

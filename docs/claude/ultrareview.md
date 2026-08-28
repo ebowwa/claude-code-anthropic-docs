@@ -1,3 +1,8 @@
+<!--
+Source: https://code.claude.com/docs/en/ultrareview.md
+Downloaded: 2026-08-28T04:04:57.593Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://code.claude.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -55,6 +60,10 @@ To review a GitHub pull request instead of a local branch, pass the PR number:
 The command also accepts `#1234`, `PR 1234`, and pasted PR URLs; a pasted URL must point to the repository in your current directory.
 
 In PR mode, the remote sandbox clones the pull request directly from the host rather than bundling your local working tree. PR mode works with repositories on `github.com` and on [GitHub Enterprise Server](/docs/en/github-enterprise-server) instances that an Owner has connected to Claude Code.
+
+For repositories on `github.com`, the sandbox clones with the GitHub account connected to your Claude account, so the account must be able to read the PR's repository. Claude Code checks this before creating the cloud session, unless you've set [`CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC`](/docs/en/env-vars#variables), and refuses the launch when [no account is connected](/docs/en/errors#no-github-account-is-connected-to-your-claude-account) or [the account can't see the repository](/docs/en/errors#your-connected-github-account-cant-see-the-repository); the refusal names the fix. Before v2.1.248, Claude Code didn't check this before launch.
+
+Run [`/web-setup`](/docs/en/web-quickstart#connect-from-your-terminal) to connect your GitHub CLI login to your Claude account.
 
 ### Post findings to the pull request
 

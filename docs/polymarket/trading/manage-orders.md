@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/trading/manage-orders.md
+Downloaded: 2026-08-28T04:04:25.237Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -9,6 +14,13 @@
 After submitting an order, use authenticated account reads to check its current
 state, reconcile open orders and resulting trades, and cancel liquidity you no
 longer want resting on the book.
+
+<Note>
+  Clients authenticated with [Session
+  Keys](/trading/session-keys#session-key-considerations) can only fetch orders
+  and trades associated with those Session Keys. **Deposit Wallet Owners**
+  cannot fetch orders from authorized Session Keys.
+</Note>
 
 ## Fetch an Order
 
