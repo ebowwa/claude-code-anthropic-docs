@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/managed-settings.md
-Downloaded: 2026-08-28T04:04:57.603Z
+Downloaded: 2026-08-29T02:44:09.244Z
 -->
 
 > ## Documentation Index
@@ -278,6 +278,8 @@ When Claude Code found a managed source on the machine and didn't select it, a s
 When the policy isn't applying, the `Setting sources` line tells you which of two problems you have:
 
 * **The line is missing**: Claude Code found no managed source that delivers a policy key. If you deployed a managed settings file, check that it sits at the path for the OS, that it's valid JSON, and that it contains a [policy key](#how-claude-code-combines-managed-sources) rather than only the control keys.
+
+  When you deployed through server-managed settings instead, run `claude doctor`, which reports the [fetch outcome](/docs/en/server-managed-settings#verify-settings-delivery).
 * **The line names a source other than the one you deployed**: a higher-priority source is present and Claude Code ignored yours, and `Skipped sources` lists it. [How Claude Code combines managed sources](#how-claude-code-combines-managed-sources) gives the order.
 
 <span id="invalid-entries-in-managed-settings" />
@@ -296,17 +298,18 @@ To find a dropped entry, look in one of three places:
 
 A few enforcement keys aren't dropped when invalid. Claude Code enforces a stricter fallback until the value is fixed; the table shows what it enforces for each key:
 
-| Field                         | Behavior when present but invalid                                                                                                                                                                                                                |
-| :---------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `allowedMcpServers`           | Enforced as an empty allowlist, so no MCP servers are admitted until the value is fixed. An individual invalid entry is stripped and the valid subset is enforced.                                                                               |
-| `allowManagedHooksOnly`       | Treated as `true` until fixed: the [hook restrictions](/docs/en/settings-reference#allowmanagedhooksonly) apply and, unless `disableCommandPluginSources` is explicitly `false`, command-sourced plugins are disabled.                                |
-| `allowManagedMcpServersOnly`  | Treated as `true`.                                                                                                                                                                                                                               |
-| `disableCommandPluginSources` | Treated as `true`, so command-sourced plugins stay disabled until the value is fixed.                                                                                                                                                            |
-| `availableModels`             | Enforced as an empty allowlist until fixed, so only the Default model is available; a non-string entry is stripped and the valid subset enforced.                                                                                                |
-| `enforceAvailableModels`      | Treated as `true`.                                                                                                                                                                                                                               |
-| `forceLoginOrgUUID`           | No organization is permitted to log in until the value is fixed.                                                                                                                                                                                 |
-| `deniedMcpServers`            | An individual invalid entry is stripped and the valid subset is enforced. A wholly invalid value is dropped with a warning, since denying every server would block servers the policy never named.                                               |
-| `sandbox.credentials`         | A recoverable invalid entry is degraded to `mode: "deny"` with a warning; an unrecoverable one is stripped; valid entries stay enforced. See [invalid credential entries](/docs/en/settings-reference#invalid-credential-entries-in-managed-settings) |
+| Field                         | Behavior when present but invalid                                                                                                                                                                                                                                                  |
+| :---------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `allowedMcpServers`           | Enforced as an empty allowlist, so no MCP servers are admitted until the value is fixed. An individual invalid entry is stripped and the valid subset is enforced.                                                                                                                 |
+| `allowManagedHooksOnly`       | Treated as `true` until fixed: the [hook restrictions](/docs/en/settings-reference#allowmanagedhooksonly) apply and, unless `disableCommandPluginSources` is explicitly `false`, command-sourced plugins are disabled.                                                                  |
+| `allowManagedMcpServersOnly`  | Treated as `true`.                                                                                                                                                                                                                                                                 |
+| `disableCommandPluginSources` | Treated as `true`, so command-sourced plugins stay disabled until the value is fixed.                                                                                                                                                                                              |
+| `availableModels`             | Enforced as an empty allowlist until fixed, so only the Default model is available; a non-string entry is stripped and the valid subset enforced.                                                                                                                                  |
+| `enforceAvailableModels`      | Treated as `true`.                                                                                                                                                                                                                                                                 |
+| `forceLoginOrgUUID`           | No organization is permitted to log in until the value is fixed.                                                                                                                                                                                                                   |
+| `crossSessionInbound`         | Treated as `refuse`, the most restrictive value, so inbound [cross-session messages](/docs/en/cross-session-messaging#control-inbound-messages) are refused until the value is fixed. The developer sees [a warning](/docs/en/errors#crosssessioninbound-must-be-one-of-accept-hold-refuse). |
+| `deniedMcpServers`            | An individual invalid entry is stripped and the valid subset is enforced. A wholly invalid value is dropped with a warning, since denying every server would block servers the policy never named.                                                                                 |
+| `sandbox.credentials`         | A recoverable invalid entry is degraded to `mode: "deny"` with a warning; an unrecoverable one is stripped; valid entries stay enforced. See [invalid credential entries](/docs/en/settings-reference#invalid-credential-entries-in-managed-settings)                                   |
 
 `requiredMinimumVersion` and `requiredMaximumVersion` fail open by design: an invalid value is dropped rather than enforced, so a bad policy push can't prevent Claude Code from starting.
 
@@ -320,7 +323,7 @@ Claude Code reads the following keys only from a managed source; placing them in
 
 Most of them are locks: the value a lock governs, such as permission rules or `sandbox.network.allowedDomains`, is an ordinary key that any level can set, and the lock tells Claude Code to honor only the managed value.
 
-The table covers the permission, plugin, and delivery controls. For any key not listed here, the Scope column of the [settings reference](/docs/en/settings-reference#all-settings) index says whether it's managed-only; the remaining managed-only keys there include the gateway login URL, version, browser, mobile-simulator, SSH host, Desktop local-session, sandbox binary path, and CLAUDE.md controls.
+The table covers the permission, plugin, and delivery controls. For any key not listed here, the Scope column of the [settings reference](/docs/en/settings-reference#all-settings) index says whether it's managed-only; the remaining managed-only keys there include the gateway login URL, version, browser, mobile-simulator, SSH host, Desktop local-session, sandbox binary path, model pricing, and CLAUDE.md controls.
 
 | Setting                                                                                                               | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
 | :-------------------------------------------------------------------------------------------------------------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |

@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/trading/session-keys.md
-Downloaded: 2026-08-28T04:04:25.237Z
+Downloaded: 2026-08-29T02:43:57.791Z
 -->
 
 > ## Documentation Index
@@ -12,20 +12,20 @@ Downloaded: 2026-08-28T04:04:25.237Z
 > Authorize a separate signer for scoped, time-limited Deposit Wallet trading.
 
 <Note>
-  Session keys are in beta. We welcome feedback as you integrate them.
+  Session Keys are in beta. We welcome feedback as you integrate them.
 </Note>
 
-A session key is a separate signer that a Deposit Wallet Owner authorizes to
+A Session Key is a separate signer that a Deposit Wallet Owner authorizes to
 trade for a Deposit Wallet. It lets an integration perform routine trading
-without using the owner's key. A session key cannot withdraw funds from the
+without using the owner's key. A Session Key cannot withdraw funds from the
 Deposit Wallet.
 
 <Note>
-  Session keys work only with Deposit Wallets. A dedicated migration flow from
+  Session Keys work only with Deposit Wallets. A dedicated migration flow from
   Safe Wallets and Proxy Wallets is planned.
 </Note>
 
-A session key can be scoped to trade on specific supported venues or all venues:
+A Session Key can be scoped to trade on specific supported venues or all venues:
 
 * **CLOB:** [Place prediction market orders](/trading/place-orders) on the
   central limit order book.
@@ -36,14 +36,14 @@ A session key can be scoped to trade on specific supported venues or all venues:
 ## Authorize a Session Key
 
 The Deposit Wallet Owner authorizes a session signer address with an expiration
-and scoped permissions.
+of 180 days and scoped permissions.
 
 <Warning>
-  Session keys are Externally Owned Accounts (EOAs). Keep their private keys
+  Session Keys are Externally Owned Accounts (EOAs). Keep their private keys
   secret to prevent unauthorized trading on behalf of your Deposit Wallet.
 </Warning>
 
-Authorizing a session key requires a Builder API key. See [Create New
+Authorizing a Session Key requires a Builder API key. See [Create New
 Accounts](/trading/wallets-auth#create-new-accounts) to generate one.
 
 <Warning>
@@ -57,7 +57,7 @@ Accounts](/trading/wallets-auth#create-new-accounts) to generate one.
   <Tab title="TypeScript">
     <Steps>
       <Step title="Generate a Session Key">
-        First, generate a fresh EVM keypair for the session key.
+        First, generate a fresh EVM keypair for the Session Key.
 
         ```ts theme={null}
         import { generatePrivateKey, privateKeyToAccount } from "viem/accounts";
@@ -93,13 +93,11 @@ Accounts](/trading/wallets-auth#create-new-accounts) to generate one.
       </Step>
 
       <Step title="Authorize the Session Key">
-        Finally, call `authorizeSessionKey()` to authorize your session key with
-        the desired expiration.
+        Finally, call `authorizeSessionKey()` to authorize your Session Key.
 
         ```ts theme={null}
         const authorization = await secureClient.authorizeSessionKey({
           address: sessionKeyAddress,
-          validUntil: Math.floor(Date.now() / 1_000) + 2 * 60 * 60,
         });
 
         // authorization: AuthorizeSessionKeyResult
@@ -114,7 +112,6 @@ Accounts](/trading/wallets-auth#create-new-accounts) to generate one.
         const scopedAuthorization = await secureClient.authorizeSessionKey({
           address: sessionKeyAddress,
           scopes: [SessionKeyKnownScope.CLOB, SessionKeyKnownScope.COMBOSRFQ],
-          validUntil: Math.floor(Date.now() / 1_000) + 2 * 60 * 60,
         });
 
         // scopedAuthorization: AuthorizeSessionKeyResult
@@ -126,7 +123,7 @@ Accounts](/trading/wallets-auth#create-new-accounts) to generate one.
   <Tab title="Python">
     <Steps>
       <Step title="Generate a Session Key">
-        First, generate a fresh EVM keypair for the session key.
+        First, generate a fresh EVM keypair for the Session Key.
 
         ```python theme={null}
         from eth_account import Account
@@ -162,15 +159,11 @@ Accounts](/trading/wallets-auth#create-new-accounts) to generate one.
       </Step>
 
       <Step title="Authorize the Session Key">
-        Finally, call `authorize_session_key()` to authorize your session key
-        with the desired expiration.
+        Finally, call `authorize_session_key()` to authorize your Session Key.
 
         ```python theme={null}
-        from datetime import UTC, datetime, timedelta
-
         authorization = await secure_client.authorize_session_key(
             address=session_key_address,
-            valid_until=datetime.now(UTC) + timedelta(hours=2),
         )
 
         # authorization: AuthorizeSessionKeyResult
@@ -188,7 +181,6 @@ Accounts](/trading/wallets-auth#create-new-accounts) to generate one.
                 SessionKeyKnownScope.CLOB,
                 SessionKeyKnownScope.COMBOSRFQ,
             ),
-            valid_until=datetime.now(UTC) + timedelta(hours=2),
         )
 
         # scoped_authorization: AuthorizeSessionKeyResult
@@ -203,7 +195,7 @@ Accounts](/trading/wallets-auth#create-new-accounts) to generate one.
 
     <Steps>
       <Step title="Generate a Session Key">
-        First, generate a fresh EVM keypair for the session key:
+        First, generate a fresh EVM keypair for the Session Key:
 
         <CodeGroup>
           ```bash Foundry theme={null}
@@ -255,14 +247,17 @@ Accounts](/trading/wallets-auth#create-new-accounts) to generate one.
         function authorizeSessionSigner(address sessionSigner, uint256 validUntil)
         ```
 
-        Set `validUntil` to a future whole Unix timestamp in seconds, no more
-        than 180 days from now. The following example uses Viem:
+        `validUntil` is required. Always set it to the current whole Unix
+        timestamp in seconds plus 180 days. Other values are rejected. The
+        following Viem example computes this value:
 
         ```ts Example theme={null}
         import { encodeFunctionData, parseAbi } from "viem"
 
         const sessionSignerAddress = "<session_signer_address>" as `0x${string}`
-        const sessionExpiryUnixSeconds = BigInt("<session_expiry_unix_seconds>")
+        const sessionExpiryUnixSeconds = BigInt(
+          Math.floor(Date.now() / 1_000) + 4_315 * 60 * 60,
+        )
 
         const calldata = encodeFunctionData({
           abi: parseAbi([
@@ -452,8 +447,8 @@ Accounts](/trading/wallets-auth#create-new-accounts) to generate one.
       </Step>
 
       <Step title="Poll for the Session Key">
-        Finally, poll the session keys endpoint until it returns the session
-        key with the expected scopes and expiration:
+        Finally, poll the Session Keys endpoint until it returns the Session
+        Key with the expected scopes and expiration:
 
         ```bash theme={null}
         curl "https://clob.polymarket.com/v1/user/session-signers" \
@@ -503,7 +498,7 @@ Accounts](/trading/wallets-auth#create-new-accounts) to generate one.
 
 ## Place an Order
 
-This section shows how to place an order using a session key. See [Place
+This section shows how to place an order using a Session Key. See [Place
 Orders](/trading/place-orders) for the complete order workflow.
 
 <Tabs>
@@ -554,7 +549,7 @@ Orders](/trading/place-orders) for the complete order workflow.
     <Steps>
       <Step title="Create the Session Client">
         First, create an `AsyncSecureClient` for the Deposit Wallet with the
-        session key.
+        Session Key.
 
         ```python theme={null}
         from polymarket import AsyncSecureClient
@@ -588,13 +583,13 @@ Orders](/trading/place-orders) for the complete order workflow.
   </Tab>
 
   <Tab title="API">
-    Authenticate with the CLOB using the session key, then place an order. See
+    Authenticate with the CLOB using the Session Key, then place an order. See
     [API Authentication](/getting-started/api#authentication) for the complete
     signing flow.
 
     <Steps>
       <Step title="Create a CLOB L1 Signature">
-        First, create a `<clob_l1_signature>` with the session key to prove
+        First, create a `<clob_l1_signature>` with the Session Key to prove
         control of the session signer.
 
         ```json ClobAuth theme={null}
@@ -730,7 +725,7 @@ Orders](/trading/place-orders) for the complete order workflow.
       </Step>
 
       <Step title="Sign the Order">
-        Then, sign the order with the session key as shown in [Sign the
+        Then, sign the order with the Session Key as shown in [Sign the
         Order](/trading/place-orders#sign-the-order):
 
         ```text theme={null}
@@ -819,7 +814,7 @@ Orders](/trading/place-orders) for the complete order workflow.
 
 ## Fetch Session Keys
 
-List the active session keys for a Deposit Wallet to see which signers can
+List the active Session Keys for a Deposit Wallet to see which signers can
 currently act on its behalf.
 
 <Tabs>
@@ -890,7 +885,7 @@ currently act on its behalf.
 
   <Tab title="API">
     Authenticate the Deposit Wallet Owner with the CLOB, then fetch the Deposit
-    Wallet's active session keys. See [API
+    Wallet's active Session Keys. See [API
     Authentication](/getting-started/api#authentication) for the complete
     signing flow.
 
@@ -960,7 +955,7 @@ currently act on its behalf.
       </Step>
 
       <Step title="Fetch the Session Keys">
-        Finally, fetch the active session keys:
+        Finally, fetch the active Session Keys:
 
         ```bash theme={null}
         curl "https://clob.polymarket.com/v1/user/session-signers" \
@@ -999,7 +994,7 @@ currently act on its behalf.
 
         `signers` contains only usable, unexpired, non-revoked authorizations.
         An empty array means the request succeeded but there are no active
-        session keys.
+        Session Keys.
       </Step>
     </Steps>
   </Tab>
@@ -1007,17 +1002,17 @@ currently act on its behalf.
 
 ## Revoke a Session Key
 
-Revoke a session key when an integration no longer needs access or its private
+Revoke a Session Key when an integration no longer needs access or its private
 key may have been exposed. Revocation prevents further trading by that key and
-cancels its open orders without affecting orders placed by other session keys.
+cancels its open orders without affecting orders placed by other Session Keys.
 
-Revocation completes after the session key's open orders are canceled and the
+Revocation completes after the Session Key's open orders are canceled and the
 on-chain transaction is confirmed, which may take several minutes.
 
 <Tabs>
   <Tab title="TypeScript">
     Call `revokeSessionKey()` on the Deposit Wallet Owner's `SecureClient` with
-    the session key's public address:
+    the Session Key's public address:
 
     ```ts theme={null}
     const revocation = await secureClient.revokeSessionKey({
@@ -1033,7 +1028,7 @@ on-chain transaction is confirmed, which may take several minutes.
 
   <Tab title="Python">
     Call `revoke_session_key()` on the Deposit Wallet Owner's
-    `AsyncSecureClient` with the session key's public address. The synchronous
+    `AsyncSecureClient` with the Session Key's public address. The synchronous
     `SecureClient` provides the same method without `await`.
 
     ```python theme={null}
@@ -1182,7 +1177,7 @@ on-chain transaction is confirmed, which may take several minutes.
 
         Where:
 
-        * `<session_signer_address>` is the session key to revoke.
+        * `<session_signer_address>` is the Session Key to revoke.
         * `<wallet_nonce>` and `<batch_deadline_unix_seconds>` match the values
           in the signed typed data.
         * `<signature>` is the value returned in the previous step.
@@ -1267,7 +1262,7 @@ on-chain transaction is confirmed, which may take several minutes.
         }
         ```
 
-        At that point, the session key's open orders have been canceled and its
+        At that point, the Session Key's open orders have been canceled and its
         on-chain revocation is confirmed.
       </Step>
     </Steps>
@@ -1275,6 +1270,9 @@ on-chain transaction is confirmed, which may take several minutes.
 </Tabs>
 
 ## Session Key Considerations
+
+Configurable shorter Session Key expirations are not currently supported. To
+end access before 180 days, [revoke the Session Key](#revoke-a-session-key).
 
 If you are adding Session Key support to an existing integration, keep these
 access boundaries in mind:

@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/claude-code-on-the-web.md
-Downloaded: 2026-08-28T04:04:57.593Z
+Downloaded: 2026-08-29T02:44:09.232Z
 -->
 
 > ## Documentation Index
@@ -26,7 +26,7 @@ This page covers the web product itself:
 * [Cloud environments](#cloud-environments): where sessions run, and where to configure that
 * [GitHub authentication options](#github-authentication-options): two ways to connect GitHub
 * [Move tasks between web and terminal](#move-tasks-between-web-and-terminal) with `--cloud` and `--teleport`
-* [Work with sessions](#work-with-sessions): reviewing, sharing, archiving, deleting
+* [Work with sessions](#work-with-sessions): permission modes, reviewing, sharing, archiving, deleting
 * [Auto-fix pull requests](#auto-fix-pull-requests): respond automatically to CI failures and review comments
 * [Security and isolation](#security-and-isolation): how sessions are isolated
 * [Limitations](#limitations): rate limits and platform restrictions
@@ -52,7 +52,7 @@ Cloud sessions need access to your GitHub repositories to clone code and push br
   With either method, a cloud session can access any repository the connecting GitHub account can see, not just the repositories the Claude GitHub App is installed on. App installation enables PR webhooks for [Auto-fix](#auto-fix-pull-requests); it is not a session-level access control. To restrict which repositories your team can reach from cloud sessions, restrict access on GitHub itself, for example by limiting team or repository membership for the connected GitHub accounts.
 </Note>
 
-Either method works. [`/schedule`](/docs/en/routines) checks for either form of access and prompts you to run `/web-setup` if neither is configured. See [Connect from your terminal](/docs/en/web-quickstart#connect-from-your-terminal) for the `/web-setup` walkthrough.
+Either method works. For how `/schedule` checks that access before creating a routine, see [Repositories and branch permissions](/docs/en/routines#repositories-and-branch-permissions). See [Connect from your terminal](/docs/en/web-quickstart#connect-from-your-terminal) for the `/web-setup` walkthrough.
 
 Quick web setup is an organization setting that lets members connect GitHub with `/web-setup`, skips the Claude GitHub App install prompt during browser onboarding, and has browser onboarding create the [**Default** environment](/docs/en/cloud-environments#the-default-environment) for them instead of showing the environment form. On Team and Enterprise plans it's off by default, which hides `/web-setup`. An [Owner](/docs/en/server-managed-settings#access-control) turns it on with the **Quick web setup** toggle at [**Admin settings > Claude Code**](https://claude.ai/admin-settings/claude-code).
 
@@ -225,6 +225,10 @@ To change the auto-compact window instead, set [`CLAUDE_CODE_AUTO_COMPACT_WINDOW
 
 [Agent teams](/docs/en/agent-teams) are off by default but can be enabled by adding `CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` to your [environment variables](/docs/en/cloud-environments#set-environment-variables).
 
+### Permission modes in cloud sessions
+
+You pick a cloud session's [permission mode](/docs/en/permission-modes) from the [mode dropdown](/docs/en/permission-modes#switch-permission-modes), both when you create the task and while the session runs. When you reopen a session whose Anthropic-hosted [environment expired](#environment-expired), or send a message to a session that a self-hosted runner [released while it was idle](/docs/en/self-hosted-environments-reference#runner-cli-flags), Claude Code resumes the session in the permission mode it was in.
+
 ### Review changes
 
 Each session shows a diff indicator with lines added and removed, like `+42 -18`. Select it to open the diff view, leave inline comments on specific lines, and send them to Claude with your next message.
@@ -322,7 +326,7 @@ If a new session fails to start with `Session creation failed` or stalls at prov
 
 ### Unable to get organization UUID
 
-`claude --cloud` and `claude --teleport` require sign-in with a claude.ai account. If you authenticate with an API key, or your stored account details are stale, these commands fail with `Unable to get organization UUID` or a message that API key authentication is not sufficient.
+`claude --cloud` and `claude --teleport` require sign-in with a claude.ai account. If you authenticate with an API key, or your stored account details are stale, these commands fail with `Unable to get organization UUID` or a message that API key authentication is not sufficient. With API key authentication or stale account details, running `claude --teleport` without a session ID shows `Error loading Claude Code sessions` in the session picker instead of either message, and the same fix applies.
 
 Run `/login` to sign in with your claude.ai account, then retry the command. If the error names your provider instead, see the [error table](#output-and-errors): cloud sessions aren't available through third-party providers.
 

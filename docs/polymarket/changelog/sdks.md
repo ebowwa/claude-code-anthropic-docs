@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/changelog/sdks.md
-Downloaded: 2026-08-26T22:47:43.293Z
+Downloaded: 2026-08-29T02:43:57.799Z
 -->
 
 > ## Documentation Index
@@ -13,6 +13,41 @@ Downloaded: 2026-08-26T22:47:43.293Z
 
 <Tabs>
   <Tab title="TypeScript">
+    ### `0.8.1`
+
+    * `client.authorizeSessionKey(...)` no longer accepts `validUntil`. This is a breaking change. Each Session Key authorization expires after 180 days. Revoke a Session Key to end access sooner.
+
+    ```diff theme={null}
+    const authorization = await client.authorizeSessionKey({
+      address: sessionKeyAddress,
+    -  validUntil: new Date(Date.now() + 30 * 24 * 60 * 60 * 1000),
+    });
+    ```
+
+    ### `0.8.0`
+
+    * Added protocol-neutral `assetId` and `conditionId` fields to CLOB reads, filters, realtime events, and Data API responses. The deprecated `tokenId`, `tokenIds`, and `market` aliases still work.
+    * Position lifecycle methods now split, merge, and redeem ordinary PolyV2 positions. Redemption by position ID supports binary, negative-risk, and Combo positions.
+    * `setupTradingApprovals()` and `prepareTradingApprovals()` now include the PolyV2 binary and negative-risk modules.
+    * Combo market discovery now exposes whether a market is `pending` and excludes pending markets when selecting live RFQ legs.
+    * Live volume reads now return `null` for empty market identifiers.
+    * Renamed the low-level CTF and Router transaction builders and their error guards to contract-specific names. This is a breaking change for callers that import them directly.
+
+    ```diff theme={null}
+    import {
+    -  mergePositionsCall,
+    -  mergeV2Call,
+    -  redeemV2Call,
+    -  splitPositionCall,
+    -  splitV2Call,
+    +  ctfMergePositionsCall,
+    +  ctfSplitPositionCall,
+    +  routerMergeCall,
+    +  routerRedeemCall,
+    +  routerSplitCall,
+    } from "@polymarket/client";
+    ```
+
     ### `0.7.0`
 
     * Added scoped Deposit Wallet session keys through `client.authorizeSessionKey(...)`, `client.fetchSessionKeys()`, and `client.revokeSessionKey(...)`. Secure clients can use an authorized session signer for ordinary operations. Scopes default to `ALL`; known scopes are enumerated while newer scope strings remain usable.
@@ -262,6 +297,17 @@ Downloaded: 2026-08-26T22:47:43.293Z
   </Tab>
 
   <Tab title="Python">
+    ### `0.7.1`
+
+    * `authorize_session_key(...)` no longer accepts `valid_until`. This is a breaking change. Each Session Key authorization expires after 180 days. Revoke a Session Key to end access sooner.
+
+    ```diff theme={null}
+    authorization = await secure_client.authorize_session_key(
+        address=session_key_address,
+    -    valid_until=datetime.now(UTC) + timedelta(days=30),
+    )
+    ```
+
     ### `0.7.0`
 
     * Added scoped Deposit Wallet session keys through `authorize_session_key(...)`, `fetch_session_keys()`, and `revoke_session_key(...)` on secure clients. Secure clients can use an authorized session signer for ordinary operations. Scopes default to `ALL`; known scopes are enumerated while newer scope strings remain usable.

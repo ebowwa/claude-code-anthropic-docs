@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/model-config.md
-Downloaded: 2026-08-28T04:04:57.613Z
+Downloaded: 2026-08-29T02:44:09.254Z
 -->
 
 > ## Documentation Index
@@ -113,7 +113,7 @@ You can configure your model in several ways, listed in order of priority:
 4. **Settings**: configure permanently in your settings file using the `model` field
 5. **[Default for new sessions](#set-a-default-model-for-new-sessions)**: set `ANTHROPIC_DEFAULT_MODEL=<alias|name>`
 
-As of v2.1.153, `/model` saves your choice as the default for new sessions by writing the `model` field in your user settings. In the picker:
+`/model` saves your choice as the default for new sessions by writing the `model` field in your user settings. In the picker:
 
 * `Enter`: switch model and save as your default
 * `s`: switch model for this session only
@@ -437,6 +437,8 @@ When a request fails over, Claude Code tries each entry in order until one accep
 * **Outside the allowlist**: Claude Code drops any entry not permitted by [`availableModels`](#restrict-model-selection) when it reads the chain.
 * **Smaller context window during compaction**: the chain also covers [compaction](/docs/en/context-window#what-survives-compaction), but Claude Code won't fall back to a model with a smaller context window than the primary's, since summarizing there would cut off part of the conversation first. If every fallback is smaller, compaction shows the original error and you can retry.
 
+Claude Code also applies the chain to [subagents](/docs/en/sub-agents). When a subagent's request fails over, Claude Code tries your configured fallback models in order, and the subagent continues on the model that accepts the request. Your session's model is unchanged. Before v2.1.247, a failure the chain covers ended the subagent instead.
+
 ### Automatic model fallback
 
 This section covers content-based fallback from Fable 5 and Opus 5. For availability-based fallback when a model is overloaded or unavailable, see [Fallback model chains](#fallback-model-chains).
@@ -550,7 +552,7 @@ Include `ultrathink` anywhere in your prompt to request deeper reasoning on that
 
 You can change effort through any of the following:
 
-* **`/effort`**: run `/effort` with no arguments to open an interactive slider, `/effort` followed by a level name to set it directly, or `/effort auto` to reset to the model default
+* **`/effort`**: run `/effort` with no arguments to open an interactive slider, `/effort` followed by a level name to set it directly, or `/effort auto` to reset to the model default. You can run it while Claude is working, and once you confirm the [cache warning](/docs/en/prompt-caching#changing-effort-level), if Claude Code shows one, Claude Code applies the new level to the next request in the turn
 * **In `/model`**: use left/right arrow keys to adjust the effort slider when selecting a model
 * **`--effort` flag**: pass a level name to set it for a single session when launching Claude Code
 * **Environment variable**: set `CLAUDE_CODE_EFFORT_LEVEL` to a level name or `auto`
@@ -574,13 +576,13 @@ On Opus 4.6 and Sonnet 4.6, you can set `CLAUDE_CODE_DISABLE_ADAPTIVE_THINKING=1
 
 ### Extended thinking
 
-Extended thinking is the reasoning Claude emits before responding. On models that support [adaptive reasoning](#adjust-effort-level), the effort level is the primary control for how much thinking happens; the settings below turn thinking on or off and control how it displays.
+Extended thinking is the reasoning Claude emits before responding. On models that support [adaptive reasoning](#adjust-effort-level), the effort level is the primary control for how much thinking happens; the settings below turn thinking on or off and control how it displays. With thinking turned off on the Anthropic API, Claude Code sends effort `high` instead of a higher level to models it knows [don't accept that combination](/docs/en/errors#effort-isnt-available-with-thinking-turned-off), such as Opus 5.
 
-| Control                        | How to set it                                                                                                                                                                                                                                                                                                                                                             |
-| :----------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Toggle for the current session | Press `Option+T` on macOS or `Alt+T` on Windows and Linux                                                                                                                                                                                                                                                                                                                 |
-| Set the global default         | Run `/config` and toggle thinking mode. Saved as `alwaysThinkingEnabled` in `~/.claude/settings.json`                                                                                                                                                                                                                                                                     |
-| Disable regardless of effort   | Set [`MAX_THINKING_TOKENS=0`](/docs/en/env-vars), which turns thinking off on the Anthropic API except on Fable 5. On [third-party providers](/docs/en/third-party-integrations) this omits the `thinking` parameter instead, and adaptive-reasoning models may still think. Other values apply only with a [fixed thinking budget](#adaptive-reasoning-and-fixed-thinking-budgets) |
+| Control                                 | How to set it                                                                                                                                                                                                                                                                                                                                                             |
+| :-------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Toggle for the current session          | Press `Option+T` on macOS or `Alt+T` on Windows and Linux                                                                                                                                                                                                                                                                                                                 |
+| Set the global default                  | Run `/config` and toggle thinking mode. Saved as `alwaysThinkingEnabled` in `~/.claude/settings.json`                                                                                                                                                                                                                                                                     |
+| Disable through an environment variable | Set [`MAX_THINKING_TOKENS=0`](/docs/en/env-vars), which turns thinking off on the Anthropic API except on Fable 5. On [third-party providers](/docs/en/third-party-integrations) this omits the `thinking` parameter instead, and adaptive-reasoning models may still think. Other values apply only with a [fixed thinking budget](#adaptive-reasoning-and-fixed-thinking-budgets) |
 
 Thinking cannot be turned off on Fable 5. The session toggle, `alwaysThinkingEnabled`, and `MAX_THINKING_TOKENS=0` have no effect there, and Fable 5 decides per step how much to think based on the effort level.
 

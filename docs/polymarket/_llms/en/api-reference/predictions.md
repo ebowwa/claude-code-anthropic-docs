@@ -1,0 +1,194 @@
+<!--
+Source: https://docs.polymarket.com/_llms/en/api-reference/predictions.md
+Downloaded: 2026-08-29T02:43:57.799Z
+-->
+
+# Polymarket Documentation: English API Reference Predictions
+
+## Predictions
+
+- [Overview](https://docs.polymarket.com/api-reference/predictions/overview.md): Explore the APIs available for building with Polymarket Predictions.
+- [Rate Limits](https://docs.polymarket.com/api-reference/rate-limits.md): Cloudflare IP-based request limits for Polymarket APIs
+- [CLOB Trading Rate Limits](https://docs.polymarket.com/api-reference/trading-rate-limits.md): Per-signer token-bucket limits for CLOB order and cancellation requests
+- [Geographic Restrictions](https://docs.polymarket.com/api-reference/geoblock.md): Check geographic restrictions before placing orders on the Polymarket API
+
+### Events
+
+- [List events (keyset pagination)](https://docs.polymarket.com/api-reference/events/list-events-keyset-pagination.md): Returns events using cursor-based (keyset) pagination for stable, efficient paging through large result sets. Use `next_cursor` from each response as `after_cursor` in the next request. The `offset` parameter is explicitly rejected; use `after_cursor` instead.
+- [List events](https://docs.polymarket.com/api-reference/events/list-events.md)
+- [Get event by id](https://docs.polymarket.com/api-reference/events/get-event-by-id.md)
+- [Get event by slug](https://docs.polymarket.com/api-reference/events/get-event-by-slug.md)
+- [Get event tags](https://docs.polymarket.com/api-reference/events/get-event-tags.md)
+
+### Markets
+
+- [List markets (keyset pagination)](https://docs.polymarket.com/api-reference/markets/list-markets-keyset-pagination.md): Returns markets using cursor-based (keyset) pagination for stable, efficient paging through large result sets. Use `next_cursor` from each response as `after_cursor` in the next request. The `offset` parameter is explicitly rejected; use `after_cursor` instead.
+- [List markets](https://docs.polymarket.com/api-reference/markets/list-markets.md)
+- [Get market by id](https://docs.polymarket.com/api-reference/markets/get-market-by-id.md)
+- [Get market by slug](https://docs.polymarket.com/api-reference/markets/get-market-by-slug.md)
+- [Get market tags by id](https://docs.polymarket.com/api-reference/markets/get-market-tags-by-id.md)
+- [Get market by token](https://docs.polymarket.com/api-reference/markets/get-market-by-token.md): Returns the parent market for a given token ID. Useful when you have a token ID and need to resolve its parent market without knowing the condition ID in advance.
+- [Get top holders for markets](https://docs.polymarket.com/api-reference/core/get-top-holders-for-markets.md)
+- [Get open interest](https://docs.polymarket.com/api-reference/misc/get-open-interest.md)
+- [Get live volume for an event](https://docs.polymarket.com/api-reference/misc/get-live-volume-for-an-event.md)
+- [Get simplified markets](https://docs.polymarket.com/api-reference/markets/get-simplified-markets.md)
+- [Get sampling markets](https://docs.polymarket.com/api-reference/markets/get-sampling-markets.md)
+- [Get sampling simplified markets](https://docs.polymarket.com/api-reference/markets/get-sampling-simplified-markets.md)
+
+### Orderbook & Pricing
+
+- [Get order book](https://docs.polymarket.com/api-reference/market-data/get-order-book.md): Retrieves the order book summary for a specific token ID. Includes bids, asks, market details, and last trade price.
+- [Get order books (request body)](https://docs.polymarket.com/api-reference/market-data/get-order-books-request-body.md): Retrieves order book summaries for multiple token IDs using a request body.
+- [Get market price](https://docs.polymarket.com/api-reference/market-data/get-market-price.md): Retrieves the best market price for a specific token ID and side (bid or ask). Returns the best bid price for BUY side or best ask price for SELL side.
+- [Get market prices (query parameters)](https://docs.polymarket.com/api-reference/market-data/get-market-prices-query-parameters.md): Retrieves market prices for multiple token IDs and sides using query parameters.
+- [Get market prices (request body)](https://docs.polymarket.com/api-reference/market-data/get-market-prices-request-body.md): Retrieves market prices for multiple token IDs and sides using a request body. Each request must include both token_id and side.
+- [Get midpoint price](https://docs.polymarket.com/api-reference/data/get-midpoint-price.md): Retrieves the midpoint price for a specific token ID. The midpoint is calculated as the average of the best bid and best ask prices.
+- [Get midpoint prices (query parameters)](https://docs.polymarket.com/api-reference/market-data/get-midpoint-prices-query-parameters.md): Retrieves midpoint prices for multiple token IDs using query parameters. The midpoint is calculated as the average of the best bid and best ask prices.
+- [Get midpoint prices (request body)](https://docs.polymarket.com/api-reference/market-data/get-midpoint-prices-request-body.md): Retrieves midpoint prices for multiple token IDs using a request body. The midpoint is calculated as the average of the best bid and best ask prices.
+- [Get spread](https://docs.polymarket.com/api-reference/market-data/get-spread.md): Retrieves the spread for a specific token ID. The spread is the difference between the best ask and best bid prices.
+- [Get spreads](https://docs.polymarket.com/api-reference/market-data/get-spreads.md): Retrieves spreads for multiple token IDs. The spread is the difference between the best ask and best bid prices.
+- [Get last trade price](https://docs.polymarket.com/api-reference/market-data/get-last-trade-price.md): Retrieves the last trade price and side for a specific token ID. Returns default values of "0.5" for price and empty string for side if no trades found.
+- [Get last trade prices (query parameters)](https://docs.polymarket.com/api-reference/market-data/get-last-trade-prices-query-parameters.md): Retrieves last trade prices for multiple token IDs using query parameters. Maximum 500 token IDs can be requested per call.
+- [Get last trade prices (request body)](https://docs.polymarket.com/api-reference/market-data/get-last-trade-prices-request-body.md): Retrieves last trade prices for multiple token IDs using a request body. Maximum 500 token IDs can be requested per call.
+- [Get prices history](https://docs.polymarket.com/api-reference/markets/get-prices-history.md): Retrieve historical price data for a market.
+- [Get batch prices history](https://docs.polymarket.com/api-reference/markets/get-batch-prices-history.md): Retrieve historical price data for multiple markets in a single request.
+- [Get fee rate](https://docs.polymarket.com/api-reference/market-data/get-fee-rate.md): Retrieves the base fee rate for a specific token ID. The fee rate can be provided either as a query parameter or as a path parameter.
+- [Get fee rate by path parameter](https://docs.polymarket.com/api-reference/market-data/get-fee-rate-by-path-parameter.md): Retrieves the base fee rate for a specific token ID using the token ID as a path parameter.
+- [Get tick size](https://docs.polymarket.com/api-reference/market-data/get-tick-size.md): Retrieves the minimum tick size (price increment) for a specific token ID. The tick size can be provided either as a query parameter or as a path parameter.
+- [Get tick size by path parameter](https://docs.polymarket.com/api-reference/market-data/get-tick-size-by-path-parameter.md): Retrieves the minimum tick size (price increment) for a specific token ID using the token ID as a path parameter.
+- [Get CLOB market info](https://docs.polymarket.com/api-reference/markets/get-clob-market-info.md): Returns all CLOB-level parameters for a market in a single call — tokens, tick size, base fees, rewards, RFQ status, and fee details.
+- [Get server time](https://docs.polymarket.com/api-reference/data/get-server-time.md): Returns the current Unix timestamp of the server. This can be used to synchronize client time with server time.
+
+### Orders
+
+- [Post a new order](https://docs.polymarket.com/api-reference/trade/post-a-new-order.md): Creates a new order in the order book
+- [Cancel single order](https://docs.polymarket.com/api-reference/trade/cancel-single-order.md): Cancels a single order by its ID. Works even in cancel-only mode.
+- [Get single order by ID](https://docs.polymarket.com/api-reference/trade/get-single-order-by-id.md): Retrieves a specific order by its ID (order hash) for the authenticated user. Builder-authenticated clients can also use this endpoint to retrieve orders attributed to their builder account.
+- [Post multiple orders](https://docs.polymarket.com/api-reference/trade/post-multiple-orders.md): Creates multiple new orders in the order book. Orders are processed in parallel. Maximum 15 orders per request.
+- [Get user orders](https://docs.polymarket.com/api-reference/trade/get-user-orders.md): Retrieves open orders for the authenticated user. Returns paginated results. Builder-authenticated clients can also use this endpoint to retrieve orders attributed to their builder account.
+- [Cancel multiple orders](https://docs.polymarket.com/api-reference/trade/cancel-multiple-orders.md): Cancels multiple orders by their IDs. Maximum 1000 orders per request. Duplicate order IDs in the request are automatically ignored. Works even in cancel-only mode.
+- [Cancel all orders](https://docs.polymarket.com/api-reference/trade/cancel-all-orders.md): Cancels all open orders for the authenticated user. Works even in cancel-only mode.
+- [Cancel orders for a market](https://docs.polymarket.com/api-reference/trade/cancel-orders-for-a-market.md): Cancels all open orders for the authenticated user in a specific market (condition) and asset. Works even in cancel-only mode.
+- [Get order scoring status](https://docs.polymarket.com/api-reference/trade/get-order-scoring-status.md): Checks if a specific order is currently scoring for rewards.
+- [Send heartbeat](https://docs.polymarket.com/api-reference/trade/send-heartbeat.md): Sends a heartbeat signal to maintain active session status. If heartbeats are not sent regularly, all open orders for the user will be automatically canceled. This is useful for automated trading systems that need to ensure orders are canceled if the system becomes unresponsive.
+
+### Trades
+
+- [Get trades](https://docs.polymarket.com/api-reference/trade/get-trades.md): Retrieves trades for the authenticated user. Returns paginated results. Requires readonly or level 2 API key authentication.
+- [Get builder trades](https://docs.polymarket.com/api-reference/trade/get-builder-trades.md): Retrieves trades attributed to a builder code.
+
+### Rebates
+
+- [Get current rebated fees for a maker](https://docs.polymarket.com/api-reference/rebates/get-current-rebated-fees-for-a-maker.md): Returns the current rebated fees for a maker address on a given date.
+
+### Rewards
+
+- [Get current active rewards configurations](https://docs.polymarket.com/api-reference/rewards/get-current-active-rewards-configurations.md): Returns all current active rewards configurations grouped by market.
+- [Get raw rewards for a specific market](https://docs.polymarket.com/api-reference/rewards/get-raw-rewards-for-a-specific-market.md): Returns an array of present and future rewards configured on a market.
+- [Get multiple markets with rewards](https://docs.polymarket.com/api-reference/rewards/get-multiple-markets-with-rewards.md): Returns a list of active markets with their reward configurations. Supports text search, tag filtering, numeric filters, and sorting.
+- [Get earnings for user by date](https://docs.polymarket.com/api-reference/rewards/get-earnings-for-user-by-date.md): Returns an array of user earnings per market for a provided day.
+- [Get total earnings for user by date](https://docs.polymarket.com/api-reference/rewards/get-total-earnings-for-user-by-date.md): Returns the summed total rewards earnings for a user on a provided day, grouped by asset address.
+- [Get reward percentages for user](https://docs.polymarket.com/api-reference/rewards/get-reward-percentages-for-user.md): Returns the real-time percentages of rewards that a user is earning per market.
+- [Get user earnings and markets configuration](https://docs.polymarket.com/api-reference/rewards/get-user-earnings-and-markets-configuration.md): Returns an array of current rewards including user earnings and live percentages per market for a provided day.
+
+### Profile
+
+- [Get public profile by wallet address](https://docs.polymarket.com/api-reference/profiles/get-public-profile-by-wallet-address.md)
+- [Get current positions for a user](https://docs.polymarket.com/api-reference/core/get-current-positions-for-a-user.md)
+- [Get closed positions for a user](https://docs.polymarket.com/api-reference/core/get-closed-positions-for-a-user.md)
+- [Get user activity](https://docs.polymarket.com/api-reference/core/get-user-activity.md)
+- [Get total value of a user's positions](https://docs.polymarket.com/api-reference/core/get-total-value-of-a-users-positions.md)
+- [Get trades for a user or markets](https://docs.polymarket.com/api-reference/core/get-trades-for-a-user-or-markets.md)
+- [Get total markets a user has traded](https://docs.polymarket.com/api-reference/misc/get-total-markets-a-user-has-traded.md)
+- [Get positions for a market](https://docs.polymarket.com/api-reference/core/get-positions-for-a-market.md)
+- [Download an accounting snapshot (ZIP of CSVs)](https://docs.polymarket.com/api-reference/misc/download-an-accounting-snapshot-zip-of-csvs.md)
+
+### Leaderboard
+
+- [Get trader leaderboard rankings](https://docs.polymarket.com/api-reference/core/get-trader-leaderboard-rankings.md)
+
+### Builders
+
+- [Get aggregated builder leaderboard](https://docs.polymarket.com/api-reference/builders/get-aggregated-builder-leaderboard.md)
+- [Get daily builder volume time-series](https://docs.polymarket.com/api-reference/builders/get-daily-builder-volume-time-series.md)
+
+### Search
+
+- [Search markets, events, and profiles](https://docs.polymarket.com/api-reference/search/search-markets-events-and-profiles.md)
+
+### Tags
+
+- [List tags](https://docs.polymarket.com/api-reference/tags/list-tags.md)
+- [Get tag by id](https://docs.polymarket.com/api-reference/tags/get-tag-by-id.md)
+- [Get tag by slug](https://docs.polymarket.com/api-reference/tags/get-tag-by-slug.md)
+- [Get related tags (relationships) by tag id](https://docs.polymarket.com/api-reference/tags/get-related-tags-relationships-by-tag-id.md)
+- [Get related tags (relationships) by tag slug](https://docs.polymarket.com/api-reference/tags/get-related-tags-relationships-by-tag-slug.md)
+- [Get tags related to a tag id](https://docs.polymarket.com/api-reference/tags/get-tags-related-to-a-tag-id.md)
+- [Get tags related to a tag slug](https://docs.polymarket.com/api-reference/tags/get-tags-related-to-a-tag-slug.md)
+
+### Series
+
+- [List series](https://docs.polymarket.com/api-reference/series/list-series.md)
+- [Get series by id](https://docs.polymarket.com/api-reference/series/get-series-by-id.md)
+
+### Comments
+
+- [List comments](https://docs.polymarket.com/api-reference/comments/list-comments.md)
+- [Get comments by comment id](https://docs.polymarket.com/api-reference/comments/get-comments-by-comment-id.md)
+- [Get comments by user address](https://docs.polymarket.com/api-reference/comments/get-comments-by-user-address.md)
+
+### Sports
+
+- [Get sports metadata information](https://docs.polymarket.com/api-reference/sports/get-sports-metadata-information.md)
+- [Get valid sports market types](https://docs.polymarket.com/api-reference/sports/get-valid-sports-market-types.md)
+- [List teams](https://docs.polymarket.com/api-reference/sports/list-teams.md)
+
+### Relayer
+
+- [Submit a transaction](https://docs.polymarket.com/api-reference/relayer/submit-a-transaction.md): Submit a transaction request to the Relayer. Authenticated using Builder API Keys or Relayer API Keys.
+- [Get a transaction by ID](https://docs.polymarket.com/api-reference/relayer/get-a-transaction-by-id.md): Gets a transaction submitted to the Relayer. Takes in a required transaction ID as a query parameter.
+- [Get recent transactions for a user](https://docs.polymarket.com/api-reference/relayer/get-recent-transactions-for-a-user.md): Gets the most recent transactions submitted to the Relayer, owned by a specific user. Authenticated using Builder API Keys or Relayer API Keys.
+- [Get current nonce for a user](https://docs.polymarket.com/api-reference/relayer/get-current-nonce-for-a-user.md): Gets the current Proxy or Safe nonce for a user. Takes in the user's signer address and the type of nonce to retrieve.
+- [Get relayer address and nonce](https://docs.polymarket.com/api-reference/relayer/get-relayer-address-and-nonce.md): Fetches the relayer address and nonce for a specific user. Takes in the user's signer address and the type of nonce to retrieve.
+- [Check if a wallet is deployed](https://docs.polymarket.com/api-reference/relayer/check-if-a-wallet-is-deployed.md): Returns whether the wallet at the given address is deployed onchain.
+- [Get all relayer API keys](https://docs.polymarket.com/api-reference/relayer-api-keys/get-all-relayer-api-keys.md): Returns all relayer API keys for the authenticated address. Auth allowed: Gamma auth or Relayer API key auth (`RELAYER_API_KEY` + `RELAYER_API_KEY_ADDRESS`).
+
+### Combos
+
+- [Get combo markets](https://docs.polymarket.com/api-reference/combo-markets/get-combo-markets.md): Returns active markets that can be used as combo legs, ordered by volume descending. This endpoint is public and does not require CLOB authentication.
+- [Submit a quote](https://docs.polymarket.com/api-reference/maker/submit-a-quote.md): Submit a signed maker quote for an active RFQ. Requires CLOB L2 authentication for the maker role.
+- [Cancel a quote](https://docs.polymarket.com/api-reference/maker/cancel-a-quote.md): Cancel an active maker quote before it is selected. Requires CLOB L2 authentication for the maker role. `signer_address` and `maker_address` must match the authenticated identity.
+- [Confirm or decline last look](https://docs.polymarket.com/api-reference/maker/confirm-or-decline-last-look.md): Respond to a last-look confirmation request for a selected quote. Requires CLOB L2 authentication for the maker role. `decision` must be `CONFIRM` or `DECLINE`.
+- [Get user combo positions](https://docs.polymarket.com/api-reference/core/get-user-combo-positions.md): Combinatorial (multi-market) positions held by a user, with per-leg breakdown. Also available at /v1/data/user/{address}/positions/combos (address from the path). Open positions with shares_balance below 0.001 are omitted (dust floor — e.g. sub-0.001 remainders left by "sell all" cashouts); resolved…
+- [Get user combo activity](https://docs.polymarket.com/api-reference/core/get-user-combo-activity.md): Combo lifecycle and redeem events (split / merge / convert / compress / wrap / unwrap / redeem) for a user, with per-leg breakdown. The combo counterpart to /activity trade rows. Also available at /v1/data/user/{address}/activity/combos (address from the path).
+- [Quoter Gateway](https://docs.polymarket.com/api-reference/wss/rfq.md): Authenticated WebSocket for combinatorial RFQ quoters — receive requests, submit quotes, confirm last look, and track execution.
+
+### WebSocket
+
+- [Market Channel](https://docs.polymarket.com/api-reference/wss/market.md): Public WebSocket for real-time orderbook, price, and market lifecycle updates.
+- [User Channel](https://docs.polymarket.com/api-reference/wss/user.md): Authenticated WebSocket for real-time order and trade updates.
+- [Sports Channel](https://docs.polymarket.com/api-reference/wss/sports.md): Public WebSocket for real-time sports match results.
+
+### Bridge
+
+- [Get supported assets](https://docs.polymarket.com/api-reference/bridge/get-supported-assets.md)
+- [Create bridge addresses](https://docs.polymarket.com/api-reference/bridge/create-bridge-addresses.md)
+- [Get a quote](https://docs.polymarket.com/api-reference/bridge/get-a-quote.md)
+- [Get transaction status](https://docs.polymarket.com/api-reference/bridge/get-transaction-status.md): Returns the deposits and withdrawals seen at a bridge address, newest first. Responses are cursor-paginated: each request returns one page plus a `nextCursor`. To read the full history, pass each `nextCursor` back as `cursor` until it comes back null. To track only recent activity, keep requesting t…
+- [Create withdrawal addresses](https://docs.polymarket.com/api-reference/bridge/create-withdrawal-addresses.md)
+
+## OpenAPI Specs
+
+- [gamma-openapi](/api-spec/gamma-openapi.yaml)
+- [clob-openapi](/api-spec/clob-openapi.yaml)
+- [data-openapi](/api-spec/data-openapi.yaml)
+- [relayer-openapi](/api-spec/relayer-openapi.yaml)
+- [combos-rfq-openapi](/api-spec/combos-rfq-openapi.yaml)
+- [bridge-openapi](/api-spec/bridge-openapi.yaml)
+
+## AsyncAPI Specs
+
+- [asyncapi-rfq](/asyncapi-rfq.json)
+- [asyncapi](/asyncapi.json)
+- [asyncapi-user](/asyncapi-user.json)
+- [asyncapi-sports](/asyncapi-sports.json)

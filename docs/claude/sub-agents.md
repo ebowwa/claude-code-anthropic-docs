@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/sub-agents.md
-Downloaded: 2026-08-28T04:04:57.596Z
+Downloaded: 2026-08-29T02:44:09.235Z
 -->
 
 > ## Documentation Index
@@ -227,7 +227,9 @@ Plugin `agents/` directories are also scanned recursively. Unlike project and us
   </Tab>
 </Tabs>
 
-The `--agents` flag accepts JSON with a `prompt` field plus these [frontmatter](#supported-frontmatter-fields) fields: `description`, `tools`, `disallowedTools`, `model`, `permissionMode`, `mcpServers`, `hooks`, `maxTurns`, `skills`, `initialPrompt`, `memory`, `effort`, `background`, and `isolation`. Use `prompt` for the system prompt, equivalent to the markdown body in file-based subagents.
+The `--agents` flag accepts JSON with a `prompt` field plus these [frontmatter](#supported-frontmatter-fields) fields: `description`, `tools`, `disallowedTools`, `model`, `permissionMode`, `mcpServers`, `hooks`, `maxTurns`, `skills`, `initialPrompt`, `memory`, `effort`, `background`, and `isolation`. Use `prompt` for the system prompt, equivalent to the markdown body in file-based subagents. Each top-level key in the JSON is the agent's name. Don't start a name with `-`.
+
+For what Claude Code does with a value it can't load, and the flags and environment variable that skip that check, see [`Invalid --agents configuration`](/docs/en/errors#invalid-agents-configuration).
 
 **Managed subagents** are deployed by organization administrators. Place markdown files in `.claude/agents/` inside the [managed settings directory](/docs/en/managed-settings#delivery-mechanisms), using the same frontmatter format as project and user subagents. Managed definitions take precedence over project and user subagents with the same name.
 
@@ -237,7 +239,7 @@ The `--agents` flag accepts JSON with a `prompt` field plus these [frontmatter](
   For security reasons, plugin subagents don't support the `hooks`, `mcpServers`, or `permissionMode` frontmatter fields. These fields are ignored when loading agents from a plugin. If you need them, copy the agent file into `.claude/agents/` or `~/.claude/agents/`. You can also add rules to [`permissions.allow`](/docs/en/settings-reference#permissions-allow) in `settings.json` or `settings.local.json`, but these rules apply to the entire session, not only the plugin subagent.
 </Note>
 
-Subagent definitions from any of these scopes are also available to [agent teams](/docs/en/agent-teams#use-subagent-definitions-for-teammates): when spawning a teammate, you can reference a subagent type and the teammate uses its `tools` and `model`, with the definition's body appended to the teammate's system prompt as additional instructions. See [agent teams](/docs/en/agent-teams#use-subagent-definitions-for-teammates) for which frontmatter fields apply on that path.
+Subagent definitions from any of these scopes are also available to [agent teams](/docs/en/agent-teams#use-subagent-definitions-for-teammates): when spawning a teammate, you can reference a subagent type, and Claude Code applies parts of that definition to the teammate. See [agent teams](/docs/en/agent-teams#use-subagent-definitions-for-teammates) for which parts apply in each display mode.
 
 ### Write subagent files
 
@@ -308,12 +310,25 @@ The following fields can be used in the YAML frontmatter. Only `name` and `descr
 | `isolation`       | No       | Set to `worktree` to run the subagent in a temporary [git worktree](/docs/en/worktrees), giving it an isolated copy of the repository branched by default from your [default branch](/docs/en/worktrees#choose-the-base-branch) rather than the parent session's `HEAD`. The worktree is automatically cleaned up if the subagent makes no changes                                                                                    |
 | `color`           | No       | Display color for the subagent in the task list and transcript. Accepts `red`, `blue`, `green`, `yellow`, `purple`, `orange`, `pink`, or `cyan`                                                                                                                                                                                                                                                                             |
 | `initialPrompt`   | No       | Auto-submitted as the first user turn when this agent runs as the main session agent (via `--agent` or the `agent` setting). [Commands](/docs/en/commands) and [skills](/docs/en/skills) are processed. Prepended to any user-provided prompt                                                                                                                                                                                         |
+| `experimental`    | No       | Map of experimental options. Set its `cacheTtl` key to `5m` or `1h` to choose the [prompt cache lifetime](/docs/en/prompt-caching#choose-the-ttl-yourself) for this subagent's requests. Claude Code ignores any other value, ignores `1h` while your Claude subscription is using usage credits, and reads the field only from subagent files. Requires Claude Code v2.1.248 or later                                           |
+
+Write `cacheTtl` inside the `experimental` map, not at the top level of the frontmatter.
+
+```yaml theme={null}
+---
+name: repo-auditor
+description: Audits a large repository and reports what it finds
+experimental:
+  cacheTtl: 1h
+---
+```
 
 #### Subagent files Claude Code skips
 
 Claude Code skips a file in a project, user, or managed `agents` directory, or in one under a directory you add with `--add-dir`, without reporting it in the session, when the frontmatter has any of these problems:
 
 * **No `name`**: Claude Code treats the file as documentation kept beside your agents.
+* **An opening `---` that isn't the file's first line**: Claude Code reads the file as having no frontmatter and treats it as documentation.
 * **A `name` that starts with `-` or contains `:`**: Claude Code skips the file and writes an error to the debug log. See the `name` row in the table above.
 * **A `name` but no `description`**: Claude Code skips the file and writes the reason to the debug log.
 * **YAML that doesn't parse**: Claude Code reads no fields from the file, skips it, and writes the parse error to the debug log.
@@ -833,6 +848,8 @@ For a skill with `context: fork`, Claude Code follows the rules in [Run skills i
 
 Background subagents run with a [smaller built-in tool set](#available-tools) than foreground subagents, except for conversation forks, and they surface every permission prompt in your main session. When you answer one of those prompts with a choice that lasts beyond that one tool call, such as a grant that lasts for the rest of the session, Claude Code applies your answer to the whole session, including your main conversation.
 
+A background subagent can leave a background [Bash or PowerShell command](/docs/en/tools-reference#background-commands) [running past the end of its turn](/docs/en/interactive-mode#how-backgrounding-works). When that command ends, Claude Code sends the subagent a notification.
+
 A background subagent's results reach Claude as a completion notification in a later turn. Claude waits for that notification before reporting the subagent's results, and if you ask about progress first, it reports that the subagent is still running. Before v2.1.211, Claude sometimes reported results for a background subagent that hadn't finished.
 
 You can also steer this yourself:
@@ -859,6 +876,8 @@ As of v2.1.199, a subagent whose run ends on an API error, such as a usage limit
 
 * **Foreground**: if a rate limit, overload, or server error cuts off a subagent that already produced text output, the Agent tool returns that partial output with a note that the subagent was cut off and didn't finish its task. A subagent that produced nothing, or whose only output was tool calls, fails with [`Agent terminated early due to an API error`](/docs/en/errors#agent-terminated-early-due-to-an-api-error), followed by the error detail. In v2.1.199, a rate limit, overload, or server error that cut off the tool-calls-only shape returned an empty partial result containing only the cut-off note instead.
 * **Background**: the subagent is marked failed, and the message Claude receives when it ends names the API error and includes the subagent's last output, so partial work isn't lost.
+
+When you configure a [fallback model chain](/docs/en/model-config#fallback-model-chains) and a subagent encounters a failure the chain covers, such as its model being unavailable, Claude Code switches the subagent to the first model in the chain that accepts the request. The subagent keeps working instead of ending on the error.
 
 Once the underlying API error clears, ask Claude to retry the task or [resume the subagent](#resume-subagents).
 

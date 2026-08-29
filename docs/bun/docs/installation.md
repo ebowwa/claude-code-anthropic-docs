@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/installation.md
-Downloaded: 2026-08-21T20:25:30.405Z
--->
-
 # Installation
 
 > Install Bun with npm, Homebrew, Docker, or the official script.

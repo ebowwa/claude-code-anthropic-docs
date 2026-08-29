@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/agent-sdk/quickstart.md
-Downloaded: 2026-08-28T04:04:57.620Z
+Downloaded: 2026-08-29T02:44:09.262Z
 -->
 
 > ## Documentation Index
@@ -369,3 +369,4 @@ Now that you've created your first agent, learn how to extend its capabilities a
 * **[MCP servers](/docs/en/agent-sdk/mcp)**: connect to databases, browsers, APIs, and other external systems
 * **[Hosting](/docs/en/agent-sdk/hosting)**: deploy agents to Docker, cloud, and CI/CD
 * **[Example agents](https://github.com/anthropics/claude-agent-sdk-demos)**: see complete examples: email assistant, research agent, and more
+* **[Troubleshooting](/docs/en/agent-sdk/troubleshooting)**: fix Agent SDK errors by the exact message you see

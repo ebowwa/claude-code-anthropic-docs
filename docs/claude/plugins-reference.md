@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/plugins-reference.md
-Downloaded: 2026-08-28T04:04:57.619Z
+Downloaded: 2026-08-29T02:44:09.261Z
 -->
 
 > ## Documentation Index
@@ -419,7 +419,7 @@ claude plugin disable my-tool@skills-dir
   Plugins synced from claude.ai
 </h2>
 
-In [Cowork](https://claude.com/product/cowork) and [cloud sessions](/docs/en/cloud-environments#what-carries-over-from-your-setup), Claude Code downloads the plugins enabled for your claude.ai account into `~/.claude/plugins/synced/` in the session's own environment and loads each one as `<name>@synced`, with no marketplace and no install record. Claude Code doesn't load them in sessions you start in your own terminal. On a machine where a synced session has run, `claude plugin list` still shows the downloaded copies, under a `Synced from claude.ai` heading that notes they load only in a synced session. Before v2.1.239, Claude Code loaded these plugins as `<name>@inline`, the identity that `--plugin-dir` plugins use.
+In [Cowork](https://claude.com/product/cowork) and [cloud sessions](/docs/en/cloud-environments#what-carries-over-from-your-setup), Claude Code downloads the plugins enabled for your claude.ai account into `~/.claude/plugins/synced/` in the session's own environment and loads each one as `<name>@synced`, with no marketplace and no install record. Claude Code doesn't load them in sessions you start in your own terminal. Inside that Cowork or cloud environment, `claude plugin list` shows the downloaded copies under a `Synced from claude.ai` heading. Before v2.1.239, Claude Code loaded these plugins as `<name>@inline`, the identity that `--plugin-dir` plugins use.
 
 Manage a synced plugin by the `<name>@synced` ID that `claude plugin list` prints:
 
@@ -476,9 +476,9 @@ The manifest is optional. If omitted, Claude Code auto-discovers components in [
 
 If you include a manifest, `name` is the only required field.
 
-| Field  | Type   | Description                                                                                                                                                                                                                       | Example              |
-| :----- | :----- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------- |
-| `name` | string | Unique identifier (kebab-case, no spaces). When a [marketplace entry](/docs/en/plugin-marketplaces#plugin-entries) lists the plugin under a different name, the marketplace entry name is what `enabledPlugins` keys and `/plugin` use | `"deployment-tools"` |
+| Field  | Type   | Description                                                                                                                                                                                                                                                                                         | Example              |
+| :----- | :----- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------- |
+| `name` | string | Unique identifier in kebab-case, with no spaces, control characters, or bidirectional-formatting characters. When a [marketplace entry](/docs/en/plugin-marketplaces#plugin-entries) lists the plugin under a different name, the marketplace entry name is what `enabledPlugins` keys and `/plugin` use | `"deployment-tools"` |
 
 This name is used for namespacing components. For example, in the UI, the
 agent `agent-creator` for the plugin with name `plugin-dev` will appear as
@@ -524,11 +524,11 @@ claude plugin validate ./my-plugin --strict
 | `license`        | string  | License identifier                                                                                                                                                                                                                                                                                                                                                                                                   | `"MIT"`, `"Apache-2.0"`                                           |
 | `keywords`       | array   | Discovery tags                                                                                                                                                                                                                                                                                                                                                                                                       | `["deployment", "ci-cd"]`                                         |
 | `metadata`       | object  | Free-form object for your own data, such as entitlement or catalog fields. Claude Code doesn't read it, so the values never affect plugin behavior. Claude Code ignores a non-object value, and `claude plugin validate` reports it as a warning. Before v2.1.222, Claude Code treated the key as an [unrecognized field](#unrecognized-fields).                                                                     | `{"catalogId": "cat-123"}`                                        |
-| `defaultEnabled` | boolean | Whether the plugin starts in an enabled state when the user has not set one. Defaults to `true`. See [Default enablement](#default-enablement). Requires Claude Code v2.1.154 or later.                                                                                                                                                                                                                              | `false`                                                           |
+| `defaultEnabled` | boolean | Whether the plugin starts in an enabled state when the user has not set one. Defaults to `true`. See [Default enablement](#default-enablement).                                                                                                                                                                                                                                                                      | `false`                                                           |
 
 ### Default enablement
 
-Set `defaultEnabled: false` in `plugin.json` to ship a plugin that installs disabled. The user turns it on with `claude plugin enable <plugin>` or the `/plugin` interface. Use this for plugins that add cost or scope a user should opt into, such as one that connects to an external service. This requires Claude Code v2.1.154 or later. Earlier versions ignore the field and enable the plugin on install.
+Set `defaultEnabled: false` in `plugin.json` to ship a plugin that installs disabled. The user turns it on with `claude plugin enable <plugin>` or the `/plugin` interface. Use this for plugins that add cost or scope a user should opt into, such as one that connects to an external service.
 
 `defaultEnabled` is the fallback when nothing else has decided the plugin's state. Two things take precedence over it:
 
@@ -829,7 +829,9 @@ For dependencies the automatic install can't provide, such as packages that need
 
 ### Path traversal limitations
 
-Copied plugins cannot reference files outside their directory. Paths that traverse outside the plugin root (such as `../shared-utils`) will not work after installation because those external files are not copied to the cache.
+Claude Code doesn't let a plugin reference files outside its own directory. It rejects a component path that resolves outside the plugin root, such as `../shared-utils`, whether the path is declared in `plugin.json` or in a [marketplace entry](/docs/en/plugin-marketplaces#plugin-entries). Claude Code reports a [`path escapes plugin directory`](/docs/en/errors#path-escapes-plugin-directory) error and loads the plugin without that component.
+
+Claude Code also doesn't copy files outside the plugin directory into the cache when it installs the plugin, so when a script inside a copied plugin reads a path above the plugin root, it doesn't find those files either.
 
 ### Share files within a marketplace with symlinks
 
@@ -1151,7 +1153,7 @@ claude plugin list [options]
 Within an interactive session, `/plugin list` prints a similar listing inline, but it covers marketplace-installed plugins only:
 
 * Plugins loaded from skills directories appear in the `/plugin` interface and in `claude plugin list`, but not in the inline `/plugin list` output.
-* On Claude Code v2.1.239 or later, [plugins synced from claude.ai](#synced-plugins) appear in `claude plugin list` on any machine where a synced session has downloaded them, with a note that they load only in a synced session. They don't appear in the inline `/plugin list` output.
+* On Claude Code v2.1.239 or later, [plugins synced from claude.ai](#synced-plugins) appear in `claude plugin list` when you run it in the environment where a synced session downloaded them. They don't appear in the inline `/plugin list` output.
 * Plugins loaded for the session with `--plugin-dir` or `--plugin-url` appear in the `/plugin` interface, and in `claude plugin list` only when the same flag precedes the subcommand, as in `claude --plugin-dir <dir> plugin list`. Only the flag names their location, so a bare `claude plugin list` can't find them, unlike synced plugins and skills-directory plugins, whose fixed directories Claude Code scans.
 
 The interactive form accepts `--enabled` or `--disabled` to show only plugins in that state, and `ls` as a shorthand for `list`.

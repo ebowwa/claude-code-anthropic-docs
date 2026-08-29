@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/terminal-config.md
-Downloaded: 2026-08-28T04:04:57.613Z
+Downloaded: 2026-08-29T02:44:09.255Z
 -->
 
 > ## Documentation Index
@@ -221,27 +221,28 @@ The reference below covers the tokens you can set in `overrides`. The interactiv
 
   Set the input box border color and the accent shown while a permission mode or indicator is active.
 
-  | Token          | Controls                                           |
-  | :------------- | :------------------------------------------------- |
-  | `promptBorder` | Input box border in Manual mode                    |
-  | `planMode`     | Plan mode accent and border                        |
-  | `autoAccept`   | Accept-edits mode accent and border                |
-  | `bashBorder`   | Input box border when entering a `!` shell command |
-  | `ide`          | IDE connection indicator                           |
-  | `fastMode`     | Fast mode indicator                                |
+  | Token          | Controls                                                                                                                                                                             |
+  | :------------- | :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | `promptBorder` | Input box border in Manual mode                                                                                                                                                      |
+  | `planMode`     | Plan mode accent and border                                                                                                                                                          |
+  | `autoAccept`   | Accept-edits mode accent and border                                                                                                                                                  |
+  | `bashBorder`   | Input box border when entering a `!` shell command                                                                                                                                   |
+  | `ide`          | IDE connection indicator                                                                                                                                                             |
+  | `fastMode`     | Fast mode indicator                                                                                                                                                                  |
+  | `effortUltra`  | The `ultracode` tag on the input box border while [ultracode](/docs/en/model-config#adjust-effort-level) is on. Your override of this color takes effect on Claude Code v2.1.239 or later |
 
   #### Diff rendering
 
   Color added and removed code in file edits and reviews.
 
-  | Token               | Controls                                           |
-  | :------------------ | :------------------------------------------------- |
-  | `diffAdded`         | Background of added lines                          |
-  | `diffRemoved`       | Background of removed lines                        |
-  | `diffAddedDimmed`   | Background of unchanged context near added lines   |
-  | `diffRemovedDimmed` | Background of unchanged context near removed lines |
-  | `diffAddedWord`     | Word-level highlight within an added line          |
-  | `diffRemovedWord`   | Word-level highlight within a removed line         |
+  | Token               | Controls                                                                      |
+  | :------------------ | :---------------------------------------------------------------------------- |
+  | `diffAdded`         | Background of added lines                                                     |
+  | `diffRemoved`       | Background of removed lines                                                   |
+  | `diffAddedDimmed`   | Background of added lines in the dimmed diff shown after you reject an edit   |
+  | `diffRemovedDimmed` | Background of removed lines in the dimmed diff shown after you reject an edit |
+  | `diffAddedWord`     | Word-level highlight within an added line                                     |
+  | `diffRemovedWord`   | Word-level highlight within a removed line                                    |
 
   #### Fullscreen mode
 
@@ -313,6 +314,8 @@ Run `/tui fullscreen` to switch and save the preference. Your conversation relau
 ## Paste large content
 
 When you paste more than 800 characters or more than two lines into the prompt, Claude Code collapses the input to a placeholder such as `[Pasted text #1 +120 lines]` so the input box stays usable. The full content is still sent to Claude when you submit.
+
+When you delete with a word or line shortcut such as `Ctrl+W` or `Ctrl+K`, or with a vim delete through an `f`/`t` motion such as `df]`, and the deleted range reaches inside a placeholder, Claude Code removes the placeholder whole. You can paste the deletion back to restore it, with [`Ctrl+Y`](/docs/en/interactive-mode#text-editing) after `Ctrl+W`, `Ctrl+U`, or `Ctrl+K`, or with [`p` in NORMAL mode](/docs/en/interactive-mode#editing-normal-mode) after a vim delete.
 
 Claude Code keeps the collapsed content under `~/.claude/paste-cache/`, so when you recall a prompt from [command history](/docs/en/interactive-mode#command-history) and resubmit it, Claude Code sends the full pasted content again, including in a later session, until the retention sweep removes the cache file.
 

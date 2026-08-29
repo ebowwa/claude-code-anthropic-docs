@@ -1,8 +1,3 @@
-<!--
-Source: https://docs.kalshi.com/cfbenchmarks/rest-passthrough.md
-Downloaded: 2026-08-21T20:25:30.754Z
--->
-
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.

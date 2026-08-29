@@ -1,6 +1,6 @@
 <!--
 Source: https://bun.com/docs/bundler/executables.md
-Downloaded: 2026-08-23T20:22:43.448Z
+Downloaded: 2026-08-29T02:44:02.849Z
 -->
 
 # Single-file executable
@@ -1247,6 +1247,8 @@ compile: {
   outfile: "./myapp",
 }
 ```
+
+Without `outfile`, the executable is named after the entrypoint and written to `outdir`, or to the current working directory when there is no `outdir`. This matches `bun build --compile`.
 
 ### Supported targets
 

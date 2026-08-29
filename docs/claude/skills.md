@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/skills.md
-Downloaded: 2026-08-28T04:04:57.598Z
+Downloaded: 2026-08-29T02:44:09.238Z
 -->
 
 > ## Documentation Index
@@ -29,7 +29,9 @@ Claude Code includes a set of bundled skills, such as `/doctor`, `/code-review`,
 
 You invoke a bundled skill the same way as any other skill, by typing `/` followed by the skill name. Claude invokes some bundled skills automatically when relevant; others, including `/verify`, run only when you invoke them, which keeps you in control of when these longer-running checks spend time and tokens.
 
-Bundled skills are available in every session. To turn them off, use the [`disableBundledSkills`](/docs/en/settings-reference#disablebundledskills) setting, which disables every bundled skill except `/doctor`.
+Most bundled skills are available in every session. A few depend on a specific feature: `/workflow-authoring`, for example, is available only when [dynamic workflows](/docs/en/workflows) are enabled.
+
+To turn bundled skills off, use the [`disableBundledSkills`](/docs/en/settings-reference#disablebundledskills) setting, which disables every bundled skill except `/doctor`.
 
 <Note>
   The [`/doctor`](/docs/en/commands#all-commands) setup checkup stays typable when `disableBundledSkills` is on, in Claude Code v2.1.205 and later. To hide it, set the `DISABLE_DOCTOR_COMMAND` environment variable or a [`skillOverrides`](#override-skill-visibility-from-settings) entry of `"doctor": "off"`. Before v2.1.205, `/doctor` was a built-in command rather than a bundled skill.
@@ -234,7 +236,7 @@ In any other session on your machine, Claude Code loads them only after you down
   </Step>
 
   <Step title="Confirm the skills load in a local session">
-    Start an interactive session, without `CLAUDE_CODE_SYNC_SKILLS` set, and run `/skills`. The menu lists the downloaded skills under `claude.ai sync`. Every local session you start afterwards loads them from `~/.claude/skills/synced/` too.
+    Start an interactive session, without `CLAUDE_CODE_SYNC_SKILLS` set, and run `/skills`. The menu lists the downloaded skills under `claude.ai sync`. Every local session you start afterwards with the same claude.ai sign-in loads them from `~/.claude/skills/synced/` too.
   </Step>
 </Steps>
 
@@ -265,7 +267,7 @@ What Claude Code does with a synced skill's body depends on where the session ru
 
 How you remove a skill depends on where it came from:
 
-* **Personal or project skill**: delete the skill's directory, `~/.claude/skills/<skill-name>/` or `.claude/skills/<skill-name>/`. Claude Code [drops it from `/skills` in the current session](#live-change-detection); content from an invocation earlier in the session [stays in context](#skill-content-lifecycle) until the session ends.
+* **Personal or project skill**: delete the skill's directory, `~/.claude/skills/<skill-name>/` or `.claude/skills/<skill-name>/`. Claude Code [drops it from `/skills` in the current session](#live-change-detection); content Claude Code already loaded from it follows the [skill content lifecycle](#skill-content-lifecycle).
 * **Enterprise skill**: an administrator deletes the skill's directory from `.claude/skills/` inside the [managed settings directory](/docs/en/managed-settings#delivery-mechanisms), for example `/etc/claude-code/.claude/skills/<skill-name>/` on Linux.
 * **Plugin skill**: disable or uninstall the plugin that provides it, from the `/plugin` menu or with `/plugin uninstall <plugin-name>@<marketplace-name>`. Claude Code unloads the plugin's skills after you run `/reload-plugins` or restart; see [Apply plugin changes without restarting](/docs/en/discover-plugins#apply-plugin-changes-without-restarting).
 * **Skill synced from claude.ai**: turn the skill off for your claude.ai account, in the same place you [enabled it](#skills-in-cowork-and-cloud-sessions). Claude Code removes it from `~/.claude/skills/synced/` the next time it [syncs your skills](#where-synced-skills-load). If you delete the directory by hand instead, the next sync downloads it again while the skill stays enabled on claude.ai.
@@ -329,6 +331,8 @@ Your skill instructions here...
 ```
 
 All fields are optional. Only `description` is recommended so Claude knows when to use the skill.
+
+Claude Code reads the frontmatter only when the opening `---` is the file's first line. Otherwise it treats the whole file, `---` markers included, as skill content.
 
 Boolean fields accept `yes`, `no`, `on`, `off`, `1`, and `0` in any letter case, in addition to `true` and `false`. Before v2.1.218, Claude Code recognized only `true` and `false`.
 
@@ -513,7 +517,7 @@ Here's how the two fields affect invocation and context loading:
 
 ### Skill content lifecycle
 
-When you or Claude invoke a skill, the rendered `SKILL.md` content enters the conversation as a single message and stays there for the rest of the session. This persistence applies to the skill's instructions, not its permissions: an [`allowed-tools`](#pre-approve-tools-for-a-skill) grant clears when you send your next message. Claude Code does not re-read the skill file on later turns, so write guidance that should apply throughout a task as standing instructions rather than one-time steps.
+When you or Claude invoke a skill, the rendered `SKILL.md` content enters the conversation as a single message and stays there across later turns. This persistence applies to the skill's instructions, not its permissions: an [`allowed-tools`](#pre-approve-tools-for-a-skill) grant clears when you send your next message. Claude Code does not re-read the skill file on later turns, so write guidance that should apply throughout a task as standing instructions rather than one-time steps.
 
 When Claude re-invokes a skill whose rendered content is identical to the copy already in context, Claude Code adds a short note that the skill is already loaded rather than a second copy of the content. When the rendered content differs, because the arguments changed or a [dynamic context](#inject-dynamic-context) command produced new output, Claude Code appends the full content again.
 
@@ -630,7 +634,6 @@ For multi-line commands, use a fenced code block opened with ` ```! ` instead of
 ## Environment
 ```!
 node --version
-npm --version
 git status --short
 ```
 ````

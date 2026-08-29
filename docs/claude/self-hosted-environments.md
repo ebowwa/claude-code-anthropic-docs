@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/self-hosted-environments.md
-Downloaded: 2026-08-28T04:04:57.611Z
+Downloaded: 2026-08-29T02:44:09.253Z
 -->
 
 > ## Documentation Index
@@ -95,7 +95,7 @@ When a developer starts a session and selects your environment, Anthropic's cont
 3. The child streams events back over HTTPS while the runner keeps polling; each poll refreshes the lease and doubles as the heartbeat.
 4. If the runner stops polling for about 60 seconds, the server requeues the session for another runner.
 
-The runner gives each poll request 10 seconds. When a request times out or is lost, the runner retries after a second or two instead of waiting for the next scheduled poll. Each further request that times out or is lost doubles the gap before the next retry, up to 20 seconds, and the runner shortens the gap whenever the lease is close to expiring.
+The runner gives each poll request 10 seconds. When a request times out, is lost, or gets a response the runner can't parse, the runner keeps serving its live sessions and retries after a second or two instead of waiting for the next scheduled poll. For example, an intercepting proxy that answers the poll with its own page produces a response the runner can't parse. Each time another request fails in one of those ways, the runner doubles the gap before the next retry, up to 20 seconds, and shortens the gap whenever the lease is close to expiring.
 
 ### Runner lifecycle
 
