@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/overview.md
-Downloaded: 2026-08-28T04:04:57.586Z
+Downloaded: 2026-08-29T22:26:19.267Z
 -->
 
 > ## Documentation Index
@@ -244,7 +244,7 @@ Once you've installed Claude Code, these guides help you go deeper.
 * [Quickstart](/docs/en/quickstart): walk through your first real task, from exploring a codebase to committing a fix
 * [Store instructions and memories](/docs/en/memory): give Claude persistent instructions with CLAUDE.md files and auto memory
 * [Common workflows](/docs/en/common-workflows) and [best practices](/docs/en/best-practices): patterns for getting the most out of Claude Code
-* [A harness for every task](https://claude.com/blog/a-harness-for-every-task-dynamic-workflows-in-claude-code): how the Claude Code team uses [dynamic workflows](/docs/en/workflows) to orchestrate subagents at scale
+* [A harness for every task](https://claude.com/blog/a-harness-for-every-task-dynamic-workflows-in-claude-code): how the Claude Code team uses [dynamic workflows](/docs/en/workflows) to orchestrate many subagents at once
 * [Settings](/docs/en/settings): customize Claude Code for your workflow
 * [Troubleshooting](/docs/en/troubleshooting): solutions for common issues
 * [code.claude.com](https://code.claude.com/): demos, pricing, and product details

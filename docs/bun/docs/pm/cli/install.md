@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/pm/cli/install.md
-Downloaded: 2026-08-22T20:22:19.936Z
--->
-
 # bun install
 
 > Install packages with Bun's fast package manager

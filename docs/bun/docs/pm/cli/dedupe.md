@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/pm/cli/dedupe.md
-Downloaded: 2026-08-22T20:22:19.936Z
--->
-
 # bun dedupe
 
 > Remove duplicate versions of packages from bun.lock

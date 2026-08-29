@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/guides/install/from-npm-install-to-bun-install.md
-Downloaded: 2026-08-22T20:22:19.951Z
--->
-
 # Migrate from npm install to bun install
 
 `bun install` is a fast, Node.js-compatible npm client.

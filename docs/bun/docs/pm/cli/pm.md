@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/pm/cli/pm.md
-Downloaded: 2026-08-22T20:22:19.937Z
--->
-
 # bun pm
 
 > Package manager utilities

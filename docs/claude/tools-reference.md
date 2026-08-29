@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/tools-reference.md
-Downloaded: 2026-08-29T02:44:09.259Z
+Downloaded: 2026-08-29T22:26:19.299Z
 -->
 
 > ## Documentation Index
@@ -308,9 +308,9 @@ The LSP tool gives Claude code intelligence from a running language server. Afte
 * Find implementations of an interface
 * Trace call hierarchies
 
-Claude Code keeps the tool inactive until you install a [code intelligence plugin](/docs/en/discover-plugins#code-intelligence) for your language. Claude Code takes the language server's configuration from the plugin, and you install the server binary yourself.
+Claude Code keeps the tool inactive until you install a [code intelligence plugin](/docs/en/discover-plugins#code-intelligence) for your language. In [cloud sessions](/docs/en/claude-code-on-the-web), Claude Code doesn't start plugin language servers, so the LSP tool stays inactive there. Claude Code takes the language server's configuration from the plugin, and you install the server binary yourself.
 
-Claude Code keeps the tool active for the rest of a session once it has had a language server available in that session. Claude Code returns an error result for each LSP call on a file whose language server it can't start. Before v2.1.235, Claude Code deactivated the tool whenever every language server had crashed or failed to start and reactivated it when one recovered.
+Claude Code returns an error result for each LSP call on a file whose language server it can't start.
 
 ## Monitor tool
 
@@ -570,7 +570,7 @@ The search backend is not configurable. To search with a different provider, add
 
 ### Session search limit
 
-A session can make at most 200 WebSearch calls, counted across the main conversation and every [subagent](/docs/en/sub-agents) it spawns, so searches made by parallel research fan-outs count against the same limit. The limit requires Claude Code v2.1.212 or later. When Claude reaches the limit, further calls return a notice telling Claude to continue with the information it already gathered, rather than an error that would invite a retry. You don't see the notice: a capped call appears in the conversation as a search that did nothing, and if Claude genuinely needs more searches, the notice tells it to ask you to raise the limit.
+A session can make at most 200 WebSearch calls, counted across the main conversation and every [subagent](/docs/en/sub-agents) it spawns, so searches made by parallel research fan-outs count against the same limit. The limit requires Claude Code v2.1.212 or later. When Claude reaches the limit, further calls return a notice telling Claude to continue with the information it already gathered, rather than an error that would invite a retry. You don't see the notice: a capped call appears in the conversation as a search that did nothing, and if Claude needs more searches, the notice tells it to ask you to raise the limit.
 
 Set the [`CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION`](/docs/en/env-vars) environment variable to change the cap; it accepts a positive whole number, so the cap can be raised but not turned off. Running [`/clear`](/docs/en/commands#all-commands) resets the count. If work that can still spawn [subagents](/docs/en/sub-agents) survives the clear, such as a running workflow, the count carries over instead.
 

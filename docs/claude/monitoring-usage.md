@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/monitoring-usage.md
-Downloaded: 2026-08-28T04:04:57.606Z
+Downloaded: 2026-08-29T22:26:19.290Z
 -->
 
 > ## Documentation Index
@@ -40,7 +40,9 @@ export OTEL_LOGS_EXPORT_INTERVAL=5000     # 5 seconds (default: 5000ms)
 claude
 ```
 
-To verify a setup that exports metrics, check your backend for the `claude_code.session.count` metric, which Claude Code emits when a session starts. To verify a logs-only setup, submit a prompt and check for the `claude_code.user_prompt` event. If nothing arrives, run `claude --debug` and check the debug log for OTel export errors.
+To verify a setup that exports metrics, check your backend for the `claude_code.session.count` metric, which Claude Code emits when a session starts. To verify a logs-only setup, submit a prompt and check for the `claude_code.user_prompt` event.
+
+If nothing arrives, run `claude --debug` and check the debug log. Claude Code reports failures from the exporters you configure as `[3P telemetry]` errors, where 3P means third-party. Lines prefixed `[Anthropic telemetry]` describe [Anthropic's separate operational telemetry](/docs/en/data-usage#telemetry-services) and don't indicate a problem with your setup.
 
 For full configuration options, see the [OpenTelemetry specification](https://github.com/open-telemetry/opentelemetry-specification/blob/main/specification/protocol/exporter.md#configuration-options).
 
@@ -1144,8 +1146,9 @@ When Claude Code can't safely determine the retention period, it pauses the swee
 * `skip_reason`: Why Claude Code paused the sweep. Present only when `result` is `"skipped"`:
   * `"user_source_disabled"`: User settings are excluded, for example by the [`--setting-sources`](/docs/en/cli-reference#cli-flags) flag or the SDK's [`settingSources`](/docs/en/agent-sdk/typescript#options) option, and no enabled source provides `cleanupPeriodDays`
   * `"settings_unknowable"`: A settings file couldn't be read or parsed, so `cleanupPeriodDays` may be set to a value Claude Code can't see
-  * `"settings_invalid_key_set"`: Settings have validation errors and `cleanupPeriodDays` is explicitly set, so falling back to the default could delete files the setting was meant to keep
+  * `"settings_invalid_key_set"`: Settings have validation errors and `cleanupPeriodDays` or `desktopSessionCleanupPeriodDays` is explicitly set, so falling back to the default could delete or keep files against that setting
 * `transcripts_deleted`: Number of session transcripts, the top-level `~/.claude/projects/*/*.jsonl` files, that the sweep deleted
+* `transcripts_exempted_desktop`: Number of transcripts past the retention period that the sweep kept under the [Claude Desktop and Cowork rule](/docs/en/claude-directory#cleaned-up-automatically). These don't count toward `files_past_cutoff`. Requires Claude Code v2.1.248 or later
 * `session_files_deleted`: Number of artifacts the session-files sweep deleted: transcripts plus per-session companion files such as sidecars, recordings, and tool results
 * `artifacts_deleted`: Total items the sweep deleted across the data directories it covers, including the session files. Some sweeps count a whole removed directory tree as one item and a few cleanup passes don't contribute to the counter, so treat the value as a floor rather than an exact file count
 * `files_retained_fresh`: Files inspected and left in place because they're still within the retention period. Only per-file sweeps count these, so the value is a floor; a nonzero value is the normal steady state
@@ -1201,7 +1204,7 @@ To distinguish a session that recovered from one that stalled, group events by `
 
 ### Event analysis
 
-The event data provides detailed insights into Claude Code interactions:
+The event data describes each Claude Code interaction in detail:
 
 **Tool usage patterns**: analyze tool result events to identify:
 
@@ -1277,7 +1280,7 @@ Point `OTEL_EXPORTER_OTLP_LOGS_ENDPOINT` at your SIEM's OTLP receiver, or at an 
 }
 ```
 
-To confirm events arrive, submit a prompt in a session running under this configuration and check your SIEM for the `claude_code.user_prompt` event. If nothing arrives, run `claude --debug` and check the debug log for OTel export errors.
+To confirm events arrive, submit a prompt in a session running under this configuration and check your SIEM for the `claude_code.user_prompt` event. If nothing arrives, run `claude --debug` and check the debug log for `[3P telemetry]` export errors.
 
 ## Backend considerations
 

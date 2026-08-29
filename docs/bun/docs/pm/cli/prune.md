@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/pm/cli/prune.md
-Downloaded: 2026-08-22T20:22:19.936Z
--->
-
 # bun prune
 
 > Remove packages that are not in bun.lock from node_modules

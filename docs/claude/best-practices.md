@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/best-practices.md
-Downloaded: 2026-08-28T04:04:57.591Z
+Downloaded: 2026-08-29T22:26:19.273Z
 -->
 
 > ## Documentation Index
@@ -403,7 +403,7 @@ During long sessions, Claude's context window can fill with irrelevant conversat
   Delegate research with `"use subagents to investigate X"`. They explore in a separate context, keeping your main conversation clean for implementation.
 </Tip>
 
-Since context is your fundamental constraint, subagents are one of the most powerful tools available. When Claude researches a codebase it reads lots of files, all of which consume your context. Subagents run in separate context windows and report back summaries:
+Since context is your fundamental constraint, use subagents to keep research out of it. When Claude researches a codebase it reads lots of files, all of which consume your context. Subagents run in separate context windows and report back summaries:
 
 ```text wrap theme={null}
 Use subagents to investigate how our authentication system handles token
@@ -510,7 +510,7 @@ For large migrations or analyses, you can distribute work across many parallel C
     ```
   </Step>
 
-  <Step title="Test on a few files, then run at scale">
+  <Step title="Test on a few files, then run on all of them">
     Refine your prompt based on what goes wrong with the first 2-3 files, then run on the full set. The `--allowedTools` flag restricts what Claude can do, which matters when you're running unattended.
   </Step>
 </Steps>

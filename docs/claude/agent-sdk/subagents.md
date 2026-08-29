@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/agent-sdk/subagents.md
-Downloaded: 2026-08-28T04:04:57.622Z
+Downloaded: 2026-08-29T22:26:19.304Z
 -->
 
 > ## Documentation Index
@@ -232,7 +232,7 @@ This bypasses automatic matching and directly invokes the named subagent.
 
 ### Dynamic agent configuration
 
-You can create agent definitions dynamically based on runtime conditions. This example creates a security reviewer with different strictness levels, using a more powerful model for strict reviews.
+You can create agent definitions dynamically based on runtime conditions. This example creates a security reviewer with different strictness levels, using a more capable model for strict reviews.
 
 <CodeGroup>
   ```python Python theme={null}

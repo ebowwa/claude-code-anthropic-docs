@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/network-config.md
-Downloaded: 2026-08-29T02:44:09.246Z
+Downloaded: 2026-08-29T22:26:19.287Z
 -->
 
 > ## Documentation Index
@@ -41,6 +41,8 @@ export NO_PROXY="*"
 ```
 
 Lowercase variants also work, and Claude Code uses the first one that's set in the order `https_proxy`, `HTTPS_PROXY`, `http_proxy`, `HTTP_PROXY`.
+
+Claude Code never sends its WebSocket connections to `localhost`, `::1`, or `127.0.0.0/8` through the proxy, so you don't need a loopback entry in `NO_PROXY` for them.
 
 <Note>
   Claude Code does not support SOCKS proxies.
