@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/third-party-integrations.md
-Downloaded: 2026-08-29T22:26:19.286Z
+Downloaded: 2026-08-31T23:39:02.457Z
 -->
 
 > ## Documentation Index
@@ -156,7 +156,7 @@ If your organization has specific infrastructure requirements, compare the optio
     <tr>
       <td>Authentication</td>
       <td>Claude.ai SSO or email</td>
-      <td>API key</td>
+      <td>API key or a [Console sign-in without one](/docs/en/authentication#sign-in-without-an-api-key)</td>
       <td>API key or AWS credentials</td>
       <td>API key or AWS credentials</td>
       <td>GCP credentials</td>

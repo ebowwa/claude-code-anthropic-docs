@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/api-keys/generate-api-key.md
-Downloaded: 2026-08-24T20:30:00.772Z
+Downloaded: 2026-08-31T23:38:51.607Z
 -->
 
 > ## Documentation Index
@@ -89,6 +89,12 @@ paths:
           description: Bad request - invalid input
         '401':
           description: Unauthorized
+        '403':
+          description: Forbidden - fcm_subtrader_id requires an FCM member caller
+        '409':
+          description: >-
+            Conflict - the bound FCM subtrader is not yet visible in the
+            credential registry; retry after the subtrader create propagates
         '500':
           description: Internal server error
       security:
@@ -123,7 +129,18 @@ components:
             you own. A restricted key may only read and trade on that
             sub-account; it cannot act on other sub-accounts, transfer funds
             between sub-accounts, or create sub-accounts. Omit to leave the key
-            unrestricted.
+            unrestricted. Mutually exclusive with fcm_subtrader_id.
+        fcm_subtrader_id:
+          type: string
+          description: >-
+            FCM members only. If set, binds the API key to a single FCM
+            subtrader that you own, spelled {your_user_id}_{suffix} with a
+            suffix of 1-16 lowercase alphanumeric characters. The subtrader must
+            already exist. A bound key is the institution's trading credential
+            for that subtrader - FIX order-entry and market-data sessions, plus
+            margin WebSocket sessions scoped to the subtrader's own data - and
+            is denied on every REST endpoint, including key management. Mutually
+            exclusive with subaccount.
     GenerateApiKeyResponse:
       type: object
       required:
@@ -138,6 +155,14 @@ components:
           description: >-
             RSA private key in PEM format. This must be stored securely and
             cannot be retrieved again after this response
+        warning:
+          type: string
+          nullable: true
+          description: >-
+            Present only when the minted key is bound to an FCM subtrader that
+            has no initial-margin cap at any scope. The mint still succeeds;
+            once SMA enforcement is enabled, the subtrader's orders will be
+            rejected until a cap is set.
     ApiKeyScope:
       type: string
       enum:

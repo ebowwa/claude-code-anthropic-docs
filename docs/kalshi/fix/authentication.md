@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.kalshi.com/fix/authentication.md
+Downloaded: 2026-08-31T23:38:51.615Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -35,7 +40,7 @@ The initiator sends a Logon message. The acceptor responds with either a Logon (
 | 141   | ResetSeqNumFlag          | Reset sequence numbers on logon. **Must be Y for non-retransmission sessions.**                                             | N                 |
 | 8013  | CancelOrdersOnDisconnect | Cancel orders on any disconnection (including graceful logout)                                                              | N                 |
 | 20126 | ListenerSession          | Listen-only session. **KalshiNR/RT only, requires SkipPendingExecReports=Y.**                                               | N                 |
-| 20127 | ReceiveSettlementReports | Receive settlement reports. **KalshiRT and KalshiPT only. Default to Y on KalshiPT.**                                       | N (Y on KalshiPT) |
+| 20127 | ReceiveSettlementReports | Receive settlement reports. **KalshiNR, KalshiRT, and KalshiPT only. Defaults to Y on KalshiPT.**                           | N (Y on KalshiPT) |
 | 20200 | MessageRetentionPeriod   | How long session messages will be stored for retransmission, max of 72 hours. **KalshiRT and KalshiPT only.**               | 24                |
 | 21005 | UseDollars               | Enable dollar-based price format for prices, including subpenny precision                                                   | N                 |
 | 21011 | SkipPendingExecReports   | Skip PENDING\_\{NEW\|REPLACE\|CANCEL} execution reports                                                                     | N                 |

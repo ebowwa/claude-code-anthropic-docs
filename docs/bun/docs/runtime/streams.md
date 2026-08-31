@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/streams.md
-Downloaded: 2026-08-24T20:30:01.361Z
--->
-
 # Streams
 
 > Use Bun's streams API to work with binary data without loading it all into memory at once

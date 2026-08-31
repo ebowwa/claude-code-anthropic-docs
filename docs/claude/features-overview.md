@@ -1,3 +1,8 @@
+<!--
+Source: https://code.claude.com/docs/en/features-overview.md
+Downloaded: 2026-08-31T23:39:02.442Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://code.claude.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -274,7 +279,7 @@ Each feature loads at different points in your session. The tabs below explain w
 
     **What loads:** Fresh, isolated context containing:
 
-    * The agent's own system prompt, not the full Claude Code system prompt
+    * The agent's own system prompt, not the Claude Code system prompt
     * Full content of skills listed in the agent's `skills:` field
     * CLAUDE.md and git status, except the built-in Explore and Plan agents [omit both](/docs/en/sub-agents#what-loads-at-startup)
     * Whatever context the lead agent passes in the prompt

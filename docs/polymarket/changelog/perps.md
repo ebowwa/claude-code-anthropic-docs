@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/changelog/perps.md
+Downloaded: 2026-08-31T23:38:47.746Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -7,6 +12,72 @@
 > Recent changes to the Polymarket Perps API and platform
 
 Notable changes to the Polymarket Perps API.
+
+<Update label="Sep 1, 2026" description="Concurrent WebSocket posts and HTTP overload shedding">
+  Concurrent WebSocket posts and HTTP overload shedding. No breaking changes.
+
+  **Added**
+
+  * **Concurrent WebSocket posts (MM gateway).** Up to 16 signed writes per
+    connection now run concurrently. Posts touching the same order, by client
+    order id or engine order id, still reach the engine in send order.
+    `cancelAll` and leverage or margin updates act as barriers. Responses can
+    arrive out of order across different orders: send a unique `id` and match
+    on it. Ordering is per connection.
+  * **HTTP overload shedding.** Requests over the server or per-IP concurrency
+    limit are shed before execution: `503`,
+    `{"status":"err","error":"service_unavailable"}`, with `Retry-After`.
+    Batch routes return a one-element array. The request did not execute, so
+    retry with backoff. The per-IP cap is 128 in-flight on the MM API against
+    healthy usage under 10. Tell us if you NAT many bots through one IP.
+
+  **Changed**
+
+  * **Cancel by client order id.** A recently completed order now returns
+    `order_already_terminal`, not `order_unknown`. A cancel racing its own
+    order's creation waits briefly (\~1ms, capped at 150ms) and succeeds
+    instead of answering `order_unknown`. TP/SL `coid`s are unchanged.
+  * **Funding.** Funding for a just-closed window now settles even if you
+    flattened or flipped just before settlement was sequenced; previously the
+    window could be skipped for the whole instrument. Drop any assumption that
+    a closed position means no funding.
+  * **Reduce-only market closes.** These now fill only within the price band
+    around the last mark. Expect partial fills or `ioc_no_fill` on a
+    dislocated book. Quotes resting far outside the band will no longer be
+    hit by them.
+  * **Balances.** REST `value` is now the USD equivalent at the asset's index
+    price, not the raw amount: same for pUSD, different for other collateral.
+    `balance` uses asset-native decimals, matching WebSocket.
+  * **`429` shape on modify routes.** `PATCH /v1/trade/orders` and
+    `PATCH /v1/trade/orders-coid` return the one-element array instead of a
+    bare object.
+  * **Idle connections.** HTTP connections with no complete header for 120s
+    are closed. A per-pod ceiling resets excess connections rather than
+    serving a `503`.
+
+  **Fixed**
+
+  * **Deposits.** Many-per-transaction deposits credit reliably; a batching
+    edge case could previously delay or drop credits.
+  * **Price continuity.** The index survives a full outage of one oracle
+    source, with marks, margin, and funding still updating. Don't assume
+    prices freeze when a provider goes down.
+  * **Referrals.** Concurrent binds for one account resolve to one winner; the
+    loser gets HTTP `400`, `account already has a referrer`.
+
+  **Not Yet Active**
+
+  * **Pending-modify expiry.** A modify left risk-undecided for 200ms will be
+    swept: the order stays open and you retry with a new `modify_id`. We'll
+    notify before enabling.
+  * **Per-account rate-limit tiers.** Still inactive. We'll notify before
+    activation.
+
+  **Rollout**
+
+  The public gateway fleet moves to dedicated hardware during this window.
+  WebSocket connections drop once; standard reconnects cover it.
+</Update>
 
 <Update label="Aug 24, 2026" description="Response timestamps, rejection references, and liquidation metadata">
   Rejections and acknowledgements now carry inspectable timing, every WebSocket

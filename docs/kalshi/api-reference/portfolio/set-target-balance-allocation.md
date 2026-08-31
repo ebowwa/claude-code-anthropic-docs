@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/api-reference/portfolio/set-target-balance-allocation.md
-Downloaded: 2026-08-24T20:30:00.768Z
+Downloaded: 2026-08-31T23:38:51.604Z
 -->
 
 > ## Documentation Index
@@ -117,6 +117,13 @@ components:
             validate: max=101,dive
           items:
             $ref: '#/components/schemas/TargetBalanceAllocationInput'
+        resting_margin_reservation:
+          allOf:
+            - $ref: '#/components/schemas/RestingMarginReservation'
+          description: Defaults to `sum` when omitted.
+          x-oapi-codegen-extra-tags:
+            validate: omitempty,oneof=max sum
+          x-go-type-skip-optional-pointer: true
     EmptyResponse:
       type: object
       description: An empty response body
@@ -141,6 +148,20 @@ components:
           x-go-type: '*int'
           x-oapi-codegen-extra-tags:
             validate: required,gte=0,lte=100
+    RestingMarginReservation:
+      type: string
+      enum:
+        - max
+        - sum
+      x-enum-varnames:
+        - RestingMarginReservationMax
+        - RestingMarginReservationSum
+      description: >
+        Collateral an automatic rebalance leaves behind for resting orders.
+        `max` reserves the
+
+        largest single market-side commitment. `sum` reserves the summed margin
+        of every resting order.
     ErrorResponse:
       type: object
       properties:
