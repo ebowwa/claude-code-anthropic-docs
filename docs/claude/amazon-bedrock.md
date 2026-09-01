@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/amazon-bedrock.md
-Downloaded: 2026-08-30T22:26:44.099Z
+Downloaded: 2026-09-01T22:25:35.402Z
 -->
 
 > ## Documentation Index
@@ -478,6 +478,8 @@ Example configuration:
   }
 }
 ```
+
+If your organization delivers the guardrail headers through a [Claude apps gateway](/docs/en/claude-apps-gateway) policy instead, they count as [settings that need approval](/docs/en/server-managed-settings#environment-variables-and-the-approval-dialog).
 
 ## Use the Mantle endpoint
 

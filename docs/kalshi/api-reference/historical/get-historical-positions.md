@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.kalshi.com/api-reference/historical/get-historical-positions.md
+Downloaded: 2026-09-01T22:25:21.195Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -70,6 +75,7 @@ paths:
       parameters:
         - $ref: '#/components/parameters/TickerQuery'
         - $ref: '#/components/parameters/SingleEventTickerQuery'
+        - $ref: '#/components/parameters/SubaccountQueryDefaultPrimary'
         - $ref: '#/components/parameters/LimitQuery'
         - $ref: '#/components/parameters/CursorQuery'
       responses:
@@ -105,6 +111,12 @@ components:
       schema:
         type: string
         x-go-type-skip-optional-pointer: true
+    SubaccountQueryDefaultPrimary:
+      name: subaccount
+      in: query
+      description: Subaccount number (0 for primary, 1-63 for subaccounts). Defaults to 0.
+      schema:
+        type: integer
     LimitQuery:
       name: limit
       in: query

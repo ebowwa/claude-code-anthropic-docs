@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/claude-apps-gateway-config.md
-Downloaded: 2026-08-29T02:44:09.246Z
+Downloaded: 2026-09-01T22:25:35.404Z
 -->
 
 > ## Documentation Index
@@ -606,6 +606,7 @@ Because these settings arrive over the network, the CLI shows each developer a s
 * `env` variables that require the developer's approval, such as proxy and base-URL variables
 * shell-execution settings such as `apiKeyHelper` and `statusLine`
 * the sandbox binary settings `sandbox.bwrapPath`, `sandbox.socatPath`, and `sandbox.ripgrep`
+* Sandbox settings that intercept traffic, inject credentials, or weaken isolation, such as `sandbox.network.tlsTerminate` and the proxy port settings. [Security approval dialogs](/docs/en/server-managed-settings#security-approval-dialogs) lists them all.
 * managed CLAUDE.md content
 
 [Approval memory](/docs/en/server-managed-settings#approval-memory) covers how long an approval lasts and when the dialog appears again.

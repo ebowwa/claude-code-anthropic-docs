@@ -1,3 +1,8 @@
+<!--
+Source: https://bun.com/docs/runtime/utils.md
+Downloaded: 2026-09-01T22:25:21.125Z
+-->
+
 # Utils
 
 > Use Bun's utility functions to work with the runtime
@@ -304,7 +309,7 @@ Escapes the following characters from an input string:
 - `<` becomes `&lt;`
 - `>` becomes `&gt;`
 
-This function is optimized for large input. On an M1X, it processes 480 MB/s -
+This function is optimized for large input. On an M1 Max, it processes 480 MB/s -
 20 GB/s, depending on how much data is being escaped and whether there is non-ASCII
 text. Bun converts non-string types to a string before escaping.
 

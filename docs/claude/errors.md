@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/errors.md
-Downloaded: 2026-08-31T23:39:02.455Z
+Downloaded: 2026-09-01T22:25:35.400Z
 -->
 
 > ## Documentation Index
@@ -73,6 +73,8 @@ Match the message you see to a section below.
 | `API Error: 401 Invalid authentication credentials`                                                                                                                                                   | [Authentication](#api-error-401-invalid-authentication-credentials)                                                           |
 | `Login expired · Please run /login`                                                                                                                                                                   | [Authentication](#login-expired)                                                                                              |
 | `Failed to authenticate: OAuth session expired and could not be refreshed`                                                                                                                            | [Authentication](#login-expired)                                                                                              |
+| `Your account is on hold and can't use Claude Code. View details or appeal: https://claude.ai/restricted`                                                                                             | [Authentication](#your-account-is-on-hold)                                                                                    |
+| `Your account is on hold and can't sign in to Claude Code. View details or appeal: https://claude.ai/restricted`                                                                                      | [Authentication](#your-account-is-on-hold)                                                                                    |
 | `Anthropic profile login expired · Re-authenticate your Anthropic profile`                                                                                                                            | [Authentication](#anthropic-profile-login-expired)                                                                            |
 | `Anthropic profile login expired · Run /login to use your claude.ai account instead, or re-authenticate the profile`                                                                                  | [Authentication](#anthropic-profile-login-expired)                                                                            |
 | `does not meet scope requirement user:profile`                                                                                                                                                        | [Authentication](#oauth-scope-requirement)                                                                                    |
@@ -120,6 +122,7 @@ Match the message you see to a section below.
 | `There's an issue with the selected model`                                                                                                                                                            | [Request errors](#theres-an-issue-with-the-selected-model)                                                                    |
 | `Model ... is not a recognized model id`                                                                                                                                                              | [Request errors](#model-is-not-a-recognized-model-id)                                                                         |
 | `Claude Opus is not available with the Claude Pro plan`                                                                                                                                               | [Request errors](#claude-opus-is-not-available-with-the-claude-pro-plan)                                                      |
+| `Claude Code ... does not support this model; version ... or newer is required`                                                                                                                       | [Request errors](#claude-code-does-not-support-this-model)                                                                    |
 | `Model ... is restricted by your organization's settings`                                                                                                                                             | [Request errors](#model-is-restricted-by-your-organizations-settings)                                                         |
 | `thinking.type.enabled is not supported for this model`                                                                                                                                               | [Request errors](#thinking-type-enabled-is-not-supported-for-this-model)                                                      |
 | `Effort '<level>' isn't available with thinking turned off on this model`                                                                                                                             | [Request errors](#effort-isnt-available-with-thinking-turned-off)                                                             |
@@ -535,18 +538,20 @@ When this error appears mid-conversation because the context grew past 200K toke
 **What to do:**
 
 * Run `/model` and select the variant without the `[1m]` suffix to fall back to the standard context window
-* Run `/usage-credits` to turn on metered billing for the 1M variant on Pro and Max, or to request it from your admin on Team and Enterprise
+* Where the message names `/usage-credits`, run it to turn on metered billing for the 1M variant on Pro and Max, or to request usage credits from your admin on Team and Enterprise
 * If the error persists after `/model`, a 1M model ID may be set elsewhere. See [Setting your model](/docs/en/model-config#setting-your-model) for the configuration locations to check in priority order.
 * To remove 1M variants from the model picker entirely, set [`CLAUDE_CODE_DISABLE_1M_CONTEXT=1`](/docs/en/env-vars)
 
 ### The prompt to confirm went unanswered
 
-On plans where Fable 5 usage [bills to usage credits](/docs/en/model-config#fable-5-and-usage-credits), Claude Code asks you to confirm before a request bills them. When nobody answers that consent prompt in a session that may have no one at its terminal, Claude Code closes the prompt and ends the turn with one of these messages:
+If your account requires the [Fable usage-credits consent](/docs/en/model-config#fable-and-usage-credits), Claude Code asks you to confirm before a Fable request bills usage credits. When nobody answers that consent prompt in a session that may have no one at its terminal, Claude Code closes the prompt and ends the turn with one of these messages:
 
 ```text theme={null}
-Fable 5 limit reached · continuing on Fable 5 uses usage credits, and the prompt to confirm went unanswered — nothing was sent · answer it where this session is running, or /model to change
-Fable 5 now uses usage credits · the prompt to confirm went unanswered — nothing was sent · answer it where this session is running, or /model to change
+Fable limit reached · continuing on Fable 5.1 uses usage credits, and the prompt to confirm went unanswered — nothing was sent · answer it where this session is running, or /model to change
+Fable 5.1 now uses usage credits · the prompt to confirm went unanswered — nothing was sent · answer it where this session is running, or /model to change
 ```
+
+The messages name the session's Fable model, so on Fable 5 they read `continuing on Fable 5` and `Fable 5 now uses usage credits`. Before v2.1.255, the first message began `Fable 5 limit reached`.
 
 This happens in [Remote Control](/docs/en/remote-control) sessions, [background sessions](/docs/en/agent-view), and [agent team](/docs/en/agent-teams) teammate sessions. Claude Code shows the consent prompt only in the session's own interactive view: the terminal where it runs, or, for a background session, the [agents view](/docs/en/agent-view) once you attach. A Remote Control client can't display it. Claude Code closes the prompt at the [`dialogExpiry`](/docs/en/settings-reference#dialogexpiry) deadline, five minutes by default, or as soon as a new prompt arrives while nobody has typed at that terminal, such as a prompt sent from a Remote Control client. Typing at the terminal where the session runs cancels the deadline, and Claude Code waits for your answer. In a background session's attached view, typing doesn't cancel the deadline, and a new prompt still closes the consent prompt, so answer before either happens. Claude Code sends nothing and keeps your model, so when you send your next prompt, Claude Code shows the consent prompt again.
 
@@ -964,7 +969,9 @@ Please run /login · API Error: 401 Invalid authentication credentials
 
 ### Login expired
 
-Claude Code tried to renew your saved claude.ai or Claude Console login and the OAuth service rejected the stored refresh token, so Claude Code cleared the saved credentials. After that, each request stops locally before it reaches the API, because only `/login` can create new credentials. Before v2.1.206, Claude Code sent the request anyway with whatever credential remained in the environment, and every model then failed with [There's an issue with the selected model](#theres-an-issue-with-the-selected-model) or a 401 instead of a prompt to sign in.
+Claude Code tried to renew your saved claude.ai or Claude Console login and the OAuth service rejected the stored refresh token, so Claude Code cleared the saved credentials. After that, each model request stops locally with this message before it reaches the API, because only `/login` can create new credentials.
+
+Before v2.1.206, Claude Code sent the model request anyway with whatever credential remained in the environment, and every model then failed with [There's an issue with the selected model](#theres-an-issue-with-the-selected-model) or a 401 instead of a prompt to sign in.
 
 ```text theme={null}
 Login expired · Please run /login
@@ -976,7 +983,7 @@ In [non-interactive mode](/docs/en/headless) (`-p`) and the [Agent SDK](/docs/en
 Failed to authenticate: OAuth session expired and could not be refreshed
 ```
 
-This is not the same state as [OAuth token revoked or expired](#oauth-token-revoked-or-expired). Those messages report a 401 the API returned. Claude Code itself produces `Login expired` for a login it already failed to renew, so it sends no request.
+This is not the same state as [OAuth token revoked or expired](#oauth-token-revoked-or-expired). Those messages report a 401 the API returned. Claude Code itself produces `Login expired` for a login it already failed to renew, so it sends no request. When the renewal fails because the account itself is suspended rather than the login being stale, Claude Code shows [Your account is on hold](#your-account-is-on-hold) instead.
 
 Sessions authenticated with an API key, [`CLAUDE_CODE_OAUTH_TOKEN`](/docs/en/env-vars), or a third-party provider don't use the saved login and never see this message.
 
@@ -987,6 +994,22 @@ You can check for this state before a request fails: [`/status`](/docs/en/comman
 * Run `/login` to sign in again. Retrying without signing in shows the same message on every request.
 * In non-interactive mode, run `claude` in the same environment, complete `/login`, then rerun your command. For automation that can't sign in interactively, authenticate with `ANTHROPIC_API_KEY` or [generate a long-lived token with `claude setup-token`](/docs/en/authentication#generate-a-long-lived-token).
 * If signing in keeps failing, see [Login and authentication](/docs/en/troubleshoot-install#login-and-authentication)
+
+### Your account is on hold
+
+The Claude account behind your login has been suspended. Claude Code shows the first message when it tries to renew your saved login and learns of the hold, and the second when a sign-in you complete in the browser reports it:
+
+```text theme={null}
+Your account is on hold and can't use Claude Code. View details or appeal: https://claude.ai/restricted
+Your account is on hold and can't sign in to Claude Code. View details or appeal: https://claude.ai/restricted
+```
+
+Signing in again with the same account doesn't clear the message, because the hold is on the account rather than the login. In [non-interactive mode](/docs/en/headless) (`-p`) and the [Agent SDK](/docs/en/agent-sdk/overview), the structured error code is `account_on_hold`. Before v2.1.235, Claude Code reported a held account as [Login expired · Please run /login](#login-expired), whose recovery steps can't clear a hold.
+
+**What to do:**
+
+* Open the link in the message to view the hold's details or appeal it
+* If you have another Claude account or an API key that isn't affected by the hold, you can keep working while the hold is resolved: run `/login` with that account, or set the key with `ANTHROPIC_API_KEY`
 
 ### Anthropic profile login expired
 
@@ -1635,7 +1658,7 @@ Claude Code produces this error locally at the moment the switch is requested, b
 **What to do:**
 
 * Run `/model` with no argument to open the picker and choose from the models available to your account, then pass the alias or ID shown there
-* If you used an alias that a newer Claude Code version supports, run `claude update`. A full ID that starts with `claude-` passes this check even when the model is newer than your Claude Code version, so upgrading isn't needed for those.
+* If you used an alias that a newer Claude Code version supports, run `claude update`. A full ID that starts with `claude-` passes this local check even when the model is newer than your Claude Code version. The server can still require a minimum version for that model; see [Claude Code does not support this model](#claude-code-does-not-support-this-model).
 * A model saved before v2.1.200 isn't repaired by this check. If a stale value keeps coming back, remove it from the locations listed under [Setting your model](/docs/en/model-config#setting-your-model).
 * The check runs only on the Anthropic API. On any other provider or gateway, including a custom `ANTHROPIC_BASE_URL`, the provider defines the model names, so Claude Code accepts any string and passes it through. Claude Code can still write the [unrecognized-model diagnostic line](#unrecognized-model-id-on-a-request) at request time, on every provider.
 
@@ -1652,6 +1675,19 @@ Claude Opus is not available with the Claude Pro plan. If you have updated your 
 * Run `/model` and select a model your plan includes
 * If you upgraded your plan recently and still see this, run `/logout` then `/login`. The stored token reflects your plan at the time you signed in, so upgrading on the web does not take effect in an existing session until you re-authenticate.
 * See [claude.com/pricing](https://claude.com/pricing) for which models each plan includes
+
+### Claude Code does not support this model
+
+The model you selected requires a newer Claude Code version than the one making the request. The server checks this per model.
+
+```text theme={null}
+API Error: 400 Claude Code 2.1.219 does not support this model; version 2.1.255 or newer is required. Run 'claude update', or update the Claude desktop app, then try again.
+```
+
+**What to do:**
+
+* Run `claude update`, or update the Claude desktop app, then start a new session on the model
+* To keep working in the current session, switch to another model with `/model`
 
 <h3 id="model-is-restricted-by-your-organizations-settings">
   Model is restricted by your organization's settings
@@ -3197,11 +3233,11 @@ Permission deny rule (.claude/settings.json): Write(docs/**) is not matched by f
 
 * Replace `Write(path)`, `NotebookEdit(path)`, and legacy `MultiEdit(path)` rules with `Edit(path)`. `Edit` rules cover all file-editing tools.
 * Except in `--allowedTools`, where Claude Code accepts a `Glob` rule without warning, replace `Glob(path)` rules with `Read(path)`.
-* Fix the rule at the source the warning names in parentheses: a settings file path, or the flag itself for `--allowed-tools` and `--disallowed-tools`. A `claude-settings-<hash>.json` path that doesn't exist on disk stands for an inline `--settings` value; fix the JSON you pass to that flag.
+* Fix the rule at the source the warning names in parentheses: a settings file path, or the flag itself for `--allowed-tools` and `--disallowed-tools`. A `claude-settings-<hash>.json` path that doesn't exist on disk stands for an inline `--settings` value. Fix the JSON you pass to that flag.
 * Leave bare tool-name rules such as `Write` or `Glob` alone. Claude Code matches them at the [tool level](/docs/en/permissions#match-all-uses-of-a-tool) and doesn't warn about them.
-* If the source reads `managed policy settings`, forward the warning to whoever maintains your managed settings; you can't clear it yourself.
+* If the source reads `managed policy settings`, forward the warning to whoever maintains your managed settings, since you can't clear it yourself.
 
-In a [background session](/docs/en/agent-view) or with `--output-format json` or `stream-json`, Claude Code writes the warning to the debug log instead of stderr, so machine-read output stays clean; run with `--debug` to capture it at `~/.claude/debug/<session-id>.txt`. Before v2.1.210, Claude Code accepted these rules without a warning.
+In a [background session](/docs/en/agent-view) or with `--output-format json` or `stream-json`, Claude Code writes the warning to the debug log instead of stderr, so machine-read output stays clean. Run with `--debug` to capture it at `~/.claude/debug/<session-id>.txt`. Before v2.1.210, Claude Code accepted these rules without a warning.
 
 ### Has a wildcard before the rest of the command
 
@@ -3316,7 +3352,7 @@ If Claude's answers seem less capable than you expect but no error is shown, the
 
 * A configured [`--fallback-model`](/docs/en/cli-reference#cli-flags) takes over after an availability error, for that turn only, with a notice in the transcript
 * An Amazon Bedrock or Google Cloud's Agent Platform startup check finds your default model unavailable
-* [Automatic model fallback](/docs/en/model-config#automatic-model-fallback) on Fable 5 and Opus 5 moves the session to the flagged category's fallback model, when that category has one, and shows a notice in the transcript
+* [Automatic model fallback](/docs/en/model-config#automatic-model-fallback) on Fable 5.1, Fable 5, and Opus 5 moves the session to the flagged category's fallback model, when that category has one, and shows a notice in the transcript
 
 The Model selection check below catches the second and third cases; the first appears as a transcript notice rather than a `/model` change. [Model configuration](/docs/en/model-config) explains when each fallback applies.
 

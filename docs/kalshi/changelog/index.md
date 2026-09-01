@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/changelog/index.md
-Downloaded: 2026-08-31T23:38:51.622Z
+Downloaded: 2026-09-01T22:25:21.205Z
 -->
 
 > ## Documentation Index
@@ -20,6 +20,48 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="September 3, 2026"
+  tags={["FIX", "Predictions", "Margin"]}
+  rss={{
+title: "Higher FIX market data session limit",
+description: "FIX market data sessions now support 100,000 active subscriptions."
+}}
+>
+  FIX market data sessions now support up to 100,000 active subscriptions. See
+  [Predictions FIX Market Data](/fix/market-data) and [Margin FIX Market
+  Data](/fix-margin/market-data).
+</Update>
+
+<Update
+  label="September 3, 2026"
+  tags={["FIX", "Predictions", "Margin"]}
+  rss={{
+title: "Order identity on FIX market data",
+description: "Owned FIX market data book updates now include the client order ID and subaccount number of the order that caused the change."
+}}
+>
+  Book entries on `MarketDataIncrementalRefresh<35=X>` now include
+  `ClOrdID<11>` and `AllocAccount<79>` when your order caused the level change.
+  These private annotations are omitted for other users' orders and sibling
+  accounts hidden by a restricted API key. See
+  [Predictions FIX Market Data](/fix/market-data) and
+  [Margin FIX Market Data](/fix-margin/market-data).
+</Update>
+
+<Update
+  label="September 3, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "Filter historical positions by subaccount",
+description: "GET /historical/positions now accepts a subaccount filter for archived positions."
+}}
+>
+  `GET /historical/positions` now accepts the `subaccount` query parameter to
+  retrieve archived positions for a numbered subaccount. If omitted, the
+  endpoint continues to return positions for the primary subaccount.
+</Update>
 
 <Update
   label="September 3, 2026"

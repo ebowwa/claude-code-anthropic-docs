@@ -1,8 +1,3 @@
-<!--
-Source: https://code.claude.com/docs/en/google-vertex-ai.md
-Downloaded: 2026-08-25T20:29:10.092Z
--->
-
 > ## Documentation Index
 > Fetch the complete documentation index at: https://code.claude.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.

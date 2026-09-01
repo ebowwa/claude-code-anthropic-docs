@@ -1,3 +1,8 @@
+<!--
+Source: https://bun.com/docs/runtime/semver.md
+Downloaded: 2026-09-01T22:25:21.125Z
+-->
+
 # Semver
 
 > Use Bun's semantic versioning API
@@ -33,7 +38,7 @@ semver.satisfies("1.0.0", "1.0.0 - 2.0.0"); // true
 semver.satisfies("1.0.0", "1.0.0 - 1.0.1"); // true
 ```
 
-If `range` or `version` is invalid, it returns `false`.
+`satisfies` returns `false` if `version` is invalid, or if either argument contains a non-ASCII character. Bun ignores the parts of `range` that it cannot parse. A `range` with no parseable part behaves like `*`.
 
 ## `Bun.semver.order(versionA: string, versionB: string): 0 | 1 | -1`
 

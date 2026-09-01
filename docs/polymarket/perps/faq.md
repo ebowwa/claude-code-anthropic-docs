@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/perps/faq.md
+Downloaded: 2026-09-01T22:25:16.967Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -112,6 +117,11 @@ Common questions about Polymarket Perps.
     * Cross margin shares account collateral across all cross positions. Unrealized PnL on one position can offset margin on another, but a liquidation evaluates and can unwind the whole cross account.
 
     The web app opens new positions in isolated mode by default. Cross is opt-in through the API using leverage configuration, and only for instruments that allow it: some markets are isolated-only and reject cross margin. Instrument data shows which margin modes each market supports. See [Update Leverage](/perps/trading#update-leverage) and [Fetch Instruments](/perps/market-data#fetch-instruments).
+  </Accordion>
+
+  <Accordion title="What is the maximum leverage?">
+    For crypto, SP500, Oil, Gold and Silver we offer up to 20x leverage, RWA in
+    general up to 10x leverage.
   </Accordion>
 
   <Accordion title="What are leverage tiers and why does my margin go up as my position grows?">

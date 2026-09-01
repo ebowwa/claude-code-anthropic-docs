@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/fix/authentication.md
-Downloaded: 2026-08-31T23:38:51.615Z
+Downloaded: 2026-09-01T22:25:21.197Z
 -->
 
 > ## Documentation Index
@@ -35,20 +35,21 @@ The initiator sends a Logon message. The acceptor responds with either a Logon (
 
 ### Optional Fields
 
-| Tag   | Name                     | Description                                                                                                                 | Default           |
-| ----- | ------------------------ | --------------------------------------------------------------------------------------------------------------------------- | ----------------- |
-| 141   | ResetSeqNumFlag          | Reset sequence numbers on logon. **Must be Y for non-retransmission sessions.**                                             | N                 |
-| 8013  | CancelOrdersOnDisconnect | Cancel orders on any disconnection (including graceful logout)                                                              | N                 |
-| 20126 | ListenerSession          | Listen-only session. **KalshiNR/RT only, requires SkipPendingExecReports=Y.**                                               | N                 |
-| 20127 | ReceiveSettlementReports | Receive settlement reports. **KalshiNR, KalshiRT, and KalshiPT only. Defaults to Y on KalshiPT.**                           | N (Y on KalshiPT) |
-| 20200 | MessageRetentionPeriod   | How long session messages will be stored for retransmission, max of 72 hours. **KalshiRT and KalshiPT only.**               | 24                |
-| 21005 | UseDollars               | Enable dollar-based price format for prices, including subpenny precision                                                   | N                 |
-| 21011 | SkipPendingExecReports   | Skip PENDING\_\{NEW\|REPLACE\|CANCEL} execution reports                                                                     | N                 |
-| 21012 | UseExpiredOrdStatus      | Emit Expired\<C> (150/39) for expiry-style system cancellations (CloseCancel and OrderExpiryCancel) instead of Canceled\<4> | N                 |
-| 21007 | EnableIocCancelReport    | Partially filled IOC orders produce a cancel report                                                                         | N                 |
-| 21008 | PreserveOriginalOrderQty | OrderQty tag 38 always reflects original order quantity across all states                                                   | N                 |
-| 21026 | AlwaysEmitNewBeforeTrade | Emit a standalone New\<0> execution report before any Trade\<F> report when both occur in the same matching cycle           | N                 |
-| 21027 | SplitCollateralReturn    | Include per-trade collateral return breakdown (tags 21030/21031) on Execution Reports                                       | N                 |
+| Tag   | Name                     | Description                                                                                                                                                                                                                                                                            | Default           |
+| ----- | ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------- |
+| 141   | ResetSeqNumFlag          | Reset sequence numbers on logon. **Must be Y for non-retransmission sessions.**                                                                                                                                                                                                        | N                 |
+| 8013  | CancelOrdersOnDisconnect | Cancel orders on any disconnection (including graceful logout)                                                                                                                                                                                                                         | N                 |
+| 20126 | ListenerSession          | Listen-only session. **KalshiNR/RT only, requires SkipPendingExecReports=Y.**                                                                                                                                                                                                          | N                 |
+| 20127 | ReceiveSettlementReports | Receive settlement reports. **KalshiNR, KalshiRT, and KalshiPT only. Defaults to Y on KalshiPT.**                                                                                                                                                                                      | N (Y on KalshiPT) |
+| 20200 | MessageRetentionPeriod   | How long session messages will be stored for retransmission, max of 72 hours. **KalshiRT and KalshiPT only.**                                                                                                                                                                          | 24                |
+| 21005 | UseDollars               | Enable dollar-based price format for prices, including subpenny precision                                                                                                                                                                                                              | N                 |
+| 21011 | SkipPendingExecReports   | Skip PENDING\_\{NEW\|REPLACE\|CANCEL} execution reports                                                                                                                                                                                                                                | N                 |
+| 21012 | UseExpiredOrdStatus      | Emit Expired\<C> (150/39) for expiry-style system cancellations (CloseCancel and OrderExpiryCancel) instead of Canceled\<4>                                                                                                                                                            | N                 |
+| 21007 | EnableIocCancelReport    | Partially filled IOC orders produce a cancel report                                                                                                                                                                                                                                    | N                 |
+| 21008 | PreserveOriginalOrderQty | OrderQty tag 38 always reflects original order quantity across all states                                                                                                                                                                                                              | N                 |
+| 21026 | AlwaysEmitNewBeforeTrade | Emit a standalone New\<0> execution report before any Trade\<F> report when both occur in the same matching cycle                                                                                                                                                                      | N                 |
+| 21027 | SplitCollateralReturn    | Include per-trade collateral return breakdown (tags 21030/21031) on Execution Reports                                                                                                                                                                                                  | N                 |
+| 21032 | UseCapReservation        | Reserve event contract daily cap headroom on order entry and replace. **FCM members only, event-contract sessions only.** Replace requires `OrderID<37>`, only after that order's `ExecType=New<0>` report, one amend per order in flight. RFQ quote acceptances are not cap-reserved. | N                 |
 
 ### Signature Generation
 

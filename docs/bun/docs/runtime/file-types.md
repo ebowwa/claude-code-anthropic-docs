@@ -1,3 +1,8 @@
+<!--
+Source: https://bun.com/docs/runtime/file-types.md
+Downloaded: 2026-09-01T22:25:21.119Z
+-->
+
 # File Types
 
 > File types and loaders supported by Bun's bundler and runtime
@@ -15,6 +20,12 @@ import my_toml from "./my_file" with { type: "toml" };
 // or with dynamic imports
 const { default: my_toml } = await import("./my_file", { with: { type: "toml" } });
 ```
+
+<Note>
+  With TypeScript 7.1 or newer, `@types/bun` types these imports from the `type` attribute: a `type: "text"` import is a
+  `string`, a `type: "sqlite"` import is a `Database`. Older TypeScript versions type the import from the file extension
+  alone.
+</Note>
 
 ---
 
