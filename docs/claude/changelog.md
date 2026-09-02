@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/changelog.md
-Downloaded: 2026-09-01T22:25:35.386Z
+Downloaded: 2026-09-02T22:24:48.319Z
 -->
 
 > ## Documentation Index
@@ -14,6 +14,11 @@ Downloaded: 2026-09-01T22:25:35.386Z
 This page is generated from the [CHANGELOG.md on GitHub](https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md).
 
 Run `claude --version` to check your installed version.
+
+<Update label="2.1.258" description="September 1, 2026">
+  * Fixed Claude Code failing to launch on macOS 12 (Monterey), a regression introduced in 2.1.255
+  * Fixed remote and scheduled sessions failing with "user messages must have non-empty content" after a re-sent permission approval could not be applied
+</Update>
 
 <Update label="2.1.257" description="September 1, 2026">
   * Added Claude Fable 5.1 (`claude-fable-5-1`), now the default Fable model — 1M context, $10/$50 per Mtok with \$0.25/Mtok cache reads

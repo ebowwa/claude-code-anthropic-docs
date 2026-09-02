@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/remote-control.md
-Downloaded: 2026-09-01T22:25:35.389Z
+Downloaded: 2026-09-02T22:24:48.322Z
 -->
 
 > ## Documentation Index
@@ -113,7 +113,7 @@ You can start a Remote Control session from the CLI or the VS Code extension. Th
   </Tab>
 
   <Tab title="VS Code">
-    In the [Claude Code VS Code extension](/docs/en/vs-code), type `/remote-control` or `/rc` in the prompt box, or open the command menu with `/` and select it.
+    In the [Claude Code VS Code extension](/docs/en/vs-code), type `/remote-control` or `/rc` in the prompt box.
 
     ```text theme={null}
     /remote-control
