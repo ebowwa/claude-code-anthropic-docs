@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/changelog/index.md
-Downloaded: 2026-09-02T22:24:42.986Z
+Downloaded: 2026-09-03T22:20:48.032Z
 -->
 
 > ## Documentation Index
@@ -79,20 +79,6 @@ description: "Owned FIX market data book updates now include the client order ID
   accounts hidden by a restricted API key. See
   [Predictions FIX Market Data](/fix/market-data) and
   [Margin FIX Market Data](/fix-margin/market-data).
-</Update>
-
-<Update
-  label="September 3, 2026"
-  tags={["REST", "Margin"]}
-  rss={{
-title: "Public margin fee tier rates",
-description: "New public GET /trade-api/v2/margin/fee_tier_rates returns Self Clearing Members and Kalshi Prime maker and taker fee rates."
-}}
->
-  New public endpoint `GET /trade-api/v2/margin/fee_tier_rates` returns each fee
-  tier in the Self Clearing Members and Kalshi Prime schedules with its
-  corresponding maker and taker fee rates. The Kalshi Prime schedule also
-  applies to FCM subtraders.
 </Update>
 
 <Update

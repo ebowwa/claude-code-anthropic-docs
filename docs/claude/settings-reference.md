@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/settings-reference.md
-Downloaded: 2026-09-02T22:24:48.342Z
+Downloaded: 2026-09-03T22:20:59.409Z
 -->
 
 > ## Documentation Index
@@ -3621,11 +3621,11 @@ At session start, Claude Code adds two git-related pieces to Claude's prompt: it
 
 ### `prUrlTemplate`
 
-Point the PR links Claude Code renders, in the footer badge and in tool-result summaries, at an internal code-review tool instead of `github.com`. Claude Code substitutes `{host}`, `{owner}`, `{repo}`, `{number}`, and `{url}` from the `gh`-reported PR URL. The [GitLab merge request badge](/docs/en/interactive-mode#gitlab-merge-requests) keeps its GitLab URL.
+Point the PR links Claude Code renders, in the footer badge and in tool-result summaries, at an internal code-review tool instead of `github.com`. Claude Code substitutes `{host}`, `{owner}`, `{repo}`, `{number}`, and `{url}` from the PR URL. The [GitLab merge request badge](/docs/en/interactive-mode#gitlab-merge-requests) keeps its GitLab URL.
 
 * **Scope**: [`Any file`](#scopes)
 * **Type**: string, a URL template using any of the five placeholders
-* **Default**: unset, so links use the `gh`-reported URL
+* **Default**: unset
 
 ```json settings.json theme={null}
 {

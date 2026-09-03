@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/http/websockets.md
-Downloaded: 2026-08-26T22:47:45.553Z
--->
-
 # WebSockets
 
 > Server-side WebSockets in Bun

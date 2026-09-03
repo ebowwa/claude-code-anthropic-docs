@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/bundler/bytecode.md
-Downloaded: 2026-08-26T22:47:45.562Z
--->
-
 # Bytecode Caching
 
 > Speed up JavaScript execution with bytecode caching in Bun's bundler
