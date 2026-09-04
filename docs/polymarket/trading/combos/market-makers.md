@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/trading/combos/market-makers.md
+Downloaded: 2026-09-04T22:10:02.843Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -3383,20 +3388,30 @@ back to market data.
 
 <Tabs>
   <Tab title="TypeScript">
-    Fetch non-closed markets and index them by position ID in your own market data
-    store.
+    Fetch non-closed markets and index Combo-enabled markets by position ID in your
+    own market data store.
 
     ```ts theme={null}
+    import { ComboKnownStatus } from "@polymarket/client";
+
     const pages = client.listMarkets({ closed: false });
 
     for await (const page of pages) {
       for (const market of page.items) {
+        if (market.state.comboStatus !== ComboKnownStatus.Enabled) continue;
+
         for (const positionId of market.positionIds) {
           marketByPositionId.set(positionId, market);
         }
       }
     }
     ```
+
+    | Enum member                 | Meaning                                                                                                                                     |
+    | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+    | `ComboKnownStatus.Pending`  | Polymarket plans to enable the market for Combos. Prepare your quoting system for the market. It may appear in an RFQ before it is enabled. |
+    | `ComboKnownStatus.Enabled`  | The market is enabled for Combos and may be quoted.                                                                                         |
+    | `ComboKnownStatus.Disabled` | The market is not enabled for Combos. Exclude it from quoting.                                                                              |
 
     You can also fetch markets by leg position ID on demand, but most market makers
     will want this context ready before the **400 ms** quote window starts.
@@ -3409,16 +3424,28 @@ back to market data.
   </Tab>
 
   <Tab title="Python">
-    Fetch non-closed markets and index them by position ID in your own market data
-    store.
+    Fetch non-closed markets and index Combo-enabled markets by position ID in your
+    own market data store.
 
     ```python theme={null}
     pages = client.list_markets(closed=False)
 
     async for market in pages.iter_items():
+        if market.state.combo_status != "enabled":
+            continue
+
         for position_id in market.position_ids:
             market_by_position_id[position_id] = market
     ```
+
+    Read Combo status from `market.state.combo_status`. The `ComboStatus` type
+    includes these known string values:
+
+    | Value        | Meaning                                                                                                                                     |
+    | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------- |
+    | `"pending"`  | Polymarket plans to enable the market for Combos. Prepare your quoting system for the market. It may appear in an RFQ before it is enabled. |
+    | `"enabled"`  | The market is enabled for Combos and may be quoted.                                                                                         |
+    | `"disabled"` | The market is not enabled for Combos. Exclude it from quoting.                                                                              |
 
     You can also fetch markets by leg position ID on demand, but most market makers
     will want this context ready before the **400 ms** quote window starts.
@@ -3437,6 +3464,7 @@ back to market data.
     ```bash theme={null}
     curl -G "https://gamma-api.polymarket.com/markets/keyset" \
       --data-urlencode "closed=false" \
+      --data-urlencode "combo_status=enabled" \
       --data-urlencode "limit=100"
     ```
 
@@ -3447,9 +3475,19 @@ back to market data.
       "id": "<market_id>",
       "conditionId": "<ctf_condition_id>",
       "question": "Will example happen?",
-      "positionIds": ["<yes_leg_position_id>", "<no_leg_position_id>"]
+      "positionIds": ["<yes_leg_position_id>", "<no_leg_position_id>"],
+      "comboStatus": "enabled"
     }
     ```
+
+    Use `comboStatus` to decide whether to prepare the market for quoting. The field
+    has these known string values:
+
+    | Value        | Meaning                                                                                                                                               |
+    | ------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+    | `"pending"`  | Polymarket plans to enable the market for Combos. Prepare your quoting system for the market. It may appear in an `RFQ_REQUEST` before it is enabled. |
+    | `"enabled"`  | The market is enabled for Combos and may be quoted.                                                                                                   |
+    | `"disabled"` | The market is not enabled for Combos. Exclude it from quoting.                                                                                        |
 
     You can also resolve markets by leg position ID on demand, but avoid doing this
     inside the **400 ms** quote window.
@@ -4198,12 +4236,13 @@ rejections rather than assuming this list is exhaustive.
 
 ### Common Footguns
 
-When quoting combos, there's a few things you should be aware of:
+When quoting Combos, account for these pricing and data risks:
 
 1. It is of course possible to receive requests where legs are correlated, and an extremely common case of this is same-game combos: for example, if a user requests a combo of the moneyline (certain team to win) and the total number of points scored in the game. Another case that may happen is duplicated events stemming from upstream provider issues -- these events may have 100% correlation and must be accounted for in pricing.
 2. Oftentimes, it is not sufficient to use the midpoint of the CLOB orderbook as a "true indicator" of probability of an outcome. Since placing liquidity on orderbooks is open to anyone, this can be problematic to use as a reference price. Be vigilant on quoting illiquid markets.
 3. Markets may resolve 50-50 as outlined in the rules of each market, or by clarification. The payout for a YES combo position is the product of the outcome of each individual leg -- if each individual leg resolves 1, then the combo resolves to 1, and can be redeemed for 1 pUSD. If one leg resolves to 0.5, and all others resolve to 1, then that YES combo can be redeemed for `(1 * 1 * 1...) * 0.5 = 0.5`. A NO combo can be redeemed for the complement to the redeemable value of a YES combo. For example, if a YES combo share can be redeemed for 0.25 (perhaps it's two legs resolved to 0.5 each), then the corresponding NO combo share would be redeemable for `1 - 0.25 = 0.75`. Price the likelihood of a leg resolving to 50-50 accordingly.
 4. Consider implementing risk thresholds on maximum exposure to a particular outcome.
-5. Legs marked as "pending" for comboStatus (in the Gamma API) may come through the requester websocket. It is up to quoters to choose whether or not to respond to these, as with all RFQs.
+5. Pending Combo legs may still reach your quoting session. Decide whether they meet your quoting criteria before responding; see [Map Legs to Markets](#map-legs-to-markets) for surface-specific detection guidance.
+6. Sports events' home and away assignments can change after markets are created, especially when games are rescheduled or moved. Before quoting, verify Polymarket's assignments and live scores against the external sports data used by your pricing system.
 
 Remember that as with all trading, RFQs you choose to quote and fill are your responsibility to vet.

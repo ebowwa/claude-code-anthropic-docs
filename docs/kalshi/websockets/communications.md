@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/websockets/communications.md
-Downloaded: 2026-09-01T22:25:21.197Z
+Downloaded: 2026-09-04T22:10:05.831Z
 -->
 
 > ## Documentation Index
@@ -61,13 +61,13 @@ address: communications
 parameters: []
 bindings: []
 operations:
-  - &ref_2
+  - &ref_3
     id: receiveRFQCreated
     title: RFQ Created
     description: Receive RFQ created notifications
     type: send
     messages:
-      - &ref_7
+      - &ref_8
         id: rfqCreated
         contentType: application/json
         payload:
@@ -84,6 +84,13 @@ operations:
                 description: >-
                   Server-generated subscription identifier (sid) used to
                   identify the channel
+                required: true
+              - name: seq
+                type: integer
+                description: >-
+                  Sequential number that should be checked if you want to
+                  guarantee you received all the messages. Used for
+                  snapshot/delta consistency
                 required: true
               - name: msg
                 type: object
@@ -159,12 +166,13 @@ operations:
           required:
             - type
             - sid
+            - seq
             - msg
           properties:
             type:
               type: string
               const: rfq_created
-              x-parser-schema-id: <anonymous-schema-182>
+              x-parser-schema-id: <anonymous-schema-204>
             sid: &ref_0
               type: integer
               description: >-
@@ -172,6 +180,14 @@ operations:
                 the channel
               minimum: 1
               x-parser-schema-id: subscriptionId
+            seq: &ref_1
+              type: integer
+              description: >-
+                Sequential number that should be checked if you want to
+                guarantee you received all the messages. Used for snapshot/delta
+                consistency
+              minimum: 1
+              x-parser-schema-id: sequenceNumber
             msg:
               type: object
               required:
@@ -183,40 +199,40 @@ operations:
                 id:
                   type: string
                   description: Unique identifier for the RFQ
-                  x-parser-schema-id: <anonymous-schema-184>
+                  x-parser-schema-id: <anonymous-schema-206>
                 creator_id:
                   type: string
                   description: >-
                     Public communications ID of the RFQ creator (anonymized).
                     Currently empty for rfq_created events.
-                  x-parser-schema-id: <anonymous-schema-185>
+                  x-parser-schema-id: <anonymous-schema-207>
                 market_ticker:
                   type: string
                   description: Market ticker for the RFQ
-                  x-parser-schema-id: <anonymous-schema-186>
+                  x-parser-schema-id: <anonymous-schema-208>
                 event_ticker:
                   type: string
                   description: Event ticker (optional)
-                  x-parser-schema-id: <anonymous-schema-187>
+                  x-parser-schema-id: <anonymous-schema-209>
                 contracts_fp:
                   type: string
                   description: Fixed-point contracts requested (2 decimals) (optional)
-                  x-parser-schema-id: <anonymous-schema-188>
+                  x-parser-schema-id: <anonymous-schema-210>
                 target_cost_dollars:
                   type: string
                   description: Target cost in dollars (optional)
-                  x-parser-schema-id: <anonymous-schema-189>
+                  x-parser-schema-id: <anonymous-schema-211>
                 created_ts:
                   type: string
                   description: Timestamp when the RFQ was created
                   format: date-time
-                  x-parser-schema-id: <anonymous-schema-190>
+                  x-parser-schema-id: <anonymous-schema-212>
                 mve_collection_ticker:
                   type: string
                   description: >-
                     Multivariate event collection ticker. Omitted for non-MVE
                     RFQs.
-                  x-parser-schema-id: <anonymous-schema-191>
+                  x-parser-schema-id: <anonymous-schema-213>
                 mve_selected_legs:
                   type: array
                   minItems: 1
@@ -233,27 +249,27 @@ operations:
                       event_ticker:
                         type: string
                         description: Event ticker for the selected leg
-                        x-parser-schema-id: <anonymous-schema-194>
+                        x-parser-schema-id: <anonymous-schema-216>
                       market_ticker:
                         type: string
                         description: Market ticker for the selected leg
-                        x-parser-schema-id: <anonymous-schema-195>
+                        x-parser-schema-id: <anonymous-schema-217>
                       side:
                         type: string
                         enum:
                           - 'yes'
                           - 'no'
                         description: Side selected for the leg
-                        x-parser-schema-id: <anonymous-schema-196>
+                        x-parser-schema-id: <anonymous-schema-218>
                       yes_settlement_value_dollars:
                         type: string
                         description: >-
                           Yes settlement value in dollars for the selected leg.
                           Omitted when unavailable.
-                        x-parser-schema-id: <anonymous-schema-197>
-                    x-parser-schema-id: <anonymous-schema-193>
-                  x-parser-schema-id: <anonymous-schema-192>
-              x-parser-schema-id: <anonymous-schema-183>
+                        x-parser-schema-id: <anonymous-schema-219>
+                    x-parser-schema-id: <anonymous-schema-215>
+                  x-parser-schema-id: <anonymous-schema-214>
+              x-parser-schema-id: <anonymous-schema-205>
           x-parser-schema-id: rfqCreatedPayload
         title: RFQ Created
         description: Notification when an RFQ is created
@@ -261,6 +277,7 @@ operations:
           {
             "type": "rfq_created",
             "sid": 15,
+            "seq": 11,
             "msg": {
               "id": "rfq_123",
               "creator_id": "",
@@ -275,16 +292,16 @@ operations:
           - id: x-parser-unique-object-id
             value: rfqCreated
     bindings: []
-    extensions: &ref_1
+    extensions: &ref_2
       - id: x-parser-unique-object-id
         value: communications
-  - &ref_3
+  - &ref_4
     id: receiveRFQDeleted
     title: RFQ Deleted
     description: Receive RFQ deleted notifications
     type: send
     messages:
-      - &ref_8
+      - &ref_9
         id: rfqDeleted
         contentType: application/json
         payload:
@@ -301,6 +318,13 @@ operations:
                 description: >-
                   Server-generated subscription identifier (sid) used to
                   identify the channel
+                required: true
+              - name: seq
+                type: integer
+                description: >-
+                  Sequential number that should be checked if you want to
+                  guarantee you received all the messages. Used for
+                  snapshot/delta consistency
                 required: true
               - name: msg
                 type: object
@@ -340,13 +364,15 @@ operations:
           required:
             - type
             - sid
+            - seq
             - msg
           properties:
             type:
               type: string
               const: rfq_deleted
-              x-parser-schema-id: <anonymous-schema-198>
+              x-parser-schema-id: <anonymous-schema-220>
             sid: *ref_0
+            seq: *ref_1
             msg:
               type: object
               required:
@@ -358,33 +384,33 @@ operations:
                 id:
                   type: string
                   description: Unique identifier for the RFQ
-                  x-parser-schema-id: <anonymous-schema-200>
+                  x-parser-schema-id: <anonymous-schema-222>
                 creator_id:
                   type: string
                   description: Public communications ID of the RFQ creator (anonymized)
-                  x-parser-schema-id: <anonymous-schema-201>
+                  x-parser-schema-id: <anonymous-schema-223>
                 market_ticker:
                   type: string
                   description: Market ticker for the RFQ
-                  x-parser-schema-id: <anonymous-schema-202>
+                  x-parser-schema-id: <anonymous-schema-224>
                 event_ticker:
                   type: string
                   description: Event ticker (optional)
-                  x-parser-schema-id: <anonymous-schema-203>
+                  x-parser-schema-id: <anonymous-schema-225>
                 contracts_fp:
                   type: string
                   description: Fixed-point contracts requested (2 decimals) (optional)
-                  x-parser-schema-id: <anonymous-schema-204>
+                  x-parser-schema-id: <anonymous-schema-226>
                 target_cost_dollars:
                   type: string
                   description: Target cost in dollars (optional)
-                  x-parser-schema-id: <anonymous-schema-205>
+                  x-parser-schema-id: <anonymous-schema-227>
                 deleted_ts:
                   type: string
                   description: Timestamp when the RFQ was deleted
                   format: date-time
-                  x-parser-schema-id: <anonymous-schema-206>
-              x-parser-schema-id: <anonymous-schema-199>
+                  x-parser-schema-id: <anonymous-schema-228>
+              x-parser-schema-id: <anonymous-schema-221>
           x-parser-schema-id: rfqDeletedPayload
         title: RFQ Deleted
         description: Notification when an RFQ is deleted
@@ -392,6 +418,7 @@ operations:
           {
             "type": "rfq_deleted",
             "sid": 15,
+            "seq": 12,
             "msg": {
               "id": "rfq_123",
               "creator_id": "comm_abc123",
@@ -407,14 +434,14 @@ operations:
           - id: x-parser-unique-object-id
             value: rfqDeleted
     bindings: []
-    extensions: *ref_1
-  - &ref_4
+    extensions: *ref_2
+  - &ref_5
     id: receiveQuoteCreated
     title: Quote Created
     description: Receive quote created notifications
     type: send
     messages:
-      - &ref_9
+      - &ref_10
         id: quoteCreated
         contentType: application/json
         payload:
@@ -431,6 +458,13 @@ operations:
                 description: >-
                   Server-generated subscription identifier (sid) used to
                   identify the channel
+                required: true
+              - name: seq
+                type: integer
+                description: >-
+                  Sequential number that should be checked if you want to
+                  guarantee you received all the messages. Used for
+                  snapshot/delta consistency
                 required: true
               - name: msg
                 type: object
@@ -499,13 +533,15 @@ operations:
           required:
             - type
             - sid
+            - seq
             - msg
           properties:
             type:
               type: string
               const: quote_created
-              x-parser-schema-id: <anonymous-schema-207>
+              x-parser-schema-id: <anonymous-schema-229>
             sid: *ref_0
+            seq: *ref_1
             msg:
               type: object
               required:
@@ -520,52 +556,52 @@ operations:
                 quote_id:
                   type: string
                   description: Unique identifier for the quote
-                  x-parser-schema-id: <anonymous-schema-209>
+                  x-parser-schema-id: <anonymous-schema-231>
                 rfq_id:
                   type: string
                   description: Identifier of the RFQ this quote is for
-                  x-parser-schema-id: <anonymous-schema-210>
+                  x-parser-schema-id: <anonymous-schema-232>
                 quote_creator_id:
                   type: string
                   description: Public communications ID of the quote creator (anonymized)
-                  x-parser-schema-id: <anonymous-schema-211>
+                  x-parser-schema-id: <anonymous-schema-233>
                 rfq_creator_id:
                   type: string
                   description: Public communications ID of the RFQ creator (anonymized)
-                  x-parser-schema-id: <anonymous-schema-212>
+                  x-parser-schema-id: <anonymous-schema-234>
                 market_ticker:
                   type: string
                   description: Market ticker for the quote
-                  x-parser-schema-id: <anonymous-schema-213>
+                  x-parser-schema-id: <anonymous-schema-235>
                 event_ticker:
                   type: string
                   description: Event ticker (optional)
-                  x-parser-schema-id: <anonymous-schema-214>
+                  x-parser-schema-id: <anonymous-schema-236>
                 yes_bid_dollars:
                   type: string
                   description: Yes side bid price in dollars
-                  x-parser-schema-id: <anonymous-schema-215>
+                  x-parser-schema-id: <anonymous-schema-237>
                 no_bid_dollars:
                   type: string
                   description: No side bid price in dollars
-                  x-parser-schema-id: <anonymous-schema-216>
+                  x-parser-schema-id: <anonymous-schema-238>
                 yes_contracts_offered_fp:
                   type: string
                   description: Fixed-point yes contracts offered (2 decimals) (optional)
-                  x-parser-schema-id: <anonymous-schema-217>
+                  x-parser-schema-id: <anonymous-schema-239>
                 no_contracts_offered_fp:
                   type: string
                   description: Fixed-point no contracts offered (2 decimals) (optional)
-                  x-parser-schema-id: <anonymous-schema-218>
+                  x-parser-schema-id: <anonymous-schema-240>
                 rfq_target_cost_dollars:
                   type: string
                   description: Target cost from the RFQ in dollars (optional)
-                  x-parser-schema-id: <anonymous-schema-219>
+                  x-parser-schema-id: <anonymous-schema-241>
                 created_ts:
                   type: string
                   description: Timestamp when the quote was created
                   format: date-time
-                  x-parser-schema-id: <anonymous-schema-220>
+                  x-parser-schema-id: <anonymous-schema-242>
                 subaccount:
                   type: integer
                   description: >
@@ -574,8 +610,8 @@ operations:
 
                     Contains your own subaccount number; the counterparty's
                     subaccount is never shared.
-                  x-parser-schema-id: <anonymous-schema-221>
-              x-parser-schema-id: <anonymous-schema-208>
+                  x-parser-schema-id: <anonymous-schema-243>
+              x-parser-schema-id: <anonymous-schema-230>
           x-parser-schema-id: quoteCreatedPayload
         title: Quote Created
         description: Notification when a quote is created on an RFQ
@@ -583,6 +619,7 @@ operations:
           {
             "type": "quote_created",
             "sid": 15,
+            "seq": 13,
             "msg": {
               "quote_id": "quote_456",
               "rfq_id": "rfq_123",
@@ -604,14 +641,14 @@ operations:
           - id: x-parser-unique-object-id
             value: quoteCreated
     bindings: []
-    extensions: *ref_1
-  - &ref_5
+    extensions: *ref_2
+  - &ref_6
     id: receiveQuoteAccepted
     title: Quote Accepted
     description: Receive quote accepted notifications
     type: send
     messages:
-      - &ref_10
+      - &ref_11
         id: quoteAccepted
         contentType: application/json
         payload:
@@ -628,6 +665,13 @@ operations:
                 description: >-
                   Server-generated subscription identifier (sid) used to
                   identify the channel
+                required: true
+              - name: seq
+                type: integer
+                description: >-
+                  Sequential number that should be checked if you want to
+                  guarantee you received all the messages. Used for
+                  snapshot/delta consistency
                 required: true
               - name: msg
                 type: object
@@ -703,13 +747,15 @@ operations:
           required:
             - type
             - sid
+            - seq
             - msg
           properties:
             type:
               type: string
               const: quote_accepted
-              x-parser-schema-id: <anonymous-schema-222>
+              x-parser-schema-id: <anonymous-schema-244>
             sid: *ref_0
+            seq: *ref_1
             msg:
               type: object
               required:
@@ -723,58 +769,58 @@ operations:
                 quote_id:
                   type: string
                   description: Unique identifier for the quote
-                  x-parser-schema-id: <anonymous-schema-224>
+                  x-parser-schema-id: <anonymous-schema-246>
                 rfq_id:
                   type: string
                   description: Identifier of the RFQ this quote is for
-                  x-parser-schema-id: <anonymous-schema-225>
+                  x-parser-schema-id: <anonymous-schema-247>
                 quote_creator_id:
                   type: string
                   description: Public communications ID of the quote creator (anonymized)
-                  x-parser-schema-id: <anonymous-schema-226>
+                  x-parser-schema-id: <anonymous-schema-248>
                 rfq_creator_id:
                   type: string
                   description: Public communications ID of the RFQ creator (anonymized)
-                  x-parser-schema-id: <anonymous-schema-227>
+                  x-parser-schema-id: <anonymous-schema-249>
                 market_ticker:
                   type: string
                   description: Market ticker for the quote
-                  x-parser-schema-id: <anonymous-schema-228>
+                  x-parser-schema-id: <anonymous-schema-250>
                 event_ticker:
                   type: string
                   description: Event ticker (optional)
-                  x-parser-schema-id: <anonymous-schema-229>
+                  x-parser-schema-id: <anonymous-schema-251>
                 yes_bid_dollars:
                   type: string
                   description: Yes side bid price in dollars
-                  x-parser-schema-id: <anonymous-schema-230>
+                  x-parser-schema-id: <anonymous-schema-252>
                 no_bid_dollars:
                   type: string
                   description: No side bid price in dollars
-                  x-parser-schema-id: <anonymous-schema-231>
+                  x-parser-schema-id: <anonymous-schema-253>
                 accepted_side:
                   type: string
                   description: Which side was accepted (yes/no) (optional)
                   enum:
                     - 'yes'
                     - 'no'
-                  x-parser-schema-id: <anonymous-schema-232>
+                  x-parser-schema-id: <anonymous-schema-254>
                 contracts_accepted_fp:
                   type: string
                   description: Fixed-point contracts accepted (2 decimals) (optional)
-                  x-parser-schema-id: <anonymous-schema-233>
+                  x-parser-schema-id: <anonymous-schema-255>
                 yes_contracts_offered_fp:
                   type: string
                   description: Fixed-point yes contracts offered (2 decimals) (optional)
-                  x-parser-schema-id: <anonymous-schema-234>
+                  x-parser-schema-id: <anonymous-schema-256>
                 no_contracts_offered_fp:
                   type: string
                   description: Fixed-point no contracts offered (2 decimals) (optional)
-                  x-parser-schema-id: <anonymous-schema-235>
+                  x-parser-schema-id: <anonymous-schema-257>
                 rfq_target_cost_dollars:
                   type: string
                   description: Target cost from the RFQ in dollars (optional)
-                  x-parser-schema-id: <anonymous-schema-236>
+                  x-parser-schema-id: <anonymous-schema-258>
                 subaccount:
                   type: integer
                   description: >
@@ -783,8 +829,8 @@ operations:
 
                     Contains your own subaccount number; the counterparty's
                     subaccount is never shared.
-                  x-parser-schema-id: <anonymous-schema-237>
-              x-parser-schema-id: <anonymous-schema-223>
+                  x-parser-schema-id: <anonymous-schema-259>
+              x-parser-schema-id: <anonymous-schema-245>
           x-parser-schema-id: quoteAcceptedPayload
         title: Quote Accepted
         description: Notification when a quote is accepted
@@ -792,6 +838,7 @@ operations:
           {
             "type": "quote_accepted",
             "sid": 15,
+            "seq": 14,
             "msg": {
               "quote_id": "quote_456",
               "rfq_id": "rfq_123",
@@ -814,8 +861,8 @@ operations:
           - id: x-parser-unique-object-id
             value: quoteAccepted
     bindings: []
-    extensions: *ref_1
-  - &ref_6
+    extensions: *ref_2
+  - &ref_7
     id: receiveQuoteExecuted
     title: Quote Executed
     description: >-
@@ -823,7 +870,7 @@ operations:
       correlation
     type: send
     messages:
-      - &ref_11
+      - &ref_12
         id: quoteExecuted
         contentType: application/json
         payload:
@@ -840,6 +887,13 @@ operations:
                 description: >-
                   Server-generated subscription identifier (sid) used to
                   identify the channel
+                required: true
+              - name: seq
+                type: integer
+                description: >-
+                  Sequential number that should be checked if you want to
+                  guarantee you received all the messages. Used for
+                  snapshot/delta consistency
                 required: true
               - name: msg
                 type: object
@@ -898,13 +952,15 @@ operations:
           required:
             - type
             - sid
+            - seq
             - msg
           properties:
             type:
               type: string
               const: quote_executed
-              x-parser-schema-id: <anonymous-schema-238>
+              x-parser-schema-id: <anonymous-schema-260>
             sid: *ref_0
+            seq: *ref_1
             msg:
               type: object
               required:
@@ -920,40 +976,40 @@ operations:
                 quote_id:
                   type: string
                   description: Unique identifier for the quote that was executed
-                  x-parser-schema-id: <anonymous-schema-240>
+                  x-parser-schema-id: <anonymous-schema-262>
                 rfq_id:
                   type: string
                   description: Identifier of the RFQ this quote was for
-                  x-parser-schema-id: <anonymous-schema-241>
+                  x-parser-schema-id: <anonymous-schema-263>
                 quote_creator_id:
                   type: string
                   description: Anonymized identifier for the quote creator
-                  x-parser-schema-id: <anonymous-schema-242>
+                  x-parser-schema-id: <anonymous-schema-264>
                 rfq_creator_id:
                   type: string
                   description: Anonymized identifier for the RFQ creator
-                  x-parser-schema-id: <anonymous-schema-243>
+                  x-parser-schema-id: <anonymous-schema-265>
                 order_id:
                   type: string
                   description: >-
                     Your order ID resulting from the quote execution. Use this
                     to match with fill messages
-                  x-parser-schema-id: <anonymous-schema-244>
+                  x-parser-schema-id: <anonymous-schema-266>
                 client_order_id:
                   type: string
                   description: >-
                     Your client order ID for the executed order. Use this to
                     correlate with fill messages
-                  x-parser-schema-id: <anonymous-schema-245>
+                  x-parser-schema-id: <anonymous-schema-267>
                 market_ticker:
                   type: string
                   description: Market ticker for the executed quote
-                  x-parser-schema-id: <anonymous-schema-246>
+                  x-parser-schema-id: <anonymous-schema-268>
                 executed_ts:
                   type: string
                   description: Timestamp when the quote was executed and orders were placed
                   format: date-time
-                  x-parser-schema-id: <anonymous-schema-247>
+                  x-parser-schema-id: <anonymous-schema-269>
                 subaccount:
                   type: integer
                   description: >
@@ -962,8 +1018,8 @@ operations:
 
                     Contains your own subaccount number; the counterparty's
                     subaccount is never shared.
-                  x-parser-schema-id: <anonymous-schema-248>
-              x-parser-schema-id: <anonymous-schema-239>
+                  x-parser-schema-id: <anonymous-schema-270>
+              x-parser-schema-id: <anonymous-schema-261>
           x-parser-schema-id: quoteExecutedPayload
         title: Quote Executed
         description: Notification when a quote is executed and orders are placed
@@ -971,6 +1027,7 @@ operations:
           {
             "type": "quote_executed",
             "sid": 15,
+            "seq": 15,
             "msg": {
               "quote_id": "quote_456",
               "rfq_id": "rfq_123",
@@ -988,21 +1045,21 @@ operations:
           - id: x-parser-unique-object-id
             value: quoteExecuted
     bindings: []
-    extensions: *ref_1
+    extensions: *ref_2
 sendOperations: []
 receiveOperations:
-  - *ref_2
   - *ref_3
   - *ref_4
   - *ref_5
   - *ref_6
+  - *ref_7
 sendMessages: []
 receiveMessages:
-  - *ref_7
   - *ref_8
   - *ref_9
   - *ref_10
   - *ref_11
+  - *ref_12
 extensions:
   - id: x-parser-unique-object-id
     value: communications

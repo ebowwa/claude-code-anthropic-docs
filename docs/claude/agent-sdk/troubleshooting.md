@@ -1,13 +1,13 @@
 <!--
 Source: https://code.claude.com/docs/en/agent-sdk/troubleshooting.md
-Downloaded: 2026-08-29T02:44:09.262Z
+Downloaded: 2026-09-04T22:10:14.783Z
 -->
 
 > ## Documentation Index
 > Fetch the complete documentation index at: https://code.claude.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.
 
-# Troubleshooting
+# Troubleshoot the Agent SDK
 
 > Fix Agent SDK errors by the exact message you see, with the cause and fix for each error in the TypeScript and Python SDKs.
 

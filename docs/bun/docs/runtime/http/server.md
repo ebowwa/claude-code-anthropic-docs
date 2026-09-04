@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/runtime/http/server.md
-Downloaded: 2026-08-28T04:04:28.284Z
--->
-
 # Server
 
 > Use `Bun.serve` to start a high-performance HTTP server in Bun

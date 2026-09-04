@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/perps/errors.md
+Downloaded: 2026-09-04T22:10:02.848Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -25,6 +30,18 @@ queue is full. It is temporary overload protection, not a gateway crash.
 
 Retry with client-side backoff. By contrast, `500 Internal Server Error` with
 `internal_error` means the gateway encountered an unexpected error.
+
+## Transient Overload (`503`)
+
+Any endpoint can answer `503` with `error: service_unavailable` when the
+serving replica sheds load at its in-flight request cap. The rejection happens
+before the request is parsed or dispatched, so it says nothing about the
+request itself:
+
+* The response carries a `Retry-After` header (whole seconds). Honor it and
+  retry — the condition is transient by design.
+* Batch endpoints keep their one-element array envelope, exactly like other
+  whole-request rejections; parse it as applying to the whole batch.
 
 ## Order Placement Errors
 

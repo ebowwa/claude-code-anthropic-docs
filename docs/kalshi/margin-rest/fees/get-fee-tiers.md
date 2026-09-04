@@ -1,10 +1,15 @@
+<!--
+Source: https://docs.kalshi.com/margin-rest/fees/get-fee-tiers.md
+Downloaded: 2026-09-04T22:10:05.836Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
 
 # Get Fee Tiers
 
-> Endpoint for retrieving the margin fee tiers for the authenticated direct margin user. Returns a map of margin market tickers to their fee tier strings.
+> Endpoint for retrieving the effective margin fee rates for the authenticated direct margin user. Returns maps of margin market tickers to maker and taker fee rates as decimal fractions; no tier numbers are returned. Use Get Fee Tier Rates for the fee schedule itself.
 
 
 
@@ -54,9 +59,10 @@ paths:
         - fees
       summary: Get Fee Tiers
       description: >-
-        Endpoint for retrieving the margin fee tiers for the authenticated
-        direct margin user. Returns a map of margin market tickers to their fee
-        tier strings.
+        Endpoint for retrieving the effective margin fee rates for the
+        authenticated direct margin user. Returns maps of margin market tickers
+        to maker and taker fee rates as decimal fractions; no tier numbers are
+        returned. Use Get Fee Tier Rates for the fee schedule itself.
       operationId: GetMarginFeeTiers
       responses:
         '200':

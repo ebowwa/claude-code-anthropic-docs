@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/changelog/sdks.md
-Downloaded: 2026-08-29T02:43:57.799Z
+Downloaded: 2026-09-04T22:10:02.848Z
 -->
 
 > ## Documentation Index
@@ -13,6 +13,30 @@ Downloaded: 2026-08-29T02:43:57.799Z
 
 <Tabs>
   <Tab title="TypeScript">
+    ### `0.9.0`
+
+    * Order estimation, preparation, creation, and placement now accept protocol-neutral `assetId` values. Structured PolyV2 position IDs select PolyV2 routing automatically, while `tokenId` remains available as a deprecated alias.
+    * Added `fetchTradingApprovalsState(...)` for reading a wallet's missing trading approvals without a signer or transaction workflow. Malformed approval-check responses now raise `UnexpectedResponseError`.
+    * Markets and events now expose their protocol through `version`, and markets expose Combo eligibility through `market.state.comboStatus`. Combo status values introduced after this release pass through as strings.
+    * Secure account reads now reject invalid request values and `user: null` with `UserInputError` instead of silently selecting the wallet or throwing an untyped error.
+    * Session Key authorization and revocation submissions now allow up to five minutes for relayer validation and broadcast.
+    * Breaking change: `revokeSessionKey(...)` now resolves to `void` once the Session Key leaves the active registry. The backend continues canceling orders and finalizing the on-chain revocation asynchronously. See [Revoke a Session Key](/trading/session-keys#revoke-a-session-key).
+
+    ```diff theme={null}
+    -const revocation = await secureClient.revokeSessionKey({
+    +await secureClient.revokeSessionKey({
+      address: sessionKeyAddress,
+    });
+    ```
+
+    * Team entries on event and team-list responses now preserve their `ordering` value.
+    * Breaking change: removed legacy AMM fields from market and event models, along with the `marketMakerAddresses` filter on `listMarkets(...)`. Responses that still contain the removed fields continue to parse, but those values are ignored. Use the supported CLOB metrics where applicable.
+
+    ```diff theme={null}
+    -const volume = market.metrics.volumeAmm;
+    +const volume = market.metrics.volumeClob;
+    ```
+
     ### `0.8.1`
 
     * `client.authorizeSessionKey(...)` no longer accepts `validUntil`. This is a breaking change. Each Session Key authorization expires after 180 days. Revoke a Session Key to end access sooner.
@@ -297,6 +321,27 @@ Downloaded: 2026-08-29T02:43:57.799Z
   </Tab>
 
   <Tab title="Python">
+    ### `0.9.0`
+
+    * Added protocol-neutral `asset_id` and `condition_id` fields across CLOB reads, filters, realtime events, and Data API responses. Pass a CTF token ID or Poly V2 position ID through `asset_id`; the deprecated `token_id`, `token_ids`, and `market` aliases remain available for compatibility.
+    * Order estimation, creation, and placement now route Poly V2 position IDs through Exchange V3, and `setup_trading_approvals()` includes the Poly V2 binary and negative-risk modules.
+    * Position lifecycle methods now split and merge ordinary Poly V2 positions. `merge_multiple_positions(...)` accepts Poly V2 `position_id` requests, and `redeem_positions(position_id=...)` redeems a resolved Poly V2 position.
+
+    ### `0.8.0`
+
+    * Markets and events now expose their protocol through `version`, and markets expose Combo eligibility through `market.state.combo_status`. Combo status values introduced after this release pass through as strings.
+    * Team entries on event and team-list responses now preserve their `ordering` value.
+    * Breaking change: `revoke_session_key(...)` now returns `None` once the Session Key leaves the active registry. The SDK retries transient registry reads, while the backend continues canceling orders and finalizing the on-chain revocation asynchronously. See [Revoke a Session Key](/trading/session-keys#revoke-a-session-key).
+
+    ```diff theme={null}
+    -transaction = await secure_client.revoke_session_key(
+    +await secure_client.revoke_session_key(
+        address=session_key_address,
+    )
+    ```
+
+    * Session Key authorization and revocation submissions now allow up to five minutes for relayer validation and broadcast.
+
     ### `0.7.1`
 
     * `authorize_session_key(...)` no longer accepts `valid_until`. This is a breaking change. Each Session Key authorization expires after 180 days. Revoke a Session Key to end access sooner.

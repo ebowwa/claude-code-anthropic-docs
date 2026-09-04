@@ -1,8 +1,3 @@
-<!--
-Source: https://docs.polymarket.com/_llms/cn/api.md
-Downloaded: 2026-08-28T04:04:25.264Z
--->
-
 # Polymarket Documentation: Chinese API 参考
 
 ## API 参考

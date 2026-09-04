@@ -1,8 +1,3 @@
-<!--
-Source: https://code.claude.com/docs/en/agents.md
-Downloaded: 2026-08-28T04:04:57.595Z
--->
-
 > ## Documentation Index
 > Fetch the complete documentation index at: https://code.claude.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.

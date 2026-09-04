@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/changelog/perps.md
-Downloaded: 2026-08-31T23:38:47.746Z
+Downloaded: 2026-09-04T22:10:02.848Z
 -->
 
 > ## Documentation Index
@@ -12,6 +12,13 @@ Downloaded: 2026-08-31T23:38:47.746Z
 > Recent changes to the Polymarket Perps API and platform
 
 Notable changes to the Polymarket Perps API.
+
+<Update label="Sep 4, 2026" description="OI reward eligibility threshold increased to $5M">
+  The OI reward eligibility threshold is now $5M of combined daily average gross
+      OI per rewards entity, up from $1M. Accounts without an entity mapping qualify
+  independently. The 6% APR rate and calculation on the account's full daily
+  average gross OI across all instruments are unchanged.
+</Update>
 
 <Update label="Sep 1, 2026" description="Concurrent WebSocket posts and HTTP overload shedding">
   Concurrent WebSocket posts and HTTP overload shedding. No breaking changes.

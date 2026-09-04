@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.polymarket.com/market-data/discover-markets.md
+Downloaded: 2026-09-04T22:10:02.838Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.polymarket.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -1223,6 +1228,120 @@ Append a known suffix when you need one companion event. To discover current com
     as `first_half_totals`, `both_teams_to_score`, and `soccer_team_totals`.
   </Tab>
 </Tabs>
+
+### Identify Home and Away Teams
+
+Sports event responses identify which team is designated home and which is
+designated away. Use this value when aligning Polymarket data with an external
+sports feed.
+
+<Tabs>
+  <Tab title="TypeScript">
+    Use `PublicClient.fetchEvent()` or `SecureClient.fetchEvent()` to identify the teams.
+
+    ```ts theme={null}
+    import { TeamOrdering } from "@polymarket/client";
+
+    const event = await client.fetchEvent({
+      slug: "fl1-psg-ren-2026-08-23",
+    });
+    const homeTeam = event.sports.teams.find(
+      (team) => team.ordering === TeamOrdering.Home,
+    );
+    const awayTeam = event.sports.teams.find(
+      (team) => team.ordering === TeamOrdering.Away,
+    );
+    ```
+
+    <Accordion title="Output: Team">
+      ```json theme={null}
+      {
+        "id": 114315,
+        "name": "Paris Saint-Germain FC",
+        "league": "fl1",
+        "abbreviation": "psg",
+        "ordering": "home"
+      }
+      ```
+    </Accordion>
+
+    Each `Team.ordering` value is `TeamOrdering.Home`, `TeamOrdering.Away`, or `null`.
+  </Tab>
+
+  <Tab title="Python">
+    Use `AsyncPublicClient.get_event()` or `AsyncSecureClient.get_event()` to identify the teams.
+
+    ```python theme={null}
+    from polymarket import TeamOrdering
+
+
+    event = await client.get_event(slug="fl1-psg-ren-2026-08-23")
+    home_team = next(
+        (team for team in event.sports.teams if team.ordering is TeamOrdering.HOME),
+        None,
+    )
+    away_team = next(
+        (team for team in event.sports.teams if team.ordering is TeamOrdering.AWAY),
+        None,
+    )
+    ```
+
+    <Accordion title="Output: Team">
+      ```json theme={null}
+      {
+        "id": 114315,
+        "name": "Paris Saint-Germain FC",
+        "league": "fl1",
+        "abbreviation": "psg",
+        "ordering": "home"
+      }
+      ```
+    </Accordion>
+
+    Each `Team.ordering` value is `TeamOrdering.HOME`, `TeamOrdering.AWAY`, or `None`.
+  </Tab>
+
+  <Tab title="API">
+    Fetch the event by slug to identify its home and away teams.
+
+    ```bash theme={null}
+    curl "https://gamma-api.polymarket.com/events/slug/fl1-psg-ren-2026-08-23"
+    ```
+
+    <Accordion title="Output: Event">
+      ```jsonc theme={null}
+      {
+        "slug": "fl1-psg-ren-2026-08-23",
+        "title": "Paris Saint-Germain FC vs. Stade Rennais FC 1901",
+        // …
+        "teams": [
+          {
+            "id": 114315,
+            "name": "Paris Saint-Germain FC",
+            // …
+            "ordering": "home",
+          },
+          {
+            "id": 114317,
+            "name": "Stade Rennais FC 1901",
+            // …
+            "ordering": "away",
+          },
+        ],
+      }
+      ```
+    </Accordion>
+
+    Read `ordering` from each entry in the event's top-level `teams` field. Its
+    value is `"home"`, `"away"`, or `null`.
+  </Tab>
+</Tabs>
+
+<Warning>
+  Home and away assignments can change after markets are created, especially
+  when games are rescheduled or moved. If you plan to submit quotes in Combos,
+  check [Common Footguns](/trading/combos/market-makers#common-footguns).
+</Warning>
 
 ### List Teams
 

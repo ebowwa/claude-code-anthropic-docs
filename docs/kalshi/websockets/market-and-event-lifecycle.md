@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.kalshi.com/websockets/market-and-event-lifecycle.md
+Downloaded: 2026-09-04T22:10:05.830Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -49,13 +54,13 @@ address: market_lifecycle_v2
 parameters: []
 bindings: []
 operations:
-  - &ref_3
+  - &ref_4
     id: receiveMarketLifecycleV2
     title: Market Lifecycle Event
     description: Receive market lifecycle updates (open, close, determination, etc.)
     type: send
     messages:
-      - &ref_6
+      - &ref_7
         id: marketLifecycleV2
         contentType: application/json
         payload:
@@ -75,6 +80,13 @@ operations:
                 description: >-
                   Server-generated subscription identifier (sid) used to
                   identify the channel
+                required: true
+              - name: seq
+                type: integer
+                description: >-
+                  Sequential number that should be checked if you want to
+                  guarantee you received all the messages. Used for
+                  snapshot/delta consistency
                 required: true
               - name: msg
                 type: object
@@ -306,12 +318,13 @@ operations:
           required:
             - type
             - sid
+            - seq
             - msg
           properties:
             type:
               type: string
               const: market_lifecycle_v2
-              x-parser-schema-id: <anonymous-schema-129>
+              x-parser-schema-id: <anonymous-schema-127>
             sid: &ref_1
               type: integer
               description: >-
@@ -319,6 +332,14 @@ operations:
                 the channel
               minimum: 1
               x-parser-schema-id: subscriptionId
+            seq: &ref_2
+              type: integer
+              description: >-
+                Sequential number that should be checked if you want to
+                guarantee you received all the messages. Used for snapshot/delta
+                consistency
+              minimum: 1
+              x-parser-schema-id: sequenceNumber
             msg:
               type: object
               required:
@@ -356,7 +377,7 @@ operations:
                     - settled
                     - price_level_structure_updated
                     - metadata_updated
-                  x-parser-schema-id: <anonymous-schema-131>
+                  x-parser-schema-id: <anonymous-schema-129>
                 market_ticker:
                   type: string
                   description: Unique market identifier
@@ -369,7 +390,7 @@ operations:
                     Optional - This key will ONLY exist when the market is
                     created. Identifier for the exchange shard the market lives
                     on
-                  x-parser-schema-id: <anonymous-schema-132>
+                  x-parser-schema-id: <anonymous-schema-130>
                 open_ts:
                   type: integer
                   description: >-
@@ -377,7 +398,7 @@ operations:
                     created. Unix timestamp for when the market opened (in
                     seconds)
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-133>
+                  x-parser-schema-id: <anonymous-schema-131>
                 close_ts:
                   type: integer
                   description: >-
@@ -386,13 +407,13 @@ operations:
                     for when the market is scheduled to close (in seconds). Will
                     be updated in case of early determination markets
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-134>
+                  x-parser-schema-id: <anonymous-schema-132>
                 result:
                   type: string
                   description: >-
                     Optional - This key will ONLY exist when the market is
                     determined. Result of the market
-                  x-parser-schema-id: <anonymous-schema-135>
+                  x-parser-schema-id: <anonymous-schema-133>
                 determination_ts:
                   type: integer
                   description: >-
@@ -400,14 +421,14 @@ operations:
                     determined. Unix timestamp for when the market is determined
                     (in seconds)
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-136>
+                  x-parser-schema-id: <anonymous-schema-134>
                 settlement_value:
                   type: string
                   description: >-
                     Optional - This key will ONLY exist when the market is
                     determined. Settlement value of the market in fixed-point
                     dollars (e.g. "0.5000")
-                  x-parser-schema-id: <anonymous-schema-137>
+                  x-parser-schema-id: <anonymous-schema-135>
                 settled_ts:
                   type: integer
                   description: >-
@@ -415,7 +436,7 @@ operations:
                     settled. Unix timestamp for when the market is settled (in
                     seconds)
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-138>
+                  x-parser-schema-id: <anonymous-schema-136>
                 is_deactivated:
                   type: boolean
                   description: >-
@@ -423,7 +444,7 @@ operations:
                     paused/unpaused. Boolean flag to indicate if trading is
                     paused on an open market. This should only be interpreted
                     for an open market
-                  x-parser-schema-id: <anonymous-schema-139>
+                  x-parser-schema-id: <anonymous-schema-137>
                 price_level_structure:
                   type: string
                   description: >-
@@ -443,7 +464,7 @@ operations:
                     - center_quint_edge_deci_cent
                     - center_centi_edge_centi_cent
                     - center_deci_edge_centi_cent
-                  x-parser-schema-id: <anonymous-schema-140>
+                  x-parser-schema-id: <anonymous-schema-138>
                 price_ranges:
                   type: array
                   description: >-
@@ -462,19 +483,19 @@ operations:
                       start:
                         type: string
                         description: Starting price for this band, in dollars
-                        x-parser-schema-id: <anonymous-schema-143>
+                        x-parser-schema-id: <anonymous-schema-141>
                       end:
                         type: string
                         description: Ending price for this band, in dollars
-                        x-parser-schema-id: <anonymous-schema-144>
+                        x-parser-schema-id: <anonymous-schema-142>
                       step:
                         type: string
                         description: >-
                           Tick size (minimum price increment) within this band,
                           in dollars
-                        x-parser-schema-id: <anonymous-schema-145>
-                    x-parser-schema-id: <anonymous-schema-142>
-                  x-parser-schema-id: <anonymous-schema-141>
+                        x-parser-schema-id: <anonymous-schema-143>
+                    x-parser-schema-id: <anonymous-schema-140>
+                  x-parser-schema-id: <anonymous-schema-139>
                 strike_type:
                   type: string
                   description: >-
@@ -482,31 +503,31 @@ operations:
                     events. Determines how floor_strike / cap_strike are
                     interpreted (e.g. "between" uses both, "greater" uses
                     floor_strike only, "less" uses cap_strike only)
-                  x-parser-schema-id: <anonymous-schema-146>
+                  x-parser-schema-id: <anonymous-schema-144>
                 floor_strike:
                   type: number
                   description: >-
                     Optional - This key will ONLY exist for metadata_updated
                     events. The floor (lower bound) strike value for the market
-                  x-parser-schema-id: <anonymous-schema-147>
+                  x-parser-schema-id: <anonymous-schema-145>
                 cap_strike:
                   type: number
                   description: >-
                     Optional - This key will ONLY exist for metadata_updated
                     events. The cap (upper bound) strike value for the market
-                  x-parser-schema-id: <anonymous-schema-148>
+                  x-parser-schema-id: <anonymous-schema-146>
                 custom_strike:
                   type: object
                   description: >-
                     Optional - This key will ONLY exist for metadata_updated
                     events with a custom or structured strike type
-                  x-parser-schema-id: <anonymous-schema-149>
+                  x-parser-schema-id: <anonymous-schema-147>
                 yes_sub_title:
                   type: string
                   description: >-
                     Optional - This key will ONLY exist for metadata_updated
                     events. The updated yes subtitle for the market
-                  x-parser-schema-id: <anonymous-schema-150>
+                  x-parser-schema-id: <anonymous-schema-148>
                 additional_metadata:
                   type: object
                   description: >-
@@ -515,46 +536,46 @@ operations:
                   properties:
                     name:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-152>
+                      x-parser-schema-id: <anonymous-schema-150>
                     title:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-153>
+                      x-parser-schema-id: <anonymous-schema-151>
                     yes_sub_title:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-154>
+                      x-parser-schema-id: <anonymous-schema-152>
                     no_sub_title:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-155>
+                      x-parser-schema-id: <anonymous-schema-153>
                     rules_primary:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-156>
+                      x-parser-schema-id: <anonymous-schema-154>
                     rules_secondary:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-157>
+                      x-parser-schema-id: <anonymous-schema-155>
                     can_close_early:
                       type: boolean
-                      x-parser-schema-id: <anonymous-schema-158>
+                      x-parser-schema-id: <anonymous-schema-156>
                     event_ticker:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-159>
+                      x-parser-schema-id: <anonymous-schema-157>
                     expected_expiration_ts:
                       type: integer
                       format: int64
-                      x-parser-schema-id: <anonymous-schema-160>
+                      x-parser-schema-id: <anonymous-schema-158>
                     strike_type:
                       type: string
-                      x-parser-schema-id: <anonymous-schema-161>
+                      x-parser-schema-id: <anonymous-schema-159>
                     floor_strike:
                       type: number
-                      x-parser-schema-id: <anonymous-schema-162>
+                      x-parser-schema-id: <anonymous-schema-160>
                     cap_strike:
                       type: number
-                      x-parser-schema-id: <anonymous-schema-163>
+                      x-parser-schema-id: <anonymous-schema-161>
                     custom_strike:
                       type: object
-                      x-parser-schema-id: <anonymous-schema-164>
-                  x-parser-schema-id: <anonymous-schema-151>
-              x-parser-schema-id: <anonymous-schema-130>
+                      x-parser-schema-id: <anonymous-schema-162>
+                  x-parser-schema-id: <anonymous-schema-149>
+              x-parser-schema-id: <anonymous-schema-128>
           x-parser-schema-id: marketLifecycleV2Payload
         title: Market Lifecycle V2
         description: >-
@@ -565,6 +586,7 @@ operations:
           {
             "type": "market_lifecycle_v2",
             "sid": 13,
+            "seq": 3,
             "msg": {
               "market_ticker": "INXD-23SEP14-B4487",
               "event_type": "created",
@@ -592,16 +614,16 @@ operations:
           - id: x-parser-unique-object-id
             value: marketLifecycleV2
     bindings: []
-    extensions: &ref_2
+    extensions: &ref_3
       - id: x-parser-unique-object-id
         value: market_lifecycle_v2
-  - &ref_4
+  - &ref_5
     id: receiveEventLifecycle
     title: Event Lifecycle
     description: Receive event creation notifications
     type: send
     messages:
-      - &ref_7
+      - &ref_8
         id: eventLifecycle
         contentType: application/json
         payload:
@@ -618,6 +640,13 @@ operations:
                 description: >-
                   Server-generated subscription identifier (sid) used to
                   identify the channel
+                required: true
+              - name: seq
+                type: integer
+                description: >-
+                  Sequential number that should be checked if you want to
+                  guarantee you received all the messages. Used for
+                  snapshot/delta consistency
                 required: true
               - name: msg
                 type: object
@@ -674,13 +703,15 @@ operations:
           required:
             - type
             - sid
+            - seq
             - msg
           properties:
             type:
               type: string
               const: event_lifecycle
-              x-parser-schema-id: <anonymous-schema-165>
+              x-parser-schema-id: <anonymous-schema-163>
             sid: *ref_1
+            seq: *ref_2
             msg:
               type: object
               required:
@@ -694,21 +725,21 @@ operations:
                 event_ticker:
                   type: string
                   description: Unique identifier for the event being created
-                  x-parser-schema-id: <anonymous-schema-167>
+                  x-parser-schema-id: <anonymous-schema-165>
                 exchange_index:
                   type: integer
                   description: >-
                     Identifier for the exchange shard the event's markets live
                     on
-                  x-parser-schema-id: <anonymous-schema-168>
+                  x-parser-schema-id: <anonymous-schema-166>
                 title:
                   type: string
                   description: Title of event
-                  x-parser-schema-id: <anonymous-schema-169>
+                  x-parser-schema-id: <anonymous-schema-167>
                 subtitle:
                   type: string
                   description: Subtitle of event
-                  x-parser-schema-id: <anonymous-schema-170>
+                  x-parser-schema-id: <anonymous-schema-168>
                 collateral_return_type:
                   type: string
                   description: >-
@@ -718,25 +749,25 @@ operations:
                     - MECNET
                     - DIRECNET
                     - ''
-                  x-parser-schema-id: <anonymous-schema-171>
+                  x-parser-schema-id: <anonymous-schema-169>
                 series_ticker:
                   type: string
                   description: Series ticker for the event
-                  x-parser-schema-id: <anonymous-schema-172>
+                  x-parser-schema-id: <anonymous-schema-170>
                 strike_date:
                   type: integer
                   description: >-
                     Optional - Unix timestamp to indicate the strike date of the
                     event if there is one
                   format: int64
-                  x-parser-schema-id: <anonymous-schema-173>
+                  x-parser-schema-id: <anonymous-schema-171>
                 strike_period:
                   type: string
                   description: >-
                     Optional - String to indicate the strike period of the event
                     if there is one
-                  x-parser-schema-id: <anonymous-schema-174>
-              x-parser-schema-id: <anonymous-schema-166>
+                  x-parser-schema-id: <anonymous-schema-172>
+              x-parser-schema-id: <anonymous-schema-164>
           x-parser-schema-id: eventLifecyclePayload
         title: Event Lifecycle
         description: Event creation notification
@@ -744,6 +775,7 @@ operations:
           {
             "type": "event_lifecycle",
             "sid": 5,
+            "seq": 8,
             "msg": {
               "event_ticker": "KXQUICKSETTLE-26JAN25H2150",
               "exchange_index": 0,
@@ -758,14 +790,14 @@ operations:
           - id: x-parser-unique-object-id
             value: eventLifecycle
     bindings: []
-    extensions: *ref_2
-  - &ref_5
+    extensions: *ref_3
+  - &ref_6
     id: receiveEventFeeUpdate
     title: Event Fee Override Update
     description: Receive notifications when an event-level fee override is set or cleared
     type: send
     messages:
-      - &ref_8
+      - &ref_9
         id: eventFeeUpdate
         contentType: application/json
         payload:
@@ -782,6 +814,13 @@ operations:
                 description: >-
                   Server-generated subscription identifier (sid) used to
                   identify the channel
+                required: true
+              - name: seq
+                type: integer
+                description: >-
+                  Sequential number that should be checked if you want to
+                  guarantee you received all the messages. Used for
+                  snapshot/delta consistency
                 required: true
               - name: msg
                 type: object
@@ -814,13 +853,15 @@ operations:
           required:
             - type
             - sid
+            - seq
             - msg
           properties:
             type:
               type: string
               const: event_fee_update
-              x-parser-schema-id: <anonymous-schema-175>
+              x-parser-schema-id: <anonymous-schema-173>
             sid: *ref_1
+            seq: *ref_2
             msg:
               type: object
               required:
@@ -831,7 +872,7 @@ operations:
                 event_ticker:
                   type: string
                   description: Unique identifier for the event
-                  x-parser-schema-id: <anonymous-schema-177>
+                  x-parser-schema-id: <anonymous-schema-175>
                 fee_type_override:
                   type: string
                   nullable: true
@@ -844,15 +885,15 @@ operations:
                   description: >-
                     Event fee type override. `null` when the override has been
                     cleared.
-                  x-parser-schema-id: <anonymous-schema-178>
+                  x-parser-schema-id: <anonymous-schema-176>
                 fee_multiplier_override:
                   type: number
                   nullable: true
                   description: >-
                     Event fee multiplier override. `null` when the override has
                     been cleared.
-                  x-parser-schema-id: <anonymous-schema-179>
-              x-parser-schema-id: <anonymous-schema-176>
+                  x-parser-schema-id: <anonymous-schema-177>
+              x-parser-schema-id: <anonymous-schema-174>
           x-parser-schema-id: eventFeeUpdatePayload
         title: Event Fee Override Update
         description: Emitted when an event-level fee override is set or cleared
@@ -860,6 +901,7 @@ operations:
           {
             "type": "event_fee_update",
             "sid": 5,
+            "seq": 9,
             "msg": {
               "event_ticker": "KXBTCD-26MAY2018",
               "fee_type_override": "quadratic",
@@ -871,17 +913,17 @@ operations:
           - id: x-parser-unique-object-id
             value: eventFeeUpdate
     bindings: []
-    extensions: *ref_2
+    extensions: *ref_3
 sendOperations: []
 receiveOperations:
-  - *ref_3
   - *ref_4
   - *ref_5
+  - *ref_6
 sendMessages: []
 receiveMessages:
-  - *ref_6
   - *ref_7
   - *ref_8
+  - *ref_9
 extensions:
   - id: x-parser-unique-object-id
     value: market_lifecycle_v2

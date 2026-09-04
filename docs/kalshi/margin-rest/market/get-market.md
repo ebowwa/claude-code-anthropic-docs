@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.kalshi.com/margin-rest/market/get-market.md
+Downloaded: 2026-09-04T22:10:05.835Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -192,6 +197,11 @@ components:
         reference_price:
           $ref: '#/components/schemas/TickerPrice'
           description: Underlying reference price, scaled per contract.
+        asset_class:
+          type: string
+          description: >
+            Asset class grouping for this market. New asset classes may be added
+            over time. Omitted when the market has no assigned class.
         schedule:
           $ref: '#/components/schemas/MarginMarketSchedule'
     ErrorResponse:

@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.kalshi.com/margin-ws/websockets/public-trades.md
+Downloaded: 2026-09-04T22:10:05.838Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -64,6 +69,10 @@ operations:
                 type: integer
                 description: Server-generated subscription identifier
                 required: true
+              - name: seq
+                type: integer
+                description: Sequence number used for snapshot/delta consistency
+                required: true
               - name: msg
                 type: object
                 required: true
@@ -97,17 +106,23 @@ operations:
           required:
             - type
             - sid
+            - seq
             - msg
           properties:
             type:
               type: string
               const: trade
-              x-parser-schema-id: <anonymous-schema-73>
+              x-parser-schema-id: <anonymous-schema-72>
             sid:
               type: integer
               minimum: 1
               description: Server-generated subscription identifier
               x-parser-schema-id: subscriptionId
+            seq:
+              type: integer
+              minimum: 1
+              description: Sequence number used for snapshot/delta consistency
+              x-parser-schema-id: sequenceNumber
             msg:
               type: object
               required:
@@ -121,17 +136,17 @@ operations:
                 trade_id:
                   type: string
                   format: uuid
-                  x-parser-schema-id: <anonymous-schema-75>
+                  x-parser-schema-id: <anonymous-schema-74>
                 market_ticker:
                   type: string
                   description: Unique market identifier
                   x-parser-schema-id: marketTicker
                 price:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-76>
+                  x-parser-schema-id: <anonymous-schema-75>
                 count:
                   type: string
-                  x-parser-schema-id: <anonymous-schema-77>
+                  x-parser-schema-id: <anonymous-schema-76>
                 taker_side:
                   type: string
                   enum:
@@ -142,8 +157,8 @@ operations:
                   type: integer
                   format: int64
                   description: Unix timestamp in milliseconds.
-                  x-parser-schema-id: <anonymous-schema-78>
-              x-parser-schema-id: <anonymous-schema-74>
+                  x-parser-schema-id: <anonymous-schema-77>
+              x-parser-schema-id: <anonymous-schema-73>
           x-parser-schema-id: marginTradePayload
         title: Trade Update
         description: Public margin trade information
@@ -151,6 +166,7 @@ operations:
           {
             "type": "<string>",
             "sid": 123,
+            "seq": 123,
             "msg": {
               "trade_id": "<string>",
               "market_ticker": "<string>",

@@ -1,8 +1,3 @@
-<!--
-Source: https://code.claude.com/docs/en/self-hosted-environments-quickstart.md
-Downloaded: 2026-08-28T04:04:57.611Z
--->
-
 > ## Documentation Index
 > Fetch the complete documentation index at: https://code.claude.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.

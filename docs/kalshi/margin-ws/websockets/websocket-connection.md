@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.kalshi.com/margin-ws/websockets/websocket-connection.md
+Downloaded: 2026-09-04T22:10:05.838Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -848,6 +853,14 @@ operations:
                 type: integer
                 description: Unique ID of a command within a WebSocket session
                 required: false
+              - name: sid
+                type: integer
+                description: Server-generated subscription identifier
+                required: false
+              - name: seq
+                type: integer
+                description: Sequence number used for snapshot/delta consistency
+                required: false
               - name: type
                 type: string
                 description: error
@@ -858,13 +871,47 @@ operations:
                 properties:
                   - name: code
                     type: integer
+                    description: >
+                      Error codes the Margin WebSocket endpoint can emit.
+
+                      Numbering is shared with the Predictions WebSocket API, so
+                      the list is
+
+                      not contiguous. Codes 23, 24, and 28 are used only on
+                      channels
+
+                      outside the public Margin surface. Codes 6, 16, and 17 are
+
+                      retired; the service no longer emits them and their
+                      numbers
+
+                      stay reserved.
+                    enumValues:
+                      - 1
+                      - 2
+                      - 3
+                      - 4
+                      - 5
+                      - 7
+                      - 8
+                      - 9
+                      - 10
+                      - 11
+                      - 12
+                      - 13
+                      - 14
+                      - 15
+                      - 18
+                      - 23
+                      - 24
+                      - 25
+                      - 26
+                      - 27
+                      - 28
                     required: true
                   - name: msg
                     type: string
                     required: true
-                  - name: market_ticker
-                    type: string
-                    required: false
         headers: []
         jsonPayloadSchema:
           type: object
@@ -873,6 +920,8 @@ operations:
             - msg
           properties:
             id: *ref_0
+            sid: *ref_2
+            seq: *ref_5
             type:
               type: string
               const: error
@@ -885,15 +934,46 @@ operations:
               properties:
                 code:
                   type: integer
-                  minimum: 1
-                  maximum: 18
+                  description: >
+                    Error codes the Margin WebSocket endpoint can emit.
+
+                    Numbering is shared with the Predictions WebSocket API, so
+                    the list is
+
+                    not contiguous. Codes 23, 24, and 28 are used only on
+                    channels
+
+                    outside the public Margin surface. Codes 6, 16, and 17 are
+
+                    retired; the service no longer emits them and their numbers
+
+                    stay reserved.
+                  enum:
+                    - 1
+                    - 2
+                    - 3
+                    - 4
+                    - 5
+                    - 7
+                    - 8
+                    - 9
+                    - 10
+                    - 11
+                    - 12
+                    - 13
+                    - 14
+                    - 15
+                    - 18
+                    - 23
+                    - 24
+                    - 25
+                    - 26
+                    - 27
+                    - 28
                   x-parser-schema-id: <anonymous-schema-33>
                 msg:
                   type: string
                   x-parser-schema-id: <anonymous-schema-34>
-                market_ticker:
-                  type: string
-                  x-parser-schema-id: <anonymous-schema-35>
               x-parser-schema-id: <anonymous-schema-32>
           x-parser-schema-id: errorResponsePayload
         title: Error Response
@@ -901,11 +981,12 @@ operations:
         example: |-
           {
             "id": 123,
+            "sid": 123,
+            "seq": 123,
             "type": "<string>",
             "msg": {
               "code": 123,
-              "msg": "<string>",
-              "market_ticker": "<string>"
+              "msg": "<string>"
             }
           }
         bindings: []

@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/trading/session-keys.md
-Downloaded: 2026-08-29T02:43:57.791Z
+Downloaded: 2026-09-04T22:10:02.839Z
 -->
 
 > ## Documentation Index
@@ -1006,24 +1006,19 @@ Revoke a Session Key when an integration no longer needs access or its private
 key may have been exposed. Revocation prevents further trading by that key and
 cancels its open orders without affecting orders placed by other Session Keys.
 
-Revocation completes after the Session Key's open orders are canceled and the
-on-chain transaction is confirmed, which may take several minutes.
-
 <Tabs>
   <Tab title="TypeScript">
     Call `revokeSessionKey()` on the Deposit Wallet Owner's `SecureClient` with
     the Session Key's public address:
 
     ```ts theme={null}
-    const revocation = await secureClient.revokeSessionKey({
+    await secureClient.revokeSessionKey({
       address: sessionKeyAddress,
     });
-
-    // revocation: RevokeSessionKeyResult
     ```
 
-    The method resolves after order cleanup and on-chain confirmation. The
-    result contains the confirmed `transaction`.
+    `revokeSessionKey()` resolves to `void` once the Session Key is no longer active in the Wallet Registry.
+    The backend continues the remaining revocation work asynchronously, canceling open orders and finalizing the on-chain transaction.
   </Tab>
 
   <Tab title="Python">
@@ -1032,15 +1027,13 @@ on-chain transaction is confirmed, which may take several minutes.
     `SecureClient` provides the same method without `await`.
 
     ```python theme={null}
-    transaction = await secure_client.revoke_session_key(
+    await secure_client.revoke_session_key(
         address=session_key_address,
     )
-
-    # transaction: TransactionOutcome
     ```
 
-    The method returns the confirmed `transaction` after order cleanup and
-    on-chain confirmation.
+    `revoke_session_key()` returns `None` once the Session Key is no longer active in the Wallet Registry.
+    The backend continues the remaining revocation work asynchronously, canceling open orders and finalizing the on-chain transaction.
   </Tab>
 
   <Tab title="API">
@@ -1261,11 +1254,11 @@ on-chain transaction is confirmed, which may take several minutes.
           "error_msg": null
         }
         ```
-
-        At that point, the Session Key's open orders have been canceled and its
-        on-chain revocation is confirmed.
       </Step>
     </Steps>
+
+    Revocation completes after the Session Key's open orders are canceled and
+    the on-chain transaction is confirmed, which may take several minutes.
   </Tab>
 </Tabs>
 

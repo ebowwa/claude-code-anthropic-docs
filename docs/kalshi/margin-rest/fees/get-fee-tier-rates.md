@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/margin-rest/fees/get-fee-tier-rates.md
-Downloaded: 2026-09-02T22:24:42.981Z
+Downloaded: 2026-09-04T22:10:05.836Z
 -->
 
 > ## Documentation Index
@@ -9,7 +9,7 @@ Downloaded: 2026-09-02T22:24:42.981Z
 
 # Get Fee Tier Rates
 
-> Returns the maker and taker fee rates for the Self Clearing Members and Kalshi Prime fee schedules. The Kalshi Prime schedule also applies to FCM subtraders.
+> Returns the fee schedule that applies to the authenticated margin-enabled account, as tier numbers with maker and taker fee rates ordered from the entry tier upward.
 
 
 
@@ -59,9 +59,9 @@ paths:
         - fees
       summary: Get Fee Tier Rates
       description: >-
-        Returns the maker and taker fee rates for the Self Clearing Members and
-        Kalshi Prime fee schedules. The Kalshi Prime schedule also applies to
-        FCM subtraders.
+        Returns the fee schedule that applies to the authenticated
+        margin-enabled account, as tier numbers with maker and taker fee rates
+        ordered from the entry tier upward.
       operationId: GetMarginFeeTierRates
       responses:
         '200':
@@ -70,8 +70,16 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/GetMarginFeeTierRatesResponse'
+        '401':
+          $ref: '#/components/responses/UnauthorizedError'
+        '403':
+          description: The account is not margin-enabled or no fee schedule applies to it
         '500':
           $ref: '#/components/responses/InternalServerError'
+      security:
+        - kalshiAccessKey: []
+          kalshiAccessSignature: []
+          kalshiAccessTimestamp: []
 components:
   schemas:
     GetMarginFeeTierRatesResponse:
@@ -96,14 +104,15 @@ components:
           enum:
             - self_clearing_members
             - kalshi_prime
-          description: >-
-            Fee schedule containing this tier. The Kalshi Prime schedule also
-            applies to FCM subtraders.
+            - fcm
+          description: Fee schedule containing this tier.
         tier:
           type: integer
           format: int32
           minimum: 0
-          description: Fee tier number within the indicated fee schedule.
+          description: >-
+            Stable fee tier number within the indicated fee schedule. Existing
+            numbers never change when the schedule is reshaped.
         maker_fee_rate:
           type: number
           format: double
@@ -129,11 +138,33 @@ components:
           type: string
           description: Additional details about the error, if available
   responses:
+    UnauthorizedError:
+      description: Unauthorized - authentication required
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponse'
     InternalServerError:
       description: Internal server error
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorResponse'
+  securitySchemes:
+    kalshiAccessKey:
+      type: apiKey
+      in: header
+      name: KALSHI-ACCESS-KEY
+      description: Your API key ID
+    kalshiAccessSignature:
+      type: apiKey
+      in: header
+      name: KALSHI-ACCESS-SIGNATURE
+      description: RSA-PSS signature of the request
+    kalshiAccessTimestamp:
+      type: apiKey
+      in: header
+      name: KALSHI-ACCESS-TIMESTAMP
+      description: Request timestamp in milliseconds
 
 ````

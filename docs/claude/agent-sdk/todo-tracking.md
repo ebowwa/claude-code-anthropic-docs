@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/agent-sdk/todo-tracking.md
-Downloaded: 2026-08-29T02:44:09.265Z
+Downloaded: 2026-09-04T22:10:14.785Z
 -->
 
 > ## Documentation Index
@@ -18,7 +18,9 @@ In a session that has the task-tracking tools, Claude keeps a written todo list,
 ## Model availability
 
 <Note>
-  On TypeScript Agent SDK 0.3.233 and later, or Python Agent SDK 0.2.139 and later, the following tools aren't available on Opus 4.8, Sonnet 5, Fable 5, Mythos 5, or later versions of those families unless you opt in:
+  On TypeScript Agent SDK 0.3.233 and later, or Python Agent SDK 0.2.139 and later, the following restriction applies.
+
+  The following tools aren't available on Opus 4.8, Sonnet 5, Fable 5, Mythos 5, or later versions of those families unless you opt in:
 
   * `TodoWrite`
   * `TaskCreate`
