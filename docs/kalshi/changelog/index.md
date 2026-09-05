@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.kalshi.com/changelog/index.md
-Downloaded: 2026-09-04T22:10:05.840Z
+Downloaded: 2026-09-05T21:56:40.713Z
 -->
 
 > ## Documentation Index
@@ -20,6 +20,25 @@ Predictions and Margin exchanges. Use the entry tags to filter by API
 surface (`REST`, `WebSocket`, `FIX`) or exchange (`Predictions`, `Margin`).
 FIX API changes, previously tracked on a separate page, now live here under
 the `FIX` tag.
+
+<Update
+  label="September 10, 2026"
+  tags={["REST", "Predictions"]}
+  rss={{
+title: "The deprecated available_on_brokers field is removed from event responses",
+description: "The deprecated available_on_brokers field is removed from event responses in the September 10, 2026 release."
+}}
+>
+  Breaking Change: the deprecated `available_on_brokers` field is removed
+  from event responses. The field stopped being populated in August 2026 and
+  has always returned `false` since then.
+
+  **Affected endpoints:**
+
+  * `GET /trade-api/v2/events`
+  * `GET /trade-api/v2/events/multivariate`
+  * `GET /trade-api/v2/events/{event_ticker}`
+</Update>
 
 <Update
   label="September 10, 2026"

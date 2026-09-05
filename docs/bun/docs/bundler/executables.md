@@ -1,8 +1,3 @@
-<!--
-Source: https://bun.com/docs/bundler/executables.md
-Downloaded: 2026-08-29T02:44:02.849Z
--->
-
 # Single-file executable
 
 > Generate standalone executables from TypeScript or JavaScript files with Bun

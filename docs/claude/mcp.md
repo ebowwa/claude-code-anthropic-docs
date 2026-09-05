@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/mcp.md
-Downloaded: 2026-09-01T22:25:35.396Z
+Downloaded: 2026-09-05T21:56:47.862Z
 -->
 
 > ## Documentation Index
@@ -235,6 +235,8 @@ claude mcp remove notion
 # (within Claude Code) Check server status
 /mcp
 ```
+
+When you remove a remote server, Claude Code also deletes the OAuth tokens and client registration it stored for that server.
 
 #### Server status
 

@@ -1,8 +1,3 @@
-<!--
-Source: https://docs.polymarket.com/_llms/en/api-reference/predictions.md
-Downloaded: 2026-08-29T02:43:57.799Z
--->
-
 # Polymarket Documentation: English API Reference Predictions
 
 ## Predictions

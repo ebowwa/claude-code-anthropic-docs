@@ -1,8 +1,3 @@
-<!--
-Source: https://docs.polymarket.com/_llms/en/api-reference.md
-Downloaded: 2026-08-29T02:43:57.787Z
--->
-
 # Polymarket Documentation: English API Reference
 
 ## API Reference
