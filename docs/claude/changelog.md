@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/changelog.md
-Downloaded: 2026-09-04T22:10:14.749Z
+Downloaded: 2026-09-06T21:58:16.624Z
 -->
 
 > ## Documentation Index
@@ -14,6 +14,10 @@ Downloaded: 2026-09-04T22:10:14.749Z
 This page is generated from the [CHANGELOG.md on GitHub](https://github.com/anthropics/claude-code/blob/main/CHANGELOG.md).
 
 Run `claude --version` to check your installed version.
+
+<Update label="2.1.263" description="September 6, 2026">
+  * Bug fixes and reliability improvements
+</Update>
 
 <Update label="2.1.261" description="September 4, 2026">
   * Added an "Organization policy" line to `/status` and `claude doctor` that says why your organization's policy could not be loaded, such as a proxy not passing the endpoint through

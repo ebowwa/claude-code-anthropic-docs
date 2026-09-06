@@ -1,8 +1,3 @@
-<!--
-Source: https://code.claude.com/docs/en/gitlab-ci-cd.md
-Downloaded: 2026-08-29T22:26:19.278Z
--->
-
 > ## Documentation Index
 > Fetch the complete documentation index at: https://code.claude.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.
