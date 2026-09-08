@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.kalshi.com/api-reference/communications/get-rfq.md
+Downloaded: 2026-09-08T22:24:12.123Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -131,6 +136,12 @@ components:
         target_cost_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Total value of the RFQ in dollars
+        target_cost_excludes_fees:
+          type: boolean
+          description: >-
+            True when the target cost is principal-only and quote sizes are
+            computed without reserving taker fees (fees are charged on top).
+          x-go-type-skip-optional-pointer: true
         status:
           type: string
           description: Current status of the RFQ (open, closed)

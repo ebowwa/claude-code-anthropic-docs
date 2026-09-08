@@ -1,6 +1,6 @@
 <!--
 Source: https://docs.polymarket.com/changelog/perps.md
-Downloaded: 2026-09-04T22:10:02.848Z
+Downloaded: 2026-09-08T22:24:08.177Z
 -->
 
 > ## Documentation Index
@@ -12,6 +12,86 @@ Downloaded: 2026-09-04T22:10:02.848Z
 > Recent changes to the Polymarket Perps API and platform
 
 Notable changes to the Polymarket Perps API.
+
+<Update label="Sep 8, 2026" description="Cancel-by-coid grace window, stricter filter validation, and faster rejected-order lookups">
+  Cancel-by-coid grace window, stricter filter validation, and faster
+  rejected-order lookups. No breaking changes.
+
+  **Added**
+
+  * **`GET /v1/info/exchange-stats`.** Public, unauthenticated exchange-wide
+    statistics for all pUSD-quoted perpetuals: matched USD volume, gross maker
+    plus taker fees, and one-sided open interest with its sample timestamp.
+    Half-open window `[start_timestamp, end_timestamp)` up to 31 days. Request
+    weight 10, or 1 when served from cache; responses cached 5 minutes.
+  * **`instrument_id` filter on `GET /v1/account/fills`.** Optional, returns
+    only that instrument's fills. Window, cursor, and sort are unchanged.
+
+  **Changed**
+
+  * **Cancel-by-coid waits for a racing create.** A cancel by client order id
+    arriving just before its create is sequenced previously returned
+    `order_unknown` and needed a retry. The gateway now waits up to 50ms of
+    sequencer time for the create to appear and applies the cancel if it does
+    — which covers the full range of races we see in production, where the
+    create lands 10–49ms behind the cancel. You'll see fewer `order_unknown`
+    rejects, and you can drop client-side retry loops for the sub-50ms case. A
+    `coid` that never becomes an order still returns `order_unknown`, but up
+    to 50ms later than before, so reject latency on those rises accordingly.
+    In a batch mixing a racing `coid` with a never-created one, the racing
+    cancel is forwarded when the batch resolves rather than the instant its
+    create lands. Single-`coid` cancels, cancels of already-live orders, and
+    `order_already_terminal` are unaffected.
+  * **`GET /v1/account/internal-transfers` accepts a direction filter.**
+    `direction=in` or `direction=out`, relative to your account. Any other
+    value now returns `400` with `unknown variant …, expected in or out`;
+    previously an unrecognized value was silently ignored. Omitting the
+    parameter changes nothing.
+  * **Unsupported WebSocket kline intervals are refused at subscribe.**
+    `klines::<iid>::<interval>` accepts `1s` `1m` `5m` `15m` `30m` `1h` `4h`
+    `6h` `12h` `1d` `1w`, unchanged. Any other interval now returns
+    `{"status":"err","error":"invalid channel: …"}` instead of acknowledging
+    the subscription and then never delivering data. If your client treats a
+    non-ok ack as fatal, subscribe only with supported intervals.
+
+  **Fixed**
+
+  * **Exact order lookups for rejected orders no longer shed under load.**
+    Looking up a single order by `order_id` or `client_order_id` where risk
+    rejected it before it reached the book is now answered from the gateway's
+    recent-outcome memory rather than a database read. Same empty page,
+    faster, and no longer returns `503` when the gateway is busy. If you poll
+    for a rejected order's status, this removes those `503`s. One caveat, and
+    it only applies if you reuse client order ids. Where a `client_order_id`
+    was booked earlier, then reused and rejected, a lookup by that id can
+    return `[]` for up to 120 seconds after the rejection even though the
+    earlier order still exists in history. Don't treat an empty page inside
+    that window as proof the earlier booking never happened — look it up by
+    `order_id` instead. Clients that never reuse client order ids are
+    unaffected.
+
+  **Not Yet Active**
+
+  * **Favorites API.** `/v1/account/favorites` is a Polymarket web-session
+    endpoint for the web app's market selector. Returns `404` until enabled
+    and is not relevant to trading integrations.
+  * **Stricter liquidation-stop check.** Operator-enabled later. A liquidation
+    stop will be refused unless the account is provably recovered at the
+    moment it applies, so an account may stay in the liquidating state
+    slightly longer during adverse price moves. No API shape change.
+  * **Per-account rate-limit tiers.** Still inactive, carried over from an
+    earlier release. We'll notify you before enabling. Default tier when
+    live: 5,000 actions/min with burst 250, 1,000 WS messages/min, 1,000 open
+    orders, 30 connects/min.
+
+  **Rollout**
+
+  The market-maker gateway rolls pod by pod during the window, so MM
+  WebSocket connections will drop once and need to reconnect. The exchange is
+  in cancel-only mode for the duration: cancels, liquidations, deposits,
+  withdrawals, and funding continue; new orders are rejected until the window
+  closes.
+</Update>
 
 <Update label="Sep 4, 2026" description="OI reward eligibility threshold increased to $5M">
   The OI reward eligibility threshold is now $5M of combined daily average gross

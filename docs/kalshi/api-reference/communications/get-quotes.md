@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.kalshi.com/api-reference/communications/get-quotes.md
+Downloaded: 2026-09-08T22:24:12.124Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -301,6 +306,13 @@ components:
         rfq_target_cost_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: Total value requested in the RFQ in dollars
+        target_cost_excludes_fees:
+          type: boolean
+          description: >-
+            True when the RFQ's target cost is principal-only and the
+            contracts-offered sizes were computed without reserving taker fees
+            (fees are charged on top of the target cost).
+          x-go-type-skip-optional-pointer: true
         rfq_creator_order_id:
           type: string
           description: Order ID for the RFQ creator (private field)

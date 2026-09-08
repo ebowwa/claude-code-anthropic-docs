@@ -1,3 +1,8 @@
+<!--
+Source: https://docs.kalshi.com/api-reference/communications/create-rfq.md
+Downloaded: 2026-09-08T22:24:12.123Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://docs.kalshi.com/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -127,6 +132,15 @@ components:
         target_cost_dollars:
           $ref: '#/components/schemas/FixedPointDollars'
           description: The target cost for the RFQ in dollars
+          x-go-type-skip-optional-pointer: true
+        target_cost_excludes_fees:
+          type: boolean
+          description: >-
+            Sizes quotes against the target cost as principal only (contracts =
+            target cost / price), with your taker fees charged on top of the
+            target cost. By default (false) the target cost caps principal plus
+            Kalshi fees, and quote sizes are reduced to make room for the fees.
+            Only valid together with a target cost.
           x-go-type-skip-optional-pointer: true
         rest_remainder:
           type: boolean

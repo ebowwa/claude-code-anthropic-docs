@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/auto-mode-config.md
-Downloaded: 2026-09-04T22:10:14.764Z
+Downloaded: 2026-09-08T22:24:26.302Z
 -->
 
 > ## Documentation Index
@@ -403,4 +403,4 @@ To react to denials programmatically, use the [`PermissionDenied` hook](/docs/en
 * [Permission modes](/docs/en/permission-modes#eliminate-prompts-with-auto-mode): what auto mode is, what it blocks by default, and which sessions start in it
 * [Managed settings](/docs/en/server-managed-settings): deploy `autoMode` configuration across your organization
 * [Permissions](/docs/en/permissions): allow, ask, and deny rules that apply before the classifier runs
-* [Settings reference](/docs/en/settings-reference#automode): every settings key, including `autoMode`
+* [All settings](/docs/en/settings-reference#automode): every settings key, including `autoMode`

@@ -1,3 +1,8 @@
+<!--
+Source: https://code.claude.com/docs/en/plugin-relevance.md
+Downloaded: 2026-09-08T22:24:26.306Z
+-->
+
 > ## Documentation Index
 > Fetch the complete documentation index at: https://code.claude.com/docs/llms.txt
 > Use this file to discover all available pages before exploring further.
@@ -165,4 +170,4 @@ The validator reports unknown keys under `relevance` and `relevance.signals` as 
 
 * [Create and distribute a plugin marketplace](/docs/en/plugin-marketplaces): build the marketplace that hosts your plugins
 * [Recommend your plugin from your CLI](/docs/en/plugin-hints): prompt users from your own CLI instead of from Claude Code's session signals
-* [Settings reference](/docs/en/settings-reference#pluginsuggestionmarketplaces): `pluginSuggestionMarketplaces` and `extraKnownMarketplaces`
+* [All settings](/docs/en/settings-reference#pluginsuggestionmarketplaces): `pluginSuggestionMarketplaces` and `extraKnownMarketplaces`

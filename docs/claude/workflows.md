@@ -1,6 +1,6 @@
 <!--
 Source: https://code.claude.com/docs/en/workflows.md
-Downloaded: 2026-08-31T23:39:02.450Z
+Downloaded: 2026-09-08T22:24:26.297Z
 -->
 
 > ## Documentation Index
@@ -115,7 +115,7 @@ You can also run a workflow command that already exists: a [bundled workflow](#b
 
 ### Ask for a workflow in your prompt
 
-To run a single task as a workflow without changing the session's effort level, include the keyword `ultracode` in your prompt. Asking in your own words, for example "use a workflow" or "run a workflow", also works: Claude treats a direct request as the same opt-in. Before v2.1.160 the literal trigger keyword was `workflow`; natural-language requests work in both versions.
+To run a single task as a workflow without changing the session's effort level, include the keyword `ultracode` in your prompt. Asking in your own words, for example "use a workflow" or "run a workflow", also works: Claude treats a direct request as the same opt-in.
 
 ```text wrap theme={null}
 ultracode: audit every API endpoint under src/routes/ for missing auth checks
